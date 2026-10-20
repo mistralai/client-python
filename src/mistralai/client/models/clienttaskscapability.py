@@ -5,6 +5,8 @@ from .clienttasksrequestscapability import (
     ClientTasksRequestsCapability,
     ClientTasksRequestsCapabilityTypedDict,
 )
+from .taskscancelcapability import TasksCancelCapability, TasksCancelCapabilityTypedDict
+from .taskslistcapability import TasksListCapability, TasksListCapabilityTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -12,41 +14,26 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict
+from pydantic import model_serializer
 from typing_extensions import NotRequired, TypedDict
 
 
 class ClientTasksCapabilityTypedDict(TypedDict):
-    r"""Capability for client tasks operations."""
+    r"""Capability for client tasks operations (2025-11-25 only)."""
 
-    list: NotRequired[Nullable[Dict[str, Any]]]
-    cancel: NotRequired[Nullable[Dict[str, Any]]]
+    list: NotRequired[Nullable[TasksListCapabilityTypedDict]]
+    cancel: NotRequired[Nullable[TasksCancelCapabilityTypedDict]]
     requests: NotRequired[Nullable[ClientTasksRequestsCapabilityTypedDict]]
 
 
 class ClientTasksCapability(BaseModel):
-    r"""Capability for client tasks operations."""
+    r"""Capability for client tasks operations (2025-11-25 only)."""
 
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+    list: OptionalNullable[TasksListCapability] = UNSET
 
-    list: OptionalNullable[Dict[str, Any]] = UNSET
-
-    cancel: OptionalNullable[Dict[str, Any]] = UNSET
+    cancel: OptionalNullable[TasksCancelCapability] = UNSET
 
     requests: OptionalNullable[ClientTasksRequestsCapability] = UNSET
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -58,7 +45,6 @@ class ClientTasksCapability(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -71,7 +57,5 @@ class ClientTasksCapability(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m

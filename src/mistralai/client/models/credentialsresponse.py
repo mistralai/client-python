@@ -7,9 +7,10 @@ from .authenticationconfiguration import (
 )
 from .authenticationtype import AuthenticationType
 from mistralai.client.types import BaseModel, UNSET_SENTINEL
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class CredentialsResponseTypedDict(TypedDict):
@@ -20,7 +21,12 @@ class CredentialsResponseTypedDict(TypedDict):
 class CredentialsResponse(BaseModel):
     credentials: List[AuthenticationConfiguration]
 
-    connector_preset_credentials_for_auth: Optional[List[AuthenticationType]] = None
+    connector_preset_credentials_for_auth: Annotated[
+        Optional[List[AuthenticationType]],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -1,0 +1,8 @@
+{
+  "label": "Local Audio (Node & Python)",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Audio I/O for local Node and Python agents. Not applicable to the browser."
+  }
+}

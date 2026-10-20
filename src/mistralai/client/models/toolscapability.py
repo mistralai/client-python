@@ -9,8 +9,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict
+from pydantic import model_serializer
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -23,22 +22,9 @@ class ToolsCapabilityTypedDict(TypedDict):
 class ToolsCapability(BaseModel):
     r"""Capability for tools operations."""
 
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
-
     list_changed: Annotated[
         OptionalNullable[bool], pydantic.Field(alias="listChanged")
     ] = UNSET
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -50,7 +36,6 @@ class ToolsCapability(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -63,8 +48,6 @@ class ToolsCapability(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m
 

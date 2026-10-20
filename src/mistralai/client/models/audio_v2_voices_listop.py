@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .voicegender import VoiceGender
+from .voicekind import VoiceKind
 from .voicelistpage import VoiceListPage, VoiceListPageTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -37,6 +38,8 @@ class AudioV2VoicesListRequestTypedDict(TypedDict):
     r"""Keep voices supporting any of these languages"""
     query: NotRequired[Nullable[str]]
     r"""Case-insensitive match on voice name"""
+    kind: NotRequired[Nullable[VoiceKind]]
+    r"""Keep voices cloned with this technology"""
 
 
 class AudioV2VoicesListRequest(BaseModel):
@@ -76,12 +79,18 @@ class AudioV2VoicesListRequest(BaseModel):
     ] = UNSET
     r"""Case-insensitive match on voice name"""
 
+    kind: Annotated[
+        OptionalNullable[VoiceKind],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Keep voices cloned with this technology"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["page_size", "page_token", "type", "gender", "language", "query"]
+            ["page_size", "page_token", "type", "gender", "language", "query", "kind"]
         )
-        nullable_fields = set(["page_token", "gender", "language", "query"])
+        nullable_fields = set(["page_token", "gender", "language", "query", "kind"])
         serialized = handler(self)
         m = {}
 

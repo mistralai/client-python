@@ -16,7 +16,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class SharingDeleteTypedDict(TypedDict):
     share_with_uuid: str
-    r"""The id of the entity (user, workspace or organization) to share with"""
+    r"""The id of the entity to stop sharing with, as returned by the list endpoint"""
     share_with_type: EntityType
     r"""The type of entity, used to share a library."""
     org_id: NotRequired[Nullable[str]]
@@ -24,7 +24,7 @@ class SharingDeleteTypedDict(TypedDict):
 
 class SharingDelete(BaseModel):
     share_with_uuid: str
-    r"""The id of the entity (user, workspace or organization) to share with"""
+    r"""The id of the entity to stop sharing with, as returned by the list endpoint"""
 
     share_with_type: EntityType
     r"""The type of entity, used to share a library."""

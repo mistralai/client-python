@@ -75,14 +75,8 @@ AgentsCompletionRequestToolTypedDict = TypeAliasType(
 )
 
 
-AgentsCompletionRequestTool = Annotated[
-    Union[
-        Annotated[Tool, Tag("function")],
-        Annotated[ImageGenerationTool, Tag("image_generation")],
-        Annotated[DocumentLibraryTool, Tag("document_library")],
-        Annotated[CustomConnector, Tag("connector")],
-    ],
-    Discriminator(lambda m: get_discriminator(m, "type", "type")),
+AgentsCompletionRequestTool = Union[
+    Tool, ImageGenerationTool, DocumentLibraryTool, CustomConnector
 ]
 
 

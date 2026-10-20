@@ -5,7 +5,7 @@ from jsonpath import JSONPath
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
-from mistralai.client.utils import get_security_from_env
+from mistralai.client.utils import get_security_from_env, jsonl
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Awaitable, Dict, Iterable, List, Mapping, Optional, Union
 
@@ -23,7 +23,7 @@ class ManagedIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateIndexV1RagManagedIndexesPostResponse:
+    ) -> models.CreateIndexV1ContextSearchIndexesPostResponse:
         r"""Create a managed index
 
         Reserves a managed search index and starts asynchronous backing-table provisioning. Poll the returned Location until status is ready or failed.
@@ -59,7 +59,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes",
+            path="/v1/context/search-indexes",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -89,7 +89,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="create_index_v1_rag_managed_indexes_post",
+                operation_id="create_index_v1_context_search_indexes_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -104,7 +104,7 @@ class ManagedIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "202", "application/json"):
-            return models.CreateIndexV1RagManagedIndexesPostResponse(
+            return models.CreateIndexV1ContextSearchIndexesPostResponse(
                 result=unmarshal_json_response(models.ManagedIndexResponse, http_res),
                 headers=utils.get_response_headers(http_res.headers),
             )
@@ -134,7 +134,7 @@ class ManagedIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateIndexV1RagManagedIndexesPostResponse:
+    ) -> models.CreateIndexV1ContextSearchIndexesPostResponse:
         r"""Create a managed index
 
         Reserves a managed search index and starts asynchronous backing-table provisioning. Poll the returned Location until status is ready or failed.
@@ -170,7 +170,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes",
+            path="/v1/context/search-indexes",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -200,7 +200,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="create_index_v1_rag_managed_indexes_post",
+                operation_id="create_index_v1_context_search_indexes_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -215,7 +215,7 @@ class ManagedIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "202", "application/json"):
-            return models.CreateIndexV1RagManagedIndexesPostResponse(
+            return models.CreateIndexV1ContextSearchIndexesPostResponse(
                 result=unmarshal_json_response(models.ManagedIndexResponse, http_res),
                 headers=utils.get_response_headers(http_res.headers),
             )
@@ -245,7 +245,7 @@ class ManagedIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ListIndexesV1RagManagedIndexesGetResponse]:
+    ) -> Optional[models.ListIndexesV1ContextSearchIndexesGetResponse]:
         r"""List managed indexes
 
         Lists all managed search indexes for the current workspace.
@@ -273,7 +273,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListIndexesV1RagManagedIndexesGetRequest(
+        request = models.ListIndexesV1ContextSearchIndexesGetRequest(
             page_size=page_size,
             page_token=page_token,
             name=name,
@@ -283,7 +283,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="GET",
-            path="/v1/rag/managed_indexes",
+            path="/v1/context/search-indexes",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -310,7 +310,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="list_indexes_v1_rag_managed_indexes_get",
+                operation_id="list_indexes_v1_context_search_indexes_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -323,7 +323,9 @@ class ManagedIndexes(BaseSDK):
             retry_config=retry_config,
         )
 
-        def next_func() -> Optional[models.ListIndexesV1RagManagedIndexesGetResponse]:
+        def next_func() -> (
+            Optional[models.ListIndexesV1ContextSearchIndexesGetResponse]
+        ):
             body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
 
             next_cursor = JSONPath("$.next_page_token").parse(body)
@@ -355,7 +357,7 @@ class ManagedIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListIndexesV1RagManagedIndexesGetResponse(
+            return models.ListIndexesV1ContextSearchIndexesGetResponse(
                 result=unmarshal_json_response(
                     models.ListManagedIndexesResponse, http_res
                 ),
@@ -387,7 +389,7 @@ class ManagedIndexes(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> Optional[models.ListIndexesV1RagManagedIndexesGetResponse]:
+    ) -> Optional[models.ListIndexesV1ContextSearchIndexesGetResponse]:
         r"""List managed indexes
 
         Lists all managed search indexes for the current workspace.
@@ -415,7 +417,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListIndexesV1RagManagedIndexesGetRequest(
+        request = models.ListIndexesV1ContextSearchIndexesGetRequest(
             page_size=page_size,
             page_token=page_token,
             name=name,
@@ -425,7 +427,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/rag/managed_indexes",
+            path="/v1/context/search-indexes",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -452,7 +454,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="list_indexes_v1_rag_managed_indexes_get",
+                operation_id="list_indexes_v1_context_search_indexes_get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -466,7 +468,7 @@ class ManagedIndexes(BaseSDK):
         )
 
         def next_func() -> (
-            Awaitable[Optional[models.ListIndexesV1RagManagedIndexesGetResponse]]
+            Awaitable[Optional[models.ListIndexesV1ContextSearchIndexesGetResponse]]
         ):
             body = utils.unmarshal_json(http_res.text, Union[Dict[Any, Any], List[Any]])
 
@@ -502,7 +504,7 @@ class ManagedIndexes(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return models.ListIndexesV1RagManagedIndexesGetResponse(
+            return models.ListIndexesV1ContextSearchIndexesGetResponse(
                 result=unmarshal_json_response(
                     models.ListManagedIndexesResponse, http_res
                 ),
@@ -554,13 +556,13 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetIndexV1RagManagedIndexesIndexNameGetRequest(
+        request = models.GetIndexV1ContextSearchIndexesIndexNameGetRequest(
             index_name=index_name,
         )
 
         req = self._build_request(
             method="GET",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -587,7 +589,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_index_v1_rag_managed_indexes__index_name__get",
+                operation_id="get_index_v1_context_search_indexes__index_name__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -649,13 +651,13 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetIndexV1RagManagedIndexesIndexNameGetRequest(
+        request = models.GetIndexV1ContextSearchIndexesIndexNameGetRequest(
             index_name=index_name,
         )
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -682,7 +684,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_index_v1_rag_managed_indexes__index_name__get",
+                operation_id="get_index_v1_context_search_indexes__index_name__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -746,7 +748,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexV1RagManagedIndexesIndexNamePutRequest(
+        request = models.UpdateIndexV1ContextSearchIndexesIndexNamePutRequest(
             index_name=index_name,
             update_managed_index_request=models.UpdateManagedIndexRequest(
                 schema_=utils.get_pydantic_model(schema, models.ManagedIndexFields),
@@ -755,7 +757,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="PUT",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -789,7 +791,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_v1_rag_managed_indexes__index_name__put",
+                operation_id="update_index_v1_context_search_indexes__index_name__put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -847,7 +849,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.UpdateIndexV1RagManagedIndexesIndexNamePutRequest(
+        request = models.UpdateIndexV1ContextSearchIndexesIndexNamePutRequest(
             index_name=index_name,
             update_managed_index_request=models.UpdateManagedIndexRequest(
                 schema_=utils.get_pydantic_model(schema, models.ManagedIndexFields),
@@ -856,7 +858,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="PUT",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -890,7 +892,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="update_index_v1_rag_managed_indexes__index_name__put",
+                operation_id="update_index_v1_context_search_indexes__index_name__put",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -946,13 +948,13 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteIndexV1RagManagedIndexesIndexNameDeleteRequest(
+        request = models.DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequest(
             index_name=index_name,
         )
 
         req = self._build_request(
             method="DELETE",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -979,7 +981,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_index_v1_rag_managed_indexes__index_name__delete",
+                operation_id="delete_index_v1_context_search_indexes__index_name__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1041,13 +1043,13 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.DeleteIndexV1RagManagedIndexesIndexNameDeleteRequest(
+        request = models.DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequest(
             index_name=index_name,
         )
 
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/rag/managed_indexes/{index_name}",
+            path="/v1/context/search-indexes/{index_name}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1074,7 +1076,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_index_v1_rag_managed_indexes__index_name__delete",
+                operation_id="delete_index_v1_context_search_indexes__index_name__delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1139,7 +1141,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.IngestDocumentsV1RagManagedIndexesIndexNameDocumentsPostRequest(
+            models.IngestDocumentsV1ContextSearchIndexesIndexNameDocumentsPostRequest(
                 index_name=index_name,
                 ingest_documents_request=models.IngestDocumentsRequest(
                     documents=utils.unmarshal(documents, List[Dict[str, Any]]),
@@ -1149,7 +1151,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/documents",
+            path="/v1/context/search-indexes/{index_name}/documents",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1183,7 +1185,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ingest_documents_v1_rag_managed_indexes__index_name__documents_post",
+                operation_id="ingest_documents_v1_context_search_indexes__index_name__documents_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1248,7 +1250,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.IngestDocumentsV1RagManagedIndexesIndexNameDocumentsPostRequest(
+            models.IngestDocumentsV1ContextSearchIndexesIndexNameDocumentsPostRequest(
                 index_name=index_name,
                 ingest_documents_request=models.IngestDocumentsRequest(
                     documents=utils.unmarshal(documents, List[Dict[str, Any]]),
@@ -1258,7 +1260,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/documents",
+            path="/v1/context/search-indexes/{index_name}/documents",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1292,7 +1294,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="ingest_documents_v1_rag_managed_indexes__index_name__documents_post",
+                operation_id="ingest_documents_v1_context_search_indexes__index_name__documents_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1357,7 +1359,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.DeleteDocumentsV1RagManagedIndexesIndexNameDocumentsDeleteRequest(
+            models.DeleteDocumentsV1ContextSearchIndexesIndexNameDocumentsDeleteRequest(
                 index_name=index_name,
                 delete_documents_request=models.DeleteDocumentsRequest(
                     document_ids=utils.unmarshal(document_ids, List[str]),
@@ -1367,7 +1369,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="DELETE",
-            path="/v1/rag/managed_indexes/{index_name}/documents",
+            path="/v1/context/search-indexes/{index_name}/documents",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1401,7 +1403,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_documents_v1_rag_managed_indexes__index_name__documents_delete",
+                operation_id="delete_documents_v1_context_search_indexes__index_name__documents_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1466,7 +1468,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.DeleteDocumentsV1RagManagedIndexesIndexNameDocumentsDeleteRequest(
+            models.DeleteDocumentsV1ContextSearchIndexesIndexNameDocumentsDeleteRequest(
                 index_name=index_name,
                 delete_documents_request=models.DeleteDocumentsRequest(
                     document_ids=utils.unmarshal(document_ids, List[str]),
@@ -1476,7 +1478,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/rag/managed_indexes/{index_name}/documents",
+            path="/v1/context/search-indexes/{index_name}/documents",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1510,7 +1512,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="delete_documents_v1_rag_managed_indexes__index_name__documents_delete",
+                operation_id="delete_documents_v1_context_search_indexes__index_name__documents_delete",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1576,7 +1578,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.SearchIndexV1RagManagedIndexesIndexNameSearchPostRequest(
+        request = models.SearchIndexV1ContextSearchIndexesIndexNameSearchPostRequest(
             index_name=index_name,
             search_request=models.SearchRequest(
                 retriever=utils.get_pydantic_model(
@@ -1587,7 +1589,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/search",
+            path="/v1/context/search-indexes/{index_name}/search",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1617,7 +1619,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="search_index_v1_rag_managed_indexes__index_name__search_post",
+                operation_id="search_index_v1_context_search_indexes__index_name__search_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1683,7 +1685,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.SearchIndexV1RagManagedIndexesIndexNameSearchPostRequest(
+        request = models.SearchIndexV1ContextSearchIndexesIndexNameSearchPostRequest(
             index_name=index_name,
             search_request=models.SearchRequest(
                 retriever=utils.get_pydantic_model(
@@ -1694,7 +1696,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/search",
+            path="/v1/context/search-indexes/{index_name}/search",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1724,7 +1726,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="search_index_v1_rag_managed_indexes__index_name__search_post",
+                operation_id="search_index_v1_context_search_indexes__index_name__search_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1798,21 +1800,23 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest(
-            index_name=index_name,
-            navigate_request=models.NavigateRequest(
-                source_id=source_id,
-                start_offset=start_offset,
-                end_offset=end_offset,
-                direction=direction,
-                top_k=top_k,
-                content_type=content_type,
-            ),
+        request = (
+            models.NavigateIndexV1ContextSearchIndexesIndexNameNavigatePostRequest(
+                index_name=index_name,
+                navigate_request=models.NavigateRequest(
+                    source_id=source_id,
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    direction=direction,
+                    top_k=top_k,
+                    content_type=content_type,
+                ),
+            )
         )
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/navigate",
+            path="/v1/context/search-indexes/{index_name}/navigate",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1842,7 +1846,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="navigate_index_v1_rag_managed_indexes__index_name__navigate_post",
+                operation_id="navigate_index_v1_context_search_indexes__index_name__navigate_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -1916,21 +1920,23 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.NavigateIndexV1RagManagedIndexesIndexNameNavigatePostRequest(
-            index_name=index_name,
-            navigate_request=models.NavigateRequest(
-                source_id=source_id,
-                start_offset=start_offset,
-                end_offset=end_offset,
-                direction=direction,
-                top_k=top_k,
-                content_type=content_type,
-            ),
+        request = (
+            models.NavigateIndexV1ContextSearchIndexesIndexNameNavigatePostRequest(
+                index_name=index_name,
+                navigate_request=models.NavigateRequest(
+                    source_id=source_id,
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    direction=direction,
+                    top_k=top_k,
+                    content_type=content_type,
+                ),
+            )
         )
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/navigate",
+            path="/v1/context/search-indexes/{index_name}/navigate",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1960,7 +1966,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="navigate_index_v1_rag_managed_indexes__index_name__navigate_post",
+                operation_id="navigate_index_v1_context_search_indexes__index_name__navigate_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2032,7 +2038,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReadIndexV1RagManagedIndexesIndexNameReadPostRequest(
+        request = models.ReadIndexV1ContextSearchIndexesIndexNameReadPostRequest(
             index_name=index_name,
             read_request=models.ReadRequest(
                 source_id=source_id,
@@ -2045,7 +2051,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/read",
+            path="/v1/context/search-indexes/{index_name}/read",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2075,7 +2081,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="read_index_v1_rag_managed_indexes__index_name__read_post",
+                operation_id="read_index_v1_context_search_indexes__index_name__read_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2147,7 +2153,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ReadIndexV1RagManagedIndexesIndexNameReadPostRequest(
+        request = models.ReadIndexV1ContextSearchIndexesIndexNameReadPostRequest(
             index_name=index_name,
             read_request=models.ReadRequest(
                 source_id=source_id,
@@ -2160,7 +2166,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/read",
+            path="/v1/context/search-indexes/{index_name}/read",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2190,7 +2196,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="read_index_v1_rag_managed_indexes__index_name__read_post",
+                operation_id="read_index_v1_context_search_indexes__index_name__read_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2262,7 +2268,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest(
+        request = models.GrepIndexV1ContextSearchIndexesIndexNameGrepPostRequest(
             index_name=index_name,
             grep_request=models.GrepRequest(
                 source_id=source_id,
@@ -2275,7 +2281,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/grep",
+            path="/v1/context/search-indexes/{index_name}/grep",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2305,7 +2311,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="grep_index_v1_rag_managed_indexes__index_name__grep_post",
+                operation_id="grep_index_v1_context_search_indexes__index_name__grep_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2377,7 +2383,7 @@ class ManagedIndexes(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GrepIndexV1RagManagedIndexesIndexNameGrepPostRequest(
+        request = models.GrepIndexV1ContextSearchIndexesIndexNameGrepPostRequest(
             index_name=index_name,
             grep_request=models.GrepRequest(
                 source_id=source_id,
@@ -2390,7 +2396,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="POST",
-            path="/v1/rag/managed_indexes/{index_name}/grep",
+            path="/v1/context/search-indexes/{index_name}/grep",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2420,7 +2426,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="grep_index_v1_rag_managed_indexes__index_name__grep_post",
+                operation_id="grep_index_v1_context_search_indexes__index_name__grep_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2485,7 +2491,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest(
+            models.GetChunkIndexV1ContextSearchIndexesIndexNameChunksChunkIDGetRequest(
                 index_name=index_name,
                 chunk_id=chunk_id,
             )
@@ -2493,7 +2499,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request(
             method="GET",
-            path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}",
+            path="/v1/context/search-indexes/{index_name}/chunks/{chunk_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2520,7 +2526,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get",
+                operation_id="get_chunk_index_v1_context_search_indexes__index_name__chunks__chunk_id__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2585,7 +2591,7 @@ class ManagedIndexes(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = (
-            models.GetChunkIndexV1RagManagedIndexesIndexNameChunksChunkIDGetRequest(
+            models.GetChunkIndexV1ContextSearchIndexesIndexNameChunksChunkIDGetRequest(
                 index_name=index_name,
                 chunk_id=chunk_id,
             )
@@ -2593,7 +2599,7 @@ class ManagedIndexes(BaseSDK):
 
         req = self._build_request_async(
             method="GET",
-            path="/v1/rag/managed_indexes/{index_name}/chunks/{chunk_id}",
+            path="/v1/context/search-indexes/{index_name}/chunks/{chunk_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2620,7 +2626,7 @@ class ManagedIndexes(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="get_chunk_index_v1_rag_managed_indexes__index_name__chunks__chunk_id__get",
+                operation_id="get_chunk_index_v1_context_search_indexes__index_name__chunks__chunk_id__get",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -2642,6 +2648,662 @@ class ManagedIndexes(BaseSDK):
             )
             raise errors.HTTPValidationError(response_data, http_res)
         if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def get_index_summary(
+        self,
+        *,
+        language: models.GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetLanguage,
+        index_name: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.GetSummaryResponseSummary:
+        r"""Get Managed Index Summary
+
+        Retrieve the summary field for a managed index if it exists
+
+        :param language:
+        :param index_name:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetRequest(
+            language=language,
+            index_name=index_name,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.GetSummaryResponseSummary, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def get_index_summary_async(
+        self,
+        *,
+        language: models.GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetLanguage,
+        index_name: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.GetSummaryResponseSummary:
+        r"""Get Managed Index Summary
+
+        Retrieve the summary field for a managed index if it exists
+
+        :param language:
+        :param index_name:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetRequest(
+            language=language,
+            index_name=index_name,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="get_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__get",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.GetSummaryResponseSummary, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    def generate_index_summary(
+        self,
+        *,
+        language: models.GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostLanguage,
+        index_name: str,
+        force: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> jsonl.JsonLStream[models.SummaryStreamTypes]:
+        r"""Generate a summary field for a managed index
+
+        Streams a summary for the managed index in chunks of json.
+
+        The first chunk contains metadata for the summary, the following contain
+        chunks of 'content' that should be joined together to form a full summary.
+
+        If force is true, regenerate the requested language even if a summary
+        already exists.
+
+        :param language:
+        :param index_name:
+        :param force: Regenerate the summary even if one already exists for this language
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequest(
+            language=language,
+            index_name=index_name,
+            force=force,
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/x-ndjson",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="generate_managed_index_summary_post_v1_context_search_indexes__index_name__summary_field__language__post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=True,
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/x-ndjson"):
+            return jsonl.JsonLStream(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.SummaryStreamTypes),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = utils.stream_to_text(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        http_res_text = utils.stream_to_text(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
+
+    async def generate_index_summary_async(
+        self,
+        *,
+        language: models.GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostLanguage,
+        index_name: str,
+        force: Optional[bool] = False,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> jsonl.JsonLStreamAsync[models.SummaryStreamTypes]:
+        r"""Generate a summary field for a managed index
+
+        Streams a summary for the managed index in chunks of json.
+
+        The first chunk contains metadata for the summary, the following contain
+        chunks of 'content' that should be joined together to form a full summary.
+
+        If force is true, regenerate the requested language even if a summary
+        already exists.
+
+        :param language:
+        :param index_name:
+        :param force: Regenerate the summary even if one already exists for this language
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequest(
+            language=language,
+            index_name=index_name,
+            force=force,
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/x-ndjson",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="generate_managed_index_summary_post_v1_context_search_indexes__index_name__summary_field__language__post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=True,
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/x-ndjson"):
+            return jsonl.JsonLStreamAsync(
+                http_res,
+                lambda raw: utils.unmarshal_json(raw, models.SummaryStreamTypes),
+                client_ref=self,
+            )
+        if utils.match_response(http_res, "422", "application/json"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res, http_res_text
+            )
+            raise errors.HTTPValidationError(response_data, http_res, http_res_text)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        http_res_text = await utils.stream_to_text_async(http_res)
+        raise errors.SDKError("Unexpected response received", http_res, http_res_text)
+
+    def set_index_summary(
+        self,
+        *,
+        language: models.SetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguagePutLanguage,
+        index_name: str,
+        content: str,
+        status: models.UpdateSummaryRequestSummaryStatus,
+        translated: bool,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Any:
+        r"""Set Managed Index Summary
+
+        Update the summary field for a managed index
+
+        :param language:
+        :param index_name:
+        :param content:
+        :param status:
+        :param translated:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.SetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguagePutRequest(
+            language=language,
+            index_name=index_name,
+            update_summary_request_summary=models.UpdateSummaryRequestSummary(
+                content=content,
+                status=status,
+                translated=translated,
+            ),
+        )
+
+        req = self._build_request(
+            method="PUT",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.update_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateSummaryRequestSummary,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="set_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__put",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Any, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, ["500", "5XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def set_index_summary_async(
+        self,
+        *,
+        language: models.SetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguagePutLanguage,
+        index_name: str,
+        content: str,
+        status: models.UpdateSummaryRequestSummaryStatus,
+        translated: bool,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Any:
+        r"""Set Managed Index Summary
+
+        Update the summary field for a managed index
+
+        :param language:
+        :param index_name:
+        :param content:
+        :param status:
+        :param translated:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.SetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguagePutRequest(
+            language=language,
+            index_name=index_name,
+            update_summary_request_summary=models.UpdateSummaryRequestSummary(
+                content=content,
+                status=status,
+                translated=translated,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="PUT",
+            path="/v1/context/search-indexes/{index_name}/summary_field/{language}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.update_summary_request_summary,
+                False,
+                False,
+                "json",
+                models.UpdateSummaryRequestSummary,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="set_managed_index_summary_v1_context_search_indexes__index_name__summary_field__language__put",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.rag.managed_indexes"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(Any, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.HTTPValidationErrorData, http_res
+            )
+            raise errors.HTTPValidationError(response_data, http_res)
+        if utils.match_response(http_res, ["400", "403", "404", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, ["500", "5XX"], "*"):

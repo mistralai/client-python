@@ -1,0 +1,8 @@
+{
+  "label": "Core",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Configuration, session, and events — common to every runtime."
+  }
+}

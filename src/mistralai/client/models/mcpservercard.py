@@ -55,7 +55,7 @@ class MCPServerCardTypedDict(TypedDict):
     dollar_schema: NotRequired[Nullable[str]]
     r"""URL to the JSON schema definition"""
     capabilities: NotRequired[ServerCapabilitiesTypedDict]
-    r"""Capabilities that a server may support."""
+    r"""Capabilities that a server may support. Not a closed set."""
     title: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
     website_url: NotRequired[Nullable[str]]
@@ -87,7 +87,7 @@ class MCPServerCard(BaseModel):
     r"""URL to the JSON schema definition"""
 
     capabilities: Optional[ServerCapabilities] = None
-    r"""Capabilities that a server may support."""
+    r"""Capabilities that a server may support. Not a closed set."""
 
     title: OptionalNullable[str] = UNSET
 

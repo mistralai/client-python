@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 from .ipaphoneme import IPAPhoneme
+from .speechassistantturn import SpeechAssistantTurn, SpeechAssistantTurnTypedDict
 from .speechoutputformat import SpeechOutputFormat
+from .speechuserturn import SpeechUserTurn, SpeechUserTurnTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -11,9 +13,20 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, List, Optional
-from typing_extensions import NotRequired, TypedDict
+from pydantic import ConfigDict, Field, model_serializer
+from typing import Any, Dict, List, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+ConversationHistoryUnionTypedDict = TypeAliasType(
+    "ConversationHistoryUnionTypedDict",
+    Union[SpeechUserTurnTypedDict, SpeechAssistantTurnTypedDict],
+)
+
+
+ConversationHistoryUnion = Annotated[
+    Union[SpeechAssistantTurn, SpeechUserTurn], Field(discriminator="role")
+]
 
 
 class SpeechRequestTypedDict(TypedDict):
@@ -27,8 +40,12 @@ class SpeechRequestTypedDict(TypedDict):
     r"""The preset or custom voice to use for generating the speech."""
     ref_audio: NotRequired[Nullable[str]]
     r"""The audio reference for generating the speech."""
+    expressiveness: NotRequired[Nullable[float]]
+    r"""Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0."""
     phoneme_hints: NotRequired[Nullable[Dict[str, List[IPAPhoneme]]]]
     r"""Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones."""
+    conversation_history: NotRequired[Nullable[List[ConversationHistoryUnionTypedDict]]]
+    r"""Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`."""
     response_format: NotRequired[SpeechOutputFormat]
 
 
@@ -55,8 +72,14 @@ class SpeechRequest(BaseModel):
     ref_audio: OptionalNullable[str] = UNSET
     r"""The audio reference for generating the speech."""
 
+    expressiveness: OptionalNullable[float] = UNSET
+    r"""Speaker flow-matching classifier-free guidance scale. Must be finite and at least 1.0."""
+
     phoneme_hints: OptionalNullable[Dict[str, List[IPAPhoneme]]] = UNSET
     r"""Optional pronunciation hints mapping a (case-sensitive) word to its ordered list of IPA phones."""
+
+    conversation_history: OptionalNullable[List[ConversationHistoryUnion]] = UNSET
+    r"""Prior turns, oldest first, alternating and ending on a user turn: `input` is the assistant reply to it. Conditions delivery, not speaker: set `voice_id` to choose the speaker. Requires `voice_id` to be a preset voice whose `kind` is `pvc`. Cannot be combined with `ref_audio`."""
 
     response_format: Optional[SpeechOutputFormat] = None
 
@@ -78,7 +101,9 @@ class SpeechRequest(BaseModel):
                 "prompt_cache_key",
                 "voice_id",
                 "ref_audio",
+                "expressiveness",
                 "phoneme_hints",
+                "conversation_history",
                 "response_format",
             ]
         )
@@ -89,7 +114,9 @@ class SpeechRequest(BaseModel):
                 "prompt_cache_key",
                 "voice_id",
                 "ref_audio",
+                "expressiveness",
                 "phoneme_hints",
+                "conversation_history",
             ]
         )
         serialized = handler(self)

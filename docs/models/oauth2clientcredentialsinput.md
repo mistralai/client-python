@@ -3,8 +3,10 @@
 
 ## Fields
 
-| Field                           | Type                            | Required                        | Description                     |
-| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
-| `grant_type`                    | *Literal["client_credentials"]* | :heavy_check_mark:              | N/A                             |
-| `client_id`                     | *str*                           | :heavy_check_mark:              | N/A                             |
-| `client_secret`                 | *str*                           | :heavy_check_mark:              | N/A                             |
+| Field                                                                             | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `grant_type`                                                                      | *Literal["client_credentials"]*                                                   | :heavy_check_mark:                                                                | N/A                                                                               |
+| `client_id`                                                                       | *str*                                                                             | :heavy_check_mark:                                                                | N/A                                                                               |
+| `client_secret`                                                                   | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `client_certificate`                                                              | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | PEM X.509 certificate registered on the OAuth2 client, for private_key_jwt.       |
+| `client_private_key`                                                              | *OptionalNullable[str]*                                                           | :heavy_minus_sign:                                                                | Unencrypted PEM RSA private key matching client_certificate, for private_key_jwt. |

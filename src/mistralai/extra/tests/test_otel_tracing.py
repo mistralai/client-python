@@ -1584,6 +1584,137 @@ class TestOtelTracing(unittest.TestCase):
             ],
         )
 
+    # -- Cached tokens ---------------------------------------------------------
+
+    def _make_cached_tokens_request(self) -> ChatCompletionRequest:
+        return ChatCompletionRequest(
+            model="mistral-large-latest",
+            messages=[UserMessage(content="What is the best French cheese?")],
+        )
+
+    def _make_cached_tokens_response(
+        self, response_id: str, usage: UsageInfo
+    ) -> ChatCompletionResponse:
+        return ChatCompletionResponse(
+            id=response_id,
+            object="chat.completion",
+            model="mistral-large-latest",
+            created=1700000000,
+            choices=[
+                ChatCompletionChoice(
+                    index=0,
+                    message=AssistantMessage(content="Camembert!"),
+                    finish_reason="stop",
+                ),
+            ],
+            usage=usage,
+        )
+
+    def test_chat_completion_with_cached_tokens(self):
+        """Cached tokens from usage.prompt_tokens_details.cached_tokens must be
+        reported as gen_ai.usage.cache_read.input_tokens."""
+        response = self._make_cached_tokens_response(
+            "cmpl-cached-001",
+            UsageInfo.model_validate(
+                {
+                    "prompt_tokens": 20,
+                    "completion_tokens": 5,
+                    "total_tokens": 25,
+                    "prompt_tokens_details": {"cached_tokens": 12},
+                }
+            ),
+        )
+        self._run_hook_lifecycle(
+            "chat_completion_v1_chat_completions_post",
+            self._make_cached_tokens_request(),
+            response,
+        )
+        span = self._get_single_span()
+        self.assertSpanAttributes(
+            span,
+            {
+                "gen_ai.usage.input_tokens": 20,
+                "gen_ai.usage.output_tokens": 5,
+                "gen_ai.usage.cache_read.input_tokens": 12,
+            },
+        )
+
+    def test_chat_completion_without_cached_tokens(self):
+        """No cache_read attribute when the response carries no cached tokens,
+        or reports zero cached tokens (cache miss)."""
+        for response_id, usage in (
+            (
+                "cmpl-nocache-001",
+                UsageInfo(prompt_tokens=20, completion_tokens=5, total_tokens=25),
+            ),
+            (
+                "cmpl-nocache-002",
+                UsageInfo.model_validate(
+                    {
+                        "prompt_tokens": 20,
+                        "completion_tokens": 5,
+                        "total_tokens": 25,
+                        "prompt_tokens_details": {"cached_tokens": 0},
+                    }
+                ),
+            ),
+        ):
+            with self.subTest(response_id=response_id):
+                _EXPORTER.clear()
+                self._run_hook_lifecycle(
+                    "chat_completion_v1_chat_completions_post",
+                    self._make_cached_tokens_request(),
+                    self._make_cached_tokens_response(response_id, usage),
+                )
+                span = self._get_single_span()
+                self.assertEqual(span.attributes["gen_ai.usage.input_tokens"], 20)
+                self.assertNotIn(
+                    "gen_ai.usage.cache_read.input_tokens", span.attributes
+                )
+
+    def test_streaming_chat_completion_with_cached_tokens(self):
+        """Cached tokens carried by the final streaming chunk must be reported
+        as gen_ai.usage.cache_read.input_tokens."""
+        response_events = [
+            CompletionEvent(
+                data=CompletionChunk(
+                    id="cmpl-stream-cached-001",
+                    model="mistral-large-latest",
+                    object="chat.completion.chunk",
+                    created=1700000000,
+                    choices=[
+                        CompletionResponseStreamChoice(
+                            index=0,
+                            delta=DeltaMessage(role="assistant", content="Camembert!"),
+                            finish_reason="stop",
+                        ),
+                    ],
+                    usage=UsageInfo.model_validate(
+                        {
+                            "prompt_tokens": 20,
+                            "completion_tokens": 5,
+                            "total_tokens": 25,
+                            "prompt_tokens_details": {"cached_tokens": 16},
+                        }
+                    ),
+                ),
+            ),
+        ]
+        self._run_hook_lifecycle(
+            "stream_chat",
+            self._make_cached_tokens_request(),
+            response_events,
+            streaming=True,
+        )
+        span = self._get_single_span()
+        self.assertSpanAttributes(
+            span,
+            {
+                "gen_ai.usage.input_tokens": 20,
+                "gen_ai.usage.cache_read.input_tokens": 16,
+            },
+        )
+
     # -- create_function_result (client-side tool execution) -------------------
 
     def test_create_function_result_span_attributes(self):

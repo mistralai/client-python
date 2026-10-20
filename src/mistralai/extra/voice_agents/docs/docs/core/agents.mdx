@@ -1,0 +1,51 @@
+---
+id: agents
+sidebar_label: Saved Agents
+title: Saved Agents
+sidebar_position: 5
+---
+
+In Python, agents are managed by generated `client.audio.agents` operations.
+Live sessions are separate: `await client.audio.sessions.init()` creates one and
+returns it ready for `await session.connect()`.
+
+| Operation | HTTP route | Behavior |
+| --- | --- | --- |
+| `create[_async]` | POST `/v1/audio/agents` | Create an agent and optional configuration |
+| `get[_async](agent_id=..., version=...)` | GET `/v1/audio/agents/{agent_id}?version=...` | Latest or selected version |
+| `update[_async](agent_id=..., name=..., configuration=...)` | PUT `/v1/audio/agents/{agent_id}` | Full configuration update creates a version |
+| `list[_async]` | GET `/v1/audio/agents` | Cursor-paginated agents |
+| `list_versions[_async]` | GET `/v1/audio/agents/{agent_id}/versions` | Cursor-paginated versions |
+| `delete[_async]` | DELETE `/v1/audio/agents/{agent_id}` | Delete an agent |
+
+```python
+from mistralai.client import Mistral
+from mistralai.extra.voice_agents import function_tool
+
+@function_tool
+async def lookup(query: str) -> str:
+    """Look up application data."""
+    return query
+
+async with Mistral() as client:
+    agent = await client.audio.agents.create_async(
+        name="Support bot",
+        configuration={"instructions": "Be helpful", "tools": [lookup.to_wire()]},
+    )
+    updated = await client.audio.agents.update_async(
+        agent_id=agent.id, name="Support bot",
+        configuration={"instructions": "Be concise", "tools": [lookup.to_wire()]},
+    )
+    session = await client.audio.sessions.init(
+        agent_id=agent.id, agent_version=updated.version, function_handlers=[lookup],
+    )
+    session.on("transcript", lambda event: print(event.content))
+    async with session:
+        await session.wait()
+```
+
+`FunctionTool` schemas may be persisted in remote configurations, but live
+Python handlers must be supplied through `function_handlers`. Attaching handlers does not override any
+saved declarations; only the `tools` parameter replaces the remote list. See [Tools](./tools.mdx).
+
+The standalone TypeScript SDK remains unchanged in this Python migration PR.

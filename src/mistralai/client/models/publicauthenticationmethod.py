@@ -12,6 +12,7 @@ from .extendedoauthservermetadata import (
 )
 from .globalheadervalue import GlobalHeaderValue, GlobalHeaderValueTypedDict
 from .oauth2granttype import OAuth2GrantType
+from .oauth2tokenendpointauthmethod import OAuth2TokenEndpointAuthMethod
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -32,6 +33,7 @@ class PublicAuthenticationMethodTypedDict(TypedDict):
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
     global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
     grant_type: NotRequired[Nullable[OAuth2GrantType]]
+    token_endpoint_auth_method: NotRequired[Nullable[OAuth2TokenEndpointAuthMethod]]
     oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
 
 
@@ -48,14 +50,29 @@ class PublicAuthenticationMethod(BaseModel):
 
     grant_type: OptionalNullable[OAuth2GrantType] = UNSET
 
+    token_endpoint_auth_method: OptionalNullable[OAuth2TokenEndpointAuthMethod] = UNSET
+
     oauth2_server_metadata: OptionalNullable[ExtendedOAuthServerMetadata] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["headers", "global_headers", "grant_type", "oauth2_server_metadata"]
+            [
+                "headers",
+                "global_headers",
+                "grant_type",
+                "token_endpoint_auth_method",
+                "oauth2_server_metadata",
+            ]
         )
-        nullable_fields = set(["headers", "grant_type", "oauth2_server_metadata"])
+        nullable_fields = set(
+            [
+                "headers",
+                "grant_type",
+                "token_endpoint_auth_method",
+                "oauth2_server_metadata",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

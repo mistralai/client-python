@@ -129,6 +129,7 @@ DEFAULT_TOKEN_PATTERNS: Final[tuple[re.Pattern[str], ...]] = (
     re.compile(r"\bsk-ant-[A-Za-z0-9\-_]{20,}\b"),
     re.compile(r"\bsk-proj-[A-Za-z0-9\-_]{20,}\b"),
     re.compile(r"\bhf_[A-Za-z0-9]{30,}\b"),
+    re.compile(r"\bmstrl_[0-9A-Za-z]{32}_[0-9A-Za-z]{6}\b"),
     # Dev / infra tokens
     re.compile(r"\bgithub_pat_[A-Za-z0-9_]{22,}\b"),
     re.compile(r"\bglpat-[A-Za-z0-9\-=_]{20,22}\b"),

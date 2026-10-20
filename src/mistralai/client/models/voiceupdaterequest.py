@@ -22,6 +22,7 @@ class VoiceUpdateRequestTypedDict(TypedDict):
     age: NotRequired[Nullable[int]]
     tags: NotRequired[Nullable[List[str]]]
     description: NotRequired[Nullable[str]]
+    retention_notice: NotRequired[Nullable[int]]
 
 
 class VoiceUpdateRequest(BaseModel):
@@ -39,13 +40,31 @@ class VoiceUpdateRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
+    retention_notice: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["name", "languages", "gender", "age", "tags", "description"]
+            [
+                "name",
+                "languages",
+                "gender",
+                "age",
+                "tags",
+                "description",
+                "retention_notice",
+            ]
         )
         nullable_fields = set(
-            ["name", "languages", "gender", "age", "tags", "description"]
+            [
+                "name",
+                "languages",
+                "gender",
+                "age",
+                "tags",
+                "description",
+                "retention_notice",
+            ]
         )
         serialized = handler(self)
         m = {}

@@ -2,12 +2,12 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
-from mistralai.client.sessions import Sessions
+from mistralai.client.realtime_sessions import RealtimeSessions
 from typing import Optional
 
 
 class Realtime(BaseSDK):
-    sessions: Sessions
+    sessions: RealtimeSessions
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -17,4 +17,6 @@ class Realtime(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.sessions = Sessions(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.sessions = RealtimeSessions(
+            self.sdk_configuration, parent_ref=self.parent_ref
+        )

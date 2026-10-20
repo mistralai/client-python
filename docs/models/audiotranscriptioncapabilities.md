@@ -1,0 +1,14 @@
+# AudioTranscriptionCapabilities
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `modes`                                                              | List[*str*]                                                          | :heavy_minus_sign:                                                   | Supported modes: `offline` and/or `realtime`.                        |
+| `diarization`                                                        | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `context_bias`                                                       | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `turn_detection`                                                     | *Optional[bool]*                                                     | :heavy_minus_sign:                                                   | Realtime only.                                                       |
+| `timestamp_granularities`                                            | List[*str*]                                                          | :heavy_minus_sign:                                                   | Offline only: `segment` and/or `word`.                               |
+| `languages`                                                          | List[*str*]                                                          | :heavy_minus_sign:                                                   | ISO 639-1 codes accepted by `language`. Empty if it cannot be set.   |
+| `streaming_delays_ms`                                                | List[[models.StreamingDelayRange](../models/streamingdelayrange.md)] | :heavy_minus_sign:                                                   | Realtime only: inclusive ranges of accepted target streaming delays. |

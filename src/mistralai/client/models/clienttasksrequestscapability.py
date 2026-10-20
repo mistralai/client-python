@@ -16,38 +16,23 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
-import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict
+from pydantic import model_serializer
 from typing_extensions import NotRequired, TypedDict
 
 
 class ClientTasksRequestsCapabilityTypedDict(TypedDict):
-    r"""Capability for tasks requests operations."""
+    r"""Specifies which request types the client can augment with tasks (2025-11-25 only)."""
 
     sampling: NotRequired[Nullable[TasksSamplingCapabilityTypedDict]]
     elicitation: NotRequired[Nullable[TasksElicitationCapabilityTypedDict]]
 
 
 class ClientTasksRequestsCapability(BaseModel):
-    r"""Capability for tasks requests operations."""
-
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+    r"""Specifies which request types the client can augment with tasks (2025-11-25 only)."""
 
     sampling: OptionalNullable[TasksSamplingCapability] = UNSET
 
     elicitation: OptionalNullable[TasksElicitationCapability] = UNSET
-
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -59,7 +44,6 @@ class ClientTasksRequestsCapability(BaseModel):
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -72,7 +56,5 @@ class ClientTasksRequestsCapability(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m

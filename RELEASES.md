@@ -1378,3 +1378,130 @@ Based on:
 - [python v3.2.0] .
 ### Releases
 - [PyPI v3.2.0] https://pypi.org/project/mistralai/3.2.0 - .
+
+## 2026-10-20 16:51:47
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Removed from the stable API surface (7):
+- `Sessions`
+- `UnknownAuthorization`
+- `UnknownAuthorization.is_unknown`
+- `UnknownAuthorization.raw`
+- `UnknownAuthorization.type`
+- `Sessions.create`
+- `Sessions.create_async`
+
+Now required on an existing stable model (2):
+- `Audio.agents`
+- `Audio.sessions`
+#### Stable type changes
+Changed types or signatures on the stable surface (5):
+- `CompletionTokensDetails.reasoning_tokens: Optional[int] -> OptionalNullable[int]`
+- `CompletionTokensDetailsTypedDict.reasoning_tokens: NotRequired[int] -> NotRequired[Nullable[int]]`
+- `CustomConnector.authorization: OptionalNullable[Authorization] -> OptionalNullable[CustomConnectorAuthorization]`
+- `CustomConnectorTypedDict.authorization: NotRequired[Nullable[AuthorizationTypedDict]] -> NotRequired[Nullable[CustomConnectorAuthorizationTypedDict]]`
+- `Realtime.sessions: Sessions -> RealtimeSessions`
+#### Beta surface changes
+Removed from the beta surface (33):
+- `CreateConnectorRequest.auth_data`
+- `CreateHTTPConnectorRequest.auth_data`
+- `HTTPConnector.active`
+- `MCPConnector.active`
+- `PublicConnectorExecutionData.use_connectors_gateway`
+- `Annotations.additional_properties`
+- `AudioContent.additional_properties`
+- `BlobResourceContents.additional_properties`
+- `ClientCapabilities.additional_properties`
+- `ClientTasksCapability.additional_properties`
+- `ClientTasksRequestsCapability.additional_properties`
+- `ElicitationCapability.additional_properties`
+- `EmbeddedResource.additional_properties`
+- `ImageContent.additional_properties`
+- `MCPServerIcon.additional_properties`
+- `PromptArgument.additional_properties`
+- `PromptsCapability.additional_properties`
+- `PublicConnectorExecutionData.serialize_model`
+- `ResourceLink.additional_properties`
+- `ResourcesCapability.additional_properties`
+- `RootsCapability.additional_properties`
+- `SamplingCapability.additional_properties`
+- `ServerCapabilities.additional_properties`
+- `ServerTasksCapability.additional_properties`
+- `ServerTasksRequestsCapability.additional_properties`
+- ...and 8 more
+
+Changed types or signatures in beta (30):
+- `ClientTasksCapability.cancel: OptionalNullable[Dict[str, Any]] -> OptionalNullable[TasksCancelCapability]`
+- `ClientTasksCapability.list: OptionalNullable[Dict[str, Any]] -> OptionalNullable[TasksListCapability]`
+- `ClientTasksCapabilityTypedDict.cancel: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[TasksCancelCapabilityTypedDict]]`
+- `ClientTasksCapabilityTypedDict.list: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[TasksListCapabilityTypedDict]]`
+- `CredentialsResponse.connector_preset_credentials_for_auth: Optional[List[AuthenticationType]] -> Annotated[Optional[List[AuthenticationType]], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `ElicitationCapability.form: OptionalNullable[Dict[str, Any]] -> OptionalNullable[FormElicitationCapability]`
+- `ElicitationCapability.url: OptionalNullable[Dict[str, Any]] -> OptionalNullable[URLElicitationCapability]`
+- `ElicitationCapabilityTypedDict.form: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[FormElicitationCapabilityTypedDict]]`
+- `ElicitationCapabilityTypedDict.url: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[URLElicitationCapabilityTypedDict]]`
+- `MessageInputEntry.role: Role -> MessageInputEntryRole`
+- `OAuth2ClientCredentialsInput.client_secret: str -> OptionalNullable[str]`
+- `OAuth2ClientCredentialsInputTypedDict.client_secret: str -> NotRequired[Nullable[str]]`
+- `SamplingCapability.context: OptionalNullable[Dict[str, Any]] -> OptionalNullable[SamplingContextCapability]`
+- `SamplingCapability.tools: OptionalNullable[Dict[str, Any]] -> OptionalNullable[SamplingToolsCapability]`
+- `SamplingCapabilityTypedDict.context: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[SamplingContextCapabilityTypedDict]]`
+- `SamplingCapabilityTypedDict.tools: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[SamplingToolsCapabilityTypedDict]]`
+- `ServerCapabilities.completions: OptionalNullable[Dict[str, Any]] -> OptionalNullable[CompletionsCapability]`
+- `ServerCapabilities.logging: OptionalNullable[Dict[str, Any]] -> OptionalNullable[LoggingCapability]`
+- `ServerCapabilitiesTypedDict.completions: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[CompletionsCapabilityTypedDict]]`
+- `ServerCapabilitiesTypedDict.logging: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[LoggingCapabilityTypedDict]]`
+- `ServerTasksCapability.cancel: OptionalNullable[Dict[str, Any]] -> OptionalNullable[TasksCancelCapability]`
+- `ServerTasksCapability.list: OptionalNullable[Dict[str, Any]] -> OptionalNullable[TasksListCapability]`
+- `ServerTasksCapabilityTypedDict.cancel: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[TasksCancelCapabilityTypedDict]]`
+- `ServerTasksCapabilityTypedDict.list: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[TasksListCapabilityTypedDict]]`
+- `TasksElicitationCapability.create: OptionalNullable[Dict[str, Any]] -> OptionalNullable[TasksCreateElicitationCapability]`
+- ...and 5 more
+</details>
+
+### API changes
+#### Breaking changes
+
+- Changed field `type` in `sdk.chat.complete()` and `sdk.agents.complete()`.
+- Changed field `type` in `sdk.chat.complete()` and `sdk.agents.complete()`.
+- Changed field `type` in `sdk.chat.complete()`, `sdk.fim.complete()`, and `sdk.agents.complete()`.
+- Removed fields `expressiveness` and `phoneme_hints` from response `data[].configuration.tts` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Removed fields `expressiveness` and `phoneme_hints` from request `configuration.tts` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Removed fields `expressiveness` and `phoneme_hints` from response `configuration.tts` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `type` in `sdk.classifiers.moderate_chat()`.
+- Changed field `type` in `sdk.classifiers.classify_chat()`.
+- Removed fields `expressiveness` and `phoneme_hints` from request `tts` in `sdk.audio.sessions.create()`.
+
+#### Beta API changes
+
+- Removed enum value `org` from request `share_with_type` in `sdk.beta.libraries.accesses.update_or_create()` and `sdk.beta.libraries.accesses.delete()`.
+- Removed fields `connection_config` and `execution_env` from response `items[].union(http)` in `sdk.beta.connectors.list()`.
+- Removed fields `connection_config` and `execution_env` from response `items[].union(mcp)` in `sdk.beta.connectors.list()`.
+- Removed fields `connection_config` and `execution_env` from response `union(http)` in `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+- Removed fields `connection_config` and `execution_env` from response `union(mcp)` in `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+
+#### Added operations
+
+Beta:
+
+- `sdk.beta.rag.managed_indexes.get_index_summary()`
+- `sdk.beta.rag.managed_indexes.set_index_summary()`
+
+#### Schema changes
+
+- Added request field `speaker_references` in `sdk.audio.transcriptions.complete()`.
+- Added response fields `audio_speech_capabilities` and `audio_transcription_capabilities` in `sdk.models.retrieve()` and `sdk.models.list()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.3.0] .
+### Releases
+- [PyPI v3.3.0] https://pypi.org/project/mistralai/3.3.0 - .

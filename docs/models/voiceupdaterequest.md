@@ -13,3 +13,4 @@ Request model for partially updating voice metadata.
 | `age`                   | *OptionalNullable[int]* | :heavy_minus_sign:      | N/A                     |
 | `tags`                  | List[*str*]             | :heavy_minus_sign:      | N/A                     |
 | `description`           | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
+| `retention_notice`      | *OptionalNullable[int]* | :heavy_minus_sign:      | N/A                     |

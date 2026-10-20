@@ -1,6 +1,6 @@
 # ServerTasksRequestsCapability
 
-Capability for tasks requests operations.
+Specifies which request types the server can augment with tasks (2025-11-25 only).
 
 
 ## Fields
@@ -8,4 +8,3 @@ Capability for tasks requests operations.
 | Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `tools`                                                                            | [OptionalNullable[models.TasksToolsCapability]](../models/taskstoolscapability.md) | :heavy_minus_sign:                                                                 | N/A                                                                                |
-| `__pydantic_extra__`                                                               | Dict[str, *Any*]                                                                   | :heavy_minus_sign:                                                                 | N/A                                                                                |

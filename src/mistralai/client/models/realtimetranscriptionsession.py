@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .audioformat import AudioFormat, AudioFormatTypedDict
+from .turndetectionconfig import TurnDetectionConfig, TurnDetectionConfigTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,6 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -18,6 +20,11 @@ class RealtimeTranscriptionSessionTypedDict(TypedDict):
     model: str
     audio_format: AudioFormatTypedDict
     target_streaming_delay_ms: NotRequired[Nullable[int]]
+    diarize: NotRequired[Nullable[bool]]
+    context_bias: NotRequired[Nullable[List[str]]]
+    language: NotRequired[Nullable[str]]
+    speaker_references: NotRequired[Nullable[List[str]]]
+    turn_detection: NotRequired[Nullable[TurnDetectionConfigTypedDict]]
 
 
 class RealtimeTranscriptionSession(BaseModel):
@@ -29,10 +36,38 @@ class RealtimeTranscriptionSession(BaseModel):
 
     target_streaming_delay_ms: OptionalNullable[int] = UNSET
 
+    diarize: OptionalNullable[bool] = UNSET
+
+    context_bias: OptionalNullable[List[str]] = UNSET
+
+    language: OptionalNullable[str] = UNSET
+
+    speaker_references: OptionalNullable[List[str]] = UNSET
+
+    turn_detection: OptionalNullable[TurnDetectionConfig] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["target_streaming_delay_ms"])
-        nullable_fields = set(["target_streaming_delay_ms"])
+        optional_fields = set(
+            [
+                "target_streaming_delay_ms",
+                "diarize",
+                "context_bias",
+                "language",
+                "speaker_references",
+                "turn_detection",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "target_streaming_delay_ms",
+                "diarize",
+                "context_bias",
+                "language",
+                "speaker_references",
+                "turn_detection",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

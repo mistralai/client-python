@@ -1,0 +1,100 @@
+---
+id: tools
+sidebar_label: Tools
+title: Tools
+sidebar_position: 2
+---
+
+In Python, `tools` contains remote declarations for provider and function tools.
+`function_handlers` attaches only local handlers, matched by name, and is never sent
+to the server. A decorated `@function_tool` passed directly in `tools` submits its
+declaration and registers its handler together. `FunctionTool` models and flat
+dictionaries are declaration-only; plain functions are accepted in `function_handlers`
+but must be decorated to be used in `tools`.
+
+| Input | `tools` | `function_handlers` |
+| --- | --- | --- |
+| omitted | Inherit all saved declarations (`UNSET`) | No additional handlers; decorated tools still register theirs |
+| `None` / `[]` | Clear all remote declarations | No additional handlers; remote declarations unchanged |
+| Nonempty list | Replace all remote declarations | Attach handlers only |
+
+## Provider tools
+
+Reuse existing main SDK `WebSearchTool`, `DocumentLibraryTool`, `CustomConnector`,
+and `ToolConfiguration`. Add voice-only filler with the convenience wrapper:
+
+```python
+from mistralai.extra.voice_agents import VoiceAgentTool, WebSearchTool, CustomConnector, ToolConfiguration
+
+providers = [
+    VoiceAgentTool(tool=WebSearchTool(), filler={"text": "Searching the web."}),
+    CustomConnector(connector_id="...", tool_configuration=ToolConfiguration(include=["search"])),
+]
+```
+
+Wire dictionaries are flat: `{"type": "web_search", "filler": {"type": "static", "text": "Searching"}}`.
+Transfer-call and hang-up tools are supported only for telephony sessions.
+
+## Function tools
+
+```python
+from mistralai.extra.voice_agents.tools import function_tool
+
+@function_tool(timeout_ms=45000, filler={"text": "Checking the weather."})
+async def get_weather(city: str) -> str:
+    return await weather_service.get(city)
+
+session = await client.audio.sessions.init(tools=[*providers, get_weather])
+```
+
+```ts
+import { functionTool } from "@mistralai/voice-agents/tools";
+import { z } from "zod/v4";
+
+const getWeather = functionTool({
+  name: "get_weather", parameters: z.object({ city: z.string() }),
+  timeoutMs: 45000, filler: { text: "Checking the weather." },
+  handler: async ({ city }) => weatherService.get(city),
+});
+const session = await client.connect({ tools: [getWeather] });
+```
+
+The wrapper retains executable code locally and sends only the name, description,
+argument schema, timeout, and optional filler. Standard function declarations can
+be saved through HTTP/agent CRUD; executing them requires registered handlers.
+Calls always await results. The RPC default is 15000 ms; there is no `wait` or
+fire-and-forget option. A timeout fails the call but does not guarantee arbitrary
+handler work or a synchronous thread has stopped.
+
+## Saved-agent declarations and handlers
+
+If a saved agent declares a function, attach its implementation without overriding
+any saved declarations:
+
+```python
+session = await client.audio.sessions.init(agent_id="...", function_handlers=[get_weather])
+```
+
+Plain named callables are also accepted in `function_handlers`. Filler, timeout, and
+schema metadata on a handler are not submitted from that parameter: the remote
+declaration remains authoritative. `tools` still replaces the entire saved list,
+so include every provider/function declaration you want when supplying it.
+
+Handlers from `tools` and `function_handlers` are merged by name. Two different handlers
+with the same name raise before the session is created; the same callable can be
+repeated. `connect()` checks the handlers against the effective declarations: an
+argument name mismatch raises `VoiceAgentConfigurationError` and closes the session,
+while missing handlers and handlers without declarations emit a recoverable
+`VoiceAgentErrorEvent` (`fatal=False`, `code="function_handler_configuration_error"`)
+and the session connects. Register an error callback before `connect()` to observe
+them. An unmatched call
+emits `unhandled_tool` and returns a failed RPC. Only explicit declarations in
+`tools` or agent CRUD change the remote schema; attaching a handler never does.
+
+## Fillers
+
+A filler is a short text (1 to 200 characters) the agent speaks while the tool runs.
+Pass a `StaticToolFiller` or a dict: `{"text": ...}` is enough, since `type`
+defaults to `"static"`. It is sent as `{"type": "static", "text": ...}`.
+Fillers are per-tool and interruptible. They are sent as top-level `filler`
+alongside a provider or function declaration.

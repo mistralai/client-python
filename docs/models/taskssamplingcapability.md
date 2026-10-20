@@ -1,11 +1,10 @@
 # TasksSamplingCapability
 
-Capability for tasks sampling operations.
+Capability for task-augmented sampling operations (2025-11-25 only).
 
 
 ## Fields
 
-| Field                | Type                 | Required             | Description          |
-| -------------------- | -------------------- | -------------------- | -------------------- |
-| `create_message`     | Dict[str, *Any*]     | :heavy_minus_sign:   | N/A                  |
-| `__pydantic_extra__` | Dict[str, *Any*]     | :heavy_minus_sign:   | N/A                  |
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `create_message`                                                                                   | [OptionalNullable[models.TasksCreateMessageCapability]](../models/taskscreatemessagecapability.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

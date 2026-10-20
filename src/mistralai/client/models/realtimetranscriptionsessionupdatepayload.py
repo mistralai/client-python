@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .audioformat import AudioFormat, AudioFormatTypedDict
+from .turndetectionconfig import TurnDetectionConfig, TurnDetectionConfigTypedDict
 from mistralai.client.types import (
     BaseModel,
     Nullable,
@@ -10,6 +11,7 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import Dict, List
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -18,6 +20,16 @@ class RealtimeTranscriptionSessionUpdatePayloadTypedDict(TypedDict):
     r"""Set before sending audio. Audio format updates are rejected after audio starts."""
     target_streaming_delay_ms: NotRequired[Nullable[int]]
     r"""Set before sending audio. Streaming delay updates are rejected after audio starts."""
+    diarize: NotRequired[Nullable[bool]]
+    r"""Inline speaker tagging. Set before audio starts."""
+    context_bias: NotRequired[Nullable[List[str]]]
+    r"""Anticipated phrases or terms to bias transcription towards. Set before audio starts."""
+    language: NotRequired[Nullable[str]]
+    r"""ISO-639-1 code of the input audio language. Set before audio starts."""
+    speaker_references: NotRequired[Nullable[Dict[str, str]]]
+    r"""Reference audio for known speakers, keyed by speaker name. Predicted speakers are matched against these references. Requires diarize. Set before sending audio."""
+    turn_detection: NotRequired[Nullable[TurnDetectionConfigTypedDict]]
+    r"""Emit turn.start, turn.eager_end, turn.resume and turn.end events derived from the model's semantic voice activity detection. Set before sending audio."""
 
 
 class RealtimeTranscriptionSessionUpdatePayload(BaseModel):
@@ -27,10 +39,45 @@ class RealtimeTranscriptionSessionUpdatePayload(BaseModel):
     target_streaming_delay_ms: OptionalNullable[int] = UNSET
     r"""Set before sending audio. Streaming delay updates are rejected after audio starts."""
 
+    diarize: OptionalNullable[bool] = UNSET
+    r"""Inline speaker tagging. Set before audio starts."""
+
+    context_bias: OptionalNullable[List[str]] = UNSET
+    r"""Anticipated phrases or terms to bias transcription towards. Set before audio starts."""
+
+    language: OptionalNullable[str] = UNSET
+    r"""ISO-639-1 code of the input audio language. Set before audio starts."""
+
+    speaker_references: OptionalNullable[Dict[str, str]] = UNSET
+    r"""Reference audio for known speakers, keyed by speaker name. Predicted speakers are matched against these references. Requires diarize. Set before sending audio."""
+
+    turn_detection: OptionalNullable[TurnDetectionConfig] = UNSET
+    r"""Emit turn.start, turn.eager_end, turn.resume and turn.end events derived from the model's semantic voice activity detection. Set before sending audio."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["audio_format", "target_streaming_delay_ms"])
-        nullable_fields = set(["audio_format", "target_streaming_delay_ms"])
+        optional_fields = set(
+            [
+                "audio_format",
+                "target_streaming_delay_ms",
+                "diarize",
+                "context_bias",
+                "language",
+                "speaker_references",
+                "turn_detection",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "audio_format",
+                "target_streaming_delay_ms",
+                "diarize",
+                "context_bias",
+                "language",
+                "speaker_references",
+                "turn_detection",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

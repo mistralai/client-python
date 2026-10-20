@@ -14,11 +14,6 @@ from .publicauthenticationmethod import (
     PublicAuthenticationMethod,
     PublicAuthenticationMethodTypedDict,
 )
-from .publicconnectionconfig import (
-    PublicConnectionConfig,
-    PublicConnectionConfigTypedDict,
-)
-from .publicexecutionenv import PublicExecutionEnv, PublicExecutionEnvTypedDict
 from .resourcevisibility import ResourceVisibility
 from datetime import datetime
 from mistralai.client.types import (
@@ -62,13 +57,10 @@ class HTTPConnectorTypedDict(TypedDict):
     connection_credentials: NotRequired[
         Nullable[List[AuthenticationConfigurationTypedDict]]
     ]
-    active: NotRequired[Nullable[bool]]
     blocked_by: NotRequired[List[ConsumerType]]
     mistral: NotRequired[bool]
     is_authenticated: NotRequired[Nullable[bool]]
     tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
-    connection_config: NotRequired[Nullable[PublicConnectionConfigTypedDict]]
-    execution_env: NotRequired[Nullable[PublicExecutionEnvTypedDict]]
     protocol: Literal["http"]
 
 
@@ -114,8 +106,6 @@ class HTTPConnector(BaseModel):
 
     connection_credentials: OptionalNullable[List[AuthenticationConfiguration]] = UNSET
 
-    active: OptionalNullable[bool] = UNSET
-
     blocked_by: Optional[List[ConsumerType]] = None
 
     mistral: Optional[bool] = False
@@ -123,10 +113,6 @@ class HTTPConnector(BaseModel):
     is_authenticated: OptionalNullable[bool] = UNSET
 
     tools: OptionalNullable[List[ConnectorTool]] = UNSET
-
-    connection_config: OptionalNullable[PublicConnectionConfig] = UNSET
-
-    execution_env: OptionalNullable[PublicExecutionEnv] = UNSET
 
     protocol: Annotated[
         Annotated[Literal["http"], AfterValidator(validate_const("http"))],
@@ -148,13 +134,10 @@ class HTTPConnector(BaseModel):
                 "supported_auth_methods",
                 "connection_preferences",
                 "connection_credentials",
-                "active",
                 "blocked_by",
                 "mistral",
                 "is_authenticated",
                 "tools",
-                "connection_config",
-                "execution_env",
             ]
         )
         nullable_fields = set(
@@ -170,11 +153,8 @@ class HTTPConnector(BaseModel):
                 "supported_auth_methods",
                 "connection_preferences",
                 "connection_credentials",
-                "active",
                 "is_authenticated",
                 "tools",
-                "connection_config",
-                "execution_env",
             ]
         )
         serialized = handler(self)

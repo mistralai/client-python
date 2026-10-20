@@ -19,4 +19,3 @@ received from untrusted servers.
 | `destructive_hint`       | *OptionalNullable[bool]* | :heavy_minus_sign:       | N/A                      |
 | `idempotent_hint`        | *OptionalNullable[bool]* | :heavy_minus_sign:       | N/A                      |
 | `open_world_hint`        | *OptionalNullable[bool]* | :heavy_minus_sign:       | N/A                      |
-| `__pydantic_extra__`     | Dict[str, *Any*]         | :heavy_minus_sign:       | N/A                      |

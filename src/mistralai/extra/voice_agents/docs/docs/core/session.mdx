@@ -1,0 +1,242 @@
+---
+id: session
+sidebar_label: Session
+title: Session
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The Python `VoiceAgentSession` returned by `await client.audio.sessions.init()`
+(or TypeScript `VoiceSession` returned by `connect()` / browser `connectSession()`) exposes events and methods to interact with the session throughout its lifecycle.
+
+## Events
+
+The worker publishes six typed backend messages, discriminated by `type`.
+Callbacks receive the generated models directly.
+
+| Callback | Backend model | Wire `type` |
+| --- | --- | --- |
+| `tool_call_started` | `VoiceAgentToolCallStartedEvent` | `tool_call.started` |
+| `tool_call_ended` | `VoiceAgentToolCallEndedEvent` | `tool_call.ended` |
+| `error` | `VoiceAgentErrorEvent` | `error` |
+| `transcript` | `VoiceAgentTranscriptEvent` | `transcription.segment` |
+| `agent_state_changed` | `VoiceAgentStateChangedEvent` | `agent.state.changed` |
+| `session_updated` | `VoiceAgentSessionUpdatedEvent` | `session.updated` |
+
+Tool lifecycle messages retain `phase` and `ts`; ended events include JSON-string
+`arguments` and `result`. State messages retain both the old and new state and `ts`.
+Transcript messages retain `ts` and optional timing/language fields. Assistant
+transcripts follow worker audio playout, including interruption truncation.
+Updates with the same segment `id` replace prior text; `final` completes the segment.
+Session-updated messages carry the full committed config in `session`; `update()`
+returns the same event, and every participant (the caller included) receives it.
+
+Connected/disconnected and unhandled tools are SDK-local.
+The `error` callback receives the generated `VoiceAgentErrorEvent` for both worker
+and SDK failures. Its `source` identifies the component; optional `payload`
+retains diagnostic details. The SDK constructs this same model for local failures.
+Nonfatal errors notify without closing. Fatal errors notify, trigger cleanup, and
+raise/reject through `wait()`; startup and explicit operation failures also raise
+to their caller. Callback exceptions are logged without preventing other handlers
+or cleanup. Unknown or malformed packets reach `unknown` as
+`UnknownVoiceAgentEvent`, retaining the payload for inspection.
+
+Import events from `mistralai.extra.voice_agents` (also re-exported from
+`mistralai.extra.voice_agents`). Wire models come directly from `mistralai.client.models`;
+Python retains `old_state`, `start_time`, and `end_time`.
+
+Register handlers with `session.on(event, handler)`.
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `connected` | `{ session_id }` | Session is connected and ready. |
+| `disconnected` | `{ session_id, reason }` | Session has been closed. |
+| `transcript` | `{ id, role, content, final }` | Speech transcription. Partial transcripts have `final=False`. |
+| `audio` | `bytes` | Agent audio output (manual handling). |
+| `audio_track` | `{ track, source }` | Media track available (browser). |
+| `agent_state_changed` | `{ state }` | Agent state changed (`listening`, `thinking`, `speaking`, etc.). |
+| `tool_call_started` | `{ id, name }` | Agent started invoking a tool. Arguments aren't known yet. |
+| `tool_call_ended` | `{ id, name, arguments, status, result }` | Tool finished. `result` is the tool output as text, the error message when `status` is `error`, or empty when `status` is `cancelled`. `status` is `done`, `error` or `cancelled`. |
+| `unhandled_tool` | `{ name, arguments }` | Agent called a [function tool](./tools.mdx#unhandled-tools) with no registered handler. |
+| `session_updated` | `{ session, ts }` | A session update was committed; `session` is the full config. Sent to every participant. |
+| `error` | `{ message, fatal, code, source }` | An agent or transport error. See the note below. |
+
+`disconnected.reason` is absent for an ordinary close. Otherwise it is one of
+`user_interrupt`, `start_failed`, `audio_input_error`, `audio_output_error`, or
+`error`.
+
+:::note Error handling
+Every error includes `fatal`. Recoverable errors leave the session open; fatal
+errors close it automatically and `wait()` raises/rejects with a
+`VoiceAgentConnectionError` after cleanup. Cleanup errors do not replace the
+original fatal failure.
+Startup failures and unexpected room disconnections are fatal errors. If you
+don't register an `error` handler, the error is logged (Python `logging` /
+`console.error`) so it is never swallowed silently.
+
+Python `init()` does not join the room, so callbacks can be attached before
+`await session.connect()`. A startup failure is attached to the thrown `VoiceAgentConnectionError` as `error_event` in
+Python and `errorEvent` in TypeScript.
+:::
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+from mistralai.extra.voice_agents.events import (
+    VoiceAgentErrorEvent,
+    VoiceAgentStateChangedEvent,
+    VoiceAgentToolCallEndedEvent,
+    VoiceAgentToolCallStartedEvent,
+    VoiceAgentTranscriptEvent,
+)
+
+
+def on_transcript(event: VoiceAgentTranscriptEvent) -> None:
+    print(f"{event.role}: {event.content}")
+
+
+def on_tool_call_started(event: VoiceAgentToolCallStartedEvent) -> None:
+    print(f"tool call started: {event.name}")
+
+
+def on_tool_call_ended(event: VoiceAgentToolCallEndedEvent) -> None:
+    print(f"tool call ended: {event.name} -> {event.result!r}")
+
+
+def on_agent_state_changed(event: VoiceAgentStateChangedEvent) -> None:
+    print(f"state: {event.state}")
+
+
+def on_error(event: VoiceAgentErrorEvent) -> None:
+    print(f"error (fatal={event.fatal}): {event.message}")
+
+
+session.on("transcript", on_transcript)
+session.on("tool_call_started", on_tool_call_started)
+session.on("tool_call_ended", on_tool_call_ended)
+session.on("agent_state_changed", on_agent_state_changed)
+session.on("error", on_error)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import type {
+  VoiceAgentErrorEvent,
+  VoiceAgentStateChangedEvent,
+  VoiceAgentToolCallEndedEvent,
+  VoiceAgentToolCallStartedEvent,
+  VoiceAgentTranscriptEvent,
+} from "@mistralai/voice-agents/types";
+
+session.on("transcript", (event: VoiceAgentTranscriptEvent) => {
+  console.log(`${event.role}: ${event.content}`);
+});
+
+session.on("tool_call_started", (event: VoiceAgentToolCallStartedEvent) => {
+  console.log(`tool call started: ${event.name}`);
+});
+
+session.on("tool_call_ended", (event: VoiceAgentToolCallEndedEvent) => {
+  console.log(`tool call ended: ${event.name}`, event.result);
+});
+
+session.on("agent_state_changed", (event: VoiceAgentStateChangedEvent) => {
+  console.log(`state: ${event.state}`);
+});
+
+session.on("error", (event: VoiceAgentErrorEvent) => {
+  console.error(`error (fatal=${event.fatal}): ${event.message}`);
+});
+```
+
+</TabItem>
+</Tabs>
+
+`session.on(...)` returns an unsubscribe function; call it to stop receiving the event. You can also call `session.off(event, handler)` with the original handler.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+unsubscribe = session.on("transcript", on_transcript)
+
+unsubscribe()  # stop receiving
+# or, equivalently:
+session.off("transcript", on_transcript)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+const unsubscribe = session.on("transcript", onTranscript);
+
+unsubscribe(); // stop receiving
+// or, equivalently:
+session.off("transcript", onTranscript);
+```
+
+</TabItem>
+</Tabs>
+
+## Transcript
+
+The session keeps every turn it received, oldest first. A handler attached after the conversation
+started can still read what it missed, and the list stays readable after `close()`.
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+for turn in session.transcript:
+    print(turn.role, turn.content)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+for (const turn of session.transcript) {
+  console.log(turn.role, turn.content);
+}
+```
+
+</TabItem>
+</Tabs>
+
+Each turn is the latest `transcript` event for its id, so a partial is replaced by its final text
+and keeps its place in the list.
+
+## Lifecycle
+
+<Tabs groupId="language">
+<TabItem value="python" label="Python">
+
+```python
+await session.set_input_enabled(False)  # mute
+await session.set_input_enabled(True)   # unmute
+
+await session.wait()   # waits for cleanup; raises on a fatal error
+await session.close()  # close the session, should always be called
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+await session.setInputEnabled(false); // mute
+await session.setInputEnabled(true);  // unmute
+
+await session.wait();  // waits for cleanup; rejects on a fatal error
+await session.close(); // close the session, should always be called
+```
+
+</TabItem>
+</Tabs>
+
+Python `client.audio.sessions.init()` and `session.close()` manage the control plane — they call `POST /v1/audio/sessions` to create the session and `DELETE /v1/audio/sessions/{id}` to tear it down. Connect within the session's join window; `close()` deletes the session even if it never connected. For direct control-plane access, use `client.audio.sessions.create(...)` and `client.audio.sessions.close(session_id=...)`.

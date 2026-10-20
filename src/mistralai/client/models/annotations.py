@@ -10,9 +10,9 @@ from mistralai.client.types import (
     UnrecognizedStr,
 )
 import pydantic
-from pydantic import ConfigDict, model_serializer
-from typing import Any, Dict, List, Literal, Union
-from typing_extensions import NotRequired, TypedDict
+from pydantic import model_serializer
+from typing import List, Literal, Union
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 Audience = Union[
@@ -25,39 +25,34 @@ Audience = Union[
 
 
 class AnnotationsTypedDict(TypedDict):
+    r"""Optional annotations the client can use to inform how objects are used or displayed."""
+
     audience: NotRequired[Nullable[List[Audience]]]
     priority: NotRequired[Nullable[float]]
+    last_modified: NotRequired[Nullable[str]]
 
 
 class Annotations(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+    r"""Optional annotations the client can use to inform how objects are used or displayed."""
 
     audience: OptionalNullable[List[Audience]] = UNSET
 
     priority: OptionalNullable[float] = UNSET
 
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
-
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+    last_modified: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="lastModified")
+    ] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["audience", "priority"])
-        nullable_fields = set(["audience", "priority"])
+        optional_fields = set(["audience", "priority", "lastModified"])
+        nullable_fields = set(["audience", "priority", "lastModified"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
                 and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
@@ -70,7 +65,11 @@ class Annotations(BaseModel):
                     or is_nullable_and_explicitly_set
                 ):
                     m[k] = val
-        for k, v in serialized.items():
-            m[k] = v
 
         return m
+
+
+try:
+    Annotations.model_rebuild()
+except NameError:
+    pass
