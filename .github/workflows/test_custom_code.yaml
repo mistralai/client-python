@@ -25,6 +25,9 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
 
+      - name: Install PortAudio (pyaudio build dependency)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends portaudio19-dev
+
       - name: Install dependencies
         run: |
           uv sync --all-extras
