@@ -1,8 +1,12 @@
 # Mistral Python Client
 
-## Migrating from v1
+## New: Voice Agents
 
-If you are upgrading from v1 to v2, check the [migration guide](https://github.com/mistralai/client-python/blob/main/MIGRATION.md) for details on breaking changes and how to update your code.
+Build live voice agents with the SDK. `client.audio.sessions.init()` opens a real-time, bidirectional voice session with speech-to-text, text-to-speech and tool calls, and `client.audio.agents` saves agent configurations to reuse across sessions. Install the extra with `pip install "mistralai[voice-agents]"`, then see [Voice Agents](#voice-agents) below and the [voice agents guide](https://github.com/mistralai/client-python/blob/main/src/mistralai/extra/voice_agents/README.md).
+
+## Migrating to v3
+
+This is v3 of the SDK. If you are upgrading from v2, check the [migration guide](https://github.com/mistralai/client-python/blob/main/MIGRATION.md) for the breaking changes and how to update your code. It also covers upgrading from v1 to v2.
 
 ## API Key Setup
 
@@ -40,7 +44,8 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [Mistral Python Client](#mistral-python-client)
-  * [Migrating from v1](#migrating-from-v1)
+  * [New: Voice Agents](#new-voice-agents)
+  * [Migrating to v3](#migrating-to-v3)
   * [API Key Setup](#api-key-setup)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
