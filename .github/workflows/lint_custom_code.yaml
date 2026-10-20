@@ -1,5 +1,8 @@
 name: Linting Python custom files
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -10,11 +13,14 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [ciclone, 4x8gi-x86]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
@@ -36,9 +42,9 @@ jobs:
         run: scripts/lint_custom_code.sh
 
   lint_custom_code_required:
-    runs-on: ubuntu-latest
+    runs-on: [ciclone, 1x1gi-x86]
     needs: lint
-    if: ${{ always() }}
+    if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
 
     steps:
       - name: Require custom code lint to pass

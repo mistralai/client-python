@@ -1,5 +1,8 @@
 name: Running the examples
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -10,7 +13,8 @@ on:
 
 jobs:
   run_examples:
-    runs-on: ubuntu-24.04
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [ciclone, 2x2gi-x86]
     strategy:
       fail-fast: false
       matrix:
@@ -19,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
@@ -39,7 +45,7 @@ jobs:
 
   examples:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 2x2gi-x86]
     environment: publish
     strategy:
       fail-fast: false
@@ -49,6 +55,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
@@ -80,9 +88,9 @@ jobs:
           MISTRAL_API_KEY: ${{ env.MISTRAL_API_KEY }}
 
   run_examples_required:
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 1x1gi-x86]
     needs: run_examples
-    if: ${{ always() }}
+    if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
 
     steps:
       - name: Require all example jobs to pass

@@ -23,7 +23,7 @@ on:
 
 jobs:
   update-sdks:
-    runs-on: ubuntu-latest
+    runs-on: [ciclone, 4x8gi-x86]
     environment: publish
     steps:
       - name: Checkout repository

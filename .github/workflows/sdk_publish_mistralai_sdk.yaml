@@ -1,7 +1,6 @@
 name: Publish MISTRALAI-SDK
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 "on":
   workflow_dispatch:
     inputs:
@@ -15,18 +14,22 @@ permissions:
     paths:
       - RELEASES.md
 jobs:
-  publish:
-    name: Publish Python SDKs to PyPI
+  build:
+    name: Build Python SDK distributions
     # Auto-publish on push to main branch; require manual confirmation for workflow_dispatch
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm_publish == 'publish')
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 2x2gi-x86]
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
     environment:
       name: publish
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
@@ -41,6 +44,33 @@ jobs:
           python scripts/prepare_readme.py
           uv build --sdist --wheel --out-dir dist/mistralai
 
+      - name: Upload distributions
+        id: upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: mistralai-distributions-${{ github.run_attempt }}
+          path: dist/mistralai/
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish Python SDKs to PyPI
+    needs: build
+    # The PyPA action recommends a dedicated GitHub-hosted publishing job.
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: publish
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: dist/mistralai/
+          merge-multiple: true
+
       - name: Publish mistralai to PyPI
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
         with:
@@ -48,6 +78,24 @@ jobs:
           print-hash: true
           verbose: true
           skip-existing: true
+
+  release:
+    needs: publish
+    runs-on: [ciclone, 1x1gi-x86]
+    permissions:
+      contents: write
+    environment:
+      name: publish
+    steps:
+      - name: Checkout release metadata
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            RELEASES.md
+            pyproject.toml
+          sparse-checkout-cone-mode: false
 
       - name: Create GitHub Release
         env:

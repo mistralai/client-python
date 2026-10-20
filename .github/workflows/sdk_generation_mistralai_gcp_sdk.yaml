@@ -16,12 +16,16 @@ permissions:
         type: string
 jobs:
   resolve-speakeasy-version:
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 1x1gi-x86]
+    permissions:
+      contents: read
     outputs:
       version: ${{ steps.resolve.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
 
       - name: Resolve Speakeasy version from workflow config
         id: resolve
@@ -39,7 +43,7 @@ jobs:
 
   generate:
     needs: resolve-speakeasy-version
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 4x8gi-x86]
     environment: publish
     steps:
       - name: Checkout
@@ -70,7 +74,7 @@ jobs:
 
   align-version:
     needs: generate
-    runs-on: ubuntu-24.04
+    runs-on: [ciclone, 2x2gi-x86]
     environment: publish
     steps:
       - name: Compute expected PR branch
