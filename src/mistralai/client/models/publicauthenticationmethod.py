@@ -20,18 +20,20 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
 from typing import Dict, List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class PublicAuthenticationMethodTypedDict(TypedDict):
     r"""Public view of an authentication method, without secrets."""
 
     method_type: AuthenticationType
-    has_default_credentials: bool
     headers: NotRequired[Nullable[List[ConnectorAuthenticationHeaderTypedDict]]]
     global_headers: NotRequired[Dict[str, GlobalHeaderValueTypedDict]]
+    has_default_credentials: NotRequired[bool]
+    r"""Deprecated: we removed the concept of connector level default credentials. Always false."""
     grant_type: NotRequired[Nullable[OAuth2GrantType]]
     token_endpoint_auth_method: NotRequired[Nullable[OAuth2TokenEndpointAuthMethod]]
     oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
@@ -42,11 +44,17 @@ class PublicAuthenticationMethod(BaseModel):
 
     method_type: AuthenticationType
 
-    has_default_credentials: bool
-
     headers: OptionalNullable[List[ConnectorAuthenticationHeader]] = UNSET
 
     global_headers: Optional[Dict[str, GlobalHeaderValue]] = None
+
+    has_default_credentials: Annotated[
+        Optional[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = False
+    r"""Deprecated: we removed the concept of connector level default credentials. Always false."""
 
     grant_type: OptionalNullable[OAuth2GrantType] = UNSET
 
@@ -60,6 +68,7 @@ class PublicAuthenticationMethod(BaseModel):
             [
                 "headers",
                 "global_headers",
+                "has_default_credentials",
                 "grant_type",
                 "token_endpoint_auth_method",
                 "oauth2_server_metadata",

@@ -1,0 +1,10 @@
+# CreateResponseRequestResponsesTextConfig
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `format_`                                                                                              | [OptionalNullable[models.CreateResponseRequestFormat]](../models/createresponserequestformat.md)       | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `verbosity`                                                                                            | [OptionalNullable[models.CreateResponseRequestVerbosity]](../models/createresponserequestverbosity.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `__pydantic_extra__`                                                                                   | Dict[str, *Any*]                                                                                       | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

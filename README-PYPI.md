@@ -1,13 +1,5 @@
 # Mistral Python Client
 
-## New: Voice Agents
-
-Build live voice agents with the SDK. `client.audio.sessions.init()` opens a real-time, bidirectional voice session with speech-to-text, text-to-speech and tool calls, and `client.audio.agents` saves agent configurations to reuse across sessions. Install the extra with `pip install "mistralai[voice-agents]"`, then see [Voice Agents](#voice-agents) below and the [voice agents guide](https://github.com/mistralai/client-python/blob/main/src/mistralai/extra/voice_agents/README.md).
-
-## Migrating to v3
-
-This is v3 of the SDK. If you are upgrading from v2, check the [migration guide](https://github.com/mistralai/client-python/blob/main/MIGRATION.md) for the breaking changes and how to update your code. It also covers upgrading from v1 to v2.
-
 ## API Key Setup
 
 Before you begin, you will need a Mistral AI API key.
@@ -44,8 +36,6 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [Mistral Python Client](#mistral-python-client)
-  * [New: Voice Agents](#new-voice-agents)
-  * [Migrating to v3](#migrating-to-v3)
   * [API Key Setup](#api-key-setup)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
@@ -847,6 +837,11 @@ print(res.choices[0].message.content)
 
 * [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/realtimesessions/README.md#create) - Create Client Session
 
+### [Responses](https://github.com/mistralai/client-python/blob/main/docs/sdks/responses/README.md)
+
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/responses/README.md#create) - Create Response
+* [count_input_tokens](https://github.com/mistralai/client-python/blob/main/docs/sdks/responses/README.md#count_input_tokens) - Count Input Tokens
+
 ### [Workflows](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md)
 
 * [get_workflows](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#get_workflows) - Get Workflows
@@ -1171,8 +1166,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 288 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 288 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 290 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 290 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

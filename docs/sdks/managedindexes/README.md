@@ -348,6 +348,7 @@ with Mistral(
             models.KeywordRetriever(
                 top_k=20,
                 query="<value>",
+                operator="or",
             ),
         ],
         rank_constant=60,

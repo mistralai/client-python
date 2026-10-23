@@ -1,0 +1,12 @@
+# ResponsesNamespaceTool
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `description`                                                                      | *str*                                                                              | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `name`                                                                             | *str*                                                                              | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `tools`                                                                            | List[[models.ResponsesNamespaceToolTool](../models/responsesnamespacetooltool.md)] | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `type`                                                                             | *Literal["namespace"]*                                                             | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `__pydantic_extra__`                                                               | Dict[str, *Any*]                                                                   | :heavy_minus_sign:                                                                 | N/A                                                                                |

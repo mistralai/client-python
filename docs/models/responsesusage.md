@@ -1,0 +1,13 @@
+# ResponsesUsage
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `input_tokens`                                                                   | *int*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `input_tokens_details`                                                           | [models.ResponsesInputTokensDetails](../models/responsesinputtokensdetails.md)   | :heavy_check_mark:                                                               | N/A                                                                              |
+| `output_tokens`                                                                  | *int*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `output_tokens_details`                                                          | [models.ResponsesOutputTokensDetails](../models/responsesoutputtokensdetails.md) | :heavy_check_mark:                                                               | N/A                                                                              |
+| `total_tokens`                                                                   | *int*                                                                            | :heavy_check_mark:                                                               | N/A                                                                              |
+| `__pydantic_extra__`                                                             | Dict[str, *Any*]                                                                 | :heavy_minus_sign:                                                               | N/A                                                                              |

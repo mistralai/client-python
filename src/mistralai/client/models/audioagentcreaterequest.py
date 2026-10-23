@@ -18,21 +18,21 @@ from typing_extensions import NotRequired, TypedDict
 
 class AudioAgentCreateRequestTypedDict(TypedDict):
     name: str
+    configuration: AudioAgentConfigurationRequestTypedDict
     description: NotRequired[Nullable[str]]
-    configuration: NotRequired[Nullable[AudioAgentConfigurationRequestTypedDict]]
 
 
 class AudioAgentCreateRequest(BaseModel):
     name: str
 
-    description: OptionalNullable[str] = UNSET
+    configuration: AudioAgentConfigurationRequest
 
-    configuration: OptionalNullable[AudioAgentConfigurationRequest] = UNSET
+    description: OptionalNullable[str] = UNSET
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["description", "configuration"])
-        nullable_fields = set(["description", "configuration"])
+        optional_fields = set(["description"])
+        nullable_fields = set(["description"])
         serialized = handler(self)
         m = {}
 

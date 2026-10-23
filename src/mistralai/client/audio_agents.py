@@ -280,13 +280,11 @@ class AudioAgents(BaseSDK):
         self,
         *,
         name: str,
+        configuration: Union[
+            models.AudioAgentConfigurationRequest,
+            models.AudioAgentConfigurationRequestTypedDict,
+        ],
         description: OptionalNullable[str] = UNSET,
-        configuration: OptionalNullable[
-            Union[
-                models.AudioAgentConfigurationRequest,
-                models.AudioAgentConfigurationRequestTypedDict,
-            ]
-        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -295,8 +293,8 @@ class AudioAgents(BaseSDK):
         r"""Create an audio agent
 
         :param name:
-        :param description:
         :param configuration:
+        :param description:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -319,7 +317,7 @@ class AudioAgents(BaseSDK):
             name=name,
             description=description,
             configuration=utils.get_pydantic_model(
-                configuration, OptionalNullable[models.AudioAgentConfigurationRequest]
+                configuration, models.AudioAgentConfigurationRequest
             ),
         )
 
@@ -389,13 +387,11 @@ class AudioAgents(BaseSDK):
         self,
         *,
         name: str,
+        configuration: Union[
+            models.AudioAgentConfigurationRequest,
+            models.AudioAgentConfigurationRequestTypedDict,
+        ],
         description: OptionalNullable[str] = UNSET,
-        configuration: OptionalNullable[
-            Union[
-                models.AudioAgentConfigurationRequest,
-                models.AudioAgentConfigurationRequestTypedDict,
-            ]
-        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -404,8 +400,8 @@ class AudioAgents(BaseSDK):
         r"""Create an audio agent
 
         :param name:
-        :param description:
         :param configuration:
+        :param description:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -428,7 +424,7 @@ class AudioAgents(BaseSDK):
             name=name,
             description=description,
             configuration=utils.get_pydantic_model(
-                configuration, OptionalNullable[models.AudioAgentConfigurationRequest]
+                configuration, models.AudioAgentConfigurationRequest
             ),
         )
 
