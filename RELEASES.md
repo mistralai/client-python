@@ -1505,3 +1505,79 @@ Based on:
 - [python v3.3.0] .
 ### Releases
 - [PyPI v3.3.0] https://pypi.org/project/mistralai/3.3.0 - .
+
+## 2026-10-23 17:08:24
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Now required on an existing stable model (2):
+- `AudioAgentCreateRequest.configuration`
+- `Mistral.responses`
+#### Stable type changes
+Changed types or signatures on the stable surface (4):
+- `AudioAgentCreateRequest.configuration: OptionalNullable[AudioAgentConfigurationRequest] -> AudioAgentConfigurationRequest`
+- `AudioAgentCreateRequestTypedDict.configuration: NotRequired[Nullable[AudioAgentConfigurationRequestTypedDict]] -> AudioAgentConfigurationRequestTypedDict`
+- `OCRTableObject.format_: Annotated[Format, pydantic.Field(alias='format')] -> Annotated[FormatEnum, pydantic.Field(alias='format')]`
+- `OCRTableObjectTypedDict.format_: Format -> FormatEnum`
+#### Beta surface changes
+Changed types or signatures in beta (2):
+- `PublicAuthenticationMethod.has_default_credentials: bool -> Annotated[Optional[bool], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `PublicAuthenticationMethodTypedDict.has_default_credentials: bool -> NotRequired[bool]`
+</details>
+
+### API changes
+#### Breaking changes
+
+- `sdk.audio.agents.create()` now requires `configuration`, a `models.AudioAgentConfigurationRequest`. It can no longer be omitted or passed as `None`.
+- `models.Format`, the type of `OCRTableObject.format_`, is renamed to `models.FormatEnum`. Imports of `Format` from `mistralai.client.models` must switch to `FormatEnum`.
+
+#### New: Responses API
+
+`sdk.responses.create()` generates a model response from text or image input. The output can contain text, reasoning and function calls. It is stateless: for multi-turn conversations, send the full history in `input`, including earlier output items and function results.
+
+- Required: `model` and `input`, either a string or a list of messages, output messages, function calls, function call outputs and reasoning items.
+- Optional: `instructions`, `tools` (function and namespace tools; only client-executed function tools are supported), `tool_choice` (`"none"`, `"auto"` (default), `"required"` or a specific function), `parallel_tool_calls` (default `True`), `reasoning`, `text` (output `format` and `verbosity`), `max_output_tokens`, `max_tool_calls`, `temperature`, `top_p`, `metadata` and `prompt_cache_key`.
+- Accepted only at fixed values: `truncation="disabled"`, `background=False`, `store=False` and `top_logprobs=0`. `previous_response_id`, `conversation`, `prompt` and `moderation` must be `None`. Responses are not stored.
+- `stream=True` returns an `EventStream[models.ResponsesStreamFrame]` instead of a `models.CreateResponseResponse`.
+- `models.CreateResponseResponse` includes `id`, `status`, `output`, `usage`, `error`, `incomplete_details`, `service_tier` (`"auto"`, `"default"`, `"flex"`, `"scale"` or `"priority"`), `truncation` (`"auto"` or `"disabled"`) and `prompt_cache_retention` (`"in_memory"` or `"24h"`).
+- Errors, in `error` and in error stream frames, are a `models.ResponsesError` with `message` and `code` (`models.Code`): `server_error`, `rate_limit_exceeded`, `invalid_prompt`, `bio_policy`, `vector_store_timeout`, or one of 14 image errors: `invalid_image`, `invalid_image_format`, `invalid_base64_image`, `invalid_image_url`, `image_too_large`, `image_too_small`, `image_parse_error`, `image_content_policy_violation`, `invalid_image_mode`, `image_file_too_large`, `unsupported_image_media_type`, `empty_image_file`, `failed_to_download_image` and `image_file_not_found`. `status` is `"completed"`, `"failed"`, `"in_progress"`, `"cancelled"`, `"queued"` or `"incomplete"`, and `incomplete_details.reason` (`models.Reason`) is `"max_output_tokens"` or `"content_filter"`.
+
+`sdk.responses.count_input_tokens()` counts the input tokens of a Responses request without generating a response, including the conversation, instructions and tool definitions. It takes the same `model`, `input`, `instructions`, `tools`, `tool_choice`, `parallel_tool_calls`, `reasoning` and `text` as `create()`, and returns `models.CountResponseInputTokensResponse` with `input_tokens`.
+
+#### New fields
+
+- Keyword retrievers in `sdk.beta.rag.managed_indexes.search()`, alone or inside an `rrf` retriever, take an `operator` (`models.Operator`). `"or"`, the default, matches chunks containing any of the query's words. `"and"` matches only chunks containing all of them, the previous behaviour.
+- `models.AudioTTSConfig`, the `tts` configuration of `sdk.audio.agents.create()`, `update()` and `sdk.audio.sessions.create()`, takes an optional `expressiveness`, a number from 1 to 5.
+
+#### Deprecated fields
+
+- `has_default_credentials` on connector authentication methods is deprecated and always `false`: connector-level default credentials were removed. It is returned by `sdk.beta.connectors.create()`, `list()`, `get()`, `update()` and `get_authentication_methods()`. Responses may now omit it, and the SDK reads a missing value as `false`.
+
+#### Added operations
+
+Stable:
+
+- `sdk.responses.create()`
+- `sdk.responses.count_input_tokens()`
+
+
+#### Schema changes
+
+- Added request field `expressiveness` in `sdk.audio.agents.create()`, `sdk.audio.sessions.create()`, and `sdk.audio.agents.update()`.
+- Added response field `expressiveness` across audio agents (5 operations).
+- Changed response field `has_default_credentials` across beta connectors (5 operations).
+- Added request field `operator` in `sdk.beta.rag.managed_indexes.search()`.
+- Added request enum values `ʁ`, `r`, `ɑ̃`, `ʀ`, `x`, `y`, `ɔ̃`, `ɐ`, `œ`, `ɛ̃`, `ʝ`, `ɲ`, `ts`, `ɥ`, `ʏ`, `ø`, `β`, `ɦ`, `pf`, `ʎ`, `ɣ`, `ɳ`, `ɔʏ`, `œ̃`, `ɟʝ`, `ɬ`, and `q` in `sdk.audio.speech.complete()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.4.0] .
+### Releases
+- [PyPI v3.4.0] https://pypi.org/project/mistralai/3.4.0 - .

@@ -842,6 +842,11 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/realtimesessions/README.md#create) - Create Client Session
 
+### [Responses](docs/sdks/responses/README.md)
+
+* [create](docs/sdks/responses/README.md#create) - Create Response
+* [count_input_tokens](docs/sdks/responses/README.md#count_input_tokens) - Count Input Tokens
+
 ### [Workflows](docs/sdks/workflows/README.md)
 
 * [get_workflows](docs/sdks/workflows/README.md#get_workflows) - Get Workflows
@@ -1166,8 +1171,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 288 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 288 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 290 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 290 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

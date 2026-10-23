@@ -1,0 +1,12 @@
+# ResponsesMessage
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `content`                                                                              | List[[models.ResponsesMessageContent](../models/responsesmessagecontent.md)]           | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `role`                                                                                 | [models.ResponsesMessageRole](../models/responsesmessagerole.md)                       | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `status`                                                                               | [OptionalNullable[models.ResponsesMessageStatus]](../models/responsesmessagestatus.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `type`                                                                                 | *OptionalNullable[Literal["message"]]*                                                 | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `__pydantic_extra__`                                                                   | Dict[str, *Any*]                                                                       | :heavy_minus_sign:                                                                     | N/A                                                                                    |

@@ -22,6 +22,12 @@ from typing import Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
+Operator = Literal[
+    "or",
+    "and",
+]
+
+
 KeywordRetrieverFilterTypedDict = TypeAliasType(
     "KeywordRetrieverFilterTypedDict",
     Union[
@@ -41,17 +47,24 @@ KeywordRetrieverFilter = Annotated[
 
 
 class KeywordRetrieverTypedDict(TypedDict):
-    r"""Retrieve document chunks with similar keywords to the given query."""
+    r"""Retrieve document chunks with similar keywords to the given query.
+
+    Uses the default settings for the index on the field.
+    """
 
     query: str
     top_k: NotRequired[int]
     type: Literal["keyword"]
+    operator: NotRequired[Operator]
     filter_: NotRequired[Nullable[KeywordRetrieverFilterTypedDict]]
     field: NotRequired[Nullable[str]]
 
 
 class KeywordRetriever(BaseModel):
-    r"""Retrieve document chunks with similar keywords to the given query."""
+    r"""Retrieve document chunks with similar keywords to the given query.
+
+    Uses the default settings for the index on the field.
+    """
 
     query: str
 
@@ -62,6 +75,8 @@ class KeywordRetriever(BaseModel):
         pydantic.Field(alias="type"),
     ] = "keyword"
 
+    operator: Optional[Operator] = "or"
+
     filter_: Annotated[
         SerializeAsAny[OptionalNullable[KeywordRetrieverFilter]],
         pydantic.Field(alias="filter"),
@@ -71,7 +86,7 @@ class KeywordRetriever(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["top_k", "filter", "field"])
+        optional_fields = set(["top_k", "operator", "filter", "field"])
         nullable_fields = set(["filter", "field"])
         serialized = handler(self)
         m = {}

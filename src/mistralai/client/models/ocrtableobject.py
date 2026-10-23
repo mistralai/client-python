@@ -16,7 +16,7 @@ from typing import List, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-Format = Union[
+FormatEnum = Union[
     Literal[
         "markdown",
         "html",
@@ -31,7 +31,7 @@ class OCRTableObjectTypedDict(TypedDict):
     r"""Table ID for extracted table in a page"""
     content: str
     r"""Content of the table in the given format"""
-    format_: Format
+    format_: FormatEnum
     r"""Format of the table"""
     word_confidence_scores: NotRequired[Nullable[List[OCRConfidenceScoreTypedDict]]]
     r"""Per-word confidence scores for the table content. Returned when confidence_scores_granularity is set to 'word'."""
@@ -44,7 +44,7 @@ class OCRTableObject(BaseModel):
     content: str
     r"""Content of the table in the given format"""
 
-    format_: Annotated[Format, pydantic.Field(alias="format")]
+    format_: Annotated[FormatEnum, pydantic.Field(alias="format")]
     r"""Format of the table"""
 
     word_confidence_scores: OptionalNullable[List[OCRConfidenceScore]] = UNSET

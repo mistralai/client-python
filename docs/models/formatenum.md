@@ -1,14 +1,14 @@
-# Format
+# FormatEnum
 
 Format of the table
 
 ## Example Usage
 
 ```python
-from mistralai.client.models import Format
+from mistralai.client.models import FormatEnum
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Format = "markdown"
+value: FormatEnum = "markdown"
 ```
 
 

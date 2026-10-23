@@ -1,0 +1,10 @@
+# CreateResponseResponseResponsesTextConfig
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `format_`                                                                                          | [OptionalNullable[models.ResponsesTextConfigFormat]](../models/responsestextconfigformat.md)       | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `verbosity`                                                                                        | [OptionalNullable[models.ResponsesTextConfigVerbosity]](../models/responsestextconfigverbosity.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `__pydantic_extra__`                                                                               | Dict[str, *Any*]                                                                                   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
