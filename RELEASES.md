@@ -1514,9 +1514,8 @@ The published SDK or generator baseline differs from the baseline used by the Op
 <summary>Generated surface details</summary>
 
 #### Stable compatibility changes
-Now required on an existing stable model (2):
+Now required on an existing stable model (1):
 - `AudioAgentCreateRequest.configuration`
-- `Mistral.responses`
 #### Stable type changes
 Changed types or signatures on the stable surface (4):
 - `AudioAgentCreateRequest.configuration: OptionalNullable[AudioAgentConfigurationRequest] -> AudioAgentConfigurationRequest`

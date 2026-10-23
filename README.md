@@ -1,9 +1,5 @@
 # Mistral Python Client
 
-## Migrating from v1
-
-If you are upgrading from v1 to v2, check the [migration guide](https://github.com/mistralai/client-python/blob/main/MIGRATION.md) for details on breaking changes and how to update your code.
-
 ## API Key Setup
 
 Before you begin, you will need a Mistral AI API key.
@@ -40,7 +36,6 @@ Mistral AI API: Our Chat Completion and Embeddings APIs specification. Create yo
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [Mistral Python Client](#mistral-python-client)
-  * [Migrating from v1](#migrating-from-v1)
   * [API Key Setup](#api-key-setup)
   * [SDK Installation](#sdk-installation)
   * [SDK Example Usage](#sdk-example-usage)
