@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 051d36e73e3eda60c3b88458ada77493
+  docChecksum: 88f8765f297eba24ea252acea6ae0346
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 3.4.0
-  configChecksum: c9a33d38ad2af6c8e6163af50adc0eb2
+  releaseVersion: 3.5.0
+  configChecksum: 90c7e2935bf5d87ac9bc5e574594582d
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: c228931a-c755-41d1-8eb2-78a71f5964c7
-  pristine_commit_hash: b06a7552c40236b64d6de9a6f8331cbb76dc1de0
-  pristine_tree_hash: f2b370f791e3a3d3215fc473116a4fb99a05ab2d
+  generation_id: a76cbf96-e5c8-4cdd-a264-aa1e028d7774
+  pristine_commit_hash: 386ad02302add3e05953b33916d1bddff2e4c3d3
+  pristine_tree_hash: 6eb983533a728d0f19c4efc5ac7f43054c6228df
 features:
   python:
     acceptHeaders: 3.0.0
@@ -3966,8 +3966,8 @@ trackedFiles:
     pristine_git_object: fb2fa9a9774e2951aa4c2885d6b6bf786ddaa411
   docs/models/reasoningeffort.md:
     id: c8fd630d3f07
-    last_write_checksum: sha1:ebfd30ba28d245cd62a6aaae59749eb1d5bfa990
-    pristine_git_object: 207f5035a7d8d0eb0b5843b70082dc681630f50d
+    last_write_checksum: sha1:54aafb448de47209e329dbf4e4516dc328631ef7
+    pristine_git_object: 6a0605060d1bb740c9473eebb43fdce7005d9370
   docs/models/recordsortfield.md:
     id: a7e7ed91fe30
     last_write_checksum: sha1:0065e62c013f9432fe40e4956c8a66849f3db485
@@ -6434,8 +6434,8 @@ trackedFiles:
     pristine_git_object: 5052bb072d14c65419bf49bdc1a47500cb03ae56
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:ee69c7e4fa48a355dcae3138142b12af547419cc
-    pristine_git_object: 27666c0e050ebdd6273c43e8c6c773185ef32e55
+    last_write_checksum: sha1:7c09a778d62000c4bca913828c94da1591087072
+    pristine_git_object: b073af7fd1283d3fa1c1ea82ade8815167e43f62
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:414c7375fcd63266d196840fa8d1274d60aae2dc
@@ -9662,8 +9662,8 @@ trackedFiles:
     pristine_git_object: bee03bcb253b5b9a1046c79c9d5b5ef1c2de492c
   src/mistralai/client/models/reasoningeffort.py:
     id: b930a0a20654
-    last_write_checksum: sha1:178bfa8d2cd0d61c4da50794a0832c5d9bd3308d
-    pristine_git_object: bb1060c8f1d2fb789638d58d36933d668f09de77
+    last_write_checksum: sha1:02c6faa2de9f084cfd8f90562c122a7986b3fa9e
+    pristine_git_object: f24b8c7cdbe8771870e3a2fe38ce38f1ba5281b6
   src/mistralai/client/models/recordsortfield.py:
     id: 929ca51c94e0
     last_write_checksum: sha1:b1458805e94869d469c5538848e439adeb6be967
@@ -15986,7 +15986,7 @@ examples:
           application/json: {"input_tokens": 363814, "object": "response.input_tokens"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.audio.agents.create()`: \n  *  `request.configuration` **Changed** (Breaking ⚠️)\n  *  `response.configuration.tts.expressiveness` **Added**\n* `mistral.beta.connectors.get_authentication_methods()`:  `response.[].has_default_credentials` **Changed**\n* `mistral.beta.connectors.list()`:  `response.items[].union(mcp).supported_auth_methods[].has_default_credentials` **Changed**\n* `mistral.responses.count_input_tokens()`: **Added**\n* `mistral.beta.connectors.get()`:  `response.union(mcp).supported_auth_methods[].has_default_credentials` **Changed**\n* `mistral.beta.connectors.update()`:  `response.union(mcp).supported_auth_methods[].has_default_credentials` **Changed**\n* `mistral.beta.rag.managed_indexes.search()`: \n  *  `request.retriever.union(rrf).retrievers[].union(keyword).operator` **Added**\n* `mistral.audio.sessions.create()`: \n  *  `request.tts.expressiveness` **Added**\n* `mistral.audio.agents.list()`:  `response.data[].configuration.tts.expressiveness` **Added**\n* `mistral.beta.connectors.create()`:  `response.union(mcp).supported_auth_methods[].has_default_credentials` **Changed**\n* `mistral.audio.agents.get()`:  `response.configuration.tts.expressiveness` **Added**\n* `mistral.audio.agents.update()`: \n  *  `request.configuration.tts.expressiveness` **Added**\n  *  `response.configuration.tts.expressiveness` **Added**\n* `mistral.audio.agents.list_versions()`:  `response.data[].configuration.tts.expressiveness` **Added**\n"
+releaseNotes: "## Python SDK Changes:\n* `mistral.beta.conversations.start()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.list()`:  `response.[].union(ModelConversation).completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.get()`:  `response.union(ModelConversation).completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.append()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.restart()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.create()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n  *  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list()`:  `response.[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list_pages()`:  `response.data[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.get()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.update()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n  *  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.update_version()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list_versions()`:  `response.[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.get_version()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.chat.complete()`: \n  *  `request.reasoning_effort.enum(max)` **Added**\n* `mistral.agents.complete()`: \n  *  `request.reasoning_effort.enum(max)` **Added**\n"
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json

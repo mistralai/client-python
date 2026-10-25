@@ -1580,3 +1580,19 @@ Based on:
 - [python v3.4.0] .
 ### Releases
 - [PyPI v3.4.0] https://pypi.org/project/mistralai/3.4.0 - .
+
+## 2026-10-25 19:48:15
+### API changes
+#### Schema changes
+
+- Added response enum value `max` across beta conversations, beta agents (10 operations).
+- Added request enum value `max` across beta conversations, beta agents, chat, agents (7 operations).
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.5.0] .
+### Releases
+- [PyPI v3.5.0] https://pypi.org/project/mistralai/3.5.0 - .
