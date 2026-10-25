@@ -13,6 +13,7 @@ ReasoningEffort = Union[
         "medium",
         "high",
         "xhigh",
+        "max",
     ],
     UnrecognizedStr,
 ]
