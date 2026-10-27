@@ -13,7 +13,7 @@ from typing import Optional
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mistralai.extra.realtime import RealtimeTranscription
+    from mistralai.extra.realtime import RealtimeSpeech, RealtimeTranscription
 # endregion imports
 
 
@@ -53,5 +53,14 @@ class Audio(BaseSDK):
             self._realtime = RealtimeTranscription(self.sdk_configuration)  # pylint: disable=attribute-defined-outside-init
 
         return self._realtime
+
+    @property
+    def realtime_speech(self) -> "RealtimeSpeech":
+        if not hasattr(self, "_realtime_speech"):
+            from mistralai.extra.realtime import RealtimeSpeech  # pylint: disable=import-outside-toplevel
+
+            self._realtime_speech = RealtimeSpeech(self.sdk_configuration)  # pylint: disable=attribute-defined-outside-init
+
+        return self._realtime_speech
 
     # endregion sdk-class-body

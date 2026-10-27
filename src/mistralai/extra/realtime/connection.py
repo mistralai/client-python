@@ -4,7 +4,7 @@ import base64
 import json
 from asyncio import CancelledError
 from collections import deque
-from typing import Any, AsyncIterator, Deque, Optional, Union
+from typing import Any, AsyncIterator, Deque, Dict, List, Optional, Union
 
 from pydantic import ValidationError, BaseModel
 
@@ -31,8 +31,13 @@ from mistralai.client.models import (
     TranscriptionStreamLanguage,
     TranscriptionStreamSegmentDelta,
     TranscriptionStreamTextDelta,
+    TurnDetectionConfig,
+    TurnDetectionConfigTypedDict,
+    TurnDetectionEagerEndEvent,
+    TurnDetectionEndEvent,
+    TurnDetectionResumeEvent,
+    TurnDetectionStartEvent,
 )
-from mistralai.client.types import UNSET
 
 
 class UnknownRealtimeEvent(BaseModel):
@@ -59,6 +64,11 @@ RealtimeEvent = Union[
     TranscriptionStreamSegmentDelta,
     TranscriptionStreamTextDelta,
     TranscriptionStreamDone,
+    # turn detection events
+    TurnDetectionStartEvent,
+    TurnDetectionEagerEndEvent,
+    TurnDetectionResumeEvent,
+    TurnDetectionEndEvent,
     # forward-compat fallback
     UnknownRealtimeEvent,
 ]
@@ -71,6 +81,10 @@ _MESSAGE_MODELS: dict[str, Any] = {
     "transcription.segment": TranscriptionStreamSegmentDelta,
     "transcription.text.delta": TranscriptionStreamTextDelta,
     "transcription.done": TranscriptionStreamDone,
+    "turn.start": TurnDetectionStartEvent,
+    "turn.eager_end": TurnDetectionEagerEndEvent,
+    "turn.resume": TurnDetectionResumeEvent,
+    "turn.end": TurnDetectionEndEvent,
 }
 
 
@@ -156,20 +170,32 @@ class RealtimeConnection:
         audio_format: Optional[AudioFormat] = None,
         *,
         target_streaming_delay_ms: Optional[int] = None,
+        diarize: Optional[bool] = None,
+        context_bias: Optional[List[str]] = None,
+        language: Optional[str] = None,
+        speaker_references: Optional[Dict[str, str]] = None,
+        turn_detection: Optional[
+            Union[TurnDetectionConfig, TurnDetectionConfigTypedDict]
+        ] = None,
     ) -> None:
         if self._closed:
             raise RuntimeError("Connection is closed")
 
-        if audio_format is None and target_streaming_delay_ms is None:
+        fields = {
+            "audio_format": audio_format,
+            "target_streaming_delay_ms": target_streaming_delay_ms,
+            "diarize": diarize,
+            "context_bias": context_bias,
+            "language": language,
+            "speaker_references": speaker_references,
+            "turn_detection": turn_detection,
+        }
+        fields = {name: value for name, value in fields.items() if value is not None}
+        if not fields:
             raise ValueError("At least one session field must be provided")
 
         message = RealtimeTranscriptionSessionUpdateMessage(
-            session=RealtimeTranscriptionSessionUpdatePayload(
-                audio_format=audio_format if audio_format is not None else UNSET,
-                target_streaming_delay_ms=target_streaming_delay_ms
-                if target_streaming_delay_ms is not None
-                else UNSET,
-            )
+            session=RealtimeTranscriptionSessionUpdatePayload.model_validate(fields)
         )
         await self._websocket.send(message.model_dump_json())
 

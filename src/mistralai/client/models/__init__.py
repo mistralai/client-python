@@ -514,10 +514,6 @@ if TYPE_CHECKING:
         CompletionsCapability,
         CompletionsCapabilityTypedDict,
     )
-    from .completiontokensdetails import (
-        CompletionTokensDetails,
-        CompletionTokensDetailsTypedDict,
-    )
     from .compute_filtered_run_statistics_v2_v1_observability_evaluation_runs_v2_run_id_statistics_compute_postop import (
         ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequest,
         ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequestTypedDict,
@@ -2233,7 +2229,6 @@ if TYPE_CHECKING:
         MessageOutputEventTypedDict,
     )
     from .messageresponse import MessageResponse, MessageResponseTypedDict
-    from .messagetokens import MessageTokens, MessageTokensTypedDict
     from .metadatafilter import (
         MetadataFilter,
         MetadataFilterTypedDict,
@@ -2565,7 +2560,6 @@ if TYPE_CHECKING:
         UpdatePromptRequestTypedDict,
     )
     from .promptscapability import PromptsCapability, PromptsCapabilityTypedDict
-    from .prompttokensdetails import PromptTokensDetails, PromptTokensDetailsTypedDict
     from .promptvariable import PromptVariable, PromptVariableTypedDict
     from .promptversion import PromptVersion, PromptVersionTypedDict
     from .publicauthenticationmethod import (
@@ -2606,6 +2600,46 @@ if TYPE_CHECKING:
         ReadIndexV1ContextSearchIndexesIndexNameReadPostRequestTypedDict,
     )
     from .readrequest import ReadRequest, ReadRequestTypedDict
+    from .realtimespeecherror import RealtimeSpeechError, RealtimeSpeechErrorTypedDict
+    from .realtimespeecherrordetail import (
+        RealtimeSpeechErrorDetail,
+        RealtimeSpeechErrorDetailMessage,
+        RealtimeSpeechErrorDetailMessageTypedDict,
+        RealtimeSpeechErrorDetailTypedDict,
+    )
+    from .realtimespeechinputtextappend import (
+        RealtimeSpeechInputTextAppend,
+        RealtimeSpeechInputTextAppendTypedDict,
+    )
+    from .realtimespeechinputtextend import (
+        RealtimeSpeechInputTextEnd,
+        RealtimeSpeechInputTextEndTypedDict,
+    )
+    from .realtimespeechinputtextflush import (
+        RealtimeSpeechInputTextFlush,
+        RealtimeSpeechInputTextFlushTypedDict,
+    )
+    from .realtimespeechsession import (
+        RealtimeSpeechSession,
+        RealtimeSpeechSessionTypedDict,
+    )
+    from .realtimespeechsessioncreated import (
+        RealtimeSpeechSessionCreated,
+        RealtimeSpeechSessionCreatedTypedDict,
+    )
+    from .realtimespeechsessionupdated import (
+        RealtimeSpeechSessionUpdated,
+        RealtimeSpeechSessionUpdatedTypedDict,
+    )
+    from .realtimespeechsessionupdatemessage import (
+        RealtimeSpeechSessionUpdateMessage,
+        RealtimeSpeechSessionUpdateMessageTypedDict,
+    )
+    from .realtimespeechsessionupdatepayload import (
+        RealtimeSpeechSessionUpdatePayload,
+        RealtimeSpeechSessionUpdatePayloadTypedDict,
+    )
+    from .realtimespeechstreamingmode import RealtimeSpeechStreamingMode
     from .realtimetranscriptionerror import (
         RealtimeTranscriptionError,
         RealtimeTranscriptionErrorTypedDict,
@@ -3002,7 +3036,6 @@ if TYPE_CHECKING:
         RetrieveModelV1ModelsModelIDGetRequestTypedDict,
         UnknownResponseRetrieveModelV1ModelsModelIDGet,
     )
-    from .roles import Roles
     from .rootscapability import RootsCapability, RootsCapabilityTypedDict
     from .rrfretriever import (
         RRFRetriever,
@@ -3772,7 +3805,6 @@ if TYPE_CHECKING:
         URLElicitationCapabilityTypedDict,
     )
     from .usageinfo import UsageInfo, UsageInfoTypedDict
-    from .usageinfo_dollar_defs import UsageInfoDollarDefs, UsageInfoDollarDefsTypedDict
     from .useridentity import UserIdentity, UserIdentityTypedDict
     from .useridentityapikey import UserIdentityAPIKey, UserIdentityAPIKeyTypedDict
     from .useridentityorganization import (
@@ -4472,8 +4504,6 @@ __all__ = [
     "CompletionResponseStreamChoice",
     "CompletionResponseStreamChoiceFinishReason",
     "CompletionResponseStreamChoiceTypedDict",
-    "CompletionTokensDetails",
-    "CompletionTokensDetailsTypedDict",
     "CompletionsCapability",
     "CompletionsCapabilityTypedDict",
     "ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequest",
@@ -5615,8 +5645,6 @@ __all__ = [
     "MessageOutputEventTypedDict",
     "MessageResponse",
     "MessageResponseTypedDict",
-    "MessageTokens",
-    "MessageTokensTypedDict",
     "Metadata",
     "MetadataFilter",
     "MetadataFilterGroup",
@@ -5874,8 +5902,6 @@ __all__ = [
     "PromptCacheRetention",
     "PromptDefinition",
     "PromptDefinitionTypedDict",
-    "PromptTokensDetails",
-    "PromptTokensDetailsTypedDict",
     "PromptTypedDict",
     "PromptVariable",
     "PromptVariableTypedDict",
@@ -5932,6 +5958,29 @@ __all__ = [
     "ReadIndexV1ContextSearchIndexesIndexNameReadPostRequestTypedDict",
     "ReadRequest",
     "ReadRequestTypedDict",
+    "RealtimeSpeechError",
+    "RealtimeSpeechErrorDetail",
+    "RealtimeSpeechErrorDetailMessage",
+    "RealtimeSpeechErrorDetailMessageTypedDict",
+    "RealtimeSpeechErrorDetailTypedDict",
+    "RealtimeSpeechErrorTypedDict",
+    "RealtimeSpeechInputTextAppend",
+    "RealtimeSpeechInputTextAppendTypedDict",
+    "RealtimeSpeechInputTextEnd",
+    "RealtimeSpeechInputTextEndTypedDict",
+    "RealtimeSpeechInputTextFlush",
+    "RealtimeSpeechInputTextFlushTypedDict",
+    "RealtimeSpeechSession",
+    "RealtimeSpeechSessionCreated",
+    "RealtimeSpeechSessionCreatedTypedDict",
+    "RealtimeSpeechSessionTypedDict",
+    "RealtimeSpeechSessionUpdateMessage",
+    "RealtimeSpeechSessionUpdateMessageTypedDict",
+    "RealtimeSpeechSessionUpdatePayload",
+    "RealtimeSpeechSessionUpdatePayloadTypedDict",
+    "RealtimeSpeechSessionUpdated",
+    "RealtimeSpeechSessionUpdatedTypedDict",
+    "RealtimeSpeechStreamingMode",
     "RealtimeTranscriptionError",
     "RealtimeTranscriptionErrorDetail",
     "RealtimeTranscriptionErrorDetailMessage",
@@ -6215,7 +6264,6 @@ __all__ = [
     "ResumeScheduleV1WorkflowsSchedulesScheduleIDResumePostRequestTypedDict",
     "RetrieveModelV1ModelsModelIDGetRequest",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict",
-    "Roles",
     "RootsCapability",
     "RootsCapabilityTypedDict",
     "RunEvaluationSummary",
@@ -6811,8 +6859,6 @@ __all__ = [
     "UpdateWorkflowV1WorkflowsWorkflowIdentifierPutRequest",
     "UpdateWorkflowV1WorkflowsWorkflowIdentifierPutRequestTypedDict",
     "UsageInfo",
-    "UsageInfoDollarDefs",
-    "UsageInfoDollarDefsTypedDict",
     "UsageInfoTypedDict",
     "UserIdentity",
     "UserIdentityAPIKey",
@@ -7369,8 +7415,6 @@ _dynamic_imports: dict[str, str] = {
     "CompletionResponseStreamChoiceTypedDict": ".completionresponsestreamchoice",
     "CompletionsCapability": ".completionscapability",
     "CompletionsCapabilityTypedDict": ".completionscapability",
-    "CompletionTokensDetails": ".completiontokensdetails",
-    "CompletionTokensDetailsTypedDict": ".completiontokensdetails",
     "ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequest": ".compute_filtered_run_statistics_v2_v1_observability_evaluation_runs_v2_run_id_statistics_compute_postop",
     "ComputeFilteredRunStatisticsV2V1ObservabilityEvaluationRunsV2RunIDStatisticsComputePostRequestTypedDict": ".compute_filtered_run_statistics_v2_v1_observability_evaluation_runs_v2_run_id_statistics_compute_postop",
     "ConfusionMatrix": ".confusionmatrix",
@@ -8562,8 +8606,6 @@ _dynamic_imports: dict[str, str] = {
     "MessageOutputEventTypedDict": ".messageoutputevent",
     "MessageResponse": ".messageresponse",
     "MessageResponseTypedDict": ".messageresponse",
-    "MessageTokens": ".messagetokens",
-    "MessageTokensTypedDict": ".messagetokens",
     "MetadataFilter": ".metadatafilter",
     "MetadataFilterTypedDict": ".metadatafilter",
     "MetadataFilterValue": ".metadatafilter",
@@ -8833,8 +8875,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdatePromptRequestTypedDict": ".prompts_updateop",
     "PromptsCapability": ".promptscapability",
     "PromptsCapabilityTypedDict": ".promptscapability",
-    "PromptTokensDetails": ".prompttokensdetails",
-    "PromptTokensDetailsTypedDict": ".prompttokensdetails",
     "PromptVariable": ".promptvariable",
     "PromptVariableTypedDict": ".promptvariable",
     "PromptVersion": ".promptversion",
@@ -8868,6 +8908,29 @@ _dynamic_imports: dict[str, str] = {
     "ReadIndexV1ContextSearchIndexesIndexNameReadPostRequestTypedDict": ".read_index_v1_context_search_indexes_index_name_read_postop",
     "ReadRequest": ".readrequest",
     "ReadRequestTypedDict": ".readrequest",
+    "RealtimeSpeechError": ".realtimespeecherror",
+    "RealtimeSpeechErrorTypedDict": ".realtimespeecherror",
+    "RealtimeSpeechErrorDetail": ".realtimespeecherrordetail",
+    "RealtimeSpeechErrorDetailMessage": ".realtimespeecherrordetail",
+    "RealtimeSpeechErrorDetailMessageTypedDict": ".realtimespeecherrordetail",
+    "RealtimeSpeechErrorDetailTypedDict": ".realtimespeecherrordetail",
+    "RealtimeSpeechInputTextAppend": ".realtimespeechinputtextappend",
+    "RealtimeSpeechInputTextAppendTypedDict": ".realtimespeechinputtextappend",
+    "RealtimeSpeechInputTextEnd": ".realtimespeechinputtextend",
+    "RealtimeSpeechInputTextEndTypedDict": ".realtimespeechinputtextend",
+    "RealtimeSpeechInputTextFlush": ".realtimespeechinputtextflush",
+    "RealtimeSpeechInputTextFlushTypedDict": ".realtimespeechinputtextflush",
+    "RealtimeSpeechSession": ".realtimespeechsession",
+    "RealtimeSpeechSessionTypedDict": ".realtimespeechsession",
+    "RealtimeSpeechSessionCreated": ".realtimespeechsessioncreated",
+    "RealtimeSpeechSessionCreatedTypedDict": ".realtimespeechsessioncreated",
+    "RealtimeSpeechSessionUpdated": ".realtimespeechsessionupdated",
+    "RealtimeSpeechSessionUpdatedTypedDict": ".realtimespeechsessionupdated",
+    "RealtimeSpeechSessionUpdateMessage": ".realtimespeechsessionupdatemessage",
+    "RealtimeSpeechSessionUpdateMessageTypedDict": ".realtimespeechsessionupdatemessage",
+    "RealtimeSpeechSessionUpdatePayload": ".realtimespeechsessionupdatepayload",
+    "RealtimeSpeechSessionUpdatePayloadTypedDict": ".realtimespeechsessionupdatepayload",
+    "RealtimeSpeechStreamingMode": ".realtimespeechstreamingmode",
     "RealtimeTranscriptionError": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorTypedDict": ".realtimetranscriptionerror",
     "RealtimeTranscriptionErrorDetail": ".realtimetranscriptionerrordetail",
@@ -9125,7 +9188,6 @@ _dynamic_imports: dict[str, str] = {
     "RetrieveModelV1ModelsModelIDGetRequest": ".retrieve_model_v1_models_model_id_getop",
     "RetrieveModelV1ModelsModelIDGetRequestTypedDict": ".retrieve_model_v1_models_model_id_getop",
     "UnknownResponseRetrieveModelV1ModelsModelIDGet": ".retrieve_model_v1_models_model_id_getop",
-    "Roles": ".roles",
     "RootsCapability": ".rootscapability",
     "RootsCapabilityTypedDict": ".rootscapability",
     "RRFRetriever": ".rrfretriever",
@@ -9694,8 +9756,6 @@ _dynamic_imports: dict[str, str] = {
     "URLElicitationCapabilityTypedDict": ".urlelicitationcapability",
     "UsageInfo": ".usageinfo",
     "UsageInfoTypedDict": ".usageinfo",
-    "UsageInfoDollarDefs": ".usageinfo_dollar_defs",
-    "UsageInfoDollarDefsTypedDict": ".usageinfo_dollar_defs",
     "UserIdentity": ".useridentity",
     "UserIdentityTypedDict": ".useridentity",
     "UserIdentityAPIKey": ".useridentityapikey",

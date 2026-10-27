@@ -83,6 +83,13 @@ class NetworkEncodedInput(NetworkEncodedBase):
         )
 
 
+class NetworkEncodedScheduleInput(NetworkEncodedInput):
+    input_hash: str = Field(
+        description="Stable hash of the input for schedule identity, keyed when encryption is enabled",
+        pattern=r"^[0-9a-f]{64}$",
+    )
+
+
 class NetworkEncodedResult(NetworkEncodedBase):
     @staticmethod
     def from_encoded_payload(encoded_payload: EncodedPayload) -> "NetworkEncodedResult":

@@ -12,7 +12,7 @@ from mistralai.client.models import (
 )
 
 if TYPE_CHECKING:
-    from mistralai.client.models import RealtimeTranscriptionError
+    from mistralai.client.models import RealtimeSpeechError, RealtimeTranscriptionError
     from mistralai.extra.run.result import RunOutputEntries
 
 
@@ -308,6 +308,35 @@ class RealtimeTranscriptionWSError(RealtimeTranscriptionException):
             except Exception:
                 code = None
 
+        super().__init__(
+            message, code=code, payload=payload if payload is not None else raw
+        )
+        self.payload_typed = payload
+        self.payload_raw = raw
+
+
+class RealtimeSpeechException(MistralClientException):
+    def __init__(
+        self,
+        message: str,
+        *,
+        code: Optional[int] = None,
+        payload: Optional[object] = None,
+    ) -> None:
+        super().__init__(message)
+        self.code = code
+        self.payload = payload
+
+
+class RealtimeSpeechWSError(RealtimeSpeechException):
+    def __init__(
+        self,
+        message: str,
+        *,
+        payload: Optional["RealtimeSpeechError"] = None,
+        raw: Optional[object] = None,
+    ) -> None:
+        code = payload.error.code if payload is not None else None
         super().__init__(
             message, code=code, payload=payload if payload is not None else raw
         )

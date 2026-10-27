@@ -115,6 +115,7 @@ RAW_PAYLOADS: dict[str, str] = {
     ),
     "duplicate_keys": '{"k": 1, "j": 2, "k": {"field_type": "__encrypted_str__", "data": "v"}}',
     "escapes": r'{"s": "é😀\/\b\f", "e": {"field_type": "__encrypted_str__", "data": "\u0000"}}',
+    "lone_surrogates": r'{"s": "\ud800 \udc00 \ud83d\ude00", "e": {"field_type": "__encrypted_str__", "data": "x"}}',
     "no_encrypted_fields": '{"a":1,"b":[true,false,null]}',
     "not_json": "this is not json",
 }
