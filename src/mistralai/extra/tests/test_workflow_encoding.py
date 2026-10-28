@@ -1,20 +1,29 @@
 """Tests for workflow encoding configuration lifecycle."""
 
 import gc
+import hashlib
+import hmac
+import inspect
 import json
 from typing import cast
 
+import httpx2 as httpx
 import msgpack
 import pytest
 import zstandard
 from pydantic import SecretStr
 
 from mistralai.client import Mistral
+from mistralai.client._hooks.types import BeforeRequestContext, HookContext
 from mistralai.client._hooks.workflow_encoding_hook import (
+    _run_async,
     _workflow_configs,
     _ENCODING_CONFIG_ID_ATTR,
+    SCHEDULE_WORKFLOW_OPERATION_ID,
+    WorkflowEncodingHook,
     configure_workflow_encoding,
 )
+from mistralai.client.utils import BackoffStrategy, RetryConfig
 from mistralai.extra.workflows import (
     BlobStorageConfig,
     EncryptedStrField,
@@ -676,7 +685,7 @@ async def test_payload_encoder_encodes_event_content_without_offloading():
     decoder = PayloadEncoder(
         encoding_config=WorkflowEncodingConfig(payload_encryption=encryption_config)
     )
-    payload = json.dumps({"data": "x" * 20_000}).encode()
+    payload = json.dumps({"data": "x" * 20_000}, separators=(",", ":")).encode()
 
     encoded, encoding_options = await encoder.encode_event_payload_content(payload)
     decoded = await decoder.decode_payload_content(encoded, encoding_options)
@@ -843,3 +852,428 @@ async def test_encode_payload_content_force_offload_is_idempotent(monkeypatch):
     await encoder.encode_payload_content(b"same", context, force_offload=True)
 
     assert len(storage.blobs) == 1
+
+
+@pytest.fixture
+def make_schedule_client():
+    http_clients: list[httpx.Client] = []
+
+    def make(
+        config: WorkflowEncodingConfig, response_body: dict | None = None
+    ) -> tuple[Mistral, list[httpx.Request]]:
+        requests: list[httpx.Request] = []
+
+        def handle(request: httpx.Request) -> httpx.Response:
+            requests.append(request)
+            return httpx.Response(
+                201 if request.method == "POST" else 200,
+                json=response_body or {"schedule_id": "sched-1"},
+            )
+
+        http_client = httpx.Client(transport=httpx.MockTransport(handle))
+        http_clients.append(http_client)
+        client = Mistral(
+            api_key="test-key",
+            server_url="https://api.mistral.ai",
+            client=http_client,
+        )
+        configure_workflow_encoding(
+            config,
+            namespace="test-namespace",
+            sdk_config=client.sdk_configuration,
+        )
+        return client, requests
+
+    yield make
+    for http_client in http_clients:
+        http_client.close()
+    gc.collect()
+
+
+def _before_request_context(client: Mistral, operation_id: str) -> BeforeRequestContext:
+    return BeforeRequestContext(
+        HookContext(
+            config=client.sdk_configuration,
+            base_url="https://api.mistral.ai",
+            operation_id=operation_id,
+            oauth2_scopes=[],
+            security_source=None,
+            tags=None,
+            extensions=None,
+        )
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("use_async", [False, True])
+@pytest.mark.parametrize("encryption_mode", [None, *PayloadEncryptionMode])
+async def test_encoding_hook_preserves_schedule_input_identity_on_retry(
+    use_async, encryption_mode
+):
+    requests = []
+
+    def handle(request):
+        requests.append(request)
+        if len(requests) == 1:
+            raise httpx.ReadError("Response lost after schedule creation")
+        return httpx.Response(201, json={"schedule_id": "sched-1"})
+
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=encryption_mode, main_key=SecretStr("0" * 64)
+        )
+        if encryption_mode is not None
+        else None,
+    )
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handle)) as async_client:
+        with httpx.Client(transport=httpx.MockTransport(handle)) as http_client:
+            client = Mistral(
+                api_key="test-key", client=http_client, async_client=async_client
+            )
+            configure_workflow_encoding(
+                config, namespace="test-namespace", sdk_config=client.sdk_configuration
+            )
+            create = (
+                client.workflows.schedules.schedule_workflow_async
+                if use_async
+                else client.workflows.schedules.schedule_workflow
+            )
+            retries = RetryConfig(
+                "backoff", BackoffStrategy(0, 0, 1, 1000, jitter_ms=0), True
+            )
+            for secret in ["s3cr3t", "s3cr3t", "changed"]:
+                input_data = {
+                    "secret": EncryptedStrField(data=secret).model_dump(),
+                    "other": "value",
+                }
+                if len(requests) == 2:
+                    input_data = dict(reversed(list(input_data.items())))
+                result = create(
+                    schedule={
+                        "input": input_data,
+                        "cron_expressions": ["0 * * * *"],
+                    },
+                    workflow_identifier="my-workflow",
+                    retries=retries,
+                )
+                if inspect.isawaitable(result):
+                    await result
+
+    bodies = [json.loads(request.content) for request in requests]
+    inputs = [body["schedule"]["input"] for body in bodies]
+    assert len(inputs) == 4
+    assert inputs[0]["input_hash"] == inputs[1]["input_hash"] == inputs[2]["input_hash"]
+    assert inputs[3]["input_hash"] != inputs[0]["input_hash"]
+    if encryption_mode is not None:
+        assert len({value["b64payload"] for value in inputs}) == 4
+    assert all(
+        "schedule_id" not in body and "schedule_id" not in body["schedule"]
+        for body in bodies
+    )
+    encoder = PayloadEncoder(config)
+    assert await encoder.decode_network_result(inputs[0]) == {
+        "secret": EncryptedStrField(data="s3cr3t").model_dump(),
+        "other": "value",
+    }
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "operation_id",
+    [
+        "execute_workflow_v1_workflows__workflow_identifier__execute_post",
+        "execute_workflow_registration_v1_workflows_registrations__workflow_registration_id__execute_post",
+        "signal_workflow_execution_v1_workflows_executions__execution_id__signals_post",
+        "query_workflow_execution_v1_workflows_executions__execution_id__queries_post",
+        "update_workflow_execution_v1_workflows_executions__execution_id__updates_post",
+        "schedule_workflow_v1_workflows_schedules_post",
+        "update_schedule_v1_workflows_schedules__schedule_id__patch",
+    ],
+)
+@pytest.mark.parametrize("encryption_mode", list(PayloadEncryptionMode))
+async def test_encoding_hook_keeps_large_unicode_inputs_under_payload_limit(
+    make_schedule_client, operation_id, encryption_mode
+):
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=encryption_mode, main_key=SecretStr("0" * 64)
+        )
+    )
+    client, _ = make_schedule_client(config)
+    payload = {"text": "é" * 350_000}
+    is_schedule = "schedule" in operation_id
+    body = (
+        {"schedule": {"input": payload}}
+        if is_schedule
+        else {"input": payload, "execution_id": "exec-1"}
+    )
+    request = httpx.Request(
+        "POST", "https://api.mistral.ai/v1/workflows/my-workflow/execute", json=body
+    )
+    result = WorkflowEncodingHook().before_request(
+        _before_request_context(client, operation_id), request
+    )
+    assert isinstance(result, httpx.Request)
+    sent = json.loads(result.content)
+    input_holder = sent["schedule"] if is_schedule else sent
+    input_field = "encoded_input" if operation_id.startswith("execute_") else "input"
+    encoded = NetworkEncodedInput.model_validate(
+        input_holder[input_field],
+    )
+
+    assert len(encoded.get_payload()) < 1_992_294
+    raw = await PayloadEncoder(config).decode_payload_content(
+        encoded.get_payload(), encoded.encoding_options
+    )
+    assert raw == b'{"text":"' + "é".encode("utf-8") * 350_000 + b'"}'
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_encodes_schedule_input_on_create(
+    make_schedule_client, encryption_config
+):
+    client, requests = make_schedule_client(encryption_config)
+
+    client.workflows.schedules.schedule_workflow(
+        schedule={"input": {"secret": "s3cr3t"}, "cron_expressions": ["0 * * * *"]},
+        workflow_identifier="my-workflow",
+    )
+
+    sent = json.loads(requests[0].content)
+    assert "input" not in sent
+    assert sent["schedule"]["cron_expressions"] == ["0 * * * *"]
+    assert sent["schedule"]["input"]["encoding_options"] == ["encrypted"]
+    assert "s3cr3t" not in json.dumps(sent)
+    encoder = PayloadEncoder(encoding_config=encryption_config)
+    decoded = await encoder.decode_network_result(sent["schedule"]["input"])
+    assert decoded == {"secret": "s3cr3t"}
+
+
+def test_encoding_hook_does_not_hash_schedule_input_with_encryption_key(
+    make_schedule_client, encryption_config
+):
+    client, requests = make_schedule_client(encryption_config)
+
+    client.workflows.schedules.schedule_workflow(
+        schedule={"input": {"secret": "s3cr3t"}},
+        workflow_identifier="my-workflow",
+    )
+
+    input_hash = json.loads(requests[0].content)["schedule"]["input"]["input_hash"]
+    encryption_key = bytes.fromhex(
+        encryption_config.payload_encryption.main_key.get_secret_value()
+    )
+    assert (
+        input_hash
+        != hmac.new(encryption_key, b'{"secret":"s3cr3t"}', hashlib.sha256).hexdigest()
+    )
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_encodes_schedule_input_on_update(
+    make_schedule_client, encryption_config
+):
+    client, requests = make_schedule_client(encryption_config)
+
+    client.workflows.schedules.update_schedule(
+        schedule_id="sched-1",
+        schedule={"input": {"secret": "s3cr3t"}},
+    )
+
+    sent = json.loads(requests[0].content)
+    assert sent["schedule"]["input"]["encoding_options"] == ["encrypted"]
+    assert "s3cr3t" not in json.dumps(sent)
+    encoder = PayloadEncoder(encoding_config=encryption_config)
+    decoded = await encoder.decode_network_result(sent["schedule"]["input"])
+    assert decoded == {"secret": "s3cr3t"}
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_leaves_schedule_update_without_input_unchanged(
+    make_schedule_client, encryption_config
+):
+    client, requests = make_schedule_client(encryption_config)
+
+    client.workflows.schedules.update_schedule(
+        schedule_id="sched-1",
+        schedule={"cron_expressions": ["0 * * * *"]},
+    )
+
+    assert json.loads(requests[0].content) == {
+        "schedule": {"cron_expressions": ["0 * * * *"]}
+    }
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_does_not_offload_schedule_input(
+    make_schedule_client, monkeypatch
+):
+    storage = InMemoryBlobStorage()
+    monkeypatch.setattr(
+        "mistralai.extra.workflows.encoding.payload_encoder.get_blob_storage",
+        lambda _: storage,
+    )
+    config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=PayloadEncryptionMode.FULL,
+            main_key=SecretStr("0" * 64),
+        ),
+        payload_offloading=PayloadOffloadingConfig(
+            min_size_bytes=1,
+            storage_config=BlobStorageConfig(
+                storage_provider=StorageProvider.S3,
+                bucket_name="test-bucket",
+            ),
+        ),
+    )
+    client, requests = make_schedule_client(config)
+
+    client.workflows.schedules.schedule_workflow(
+        schedule={"input": {"secret": "s3cr3t"}},
+        workflow_identifier="my-workflow",
+    )
+
+    sent = json.loads(requests[0].content)
+    assert sent["schedule"]["input"]["encoding_options"] == ["encrypted"]
+    assert (
+        EncodedPayloadOptions.OFFLOADED
+        not in sent["schedule"]["input"]["encoding_options"]
+    )
+    assert storage.blobs == {}
+    encoder = PayloadEncoder(encoding_config=config)
+    decoded = await encoder.decode_network_result(sent["schedule"]["input"])
+    assert decoded == {"secret": "s3cr3t"}
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("exclude", [{"empty"}, None])
+async def test_encoding_hook_decodes_schedule_input_on_get(
+    make_schedule_client, encryption_config, exclude
+):
+    encoder = PayloadEncoder(encoding_config=encryption_config)
+    encoded_input = await encoder.encode_network_input(
+        {"secret": "s3cr3t"},
+        WorkflowContext(namespace="test-namespace", execution_id="sched-1"),
+    )
+    client, _ = make_schedule_client(
+        encryption_config,
+        {
+            "schedule_id": "sched-1",
+            "workflow_name": "my-workflow",
+            "paused": False,
+            "input": encoded_input.model_dump(mode="json", exclude=exclude),
+        },
+    )
+
+    schedule = client.workflows.schedules.get_schedule(schedule_id="sched-1")
+
+    assert schedule.input == {"secret": "s3cr3t"}
+
+
+@pytest.mark.parametrize(
+    "plain_input",
+    [
+        {"b64payload": "Zmlyc3Q=", "foo": "bar"},
+        {"b64payload": "not base64!"},
+        {"b64payload": "//4=", "encoding_options": []},
+        {"b64payload": "Zmlyc3Q=", "encoding_options": ["encrypted"]},
+    ],
+)
+def test_encoding_hook_leaves_plain_schedule_input_unchanged_on_get(
+    make_schedule_client, encryption_config, plain_input
+):
+    client, _ = make_schedule_client(
+        encryption_config,
+        {
+            "schedule_id": "sched-1",
+            "workflow_name": "my-workflow",
+            "paused": False,
+            "input": plain_input,
+        },
+    )
+
+    schedule = client.workflows.schedules.get_schedule(schedule_id="sched-1")
+
+    assert schedule.input == plain_input
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_decodes_schedule_inputs_on_list(
+    make_schedule_client, encryption_config, monkeypatch
+):
+    encoder = PayloadEncoder(encoding_config=encryption_config)
+    foreign_encoder = PayloadEncoder(
+        encoding_config=WorkflowEncodingConfig(
+            payload_encryption=PayloadEncryptionConfig(
+                mode=PayloadEncryptionMode.FULL, main_key=SecretStr("1" * 64)
+            )
+        )
+    )
+    context = WorkflowContext(namespace="test-namespace", execution_id="sched-1")
+    plain_input = {"b64payload": "Zmlyc3Q=", "foo": "bar"}
+    foreign_input = (
+        await foreign_encoder.encode_network_input({"n": 3}, context)
+    ).model_dump(mode="json", exclude={"empty"})
+    non_json_input = NetworkEncodedInput.from_data(
+        *await encoder.encode_payload_content(b"not json", context)
+    ).model_dump(mode="json", exclude={"empty"})
+    schedule_inputs = [
+        (await encoder.encode_network_input({"n": n}, context)).model_dump(
+            mode="json", exclude={"empty"}
+        )
+        for n in range(3)
+    ]
+    client, _ = make_schedule_client(
+        encryption_config,
+        {
+            "schedules": [
+                {
+                    "schedule_id": f"sched-{index}",
+                    "workflow_name": "my-workflow",
+                    "paused": False,
+                    "input": schedule_input,
+                }
+                for index, schedule_input in enumerate(
+                    [*schedule_inputs, foreign_input, non_json_input, plain_input]
+                )
+            ]
+        },
+    )
+    run_async_calls = []
+
+    def counting_run_async(coro):
+        run_async_calls.append(coro)
+        return _run_async(coro)
+
+    monkeypatch.setattr(
+        "mistralai.client._hooks.workflow_encoding_hook._run_async",
+        counting_run_async,
+    )
+
+    schedules = client.workflows.schedules.get_schedules()
+
+    assert [schedule.input for schedule in schedules.result.schedules] == [
+        {"n": 0},
+        {"n": 1},
+        {"n": 2},
+        foreign_input,
+        non_json_input,
+        plain_input,
+    ]
+    assert len(run_async_calls) == 1
+
+
+def test_encoding_hook_refuses_schedule_operation_without_schedule_object(
+    make_schedule_client, encryption_config
+):
+    client, _ = make_schedule_client(encryption_config)
+    request = httpx.Request(
+        "POST",
+        "https://api.mistral.ai/v1/workflows/schedules",
+        json={"input": {"secret": "s3cr3t"}},
+    )
+
+    with pytest.raises(ValueError, match="no schedule object"):
+        WorkflowEncodingHook().before_request(
+            _before_request_context(client, SCHEDULE_WORKFLOW_OPERATION_ID), request
+        )

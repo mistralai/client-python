@@ -1596,3 +1596,83 @@ Based on:
 - [python v3.5.0] .
 ### Releases
 - [PyPI v3.5.0] https://pypi.org/project/mistralai/3.5.0 - .
+
+## 2026-10-27 16:51:27
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Removed from the stable API surface (27):
+- `CompletionTokensDetails`
+- `MessageTokens`
+- `PromptTokensDetails`
+- `UsageInfoDollarDefs`
+- `CompletionTokensDetails.reasoning_tokens`
+- `MessageTokens.role`
+- `MessageTokens.settings_tokens`
+- `MessageTokens.total_tokens`
+- `MessageTokens.truncated`
+- `MessageTokens.usage_count`
+- `PromptTokensDetails.audio_tokens`
+- `PromptTokensDetails.cached_tokens`
+- `PromptTokensDetails.messages`
+- `UsageInfoDollarDefs.completion_tokens`
+- `UsageInfoDollarDefs.completion_tokens_details`
+- `UsageInfoDollarDefs.num_cached_tokens`
+- `UsageInfoDollarDefs.prompt_audio_seconds`
+- `UsageInfoDollarDefs.prompt_token_details`
+- `UsageInfoDollarDefs.prompt_tokens`
+- `UsageInfoDollarDefs.prompt_tokens_details`
+- `UsageInfoDollarDefs.request_count`
+- `UsageInfoDollarDefs.service_tier`
+- `UsageInfoDollarDefs.total_tokens`
+- `CompletionTokensDetails.serialize_model`
+- `MessageTokens.serialize_model`
+- ...and 2 more
+#### Stable type changes
+Changed types or signatures on the stable surface (2):
+- `SpeechStreamDone.usage: UsageInfoDollarDefs -> UsageInfo`
+- `SpeechStreamDoneTypedDict.usage: UsageInfoDollarDefsTypedDict -> UsageInfoTypedDict`
+#### Beta surface changes
+Changed types or signatures in beta (3):
+- `ConnectionPreference.is_default: OptionalNullable[bool] -> Annotated[OptionalNullable[bool], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `ConnectionPreference.name: str -> Annotated[Optional[str], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `ConnectionPreferenceTypedDict.name: str -> NotRequired[str]`
+</details>
+
+### API changes
+#### Breaking changes
+
+- Removed fields `num_cached_tokens`, `prompt_tokens_details`, `completion_tokens_details`, `prompt_token_details`, and `request_count` from response `data.union(speech.audio.done).usage` in `sdk.audio.speech.complete()`.
+
+#### Added operations
+
+Stable:
+
+- `sdk.audio.realtime_speech.connect()`
+- `sdk.audio.realtime_speech.speak_stream()`
+
+#### Schema changes
+
+- Added enum value `optimization_trial_observation_already_exists` across beta observability judges, beta observability datasets, beta observability datasets records, beta observability evaluations, beta observability evaluations projects, beta observability evaluations runs, beta observability evaluations records, beta observability evaluations optimizations, beta observability logs, beta observability traces, beta observability spans (65 operations).
+- Changed response field `name` in `sdk.beta.connectors.list()`, `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+- Added field `status[403]` in `sdk.beta.rag.managed_indexes.create()`.
+- Added request fields `diarize`, `context_bias`, `language`, `speaker_references`, and `turn_detection` in `sdk.audio.realtime.connect()`, `sdk.audio.realtime.transcribe_stream()`, and `sdk.audio.realtime.connect().update_session()`.
+- Added response variants `TurnDetectionStartEvent`, `TurnDetectionEagerEndEvent`, `TurnDetectionResumeEvent`, and `TurnDetectionEndEvent` in `sdk.audio.realtime.connect()` and `sdk.audio.realtime.transcribe_stream()`.
+
+#### Fixes
+
+- `sdk.workflows.schedules.schedule_workflow()` and `sdk.workflows.schedules.update_schedule()` now encrypt `schedule.input` when payload encryption is enabled; it was previously sent in cleartext. `sdk.workflows.schedules.get_schedule()` and `sdk.workflows.schedules.get_schedules()` decode it.
+- Partially encrypted workflow payloads are now serialized as compact JSON, matching the TypeScript SDK.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.6.0] .
+### Releases
+- [PyPI v3.6.0] https://pypi.org/project/mistralai/3.6.0 - .

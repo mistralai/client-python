@@ -1,5 +1,7 @@
 import asyncio
 import concurrent.futures
+import hashlib
+import hmac
 import json
 import logging
 import re
@@ -9,6 +11,7 @@ from typing import Any, AsyncIterator, Coroutine, Dict, Optional, TypeVar, Union
 
 import httpx2 as httpx
 from httpx2._types import AsyncByteStream
+from pydantic_core import to_json
 
 from .types import (
     AfterSuccessContext,
@@ -19,7 +22,11 @@ from .types import (
 from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.extra.workflows.encoding.config import WorkflowEncodingConfig
 from mistralai.extra.workflows.encoding.helpers import generate_two_part_id
-from mistralai.extra.workflows.encoding.models import WorkflowContext
+from mistralai.extra.workflows.encoding.models import (
+    NetworkEncodedInput,
+    NetworkEncodedScheduleInput,
+    WorkflowContext,
+)
 from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
 
 logger = logging.getLogger(__name__)
@@ -86,10 +93,18 @@ EXECUTE_WORKFLOW_OPERATION_ID = (
 )
 EXECUTE_WORKFLOW_REGISTRATION_OPERATION_ID = "execute_workflow_registration_v1_workflows_registrations__workflow_registration_id__execute_post"
 SCHEDULE_WORKFLOW_OPERATION_ID = "schedule_workflow_v1_workflows_schedules_post"
+UPDATE_SCHEDULE_OPERATION_ID = (
+    "update_schedule_v1_workflows_schedules__schedule_id__patch"
+)
 
 EXECUTE_OPERATIONS = {
     EXECUTE_WORKFLOW_OPERATION_ID,
     EXECUTE_WORKFLOW_REGISTRATION_OPERATION_ID,
+}
+
+SCHEDULE_OPERATIONS = {
+    SCHEDULE_WORKFLOW_OPERATION_ID,
+    UPDATE_SCHEDULE_OPERATION_ID,
 }
 
 OPERATIONS_ENCODE_INPUT = {
@@ -99,6 +114,7 @@ OPERATIONS_ENCODE_INPUT = {
     "query_workflow_execution_v1_workflows_executions__execution_id__queries_post",
     "update_workflow_execution_v1_workflows_executions__execution_id__updates_post",
     SCHEDULE_WORKFLOW_OPERATION_ID,
+    UPDATE_SCHEDULE_OPERATION_ID,
 }
 
 OPERATIONS_DECODE_RESULT = {
@@ -107,6 +123,11 @@ OPERATIONS_DECODE_RESULT = {
     "get_workflow_execution_v1_workflows_executions__execution_id__get",
     "query_workflow_execution_v1_workflows_executions__execution_id__queries_post",
     "update_workflow_execution_v1_workflows_executions__execution_id__updates_post",
+}
+
+OPERATIONS_DECODE_SCHEDULE_INPUT = {
+    "get_schedule_v1_workflows_schedules__schedule_id__get",
+    "get_schedules_v1_workflows_schedules_get",
 }
 
 # Operations that return event data that may need decryption
@@ -121,6 +142,8 @@ OPERATIONS_DECODE_EVENTS_STREAM = {
 }
 
 SCHEDULE_CORRELATION_ID_PLACEHOLDER = "__scheduled_workflow__"
+
+SCHEDULE_INPUT_HASH_KEY_LABEL = b"schedule-input-hash"
 
 
 def _is_payload_type(value: Any) -> bool:
@@ -211,6 +234,34 @@ async def _decrypt_events_in_response(
             )
 
     return body
+
+
+def _is_encoded_schedule_input(value: Any, payload_encoder: PayloadEncoder) -> bool:
+    return (
+        isinstance(value, dict)
+        and bool(value.get("encoding_options"))
+        and payload_encoder.check_is_payload_encoded(value)
+    )
+
+
+async def _decode_schedule_inputs(
+    schedule_defs: list[Dict[str, Any]],
+    payload_encoder: PayloadEncoder,
+) -> None:
+    for schedule_def in schedule_defs:
+        try:
+            decoded_input = await payload_encoder.decode_network_result(
+                schedule_def["input"]
+            )
+        except Exception as e:
+            logger.warning(
+                "WorkflowEncodingHook: Failed to decode input of schedule %s: %s",
+                schedule_def.get("schedule_id"),
+                e,
+            )
+            continue
+        if not isinstance(decoded_input, bytes):
+            schedule_def["input"] = decoded_input
 
 
 def _decrypt_sse_line(line: bytes, payload_encoder: PayloadEncoder) -> bytes:
@@ -325,7 +376,17 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
 
         try:
             body = json.loads(request.content)
-            input_data = body.get("input")
+            if not isinstance(body, dict):
+                return request
+            if hook_ctx.operation_id in SCHEDULE_OPERATIONS:
+                input_holder = body.get("schedule")
+                if not isinstance(input_holder, dict):
+                    raise ValueError(
+                        f"WorkflowEncoding: {hook_ctx.operation_id} request has no schedule object to encode"
+                    )
+            else:
+                input_holder = body
+            input_data = input_holder.get("input")
             if input_data is None:
                 return request
 
@@ -338,10 +399,7 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 execution_id = generate_two_part_id(seed)
                 body["execution_id"] = execution_id
 
-            if (
-                not execution_id
-                and hook_ctx.operation_id == SCHEDULE_WORKFLOW_OPERATION_ID
-            ):
+            if not execution_id and hook_ctx.operation_id in SCHEDULE_OPERATIONS:
                 execution_id = SCHEDULE_CORRELATION_ID_PLACEHOLDER
 
             if not execution_id:
@@ -354,20 +412,50 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 execution_id=execution_id,
             )
 
-            encoded_input = _run_async(
-                encoding_config.payload_encoder.encode_network_input(
-                    input_data, context
+            allow_offloading = hook_ctx.operation_id not in SCHEDULE_OPERATIONS
+
+            encoded_data, encoding_options = _run_async(
+                encoding_config.payload_encoder.encode_payload_content(
+                    to_json(input_data),
+                    context,
+                    allow_offloading=allow_offloading,
                 )
             )
+            encoded_input = NetworkEncodedInput.from_data(
+                encoded_data, encoding_options
+            )
 
-            # Update body based on operation type:
-            # - Execute operations: use separate `encoded_input` field and set `input` to None
-            # - Signal/Query/Update: put encoded input directly in `input` field
+            encryption_config = encoding_config.payload_encoder.encryption_config
+            if hook_ctx.operation_id == SCHEDULE_WORKFLOW_OPERATION_ID:
+                canonical_input = json.dumps(
+                    input_data,
+                    sort_keys=True,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+                if (
+                    encryption_config is not None
+                    and encryption_config.main_key is not None
+                ):
+                    hash_key = hmac.new(
+                        bytes.fromhex(encryption_config.main_key.get_secret_value()),
+                        SCHEDULE_INPUT_HASH_KEY_LABEL,
+                        hashlib.sha256,
+                    ).digest()
+                    input_hash = hmac.new(
+                        hash_key, canonical_input, hashlib.sha256
+                    ).hexdigest()
+                else:
+                    input_hash = hashlib.sha256(canonical_input).hexdigest()
+                encoded_input = NetworkEncodedScheduleInput(
+                    **encoded_input.model_dump(), input_hash=input_hash
+                )
+
             if hook_ctx.operation_id in EXECUTE_OPERATIONS:
                 body["encoded_input"] = encoded_input.model_dump(mode="json")
                 body["input"] = None
             else:
-                body["input"] = encoded_input.model_dump(mode="json")
+                input_holder["input"] = encoded_input.model_dump(mode="json")
 
             new_content = json.dumps(body).encode("utf-8")
             new_headers = httpx.Headers(request.headers)
@@ -453,6 +541,42 @@ class WorkflowEncodingHook(BeforeRequestHook, AfterSuccessHook):
                 )
             except Exception as e:
                 logger.error("WorkflowEncodingHook: Failed to decode events: %s", e)
+                raise
+
+        elif hook_ctx.operation_id in OPERATIONS_DECODE_SCHEDULE_INPUT:
+            try:
+                body = json.loads(response.content)
+                if not isinstance(body, dict):
+                    return response
+                schedule_defs = body.get("schedules")
+                if not isinstance(schedule_defs, list):
+                    schedule_defs = [body]
+                encoded_schedule_defs = [
+                    schedule_def
+                    for schedule_def in schedule_defs
+                    if isinstance(schedule_def, dict)
+                    and _is_encoded_schedule_input(
+                        schedule_def.get("input"), encoding_config.payload_encoder
+                    )
+                ]
+                if encoded_schedule_defs:
+                    _run_async(
+                        _decode_schedule_inputs(
+                            encoded_schedule_defs, encoding_config.payload_encoder
+                        )
+                    )
+                    new_content = json.dumps(body).encode("utf-8")
+                    response = httpx.Response(
+                        status_code=response.status_code,
+                        headers=_strip_content_encoding_header(response.headers),
+                        content=new_content,
+                        request=response.request,
+                        extensions=response.extensions,
+                    )
+            except Exception as e:
+                logger.error(
+                    "WorkflowEncodingHook: Failed to decode schedule input: %s", e
+                )
                 raise
 
         return response

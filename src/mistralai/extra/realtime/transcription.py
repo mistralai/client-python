@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import time
-from typing import AsyncIterator, Mapping, Optional
+from typing import AsyncIterator, Dict, List, Mapping, Optional, Union
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 try:
@@ -23,6 +23,8 @@ from mistralai.client.models import (
     RealtimeTranscriptionError,
     RealtimeTranscriptionSession,
     RealtimeTranscriptionSessionCreated,
+    TurnDetectionConfig,
+    TurnDetectionConfigTypedDict,
 )
 from mistralai.client.sdkconfiguration import SDKConfiguration
 from mistralai.client.utils import generate_url, get_security, get_security_from_env
@@ -75,6 +77,14 @@ class RealtimeTranscription:
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
+        *,
+        diarize: Optional[bool] = None,
+        context_bias: Optional[List[str]] = None,
+        language: Optional[str] = None,
+        speaker_references: Optional[Dict[str, str]] = None,
+        turn_detection: Optional[
+            Union[TurnDetectionConfig, TurnDetectionConfigTypedDict]
+        ] = None,
     ) -> RealtimeConnection:
         if timeout_ms is None:
             timeout_ms = self._sdk_config.timeout_ms
@@ -128,19 +138,33 @@ class RealtimeTranscription:
                 user_agent_header=user_agent,
             )
 
-            session, initial_events = await _recv_handshake(
+            created_session, initial_events = await _recv_handshake(
                 websocket, timeout_ms=timeout_ms
             )
             connection = RealtimeConnection(
                 websocket=websocket,
-                session=session,
+                session=created_session,
                 initial_events=initial_events,
             )
 
-            if audio_format is not None or target_streaming_delay_ms is not None:
+            session_fields = (
+                audio_format,
+                target_streaming_delay_ms,
+                diarize,
+                context_bias,
+                language,
+                speaker_references,
+                turn_detection,
+            )
+            if any(value is not None for value in session_fields):
                 await connection.update_session(
                     audio_format,
                     target_streaming_delay_ms=target_streaming_delay_ms,
+                    diarize=diarize,
+                    context_bias=context_bias,
+                    language=language,
+                    speaker_references=speaker_references,
+                    turn_detection=turn_detection,
                 )
 
             return connection
@@ -163,6 +187,14 @@ class RealtimeTranscription:
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
+        *,
+        diarize: Optional[bool] = None,
+        context_bias: Optional[List[str]] = None,
+        language: Optional[str] = None,
+        speaker_references: Optional[Dict[str, str]] = None,
+        turn_detection: Optional[
+            Union[TurnDetectionConfig, TurnDetectionConfigTypedDict]
+        ] = None,
     ) -> AsyncIterator[RealtimeEvent]:
         """
         Flow
@@ -177,6 +209,11 @@ class RealtimeTranscription:
             server_url=server_url,
             timeout_ms=timeout_ms,
             http_headers=http_headers,
+            diarize=diarize,
+            context_bias=context_bias,
+            language=language,
+            speaker_references=speaker_references,
+            turn_detection=turn_detection,
         ) as connection:
 
             async def _send() -> None:

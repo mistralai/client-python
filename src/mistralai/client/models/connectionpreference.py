@@ -13,30 +13,46 @@ from mistralai.client.types import (
     UNSET,
     UNSET_SENTINEL,
 )
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import NotRequired, TypedDict
+from typing import Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ConnectionPreferenceTypedDict(TypedDict):
-    name: str
     tool_configuration: ToolExecutionConfigurationTypedDict
-    is_default: NotRequired[Nullable[bool]]
     consumer_type: NotRequired[Nullable[ConsumerType]]
+    name: NotRequired[str]
+    r"""Deprecated: always `default`, a connection holds a single preference."""
+    is_default: NotRequired[Nullable[bool]]
+    r"""Deprecated: always `true`."""
 
 
 class ConnectionPreference(BaseModel):
-    name: str
-
     tool_configuration: ToolExecutionConfiguration
-
-    is_default: OptionalNullable[bool] = UNSET
 
     consumer_type: OptionalNullable[ConsumerType] = UNSET
 
+    name: Annotated[
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = "default"
+    r"""Deprecated: always `default`, a connection holds a single preference."""
+
+    is_default: Annotated[
+        OptionalNullable[bool],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated: always `true`."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["is_default", "consumer_type"])
-        nullable_fields = set(["is_default", "consumer_type"])
+        optional_fields = set(["consumer_type", "name", "is_default"])
+        nullable_fields = set(["consumer_type", "is_default"])
         serialized = handler(self)
         m = {}
 

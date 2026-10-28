@@ -283,7 +283,8 @@ class PayloadEncoder:
             encrypted_data = self._encrypt(encrypted_field["data"].encode())
             encrypted_field["data"] = base64.b64encode(encrypted_data).decode()
 
-        return json.dumps(obj).encode(), len(encrypted_fields) > 0
+        serialized = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+        return serialized.encode("utf-8", "backslashreplace"), len(encrypted_fields) > 0
 
     async def _partially_decrypt_fields(self, data: bytes) -> tuple[bytes, bool]:
         try:

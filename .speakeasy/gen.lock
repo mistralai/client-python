@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 2d045ec7-2ebb-4f4d-ad25-40953b132161
 management:
-  docChecksum: 88f8765f297eba24ea252acea6ae0346
+  docChecksum: cfe6944e067faa7851832c66c9b4b340
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 3.5.0
-  configChecksum: 90c7e2935bf5d87ac9bc5e574594582d
+  releaseVersion: 3.6.0
+  configChecksum: e989c703205a842171b583faeec42be4
   repoURL: https://github.com/mistralai/client-python.git
   installationURL: https://github.com/mistralai/client-python.git
   published: true
 persistentEdits:
-  generation_id: a76cbf96-e5c8-4cdd-a264-aa1e028d7774
-  pristine_commit_hash: 386ad02302add3e05953b33916d1bddff2e4c3d3
-  pristine_tree_hash: 6eb983533a728d0f19c4efc5ac7f43054c6228df
+  generation_id: 53136f90-a575-4cae-b8d9-b64cd15c6143
+  pristine_commit_hash: d18bece5899675225816b484a4335ed500dc94e1
+  pristine_tree_hash: 6fc1736b4a815dcf15ba0bfe80ed6804ad66aac2
 features:
   python:
     acceptHeaders: 3.0.0
@@ -820,10 +820,6 @@ trackedFiles:
     id: 458248f721bb
     last_write_checksum: sha1:d4591e7b6f6e841cffc67d1821bd0b3258ff4b1d
     pristine_git_object: e979caf1e36471e2fc485ed096fd29e3cda3582e
-  docs/models/completiontokensdetails.md:
-    id: 72beafa9a4c8
-    last_write_checksum: sha1:79d4cd281e9247b16f381800938fb302752df5b2
-    pristine_git_object: fec4195551396423a67aab09606a7fdc1b26a3f1
   docs/models/computefilteredrunstatisticsv2v1observabilityevaluationrunsv2runidstatisticscomputepostrequest.md:
     id: 44374d81fb36
     last_write_checksum: sha1:3f11891cf8ffc16b10cb348eebb0c0113faa8b94
@@ -846,8 +842,8 @@ trackedFiles:
     pristine_git_object: 0a2e25d13afd8d8507afc3c2cbcf6e8656817eee
   docs/models/connectionpreference.md:
     id: be469697273b
-    last_write_checksum: sha1:f59d85167c69837a67f05e190a8efdd2feaa723f
-    pristine_git_object: e069233ff9f42a6b13e356985e3bc3819128b970
+    last_write_checksum: sha1:69a6cefd1f899906a65af2effcc9b9c5d5ed7ba3
+    pristine_git_object: 48347b9568a6772d6bfaffb1ae44d549d7f89ca9
   docs/models/connector.md:
     id: cbf7c2c53983
     last_write_checksum: sha1:48b79253125e022074f325f25dd122329890d34c
@@ -3252,10 +3248,6 @@ trackedFiles:
     id: 3dd409ff05ba
     last_write_checksum: sha1:f7dd5b03360f01417c32a33fd8131e6899ec6430
     pristine_git_object: 504aa9de165ea21ffd7178dd092b7532fc3f9e6a
-  docs/models/messagetokens.md:
-    id: c348c2448aaa
-    last_write_checksum: sha1:745a41b9189a9a48cbde2838bf9432e60bb9df62
-    pristine_git_object: 79b126d9a6a72f84fa491417bff0f891206f59b4
   docs/models/metadata.md:
     id: ad63dba5a4f8
     last_write_checksum: sha1:ff2c890fd9527ba5ecae6fc1f28609eac06c44d9
@@ -3442,8 +3434,8 @@ trackedFiles:
     pristine_git_object: 22e2804a4424325ad07c264a61463635299fc254
   docs/models/observabilityerrorcode.md:
     id: 61d16ff95b87
-    last_write_checksum: sha1:dfa87efabba4a093f43605b803bf8fe16d9adfe9
-    pristine_git_object: 314a516353e9a844677a397ffb4f53273704a025
+    last_write_checksum: sha1:c7ad15b7169b61165ce5ec96048f4810c862fc47
+    pristine_git_object: ee72a767a23a06437ce3ed94518ac979964131e7
   docs/models/observabilityerrordetail.md:
     id: 38061447dfbb
     last_write_checksum: sha1:1da7bf6e72c2f972b0e22f0201a1cb9b76f53ccd
@@ -3856,10 +3848,6 @@ trackedFiles:
     id: 327de0066e86
     last_write_checksum: sha1:db07389f762ea8e69bd6f661d9e7f14f38093806
     pristine_git_object: f46e47a0e9389830cda6385a6f9cddf4bcdc9aac
-  docs/models/prompttokensdetails.md:
-    id: 1391892fce0a
-    last_write_checksum: sha1:d6409b4ded3c282050b3751d1c535f6f428ccacb
-    pristine_git_object: 9614a436bf49c19500bc829f2ac1d65929eb7375
   docs/models/promptvariable.md:
     id: 2e9f9dbaf1a3
     last_write_checksum: sha1:6fbb6fe14fcaad4e86189c876c0a9338f4edba9a
@@ -3916,6 +3904,54 @@ trackedFiles:
     id: 1323016410bd
     last_write_checksum: sha1:553cf2fa061b2ac0cd52d04c287927d7d8f01b10
     pristine_git_object: 657af9de97a1863eef9f9484303b939ad854fe01
+  docs/models/realtimespeecherror.md:
+    id: db5ede717a0c
+    last_write_checksum: sha1:10d7e6f4da88cb3294dbe16bc6d70697ef2a43f5
+    pristine_git_object: 24ea9672a70c1a2e5d1bd8636c0e266584722ecb
+  docs/models/realtimespeecherrordetail.md:
+    id: 69e8335daf17
+    last_write_checksum: sha1:363a4b197b646d459064db72b4afe46fff924b86
+    pristine_git_object: 393fbd62410fbc56724d113d5b462b7fb60ffa77
+  docs/models/realtimespeecherrordetailmessage.md:
+    id: 161fc46cd8c0
+    last_write_checksum: sha1:ce0869376d388813c0ef0170e0cfd37c60a6dc7c
+    pristine_git_object: 281c50060dd37bca3d71564185ea535d75b2fe40
+  docs/models/realtimespeechinputtextappend.md:
+    id: 381fbbedd861
+    last_write_checksum: sha1:c6b1d339dd8a8a8aaf74d6c684233c8620dcbefa
+    pristine_git_object: 96d5f813e54b92a52df1aa6ccd61fc6ac717f8d8
+  docs/models/realtimespeechinputtextend.md:
+    id: 702831e13b28
+    last_write_checksum: sha1:0c442cb7685c3e4b8ea3c9836a40604bf2e74612
+    pristine_git_object: 936a64bd469c5bbbb8d86476546d2c3a5108126b
+  docs/models/realtimespeechinputtextflush.md:
+    id: 8d69f70645f1
+    last_write_checksum: sha1:d693df10221d0eea6e4c210033d24132ecd353c9
+    pristine_git_object: 48041c5d5d1662dd28f1c450d41dcc86db496dcd
+  docs/models/realtimespeechsession.md:
+    id: 28b2f5a82537
+    last_write_checksum: sha1:e9ceb29414b8e0d2e7772ad9e93b2a710f2972c3
+    pristine_git_object: 256b2bfdd18c406cc2dfaef3d08861ca112cad7e
+  docs/models/realtimespeechsessioncreated.md:
+    id: 6a5abd07b3f5
+    last_write_checksum: sha1:22de922e7be85645946e42aedab732f3a2a4be5b
+    pristine_git_object: 169a9c017d095a9dc1f95420f552302de0fef391
+  docs/models/realtimespeechsessionupdated.md:
+    id: e47d1889c765
+    last_write_checksum: sha1:042f6076307379a2811499d93cceb902e4f932e5
+    pristine_git_object: 0a38f78f9b77e29e6a1333a5f284c034631c94e5
+  docs/models/realtimespeechsessionupdatemessage.md:
+    id: b4270a54bbb9
+    last_write_checksum: sha1:4fc5a99f2b24db294ffd8cd4139c644625eac212
+    pristine_git_object: 6f96b67c2b112ef3b4253d5eb856c19ce1ec59b2
+  docs/models/realtimespeechsessionupdatepayload.md:
+    id: a9ee3a4cd31a
+    last_write_checksum: sha1:66967ecf8d6d7be1f2a39ff84ebba68895764c7d
+    pristine_git_object: b931680851ddd15e5c22caae3284956c77dafb1a
+  docs/models/realtimespeechstreamingmode.md:
+    id: 0fde6b6275cd
+    last_write_checksum: sha1:d376a19ffa871b3375b33a517e17527bc46454d5
+    pristine_git_object: 2c388e6f5886e7eef5adab87df07b07b092136d1
   docs/models/realtimetranscriptionerror.md:
     id: 4bc5e819565b
     last_write_checksum: sha1:c93e4b19a0aa68723ea69973a9f22a581c7b2ff6
@@ -4536,10 +4572,6 @@ trackedFiles:
     id: ac567924689c
     last_write_checksum: sha1:7534c5ec5f1ae1e750c8f610f81f2106587e81a9
     pristine_git_object: f1280f8862e9d3212a5cfccd9453884b4055710a
-  docs/models/roles.md:
-    id: 2af79e204ed6
-    last_write_checksum: sha1:10354a9bcbe03a498848de9874b3163cde0fcc05
-    pristine_git_object: d722e7654427a013da70deb45f1bdb65b55add30
   docs/models/rootscapability.md:
     id: 7cc1a16f90b4
     last_write_checksum: sha1:68d66251fe9a079c0c0c78853699009c378ddef5
@@ -4978,8 +5010,8 @@ trackedFiles:
     pristine_git_object: 3a1725529f737b69ecfe147f1619c05896d0c2a4
   docs/models/speechstreamdone.md:
     id: 660654bb6961
-    last_write_checksum: sha1:460b0891989440add3f7f0e802b5744e343249cb
-    pristine_git_object: d9b5e0c0c9deef93a2ff79d46a026766c4aef673
+    last_write_checksum: sha1:b22cea97446a13b5be8bd1bce302eabf77d69130
+    pristine_git_object: 12c38c7e2fc0ce775a3f728b62f901afd039f688
   docs/models/speechstreamevents.md:
     id: d071f3e7ecda
     last_write_checksum: sha1:48806c50f933cdf9331fafe5a622717147fe9427
@@ -5764,10 +5796,6 @@ trackedFiles:
     id: ec6fe65028a9
     last_write_checksum: sha1:19977a2bb11140ff61aaf762e5ebf8a60c8a050f
     pristine_git_object: fb460774fe5e9affe5d1c0e6795ed6255cf06587
-  docs/models/usageinfodollardefs.md:
-    id: db2412f29163
-    last_write_checksum: sha1:618cb870e5cb3bc6e612908b118c1bce075391e0
-    pristine_git_object: 8f1f228d20f855505f9dfd33c627a6f0d81b88d5
   docs/models/useridentity.md:
     id: 959b5b6bb365
     last_write_checksum: sha1:57c19208b5cccac6058c850e34f98bdb7d6b04e9
@@ -6434,8 +6462,8 @@ trackedFiles:
     pristine_git_object: 5052bb072d14c65419bf49bdc1a47500cb03ae56
   src/mistralai/client/_version.py:
     id: cc807b30de19
-    last_write_checksum: sha1:7c09a778d62000c4bca913828c94da1591087072
-    pristine_git_object: b073af7fd1283d3fa1c1ea82ade8815167e43f62
+    last_write_checksum: sha1:eb2f38c76b6186585c38f1a15cb08e729b316504
+    pristine_git_object: 729425f91764a66b7771d3c38a92436dc4c640f5
   src/mistralai/client/accesses.py:
     id: 76fc53bfcf59
     last_write_checksum: sha1:414c7375fcd63266d196840fa8d1274d60aae2dc
@@ -6598,16 +6626,16 @@ trackedFiles:
     pristine_git_object: e7755cdc9230bbb9a87fff16930099911959c558
   src/mistralai/client/managed_indexes.py:
     id: b6dd0fca653d
-    last_write_checksum: sha1:f61b7f33f06494f6dc687165204c57558e6af6b4
-    pristine_git_object: 4ffd52d4a9b964a9d98b91eeacaca0c938acc432
+    last_write_checksum: sha1:26c6d9a04c1b87e60221efbb1cef9a4b69bb0c38
+    pristine_git_object: 0e5b80e29cb9acf864055c4ae8394c9421bc4a30
   src/mistralai/client/metrics.py:
     id: 937cb03f8130
     last_write_checksum: sha1:461f34f2e6b943241208de01bbbf5f57ec6a31b4
     pristine_git_object: 41d7f799e8a2afa860b4193f7752e094f1c624b2
   src/mistralai/client/models/__init__.py:
     id: e0e8dad92725
-    last_write_checksum: sha1:5ed9fa555fef2f9d62f14e1498d40cf9ccf6ebfc
-    pristine_git_object: 67090a69a82505390159fc39af19be1cf24609ef
+    last_write_checksum: sha1:f9019f990040b4bdc89401030f4a2d489214cd8a
+    pristine_git_object: 4c21494c59eefea68c1c910af8094ab9654a2a25
   src/mistralai/client/models/accepteddocumentresponse.py:
     id: f529b784daff
     last_write_checksum: sha1:2eb3c7dc0d7165987aefda841b1ceada6698c15d
@@ -7168,10 +7196,6 @@ trackedFiles:
     id: fdd27ba32f7c
     last_write_checksum: sha1:6b4a5aa8545f6807625ad44d645551a054ccd9cc
     pristine_git_object: 5b0688a0398b51e50fa4c8ea9b741c61d2beb150
-  src/mistralai/client/models/completiontokensdetails.py:
-    id: 8e822f11a1b2
-    last_write_checksum: sha1:ac75a68cd2d87926a4f751833b036098accf67ed
-    pristine_git_object: f253decf8e24fff25256a323b7288b27a33fe7ca
   ? src/mistralai/client/models/compute_filtered_run_statistics_v2_v1_observability_evaluation_runs_v2_run_id_statistics_compute_postop.py
   : id: a9bcc643cf6a
     last_write_checksum: sha1:6c3f7e18a33fe11a4604600398a7b317e210a71e
@@ -7186,8 +7210,8 @@ trackedFiles:
     pristine_git_object: 13a20107f4a4e60dd569db435df4a9c610e9a993
   src/mistralai/client/models/connectionpreference.py:
     id: 6b9389ac91e6
-    last_write_checksum: sha1:586106310d6ec2ce38e7d1aefb0a37cb71534ee8
-    pristine_git_object: fbca39a4f13d80041161d4f0a35efbc170d3eea6
+    last_write_checksum: sha1:50cb67daee6c0f20e5eca35466ab61b5b06ee3ea
+    pristine_git_object: 8e0bcf220c25b1df84a7584faac325873cab1972
   src/mistralai/client/models/connector.py:
     id: 1a4facac922d
     last_write_checksum: sha1:ab248d0d9facc036b568078130ab576601a07bdb
@@ -9060,10 +9084,6 @@ trackedFiles:
     id: 6b388bc155dd
     last_write_checksum: sha1:668d73bde9650a7642fd71c61b7383cb9be8abf6
     pristine_git_object: 42fb7b7fcc14ec779408bbcbce2a2151ad7536f5
-  src/mistralai/client/models/messagetokens.py:
-    id: e2a5171d27c5
-    last_write_checksum: sha1:af37f98ca55f6ba5373ed538e68f88e1e9f3e612
-    pristine_git_object: 7326311b6d45c56cbc6c2c513e27826a3e2b943e
   src/mistralai/client/models/metadatafilter.py:
     id: 119677f7c52c
     last_write_checksum: sha1:1cefa7882d18ad41b6ff6887c16ba56932006ed0
@@ -9214,8 +9234,8 @@ trackedFiles:
     pristine_git_object: 91c2360d5d2c02e4391590a61ea4f6b0af5e24ec
   src/mistralai/client/models/observabilityerrorcode.py:
     id: ae572b470a30
-    last_write_checksum: sha1:a2152859dba9f1bf6b891312b59c37bccc135e21
-    pristine_git_object: 8f3bf3e8f29dd23db264513760de6c8fd1d738b0
+    last_write_checksum: sha1:5776ff19686908459ab073616c4a51da5988eb12
+    pristine_git_object: e036b0d3fe4fd59533a69320c96cedab5184de8f
   src/mistralai/client/models/observabilityerrordetail.py:
     id: cb6e8a484a38
     last_write_checksum: sha1:f77796b6fbcb1e7e7a87dc25dd52cf1f9474510c
@@ -9568,10 +9588,6 @@ trackedFiles:
     id: 15c552f53adf
     last_write_checksum: sha1:40c135b89809978ca26628e66af4277138f662f8
     pristine_git_object: c75e8c237ef7be829227b332d53dc5938bf13d45
-  src/mistralai/client/models/prompttokensdetails.py:
-    id: e6be33f2cd2d
-    last_write_checksum: sha1:c2cd2bab5863224ea26f932b180e37b9992d2d74
-    pristine_git_object: d9204fcdca4ec825f60e40e6de46bdd8162c9916
   src/mistralai/client/models/promptvariable.py:
     id: c86c2b89e3ce
     last_write_checksum: sha1:0efc25a3bc4aa3c103a79e606519873ec2440356
@@ -9620,6 +9636,50 @@ trackedFiles:
     id: 8ef0ba975e25
     last_write_checksum: sha1:b74353dfa67c9c373adc473c5ffb9d31f819169b
     pristine_git_object: d318e18465c8eaac9a61b2c75cd30c30749b0456
+  src/mistralai/client/models/realtimespeecherror.py:
+    id: f3233c538690
+    last_write_checksum: sha1:315f9e974b81afbb292c66f5d3feaed6d83492bb
+    pristine_git_object: 1dc232a9d990b2d14bd5ef7b37bc1df86a3cdc1d
+  src/mistralai/client/models/realtimespeecherrordetail.py:
+    id: 852eea0ef272
+    last_write_checksum: sha1:c80a509db977d1a5da5b223f7491c3478f5de35f
+    pristine_git_object: f3e747f5f4de58bc3a19080ce88191f54ea85c1c
+  src/mistralai/client/models/realtimespeechinputtextappend.py:
+    id: 95c5a18e566b
+    last_write_checksum: sha1:c182504907843c01747944e8b9c4c99caceeddaf
+    pristine_git_object: 994e160ceb70248dcaa9530deb778864c921d42e
+  src/mistralai/client/models/realtimespeechinputtextend.py:
+    id: 797090a803c8
+    last_write_checksum: sha1:ab6a036e00bcc0ad599c9a2986e9b30e335e7e1c
+    pristine_git_object: 34b6b97c8e334f2857b456bdb1dcf90b66284313
+  src/mistralai/client/models/realtimespeechinputtextflush.py:
+    id: ff816674b0d7
+    last_write_checksum: sha1:f87e61ecae4a55fa50c922fbd965a68fcff1fe73
+    pristine_git_object: 1dec12ab5f01c68089eac3922b98f5de88317247
+  src/mistralai/client/models/realtimespeechsession.py:
+    id: 0b8c41568fce
+    last_write_checksum: sha1:d2fc2309cf8f7d58f7da925e1f65ee8dc3af3d24
+    pristine_git_object: 8a4ea97c2badc51ea7588085e7378fcb7930810d
+  src/mistralai/client/models/realtimespeechsessioncreated.py:
+    id: 46cd4ef13e0e
+    last_write_checksum: sha1:c165056e010506590c0cb10976a2e9301481bf35
+    pristine_git_object: 28e26ee28670ab5308038d4a28d95a17aeea4f6c
+  src/mistralai/client/models/realtimespeechsessionupdated.py:
+    id: ecd9359dee85
+    last_write_checksum: sha1:cc0ca6ffe38d81798b93bbc9da7240aeb78e4bac
+    pristine_git_object: e5043ae5a54c009000ea894da3f63863db1c4629
+  src/mistralai/client/models/realtimespeechsessionupdatemessage.py:
+    id: f2c064a777b2
+    last_write_checksum: sha1:80dba67b81bee6a9bb1f41fe0ec62058be46e1b5
+    pristine_git_object: fbb541fa5615d4dff2823c09fd5da35c219c1578
+  src/mistralai/client/models/realtimespeechsessionupdatepayload.py:
+    id: 3f0e12441b91
+    last_write_checksum: sha1:ade5311cddbbac00ed935236ba17b40112ced229
+    pristine_git_object: 0feae7e820a84c72bb28a97a268a3c48b3d578d7
+  src/mistralai/client/models/realtimespeechstreamingmode.py:
+    id: ee52fdab8618
+    last_write_checksum: sha1:3702c8d3b3706fd1cac8eceaf7d6750b4fd443b3
+    pristine_git_object: e4c169cf76f9b2d77fb9de2f52ad1167756c45ac
   src/mistralai/client/models/realtimetranscriptionerror.py:
     id: 8c2267378f48
     last_write_checksum: sha1:baf9963ef1a7c5ed3ca3958859237b3d6b309dbb
@@ -9980,10 +10040,6 @@ trackedFiles:
     id: 6fefa90ca351
     last_write_checksum: sha1:6727373da253fb3da395681c167264141771d9cd
     pristine_git_object: eaaf010c5556472fa94983033984faec79fd2afa
-  src/mistralai/client/models/roles.py:
-    id: e41c04cf7422
-    last_write_checksum: sha1:67cf30898ea50742c1271ea6d825abafaca630f1
-    pristine_git_object: 42263b5d1c4317d7e991182f386ab83d797478f4
   src/mistralai/client/models/rootscapability.py:
     id: f1514b6dd416
     last_write_checksum: sha1:8be6c7b90f486f80843394e31dc4daceb64336de
@@ -10358,8 +10414,8 @@ trackedFiles:
     pristine_git_object: 7fdd1b5a52cbbeeea563cec24fc09d59a06e5ef4
   src/mistralai/client/models/speechstreamdone.py:
     id: 2164b6526a81
-    last_write_checksum: sha1:ff4611cb50b27b1dfed76434e6e849154a4659da
-    pristine_git_object: 5d29dd86cd0dfc592f6f51662ebf8d0f276e824f
+    last_write_checksum: sha1:b66df6bdce8af49e74146db00c516fc22f48cc2b
+    pristine_git_object: c435a4ae0ec0e3c0b3531d3036362ae1c94e0f62
   src/mistralai/client/models/speechstreameventtypes.py:
     id: b76eee4fdf6a
     last_write_checksum: sha1:b58401574b545377bd720689987ce1f4e0039781
@@ -10956,10 +11012,6 @@ trackedFiles:
     id: 54adb9a3af16
     last_write_checksum: sha1:a4a4fcf6064ad55e9495258241e495a0a50f1c46
     pristine_git_object: e8978e8522246ca127853f907968f290635783a3
-  src/mistralai/client/models/usageinfo_dollar_defs.py:
-    id: d543506af998
-    last_write_checksum: sha1:79b2cdf708c61b623780e3bef926022b61da0763
-    pristine_git_object: 25ffc4e40bd84e0ace846975a6c0140bb3ee3e24
   src/mistralai/client/models/useridentity.py:
     id: 8b1effdfe1ba
     last_write_checksum: sha1:2b131fbb269cce463f9758cd2a97025aff0aef26
@@ -15986,7 +16038,78 @@ examples:
           application/json: {"input_tokens": 363814, "object": "response.input_tokens"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Python SDK Changes:\n* `mistral.beta.conversations.start()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.list()`:  `response.[].union(ModelConversation).completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.get()`:  `response.union(ModelConversation).completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.append()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.conversations.restart()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.create()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n  *  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list()`:  `response.[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list_pages()`:  `response.data[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.get()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.update()`: \n  *  `request.completion_args.reasoning_effort.enum(max)` **Added**\n  *  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.update_version()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.list_versions()`:  `response.[].completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.beta.agents.get_version()`:  `response.completion_args.reasoning_effort.enum(max)` **Added**\n* `mistral.chat.complete()`: \n  *  `request.reasoning_effort.enum(max)` **Added**\n* `mistral.agents.complete()`: \n  *  `request.reasoning_effort.enum(max)` **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `mistral.beta.observability.judges.create()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.judges.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.judges.fetch()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.judges.delete()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.judges.update()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.judges.judge_conversation()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.create()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.fetch()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.delete()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.update()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.list_records()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.create_record()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.import_from_file()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.import_from_playground()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.import_from_spans()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.import_from_dataset_records()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.export_to_jsonl()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.fetch_task()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.list_tasks()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.fetch()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.delete()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.bulk_delete()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.judge()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.update_payload()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.datasets.records.update_properties()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.create_pipeline()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.list_pipelines()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.get_pipeline()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.update_pipeline()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.delete_pipeline()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.get()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.projects.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.projects.get()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.runs.search()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.runs.search_all()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.runs.get()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.runs.get_statistics()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.runs.compute_statistics()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.records.get()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.records.search()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.optimizations.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.optimizations.get()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.evaluations.optimizations.list_trials()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.logs.search()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.logs.list()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.logs.fetch_options()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.search()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.aggregate()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.get_trace_fields()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.get_trace_by_id()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.get_trace_spans()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.fetch_options()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.traces.get_span_by_id()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.search_spans()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.aggregate()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.aggregate_span_evaluations()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.search_span_evaluations()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.search_latest_span_evaluations()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.search_pipeline_results()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.list_span_fields()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.list_span_eval_fields()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.fetch_span_field_options()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.observability.spans.fetch_span_eval_field_options()`:  `error.detail.error_code.enum(optimization_trial_observation_already_exists)` **Added**
+  * `mistral.beta.connectors.create()`:  `response.union(mcp).connection_preferences[].name` **Changed**
+  * `mistral.beta.connectors.list()`:  `response.items[].union(mcp).connection_preferences[].name` **Changed**
+  * `mistral.beta.connectors.get()`:  `response.union(mcp).connection_preferences[].name` **Changed**
+  * `mistral.beta.connectors.update()`:  `response.union(http).connection_preferences[].name` **Changed**
+  * `mistral.beta.rag.managed_indexes.create()`:  `error.status[403]` **Added**
 generatedFiles:
   - .gitattributes
   - .vscode/settings.json
