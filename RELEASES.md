@@ -1648,6 +1648,13 @@ Changed types or signatures in beta (3):
 
 - Removed fields `num_cached_tokens`, `prompt_tokens_details`, `completion_tokens_details`, `prompt_token_details`, and `request_count` from response `data.union(speech.audio.done).usage` in `sdk.audio.speech.complete()`.
 
+#### Added operations
+
+Stable:
+
+- `sdk.audio.realtime_speech.connect()`
+- `sdk.audio.realtime_speech.speak_stream()`
+
 #### Schema changes
 
 - Added enum value `optimization_trial_observation_already_exists` across beta observability judges, beta observability datasets, beta observability datasets records, beta observability evaluations, beta observability evaluations projects, beta observability evaluations runs, beta observability evaluations records, beta observability evaluations optimizations, beta observability logs, beta observability traces, beta observability spans (65 operations).
@@ -1655,6 +1662,11 @@ Changed types or signatures in beta (3):
 - Added field `status[403]` in `sdk.beta.rag.managed_indexes.create()`.
 - Added request fields `diarize`, `context_bias`, `language`, `speaker_references`, and `turn_detection` in `sdk.audio.realtime.connect()`, `sdk.audio.realtime.transcribe_stream()`, and `sdk.audio.realtime.connect().update_session()`.
 - Added response variants `TurnDetectionStartEvent`, `TurnDetectionEagerEndEvent`, `TurnDetectionResumeEvent`, and `TurnDetectionEndEvent` in `sdk.audio.realtime.connect()` and `sdk.audio.realtime.transcribe_stream()`.
+
+#### Fixes
+
+- `sdk.workflows.schedules.schedule_workflow()` and `sdk.workflows.schedules.update_schedule()` now encrypt `schedule.input` when payload encryption is enabled; it was previously sent in cleartext. `sdk.workflows.schedules.get_schedule()` and `sdk.workflows.schedules.get_schedules()` decode it.
+- Partially encrypted workflow payloads are now serialized as compact JSON, matching the TypeScript SDK.
 
 ### Changes
 Based on:
