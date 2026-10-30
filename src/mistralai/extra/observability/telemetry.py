@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, Final, Literal
 
 from opentelemetry import trace as otel_trace
 
+from mistralai.client.sdkconfiguration import SERVER_GLOBAL, SERVERS
 from mistralai.client.utils import get_security_from_env
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
@@ -27,7 +28,8 @@ if TYPE_CHECKING:
 
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
-MISTRAL_TELEMETRY_ENDPOINT = "https://api.mistral.ai/telemetry/v1/traces"
+MISTRAL_TELEMETRY_PATH = "/telemetry/v1/traces"
+MISTRAL_TELEMETRY_ENDPOINT = f"{SERVERS[SERVER_GLOBAL]}{MISTRAL_TELEMETRY_PATH}"
 MISTRAL_OTLP_TRACES_ENDPOINT_ENV = "MISTRAL_OTLP_TRACES_ENDPOINT"
 TELEMETRY_PROVIDER_DEDICATED: Final[Literal["dedicated"]] = "dedicated"
 TELEMETRY_PROVIDER_GLOBAL: Final[Literal["global"]] = "global"
@@ -114,7 +116,10 @@ def configure_telemetry(
 ) -> bool:
     """Configure telemetry provider mode for a Mistral client.
 
-    By default, this creates an SDK-owned telemetry provider/exporter. Passing
+    By default, this creates an SDK-owned telemetry provider/exporter that sends
+    traces to /telemetry/v1/traces on the client's explicit server_url if set,
+    otherwise to https://api.mistral.ai (also for the named eu/us servers).
+    MISTRAL_OTLP_TRACES_ENDPOINT overrides that endpoint. Passing
     provider="global" clears the per-client provider so SDK spans use the
     global OpenTelemetry provider. Passing a TracerProvider attaches it to this
     client without taking ownership of its lifecycle.
@@ -272,6 +277,9 @@ def configure_telemetry_for_hook(
     api_key = _resolve_api_key_from_security(getattr(sdk_config, "security", None))
     provider = _create_telemetry_tracer_provider(
         api_key=api_key,
+        # Only follow an explicit server_url (e.g. private cloud); the named
+        # regional servers don't serve the telemetry endpoint.
+        server_url=getattr(sdk_config, "server_url", None) or SERVERS[SERVER_GLOBAL],
         redaction=redaction,
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
@@ -313,6 +321,7 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
+    server_url: str,
     redaction: RedactionPolicyLike | bool = True,
 ) -> "SDKTracerProvider":
     (
@@ -328,7 +337,7 @@ def _create_telemetry_tracer_provider(
             "client or set MISTRAL_API_KEY."
         )
     exporter = otlp_span_exporter_cls(
-        endpoint=_resolve_mistral_telemetry_endpoint(),
+        endpoint=_resolve_mistral_telemetry_endpoint(server_url),
         headers={"Authorization": _as_bearer_token(api_key)},
     )
     policy = _resolve_redaction(redaction)
@@ -359,11 +368,9 @@ def _load_otel_sdk():
     return BatchSpanProcessor, OTLPSpanExporter, Resource, TracerProvider
 
 
-def _resolve_mistral_telemetry_endpoint() -> str:
-    return os.getenv(
-        MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
-        MISTRAL_TELEMETRY_ENDPOINT,
-    ).strip() or MISTRAL_TELEMETRY_ENDPOINT
+def _resolve_mistral_telemetry_endpoint(server_url: str) -> str:
+    override = os.getenv(MISTRAL_OTLP_TRACES_ENDPOINT_ENV, "").strip()
+    return override or f"{server_url.rstrip('/')}{MISTRAL_TELEMETRY_PATH}"
 
 
 def _has_real_global_tracer_provider() -> bool:

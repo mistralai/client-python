@@ -1465,6 +1465,8 @@ with Mistral(api_key=os.environ["MISTRAL_API_KEY"]) as client:
     )
 ```
 
+In dedicated mode, traces go to `/telemetry/v1/traces` on the client's `server_url` if one is set (e.g. a private cloud deployment), otherwise to `https://api.mistral.ai`, including for the named `eu`/`us` servers. Set `MISTRAL_OTLP_TRACES_ENDPOINT` to send traces to a separate collector.
+
 ### Provider modes
 
 `configure_telemetry(client, provider=...)` selects where spans go and who owns the export pipeline:
@@ -1552,7 +1554,7 @@ configure_telemetry(
 | Variable | Description | Default |
 | -------- | ----------- | ------- |
 | `MISTRAL_SDK_TELEMETRY` | Auto-enable telemetry: `dedicated`, `global`, or `false`. | unset (disabled) |
-| `MISTRAL_OTLP_TRACES_ENDPOINT` | Override the OTLP traces endpoint used in dedicated mode. | `https://api.mistral.ai/telemetry/v1/traces` |
+| `MISTRAL_OTLP_TRACES_ENDPOINT` | Override the OTLP traces endpoint used in dedicated mode. | Client `server_url` + `/telemetry/v1/traces` if set, otherwise `https://api.mistral.ai/telemetry/v1/traces` |
 | `MISTRAL_SDK_DEBUG_TRACING` | Set to `true` for verbose tracing logs. | `false` |
 | `MISTRAL_API_KEY` | Used as the bearer token for the dedicated-mode exporter. | — |
 
