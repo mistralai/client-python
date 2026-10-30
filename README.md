@@ -1465,7 +1465,7 @@ with Mistral(api_key=os.environ["MISTRAL_API_KEY"]) as client:
     )
 ```
 
-In dedicated mode, traces go to `/telemetry/v1/traces` on the client's `server_url` if one is set (e.g. a private cloud deployment), otherwise to `https://api.mistral.ai`, including for the named `eu`/`us` servers. Set `MISTRAL_OTLP_TRACES_ENDPOINT` to send traces to a separate collector.
+In dedicated mode, traces go to `/telemetry/v1/traces` on the client's `server_url` if one is set, otherwise to `https://api.mistral.ai`, including for the named `eu`/`us` servers. Set `MISTRAL_OTLP_TRACES_ENDPOINT` to send traces to a separate collector.
 
 ### Provider modes
 

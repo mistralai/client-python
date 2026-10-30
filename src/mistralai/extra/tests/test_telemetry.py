@@ -153,7 +153,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            server_url="https://api.mistral.ai",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -218,7 +218,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            server_url="https://api.mistral.ai",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -237,7 +237,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            server_url="https://api.mistral.ai",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -322,7 +322,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         self.assertEqual(create_provider.call_count, 2)
         create_provider.assert_any_call(
-            api_key="test-key", server_url="https://api.mistral.ai", redaction=False
+            api_key="test-key", server_url="", redaction=False
         )
         self.assertTrue(first_provider.shutdown_called)
         self.assertIs(hook.tracer_provider, second_provider)
@@ -469,7 +469,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="env-key",
-            server_url="https://api.mistral.ai",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -510,7 +510,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
-            server_url="https://api.mistral.ai",
+            server_url="",
             redaction=True,
         )
 
@@ -645,7 +645,6 @@ class TestTelemetryConfiguration(unittest.TestCase):
         ):
             provider = _create_telemetry_tracer_provider(
                 api_key="test-key",
-                server_url="https://api.mistral.ai",
             )
 
         self.assertIsInstance(provider, FakeTracerProvider)
@@ -675,9 +674,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
                 {MISTRAL_OTLP_TRACES_ENDPOINT_ENV: custom_endpoint},
                 clear=True,
             ):
-                provider = _create_telemetry_tracer_provider(
-                    api_key="test-key", server_url="https://api.mistral.ai"
-                )
+                provider = _create_telemetry_tracer_provider(api_key="test-key")
 
         self.assertIsInstance(provider, FakeTracerProvider)
         self.assertEqual(len(FakeExporter.instances), 1)
@@ -751,9 +748,9 @@ class TestTelemetryEndpoint(unittest.TestCase):
             ({"server": "eu"}, "https://api.eu.mistral.ai", "https://api.mistral.ai"),
             ({"server": "us"}, "https://api.us.mistral.ai", "https://api.mistral.ai"),
             (
-                {"server_url": "https://pc.example.com"},
-                "https://pc.example.com",
-                "https://pc.example.com",
+                {"server_url": "https://mistral.example.com"},
+                "https://mistral.example.com",
+                "https://mistral.example.com",
             ),
             (
                 {"server_url": "https://llm.acme-corp.io/"},
@@ -847,9 +844,7 @@ class TestTelemetryRedaction:
                 FakeTracerProvider,
             ),
         ):
-            return _create_telemetry_tracer_provider(
-                api_key="test-key", server_url="https://api.mistral.ai", **kwargs
-            )
+            return _create_telemetry_tracer_provider(api_key="test-key", **kwargs)
 
     @staticmethod
     def _exporter_of(provider):
@@ -902,7 +897,7 @@ class TestTelemetryRedaction:
             configure_telemetry(client, provider="dedicated", redaction=policy)
 
         create_provider.assert_called_once_with(
-            api_key="test-key", server_url="https://api.mistral.ai", redaction=policy
+            api_key="test-key", server_url="", redaction=policy
         )
 
     def test_dedicated_mode_forwards_default_redaction_to_provider(self):
@@ -915,7 +910,7 @@ class TestTelemetryRedaction:
             configure_telemetry(client, provider="dedicated")
 
         create_provider.assert_called_once_with(
-            api_key="test-key", server_url="https://api.mistral.ai", redaction=True
+            api_key="test-key", server_url="", redaction=True
         )
 
     def test_global_mode_warns_by_default(self, caplog):

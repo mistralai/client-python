@@ -277,9 +277,7 @@ def configure_telemetry_for_hook(
     api_key = _resolve_api_key_from_security(getattr(sdk_config, "security", None))
     provider = _create_telemetry_tracer_provider(
         api_key=api_key,
-        # Only follow an explicit server_url (e.g. private cloud); the named
-        # regional servers don't serve the telemetry endpoint.
-        server_url=getattr(sdk_config, "server_url", None) or SERVERS[SERVER_GLOBAL],
+        server_url=getattr(sdk_config, "server_url", None),
         redaction=redaction,
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
@@ -321,7 +319,7 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
-    server_url: str,
+    server_url: str | None = None,
     redaction: RedactionPolicyLike | bool = True,
 ) -> "SDKTracerProvider":
     (
@@ -337,7 +335,11 @@ def _create_telemetry_tracer_provider(
             "client or set MISTRAL_API_KEY."
         )
     exporter = otlp_span_exporter_cls(
-        endpoint=_resolve_mistral_telemetry_endpoint(server_url),
+        # Only follow an explicit server_url (e.g. another deployment); the named
+        # regional servers don't serve the telemetry endpoint.
+        endpoint=_resolve_mistral_telemetry_endpoint(
+            server_url or SERVERS[SERVER_GLOBAL]
+        ),
         headers={"Authorization": _as_bearer_token(api_key)},
     )
     policy = _resolve_redaction(redaction)
