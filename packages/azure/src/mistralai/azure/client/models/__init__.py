@@ -34,6 +34,18 @@ if TYPE_CHECKING:
         ChatCompletionResponse,
         ChatCompletionResponseTypedDict,
     )
+    from .chatcompletionresponsechoicelogprobs import (
+        ChatCompletionResponseChoiceLogprobs,
+        ChatCompletionResponseChoiceLogprobsTypedDict,
+    )
+    from .chatcompletionresponsetokenlogprobs import (
+        ChatCompletionResponseTokenLogprobs,
+        ChatCompletionResponseTokenLogprobsTypedDict,
+    )
+    from .chatcompletionresponsetokenlogprobstopk import (
+        ChatCompletionResponseTokenLogprobsTopK,
+        ChatCompletionResponseTokenLogprobsTopKTypedDict,
+    )
     from .chatcompletionstreamrequest import (
         ChatCompletionStreamRequest,
         ChatCompletionStreamRequestMessage,
@@ -46,7 +58,6 @@ if TYPE_CHECKING:
         ChatCompletionStreamRequestToolTypedDict,
         ChatCompletionStreamRequestTypedDict,
     )
-    from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
     from .completionchunk import CompletionChunk, CompletionChunkTypedDict
     from .completionevent import CompletionEvent, CompletionEventTypedDict
     from .completionresponsestreamchoice import (
@@ -108,14 +119,33 @@ if TYPE_CHECKING:
         ModerationLlmv2ConfigTypedDict,
     )
     from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
+    from .ocrasidetextblock import OCRAsideTextBlock, OCRAsideTextBlockTypedDict
+    from .ocrblockconfidencescores import (
+        OCRBlockConfidenceScores,
+        OCRBlockConfidenceScoresTypedDict,
+    )
+    from .ocrcaptionblock import OCRCaptionBlock, OCRCaptionBlockTypedDict
+    from .ocrcodeblock import OCRCodeBlock, OCRCodeBlockTypedDict
     from .ocrconfidencescore import OCRConfidenceScore, OCRConfidenceScoreTypedDict
+    from .ocrequationblock import OCREquationBlock, OCREquationBlockTypedDict
+    from .ocrfooterblock import OCRFooterBlock, OCRFooterBlockTypedDict
+    from .ocrheaderblock import OCRHeaderBlock, OCRHeaderBlockTypedDict
+    from .ocrimageblock import OCRImageBlock, OCRImageBlockTypedDict
     from .ocrimageobject import OCRImageObject, OCRImageObjectTypedDict
+    from .ocrlistblock import OCRListBlock, OCRListBlockTypedDict
     from .ocrpageconfidencescores import (
         OCRPageConfidenceScores,
         OCRPageConfidenceScoresTypedDict,
     )
     from .ocrpagedimensions import OCRPageDimensions, OCRPageDimensionsTypedDict
-    from .ocrpageobject import OCRPageObject, OCRPageObjectTypedDict
+    from .ocrpageobject import (
+        Block,
+        BlockTypedDict,
+        OCRPageObject,
+        OCRPageObjectTypedDict,
+        UnknownBlock,
+    )
+    from .ocrreferencesblock import OCRReferencesBlock, OCRReferencesBlockTypedDict
     from .ocrrequest import (
         ConfidenceScoresGranularity,
         Document,
@@ -127,7 +157,11 @@ if TYPE_CHECKING:
         TableFormat,
     )
     from .ocrresponse import OCRResponse, OCRResponseTypedDict
+    from .ocrsignatureblock import OCRSignatureBlock, OCRSignatureBlockTypedDict
+    from .ocrtableblock import OCRTableBlock, OCRTableBlockTypedDict
     from .ocrtableobject import Format, OCRTableObject, OCRTableObjectTypedDict
+    from .ocrtextblock import OCRTextBlock, OCRTextBlockTypedDict
+    from .ocrtitleblock import OCRTitleBlock, OCRTitleBlockTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
     from .prediction import Prediction, PredictionTypedDict
     from .reasoningeffort import ReasoningEffort
@@ -184,11 +218,6 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
-    from .websearchpremiumtool import (
-        WebSearchPremiumTool,
-        WebSearchPremiumToolTypedDict,
-    )
-    from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 
 __all__ = [
     "APIKeyAuth",
@@ -201,6 +230,8 @@ __all__ = [
     "AssistantMessageTypedDict",
     "Authorization",
     "AuthorizationTypedDict",
+    "Block",
+    "BlockTypedDict",
     "BuiltInConnectors",
     "ChatCompletionChoice",
     "ChatCompletionChoiceFinishReason",
@@ -216,6 +247,12 @@ __all__ = [
     "ChatCompletionRequestToolTypedDict",
     "ChatCompletionRequestTypedDict",
     "ChatCompletionResponse",
+    "ChatCompletionResponseChoiceLogprobs",
+    "ChatCompletionResponseChoiceLogprobsTypedDict",
+    "ChatCompletionResponseTokenLogprobs",
+    "ChatCompletionResponseTokenLogprobsTopK",
+    "ChatCompletionResponseTokenLogprobsTopKTypedDict",
+    "ChatCompletionResponseTokenLogprobsTypedDict",
     "ChatCompletionResponseTypedDict",
     "ChatCompletionStreamRequest",
     "ChatCompletionStreamRequestMessage",
@@ -227,8 +264,6 @@ __all__ = [
     "ChatCompletionStreamRequestToolChoiceTypedDict",
     "ChatCompletionStreamRequestToolTypedDict",
     "ChatCompletionStreamRequestTypedDict",
-    "CodeInterpreterTool",
-    "CodeInterpreterToolTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
     "CompletionEvent",
@@ -289,22 +324,50 @@ __all__ = [
     "ModerationLlmv2ConfigTypedDict",
     "OAuth2TokenAuth",
     "OAuth2TokenAuthTypedDict",
+    "OCRAsideTextBlock",
+    "OCRAsideTextBlockTypedDict",
+    "OCRBlockConfidenceScores",
+    "OCRBlockConfidenceScoresTypedDict",
+    "OCRCaptionBlock",
+    "OCRCaptionBlockTypedDict",
+    "OCRCodeBlock",
+    "OCRCodeBlockTypedDict",
     "OCRConfidenceScore",
     "OCRConfidenceScoreTypedDict",
+    "OCREquationBlock",
+    "OCREquationBlockTypedDict",
+    "OCRFooterBlock",
+    "OCRFooterBlockTypedDict",
+    "OCRHeaderBlock",
+    "OCRHeaderBlockTypedDict",
+    "OCRImageBlock",
+    "OCRImageBlockTypedDict",
     "OCRImageObject",
     "OCRImageObjectTypedDict",
+    "OCRListBlock",
+    "OCRListBlockTypedDict",
     "OCRPageConfidenceScores",
     "OCRPageConfidenceScoresTypedDict",
     "OCRPageDimensions",
     "OCRPageDimensionsTypedDict",
     "OCRPageObject",
     "OCRPageObjectTypedDict",
+    "OCRReferencesBlock",
+    "OCRReferencesBlockTypedDict",
     "OCRRequest",
     "OCRRequestTypedDict",
     "OCRResponse",
     "OCRResponseTypedDict",
+    "OCRSignatureBlock",
+    "OCRSignatureBlockTypedDict",
+    "OCRTableBlock",
+    "OCRTableBlockTypedDict",
     "OCRTableObject",
     "OCRTableObjectTypedDict",
+    "OCRTextBlock",
+    "OCRTextBlockTypedDict",
+    "OCRTitleBlock",
+    "OCRTitleBlockTypedDict",
     "OCRUsageInfo",
     "OCRUsageInfoTypedDict",
     "Pages",
@@ -351,6 +414,7 @@ __all__ = [
     "ToolReferenceChunkToolTypedDict",
     "ToolReferenceChunkTypedDict",
     "ToolTypedDict",
+    "UnknownBlock",
     "UnknownContentChunk",
     "UsageInfo",
     "UsageInfoTypedDict",
@@ -360,10 +424,6 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
-    "WebSearchPremiumTool",
-    "WebSearchPremiumToolTypedDict",
-    "WebSearchTool",
-    "WebSearchToolTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -389,6 +449,12 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionRequestTypedDict": ".chatcompletionrequest",
     "ChatCompletionResponse": ".chatcompletionresponse",
     "ChatCompletionResponseTypedDict": ".chatcompletionresponse",
+    "ChatCompletionResponseChoiceLogprobs": ".chatcompletionresponsechoicelogprobs",
+    "ChatCompletionResponseChoiceLogprobsTypedDict": ".chatcompletionresponsechoicelogprobs",
+    "ChatCompletionResponseTokenLogprobs": ".chatcompletionresponsetokenlogprobs",
+    "ChatCompletionResponseTokenLogprobsTypedDict": ".chatcompletionresponsetokenlogprobs",
+    "ChatCompletionResponseTokenLogprobsTopK": ".chatcompletionresponsetokenlogprobstopk",
+    "ChatCompletionResponseTokenLogprobsTopKTypedDict": ".chatcompletionresponsetokenlogprobstopk",
     "ChatCompletionStreamRequest": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestMessage": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestMessageTypedDict": ".chatcompletionstreamrequest",
@@ -399,8 +465,6 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionStreamRequestToolChoiceTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestTypedDict": ".chatcompletionstreamrequest",
-    "CodeInterpreterTool": ".codeinterpretertool",
-    "CodeInterpreterToolTypedDict": ".codeinterpretertool",
     "CompletionChunk": ".completionchunk",
     "CompletionChunkTypedDict": ".completionchunk",
     "CompletionEvent": ".completionevent",
@@ -458,16 +522,39 @@ _dynamic_imports: dict[str, str] = {
     "ModerationLlmv2ConfigTypedDict": ".moderationllmv2config",
     "OAuth2TokenAuth": ".oauth2tokenauth",
     "OAuth2TokenAuthTypedDict": ".oauth2tokenauth",
+    "OCRAsideTextBlock": ".ocrasidetextblock",
+    "OCRAsideTextBlockTypedDict": ".ocrasidetextblock",
+    "OCRBlockConfidenceScores": ".ocrblockconfidencescores",
+    "OCRBlockConfidenceScoresTypedDict": ".ocrblockconfidencescores",
+    "OCRCaptionBlock": ".ocrcaptionblock",
+    "OCRCaptionBlockTypedDict": ".ocrcaptionblock",
+    "OCRCodeBlock": ".ocrcodeblock",
+    "OCRCodeBlockTypedDict": ".ocrcodeblock",
     "OCRConfidenceScore": ".ocrconfidencescore",
     "OCRConfidenceScoreTypedDict": ".ocrconfidencescore",
+    "OCREquationBlock": ".ocrequationblock",
+    "OCREquationBlockTypedDict": ".ocrequationblock",
+    "OCRFooterBlock": ".ocrfooterblock",
+    "OCRFooterBlockTypedDict": ".ocrfooterblock",
+    "OCRHeaderBlock": ".ocrheaderblock",
+    "OCRHeaderBlockTypedDict": ".ocrheaderblock",
+    "OCRImageBlock": ".ocrimageblock",
+    "OCRImageBlockTypedDict": ".ocrimageblock",
     "OCRImageObject": ".ocrimageobject",
     "OCRImageObjectTypedDict": ".ocrimageobject",
+    "OCRListBlock": ".ocrlistblock",
+    "OCRListBlockTypedDict": ".ocrlistblock",
     "OCRPageConfidenceScores": ".ocrpageconfidencescores",
     "OCRPageConfidenceScoresTypedDict": ".ocrpageconfidencescores",
     "OCRPageDimensions": ".ocrpagedimensions",
     "OCRPageDimensionsTypedDict": ".ocrpagedimensions",
+    "Block": ".ocrpageobject",
+    "BlockTypedDict": ".ocrpageobject",
     "OCRPageObject": ".ocrpageobject",
     "OCRPageObjectTypedDict": ".ocrpageobject",
+    "UnknownBlock": ".ocrpageobject",
+    "OCRReferencesBlock": ".ocrreferencesblock",
+    "OCRReferencesBlockTypedDict": ".ocrreferencesblock",
     "ConfidenceScoresGranularity": ".ocrrequest",
     "Document": ".ocrrequest",
     "DocumentTypedDict": ".ocrrequest",
@@ -478,9 +565,17 @@ _dynamic_imports: dict[str, str] = {
     "TableFormat": ".ocrrequest",
     "OCRResponse": ".ocrresponse",
     "OCRResponseTypedDict": ".ocrresponse",
+    "OCRSignatureBlock": ".ocrsignatureblock",
+    "OCRSignatureBlockTypedDict": ".ocrsignatureblock",
+    "OCRTableBlock": ".ocrtableblock",
+    "OCRTableBlockTypedDict": ".ocrtableblock",
     "Format": ".ocrtableobject",
     "OCRTableObject": ".ocrtableobject",
     "OCRTableObjectTypedDict": ".ocrtableobject",
+    "OCRTextBlock": ".ocrtextblock",
+    "OCRTextBlockTypedDict": ".ocrtextblock",
+    "OCRTitleBlock": ".ocrtitleblock",
+    "OCRTitleBlockTypedDict": ".ocrtitleblock",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
     "Prediction": ".prediction",
@@ -536,10 +631,6 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
-    "WebSearchPremiumTool": ".websearchpremiumtool",
-    "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
-    "WebSearchTool": ".websearchtool",
-    "WebSearchToolTypedDict": ".websearchtool",
 }
 
 

@@ -3,6 +3,7 @@
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
 from mistralai.client.beta_agents import BetaAgents
+from mistralai.client.beta_context import BetaContext
 from mistralai.client.beta_prompts import BetaPrompts
 from mistralai.client.connectors import Connectors
 from mistralai.client.conversations import Conversations
@@ -11,7 +12,9 @@ from mistralai.client.observability import Observability
 from mistralai.client.rag import Rag
 from mistralai.client.service_accounts import ServiceAccounts
 from mistralai.client.skills import Skills
+from mistralai.client.triggers import Triggers
 from mistralai.client.users import Users
+from mistralai.client.webhooks import Webhooks
 from typing import Optional
 
 
@@ -29,6 +32,9 @@ class Beta(BaseSDK):
     connectors: Connectors
     r"""(beta) Connectors API - manage your connectors"""
     rag: Rag
+    context: BetaContext
+    triggers: Triggers
+    webhooks: Webhooks
     users: Users
 
     def __init__(
@@ -54,4 +60,7 @@ class Beta(BaseSDK):
         )
         self.connectors = Connectors(self.sdk_configuration, parent_ref=self.parent_ref)
         self.rag = Rag(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.context = BetaContext(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.triggers = Triggers(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.webhooks = Webhooks(self.sdk_configuration, parent_ref=self.parent_ref)
         self.users = Users(self.sdk_configuration, parent_ref=self.parent_ref)

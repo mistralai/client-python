@@ -17,6 +17,7 @@ class SkillsListRequestTypedDict(TypedDict):
     page_token: NotRequired[str]
     alias: NotRequired[str]
     fields: NotRequired[List[str]]
+    r"""Projection over each listed Skill. definition.description is the only definition path a list accepts; body and assets are read one skill at a time with GetSkill."""
     sort_field: NotRequired[ListSortField]
     r"""Defaults to created_at when omitted."""
     sort_direction_query_parameter: NotRequired[ListSortDirection]
@@ -49,6 +50,7 @@ class SkillsListRequest(BaseModel):
         Optional[List[str]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
+    r"""Projection over each listed Skill. definition.description is the only definition path a list accepts; body and assets are read one skill at a time with GetSkill."""
 
     sort_field: Annotated[
         Optional[ListSortField],

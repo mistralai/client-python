@@ -5,15 +5,13 @@ from .sdkconfiguration import SDKConfiguration
 from mistralai.client.ingestion_pipeline_configurations import (
     IngestionPipelineConfigurations,
 )
-from mistralai.client.managed_indexes import ManagedIndexes
-from mistralai.client.search_indexes import SearchIndexes
+from mistralai.client.rag_search_indexes import RagSearchIndexes
 from typing import Optional
 
 
 class Rag(BaseSDK):
     ingestion_pipeline_configurations: IngestionPipelineConfigurations
-    search_indexes: SearchIndexes
-    managed_indexes: ManagedIndexes
+    search_indexes: RagSearchIndexes
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -26,9 +24,6 @@ class Rag(BaseSDK):
         self.ingestion_pipeline_configurations = IngestionPipelineConfigurations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
-        self.search_indexes = SearchIndexes(
-            self.sdk_configuration, parent_ref=self.parent_ref
-        )
-        self.managed_indexes = ManagedIndexes(
+        self.search_indexes = RagSearchIndexes(
             self.sdk_configuration, parent_ref=self.parent_ref
         )

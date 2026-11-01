@@ -10,4 +10,5 @@ BuiltInConnectors = Literal[
     "code_interpreter",
     "image_generation",
     "document_library",
+    "mistral_mcp",
 ]

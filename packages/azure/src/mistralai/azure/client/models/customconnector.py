@@ -33,6 +33,7 @@ class CustomConnectorTypedDict(TypedDict):
     connector_id: str
     type: Literal["connector"]
     authorization: NotRequired[Nullable[AuthorizationTypedDict]]
+    r"""Deprecated: per-request connector credentials will be removed. Authenticate the connector through the Connectors API instead."""
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
 
 
@@ -44,7 +45,13 @@ class CustomConnector(BaseModel):
         pydantic.Field(alias="type"),
     ] = "connector"
 
-    authorization: SerializeAsAny[OptionalNullable[Authorization]] = UNSET
+    authorization: Annotated[
+        SerializeAsAny[OptionalNullable[Authorization]],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated: per-request connector credentials will be removed. Authenticate the connector through the Connectors API instead."""
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 

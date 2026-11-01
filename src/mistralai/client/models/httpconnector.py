@@ -7,6 +7,7 @@ from .authenticationconfiguration import (
 )
 from .connectionpreference import ConnectionPreference, ConnectionPreferenceTypedDict
 from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
+from .connectoropenapispec import ConnectorOpenAPISpec, ConnectorOpenAPISpecTypedDict
 from .connectortool import ConnectorTool, ConnectorToolTypedDict
 from .consumertype import ConsumerType
 from .mcpservercard import MCPServerCard, MCPServerCardTypedDict
@@ -62,6 +63,8 @@ class HTTPConnectorTypedDict(TypedDict):
     is_authenticated: NotRequired[Nullable[bool]]
     tools: NotRequired[Nullable[List[ConnectorToolTypedDict]]]
     protocol: Literal["http"]
+    openapi_spec: NotRequired[Nullable[ConnectorOpenAPISpecTypedDict]]
+    r"""The OpenAPI spec the connector tools are converted from. Null when it has none."""
 
 
 class HTTPConnector(BaseModel):
@@ -119,6 +122,9 @@ class HTTPConnector(BaseModel):
         pydantic.Field(alias="protocol"),
     ] = "http"
 
+    openapi_spec: OptionalNullable[ConnectorOpenAPISpec] = UNSET
+    r"""The OpenAPI spec the connector tools are converted from. Null when it has none."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -138,6 +144,7 @@ class HTTPConnector(BaseModel):
                 "mistral",
                 "is_authenticated",
                 "tools",
+                "openapi_spec",
             ]
         )
         nullable_fields = set(
@@ -155,6 +162,7 @@ class HTTPConnector(BaseModel):
                 "connection_credentials",
                 "is_authenticated",
                 "tools",
+                "openapi_spec",
             ]
         )
         serialized = handler(self)

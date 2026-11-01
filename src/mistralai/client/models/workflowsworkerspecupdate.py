@@ -13,14 +13,19 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
 class WorkflowsWorkerSpecUpdateTypedDict(TypedDict):
     github_url: NotRequired[Nullable[str]]
     revision: NotRequired[Nullable[str]]
+    archive_id: NotRequired[Nullable[str]]
+    r"""Rebuild the worker from this archive, dropping 'github_url' and 'revision'. Sending 'github_url' instead moves it back to a repository."""
     backend_spec: NotRequired[Nullable[DeploymentMistralCloudBackendSpecTypedDict]]
     r"""Backend-specific configuration for the Mistral Cloud backend."""
+    requested_roles: NotRequired[Nullable[List[str]]]
+    r"""The complete workspace-role set after the update, beyond `workflow_executor`. Replaces the current roles; omit it to leave them unchanged, send an empty list to drop all extras. Granted only if the deploying user holds them."""
 
 
 class WorkflowsWorkerSpecUpdate(BaseModel):
@@ -28,13 +33,23 @@ class WorkflowsWorkerSpecUpdate(BaseModel):
 
     revision: OptionalNullable[str] = UNSET
 
+    archive_id: OptionalNullable[str] = UNSET
+    r"""Rebuild the worker from this archive, dropping 'github_url' and 'revision'. Sending 'github_url' instead moves it back to a repository."""
+
     backend_spec: OptionalNullable[DeploymentMistralCloudBackendSpec] = UNSET
     r"""Backend-specific configuration for the Mistral Cloud backend."""
 
+    requested_roles: OptionalNullable[List[str]] = UNSET
+    r"""The complete workspace-role set after the update, beyond `workflow_executor`. Replaces the current roles; omit it to leave them unchanged, send an empty list to drop all extras. Granted only if the deploying user holds them."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["github_url", "revision", "backend_spec"])
-        nullable_fields = set(["github_url", "revision", "backend_spec"])
+        optional_fields = set(
+            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+        )
+        nullable_fields = set(
+            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+        )
         serialized = handler(self)
         m = {}
 

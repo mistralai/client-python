@@ -1,0 +1,16 @@
+# TriggerEvent
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `event_id`                                                           | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `trigger_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `source_id`                                                          | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `status`                                                             | [models.TriggerStatusValue](../models/triggerstatusvalue.md)         | :heavy_check_mark:                                                   | N/A                                                                  |
+| `received_at`                                                        | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `submitted_at`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `triggered_at`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `detail`                                                             | *Nullable[str]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |
+| `url`                                                                | *Nullable[str]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |

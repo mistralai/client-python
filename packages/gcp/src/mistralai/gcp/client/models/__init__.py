@@ -34,6 +34,18 @@ if TYPE_CHECKING:
         ChatCompletionResponse,
         ChatCompletionResponseTypedDict,
     )
+    from .chatcompletionresponsechoicelogprobs import (
+        ChatCompletionResponseChoiceLogprobs,
+        ChatCompletionResponseChoiceLogprobsTypedDict,
+    )
+    from .chatcompletionresponsetokenlogprobs import (
+        ChatCompletionResponseTokenLogprobs,
+        ChatCompletionResponseTokenLogprobsTypedDict,
+    )
+    from .chatcompletionresponsetokenlogprobstopk import (
+        ChatCompletionResponseTokenLogprobsTopK,
+        ChatCompletionResponseTokenLogprobsTopKTypedDict,
+    )
     from .chatcompletionstreamrequest import (
         ChatCompletionStreamRequest,
         ChatCompletionStreamRequestMessage,
@@ -46,7 +58,6 @@ if TYPE_CHECKING:
         ChatCompletionStreamRequestToolTypedDict,
         ChatCompletionStreamRequestTypedDict,
     )
-    from .codeinterpretertool import CodeInterpreterTool, CodeInterpreterToolTypedDict
     from .completionchunk import CompletionChunk, CompletionChunkTypedDict
     from .completionevent import CompletionEvent, CompletionEventTypedDict
     from .completionresponsestreamchoice import (
@@ -177,11 +188,6 @@ if TYPE_CHECKING:
         ValidationError,
         ValidationErrorTypedDict,
     )
-    from .websearchpremiumtool import (
-        WebSearchPremiumTool,
-        WebSearchPremiumToolTypedDict,
-    )
-    from .websearchtool import WebSearchTool, WebSearchToolTypedDict
 
 __all__ = [
     "APIKeyAuth",
@@ -209,6 +215,12 @@ __all__ = [
     "ChatCompletionRequestToolTypedDict",
     "ChatCompletionRequestTypedDict",
     "ChatCompletionResponse",
+    "ChatCompletionResponseChoiceLogprobs",
+    "ChatCompletionResponseChoiceLogprobsTypedDict",
+    "ChatCompletionResponseTokenLogprobs",
+    "ChatCompletionResponseTokenLogprobsTopK",
+    "ChatCompletionResponseTokenLogprobsTopKTypedDict",
+    "ChatCompletionResponseTokenLogprobsTypedDict",
     "ChatCompletionResponseTypedDict",
     "ChatCompletionStreamRequest",
     "ChatCompletionStreamRequestMessage",
@@ -220,8 +232,6 @@ __all__ = [
     "ChatCompletionStreamRequestToolChoiceTypedDict",
     "ChatCompletionStreamRequestToolTypedDict",
     "ChatCompletionStreamRequestTypedDict",
-    "CodeInterpreterTool",
-    "CodeInterpreterToolTypedDict",
     "CompletionChunk",
     "CompletionChunkTypedDict",
     "CompletionEvent",
@@ -334,10 +344,6 @@ __all__ = [
     "UserMessageTypedDict",
     "ValidationError",
     "ValidationErrorTypedDict",
-    "WebSearchPremiumTool",
-    "WebSearchPremiumToolTypedDict",
-    "WebSearchTool",
-    "WebSearchToolTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -363,6 +369,12 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionRequestTypedDict": ".chatcompletionrequest",
     "ChatCompletionResponse": ".chatcompletionresponse",
     "ChatCompletionResponseTypedDict": ".chatcompletionresponse",
+    "ChatCompletionResponseChoiceLogprobs": ".chatcompletionresponsechoicelogprobs",
+    "ChatCompletionResponseChoiceLogprobsTypedDict": ".chatcompletionresponsechoicelogprobs",
+    "ChatCompletionResponseTokenLogprobs": ".chatcompletionresponsetokenlogprobs",
+    "ChatCompletionResponseTokenLogprobsTypedDict": ".chatcompletionresponsetokenlogprobs",
+    "ChatCompletionResponseTokenLogprobsTopK": ".chatcompletionresponsetokenlogprobstopk",
+    "ChatCompletionResponseTokenLogprobsTopKTypedDict": ".chatcompletionresponsetokenlogprobstopk",
     "ChatCompletionStreamRequest": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestMessage": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestMessageTypedDict": ".chatcompletionstreamrequest",
@@ -373,8 +385,6 @@ _dynamic_imports: dict[str, str] = {
     "ChatCompletionStreamRequestToolChoiceTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestToolTypedDict": ".chatcompletionstreamrequest",
     "ChatCompletionStreamRequestTypedDict": ".chatcompletionstreamrequest",
-    "CodeInterpreterTool": ".codeinterpretertool",
-    "CodeInterpreterToolTypedDict": ".codeinterpretertool",
     "CompletionChunk": ".completionchunk",
     "CompletionChunkTypedDict": ".completionchunk",
     "CompletionEvent": ".completionevent",
@@ -491,10 +501,6 @@ _dynamic_imports: dict[str, str] = {
     "LocTypedDict": ".validationerror",
     "ValidationError": ".validationerror",
     "ValidationErrorTypedDict": ".validationerror",
-    "WebSearchPremiumTool": ".websearchpremiumtool",
-    "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
-    "WebSearchTool": ".websearchtool",
-    "WebSearchToolTypedDict": ".websearchtool",
 }
 
 

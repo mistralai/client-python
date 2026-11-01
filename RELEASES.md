@@ -1676,3 +1676,122 @@ Based on:
 - [python v3.6.0] .
 ### Releases
 - [PyPI v3.6.0] https://pypi.org/project/mistralai/3.6.0 - .
+
+## 2026-11-01 13:00:38
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Removed from the stable API surface (1):
+- `VoiceCreateRequest.slug`
+#### Stable type changes
+Changed types or signatures on the stable surface (6):
+- `DeploymentWorkerSpecInput.github_url: str -> OptionalNullable[str]`
+- `DeploymentWorkerSpecInputTypedDict.github_url: str -> NotRequired[Nullable[str]]`
+- `VoiceCreateRequest.gender: OptionalNullable[str] -> OptionalNullable[VoiceGender]`
+- `VoiceCreateRequestTypedDict.gender: NotRequired[Nullable[str]] -> NotRequired[Nullable[VoiceGender]]`
+- `VoiceUpdateRequest.gender: OptionalNullable[str] -> OptionalNullable[VoiceGender]`
+- `VoiceUpdateRequestTypedDict.gender: NotRequired[Nullable[str]] -> NotRequired[Nullable[VoiceGender]]`
+#### Beta surface changes
+Removed from the beta surface (41):
+- `ManagedIndexes`
+- `SearchIndexes`
+- `Rag.managed_indexes`
+- `ManagedIndexes.create`
+- `ManagedIndexes.create_async`
+- `ManagedIndexes.delete`
+- `ManagedIndexes.delete_async`
+- `ManagedIndexes.delete_documents`
+- `ManagedIndexes.delete_documents_async`
+- `ManagedIndexes.generate_index_summary`
+- `ManagedIndexes.generate_index_summary_async`
+- `ManagedIndexes.get`
+- `ManagedIndexes.get_async`
+- `ManagedIndexes.get_chunk`
+- `ManagedIndexes.get_chunk_async`
+- `ManagedIndexes.get_index_summary`
+- `ManagedIndexes.get_index_summary_async`
+- `ManagedIndexes.grep`
+- `ManagedIndexes.grep_async`
+- `ManagedIndexes.ingest_documents`
+- `ManagedIndexes.ingest_documents_async`
+- `ManagedIndexes.list`
+- `ManagedIndexes.list_async`
+- `ManagedIndexes.navigate`
+- `ManagedIndexes.navigate_async`
+- ...and 16 more
+
+Changed types or signatures in beta (1):
+- `Rag.search_indexes: SearchIndexes -> RagSearchIndexes`
+
+Now required on an existing beta model (3):
+- `Beta.context`
+- `Beta.triggers`
+- `Beta.webhooks`
+</details>
+
+### API changes
+#### Breaking changes
+
+- Changed field `gender` in `sdk.audio.voices.create()` and `sdk.audio.voices.update()`.
+- Removed field `slug` from request in `sdk.audio.voices.create()`.
+
+#### Beta API changes
+
+- Removed beta operations: `sdk.beta.rag.managed_indexes.list()`, `sdk.beta.rag.managed_indexes.create()`, `sdk.beta.rag.managed_indexes.get()`, `sdk.beta.rag.managed_indexes.update()`, `sdk.beta.rag.managed_indexes.delete()`, `sdk.beta.rag.managed_indexes.ingest_documents()`, `sdk.beta.rag.managed_indexes.delete_documents()`, `sdk.beta.rag.managed_indexes.search()`, `sdk.beta.rag.managed_indexes.navigate()`, `sdk.beta.rag.managed_indexes.read()`, `sdk.beta.rag.managed_indexes.grep()`, `sdk.beta.rag.managed_indexes.get_chunk()`, `sdk.beta.rag.managed_indexes.get_index_summary()`, and `sdk.beta.rag.managed_indexes.set_index_summary()`.
+
+#### Added operations
+
+Stable:
+
+- `sdk.workflows.add_workflow_tags()`
+- `sdk.workflows.deployments.get_deployment_archive()`
+
+Beta:
+
+- `sdk.beta.context.search_indexes.list()`
+- `sdk.beta.context.search_indexes.create()`
+- `sdk.beta.context.search_indexes.get()`
+- `sdk.beta.context.search_indexes.update()`
+- `sdk.beta.context.search_indexes.delete()`
+- `sdk.beta.context.search_indexes.ingest_documents()`
+- `sdk.beta.context.search_indexes.delete_documents()`
+- `sdk.beta.context.search_indexes.search()`
+- `sdk.beta.context.search_indexes.navigate()`
+- `sdk.beta.context.search_indexes.read()`
+- `sdk.beta.context.search_indexes.grep()`
+- `sdk.beta.context.search_indexes.get_chunk()`
+- `sdk.beta.context.search_indexes.get_index_summary()`
+- `sdk.beta.context.search_indexes.set_index_summary()`
+- `sdk.beta.triggers.list()`
+- `sdk.beta.triggers.create()`
+- `sdk.beta.triggers.get()`
+- `sdk.beta.triggers.delete()`
+- `sdk.beta.triggers.list_events()`
+- `sdk.beta.webhooks.list()`
+- `sdk.beta.webhooks.create()`
+- `sdk.beta.webhooks.get()`
+- `sdk.beta.webhooks.delete()`
+- `sdk.beta.webhooks.get_signing_secret()`
+
+#### Schema changes
+
+- Added response fields `kind` and `spec` in `sdk.beta.observability.evaluations.runs.search()`, `sdk.beta.observability.evaluations.runs.search_all()`, `sdk.beta.observability.evaluations.runs.get()`, and `sdk.beta.observability.evaluations.optimizations.list_trials()`.
+- Added response field `service_account_id` across beta observability logs, beta observability traces, beta observability spans (8 operations).
+- Added response field `openapi_spec` in `sdk.beta.connectors.list()`, `sdk.beta.connectors.create()`, `sdk.beta.connectors.get()`, and `sdk.beta.connectors.update()`.
+- Added response field `archive_id` across workflows deployments (8 operations).
+- Added field `requested_roles` across workflows deployments (8 operations).
+- Added request field `archive_id` in `sdk.workflows.deployments.create_deployment()` and `sdk.workflows.deployments.update_deployment()`.
+- Changed request field `github_url` in `sdk.workflows.deployments.create_deployment()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.796.4 (2.935.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.7.0] .
+### Releases
+- [PyPI v3.7.0] https://pypi.org/project/mistralai/3.7.0 - .

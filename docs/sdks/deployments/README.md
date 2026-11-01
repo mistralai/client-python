@@ -14,6 +14,7 @@
 * [start_deployment](#start_deployment) - Start Deployment
 * [restart_deployment](#restart_deployment) - Restart Deployment
 * [list_deployment_workers](#list_deployment_workers) - List Deployment Workers
+* [get_deployment_archive](#get_deployment_archive) - Get Deployment Archive
 * [get_deployment_logs](#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](#stream_deployment_logs) - Stream Deployment Logs
 
@@ -123,9 +124,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.workflows.deployments.create_deployment(name="<value>", spec={
-        "github_url": "https://ugly-parade.com",
-    }, hardened=False)
+    res = mistral.workflows.deployments.create_deployment(name="<value>", spec={}, hardened=False)
 
     # Handle response
     print(res)
@@ -438,6 +437,50 @@ with Mistral(
 ### Response
 
 **[models.DeploymentWorkerListResponse](../../models/deploymentworkerlistresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## get_deployment_archive
+
+Get the archive a managed deployment builds from, with a signed URL to download it.
+
+`download_url` expires within 24 hours, and is null once Mistral Cloud has deleted the archive.
+A deployment that builds from a repository answers 404.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_deployment_archive_v1_workflows_deployments__name__archive_get" method="get" path="/v1/workflows/deployments/{name}/archive" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    res = mistral.workflows.deployments.get_deployment_archive(name="<value>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.DeploymentArchiveResponse](../../models/deploymentarchiveresponse.md)**
 
 ### Errors
 

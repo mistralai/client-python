@@ -13,28 +13,45 @@ from mistralai.client.types import (
     UNSET_SENTINEL,
 )
 from pydantic import model_serializer
+from typing import List
 from typing_extensions import NotRequired, TypedDict
 
 
 class DeploymentWorkerSpecInputTypedDict(TypedDict):
-    github_url: str
+    github_url: NotRequired[Nullable[str]]
+    r"""GitHub repository to build the worker from. Set this or 'archive_id', not both."""
     revision: NotRequired[Nullable[str]]
+    archive_id: NotRequired[Nullable[str]]
+    r"""Mistral Cloud archive to build the worker from instead of a repository. The archive is the whole build context: 'dockerfile_path' is relative to its root, and 'build_directory' must be unset."""
     backend_spec: NotRequired[Nullable[DeploymentMistralCloudBackendSpecTypedDict]]
     r"""Backend-specific configuration for the Mistral Cloud backend."""
+    requested_roles: NotRequired[Nullable[List[str]]]
+    r"""Workspace roles, by name, that the deployment's service account holds beyond `workflow_executor`. Granted only if the deploying user holds them."""
 
 
 class DeploymentWorkerSpecInput(BaseModel):
-    github_url: str
+    github_url: OptionalNullable[str] = UNSET
+    r"""GitHub repository to build the worker from. Set this or 'archive_id', not both."""
 
     revision: OptionalNullable[str] = UNSET
+
+    archive_id: OptionalNullable[str] = UNSET
+    r"""Mistral Cloud archive to build the worker from instead of a repository. The archive is the whole build context: 'dockerfile_path' is relative to its root, and 'build_directory' must be unset."""
 
     backend_spec: OptionalNullable[DeploymentMistralCloudBackendSpec] = UNSET
     r"""Backend-specific configuration for the Mistral Cloud backend."""
 
+    requested_roles: OptionalNullable[List[str]] = UNSET
+    r"""Workspace roles, by name, that the deployment's service account holds beyond `workflow_executor`. Granted only if the deploying user holds them."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["revision", "backend_spec"])
-        nullable_fields = set(["revision", "backend_spec"])
+        optional_fields = set(
+            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+        )
+        nullable_fields = set(
+            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+        )
         serialized = handler(self)
         m = {}
 

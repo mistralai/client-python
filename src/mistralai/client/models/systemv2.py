@@ -2,10 +2,16 @@
 
 from __future__ import annotations
 from datetime import datetime
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
-from typing import Dict, Union
-from typing_extensions import TypeAliasType, TypedDict
+from typing import Any, Dict, Optional, Union
+from typing_extensions import NotRequired, TypeAliasType, TypedDict
 
 
 ParamsTypedDict = TypeAliasType("ParamsTypedDict", Union[str, int, float, bool])
@@ -21,6 +27,8 @@ class SystemV2TypedDict(TypedDict):
     deleted_at: Nullable[datetime]
     name: str
     params: Dict[str, ParamsTypedDict]
+    kind: NotRequired[str]
+    spec: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class SystemV2(BaseModel):
@@ -36,16 +44,31 @@ class SystemV2(BaseModel):
 
     params: Dict[str, Params]
 
+    kind: Optional[str] = "custom"
+
+    spec: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
+        optional_fields = set(["kind", "spec"])
+        nullable_fields = set(["deleted_at", "spec"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                m[k] = val
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

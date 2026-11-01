@@ -233,9 +233,8 @@ class Voices(BaseSDK):
         self,
         *,
         name: str,
-        slug: OptionalNullable[str] = UNSET,
         languages: Optional[Iterable[str]] = None,
-        gender: OptionalNullable[str] = UNSET,
+        gender: OptionalNullable[models.VoiceGender] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
@@ -253,7 +252,6 @@ class Voices(BaseSDK):
         Create a new voice with a base64-encoded audio sample
 
         :param name:
-        :param slug:
         :param languages:
         :param gender:
         :param age:
@@ -283,7 +281,6 @@ class Voices(BaseSDK):
 
         request = models.VoiceCreateRequest(
             name=name,
-            slug=slug,
             languages=utils.unmarshal(languages, Optional[List[str]]),
             gender=gender,
             age=age,
@@ -361,9 +358,8 @@ class Voices(BaseSDK):
         self,
         *,
         name: str,
-        slug: OptionalNullable[str] = UNSET,
         languages: Optional[Iterable[str]] = None,
-        gender: OptionalNullable[str] = UNSET,
+        gender: OptionalNullable[models.VoiceGender] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         color: OptionalNullable[str] = UNSET,
@@ -381,7 +377,6 @@ class Voices(BaseSDK):
         Create a new voice with a base64-encoded audio sample
 
         :param name:
-        :param slug:
         :param languages:
         :param gender:
         :param age:
@@ -411,7 +406,6 @@ class Voices(BaseSDK):
 
         request = models.VoiceCreateRequest(
             name=name,
-            slug=slug,
             languages=utils.unmarshal(languages, Optional[List[str]]),
             gender=gender,
             age=age,
@@ -681,7 +675,7 @@ class Voices(BaseSDK):
         voice_id: str,
         name: OptionalNullable[str] = UNSET,
         languages: OptionalNullable[Iterable[str]] = UNSET,
-        gender: OptionalNullable[str] = UNSET,
+        gender: OptionalNullable[models.VoiceGender] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,
@@ -806,7 +800,7 @@ class Voices(BaseSDK):
         voice_id: str,
         name: OptionalNullable[str] = UNSET,
         languages: OptionalNullable[Iterable[str]] = UNSET,
-        gender: OptionalNullable[str] = UNSET,
+        gender: OptionalNullable[models.VoiceGender] = UNSET,
         age: OptionalNullable[int] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
         description: OptionalNullable[str] = UNSET,

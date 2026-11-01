@@ -571,6 +571,24 @@ print(res.choices[0].message.content)
 * [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#update) - Update a connector.
 * [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/connectors/README.md#delete) - Delete a connector.
 
+### [Beta.Context.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md)
+
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#create) - Create a managed index
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#list) - List managed indexes
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#get) - Get a managed index
+* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#update) - Update a managed index schema
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#delete) - Delete a managed index
+* [ingest_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#ingest_documents) - Ingest documents into a managed index
+* [delete_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#delete_documents) - Delete documents from a managed index
+* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#search) - Search a managed index
+* [navigate](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#navigate) - Navigate to adjacent chunks
+* [read](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#read) - Read chunks within a span
+* [grep](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#grep) - Grep for a pattern within a source
+* [get_chunk](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#get_chunk) - Get a single chunk by id
+* [get_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#get_index_summary) - Get Managed Index Summary
+* [generate_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#generate_index_summary) - Generate a summary field for a managed index
+* [set_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/contextsearchindexes/README.md#set_index_summary) - Set Managed Index Summary
+
 ### [Beta.Conversations](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md)
 
 * [start](https://github.com/mistralai/client-python/blob/main/docs/sdks/conversations/README.md#start) - Create a conversation and append entries to it.
@@ -730,30 +748,12 @@ print(res.choices[0].message.content)
 * [register](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#register) - Register Config
 * [update_run_info](https://github.com/mistralai/client-python/blob/main/docs/sdks/ingestionpipelineconfigurations/README.md#update_run_info) - Update Run Info
 
-### [Beta.Rag.ManagedIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md)
+### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/ragsearchindexes/README.md)
 
-* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#create) - Create a managed index
-* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#list) - List managed indexes
-* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get) - Get a managed index
-* [update](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#update) - Update a managed index schema
-* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#delete) - Delete a managed index
-* [ingest_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#ingest_documents) - Ingest documents into a managed index
-* [delete_documents](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#delete_documents) - Delete documents from a managed index
-* [search](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#search) - Search a managed index
-* [navigate](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#navigate) - Navigate to adjacent chunks
-* [read](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#read) - Read chunks within a span
-* [grep](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#grep) - Grep for a pattern within a source
-* [get_chunk](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get_chunk) - Get a single chunk by id
-* [get_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#get_index_summary) - Get Managed Index Summary
-* [generate_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#generate_index_summary) - Generate a summary field for a managed index
-* [set_index_summary](https://github.com/mistralai/client-python/blob/main/docs/sdks/managedindexes/README.md#set_index_summary) - Set Managed Index Summary
-
-### [Beta.Rag.SearchIndexes](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md)
-
-* [get_deployment_summaries](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#get_deployment_summaries) - Get Deployment Summaries
-* [register_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#register_deployment) - Register (or re-register) a search index
-* [unregister_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#unregister_deployment) - Unregister Deployment
-* [update_index_metrics](https://github.com/mistralai/client-python/blob/main/docs/sdks/searchindexes/README.md#update_index_metrics) - Update Index Metrics
+* [get_deployment_summaries](https://github.com/mistralai/client-python/blob/main/docs/sdks/ragsearchindexes/README.md#get_deployment_summaries) - Get Deployment Summaries
+* [register_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/ragsearchindexes/README.md#register_deployment) - Register (or re-register) a search index
+* [unregister_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/ragsearchindexes/README.md#unregister_deployment) - Unregister Deployment
+* [update_index_metrics](https://github.com/mistralai/client-python/blob/main/docs/sdks/ragsearchindexes/README.md#update_index_metrics) - Update Index Metrics
 
 ### [Beta.ServiceAccounts](https://github.com/mistralai/client-python/blob/main/docs/sdks/serviceaccounts/README.md)
 
@@ -778,12 +778,28 @@ print(res.choices[0].message.content)
 * [get_version](https://github.com/mistralai/client-python/blob/main/docs/sdks/skills/README.md#get_version) - GetSkillVersion
 * [update_version_metadata](https://github.com/mistralai/client-python/blob/main/docs/sdks/skills/README.md#update_version_metadata) - UpdateSkillVersionMetadata
 
+### [Beta.Triggers](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md)
+
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md#create) - Create Trigger
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md#list) - List Triggers
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md#get) - Get Trigger
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md#delete) - Delete Trigger
+* [list_events](https://github.com/mistralai/client-python/blob/main/docs/sdks/triggers/README.md#list_events) - List Trigger Events
+
 ### [Beta.Users](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md)
 
 * [get_identity](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#get_identity) - Get Identity
 * [list_organizations](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#list_organizations) - List Organizations
 * [list_workspaces](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#list_workspaces) - List Workspaces
 * [whoami](https://github.com/mistralai/client-python/blob/main/docs/sdks/users/README.md#whoami) - Whoami
+
+### [Beta.Webhooks](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md)
+
+* [list](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md#list) - List Webhooks
+* [create](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md#create) - Create Webhook
+* [get](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md#get) - Get Webhook
+* [delete](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md#delete) - Delete Webhook
+* [get_signing_secret](https://github.com/mistralai/client-python/blob/main/docs/sdks/webhooks/README.md#get_signing_secret) - Get Webhook Signing Secret
 
 ### [Chat](https://github.com/mistralai/client-python/blob/main/docs/sdks/chat/README.md)
 
@@ -853,6 +869,7 @@ print(res.choices[0].message.content)
 * [get_workflow_registration](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#get_workflow_registration) - Get Workflow Registration
 * [bulk_archive_workflows](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#bulk_archive_workflows) - Bulk Archive Workflows
 * [bulk_unarchive_workflows](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#bulk_unarchive_workflows) - Bulk Unarchive Workflows
+* [add_workflow_tags](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#add_workflow_tags) - Add Workflow Tags
 * [archive_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#archive_workflow) - Archive Workflow
 * [unarchive_workflow](https://github.com/mistralai/client-python/blob/main/docs/sdks/workflows/README.md#unarchive_workflow) - Unarchive Workflow
 
@@ -868,6 +885,7 @@ print(res.choices[0].message.content)
 * [start_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#start_deployment) - Start Deployment
 * [restart_deployment](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#restart_deployment) - Restart Deployment
 * [list_deployment_workers](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#list_deployment_workers) - List Deployment Workers
+* [get_deployment_archive](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#get_deployment_archive) - Get Deployment Archive
 * [get_deployment_logs](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](https://github.com/mistralai/client-python/blob/main/docs/sdks/deployments/README.md#stream_deployment_logs) - Stream Deployment Logs
 
@@ -986,7 +1004,7 @@ with Mistral(
     api_key=os.getenv("MISTRAL_API_KEY", ""),
 ) as mistral:
 
-    res = mistral.beta.rag.managed_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
+    res = mistral.beta.context.search_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
 
     with res as jsonl_stream:
         for event in jsonl_stream:
@@ -1166,8 +1184,8 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 178 of 290 methods.*
-* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 290 methods.*
+* [`HTTPValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 189 of 302 methods.*
+* [`ObservabilityError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 302 methods.*
 * [`ResponseValidationError`](https://github.com/mistralai/client-python/blob/main/src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

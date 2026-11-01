@@ -13,6 +13,7 @@
 * [get_workflow_registration](#get_workflow_registration) - Get Workflow Registration
 * [bulk_archive_workflows](#bulk_archive_workflows) - Bulk Archive Workflows
 * [bulk_unarchive_workflows](#bulk_unarchive_workflows) - Bulk Unarchive Workflows
+* [add_workflow_tags](#add_workflow_tags) - Add Workflow Tags
 * [archive_workflow](#archive_workflow) - Archive Workflow
 * [unarchive_workflow](#unarchive_workflow) - Unarchive Workflow
 
@@ -428,6 +429,43 @@ with Mistral(
 ### Response
 
 **[models.WorkflowBulkUnarchiveResponse](../../models/workflowbulkunarchiveresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## add_workflow_tags
+
+Add Workflow Tags
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="add_workflow_tags_v1_workflows__workflow_identifier__tags_post" method="post" path="/v1/workflows/{workflow_identifier}/tags" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+) as mistral:
+
+    mistral.workflows.add_workflow_tags(workflow_identifier="<value>", tags=[])
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `workflow_identifier`                                               | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `tags`                                                              | List[*str*]                                                         | :heavy_check_mark:                                                  | Tags to add to the workflow. Existing tags are kept.                |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Errors
 

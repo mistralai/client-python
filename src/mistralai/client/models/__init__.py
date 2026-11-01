@@ -51,6 +51,10 @@ if TYPE_CHECKING:
         ActivityTaskStartedResponse,
         ActivityTaskStartedResponseTypedDict,
     )
+    from .add_workflow_tags_v1_workflows_workflow_identifier_tags_postop import (
+        AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequest,
+        AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequestTypedDict,
+    )
     from .agent import (
         Agent,
         AgentTool,
@@ -642,6 +646,10 @@ if TYPE_CHECKING:
         ConnectorMCPPublicUpdateAuthMethod2TypedDict,
         ConnectorMCPPublicUpdateTypedDict,
     )
+    from .connectoropenapispec import (
+        ConnectorOpenAPISpec,
+        ConnectorOpenAPISpecTypedDict,
+    )
     from .connectorsqueryfilters import (
         ConnectorsQueryFilters,
         ConnectorsQueryFiltersTypedDict,
@@ -934,6 +942,9 @@ if TYPE_CHECKING:
         CreateSkillVersionResponse,
         CreateSkillVersionResponseTypedDict,
     )
+    from .createtrigger import CreateTrigger, CreateTriggerTypedDict
+    from .createtriggeraction import CreateTriggerAction, CreateTriggerActionTypedDict
+    from .createwebhook import CreateWebhook, CreateWebhookTypedDict
     from .credentialscreateorupdate import (
         CredentialsCreateOrUpdate,
         CredentialsCreateOrUpdateTypedDict,
@@ -1053,9 +1064,17 @@ if TYPE_CHECKING:
         DeleteSessionV1AudioSessionsSessionIDDeleteRequest,
         DeleteSessionV1AudioSessionsSessionIDDeleteRequestTypedDict,
     )
+    from .delete_trigger_v1_triggers_trigger_id_deleteop import (
+        DeleteTriggerV1TriggersTriggerIDDeleteRequest,
+        DeleteTriggerV1TriggersTriggerIDDeleteRequestTypedDict,
+    )
     from .delete_voice_v1_audio_voices_voice_id_deleteop import (
         DeleteVoiceV1AudioVoicesVoiceIDDeleteRequest,
         DeleteVoiceV1AudioVoicesVoiceIDDeleteRequestTypedDict,
+    )
+    from .delete_webhook_v1_webhooks_webhook_id_deleteop import (
+        DeleteWebhookV1WebhooksWebhookIDDeleteRequest,
+        DeleteWebhookV1WebhooksWebhookIDDeleteRequestTypedDict,
     )
     from .deletebatchjobresponse import (
         DeleteBatchJobResponse,
@@ -1093,6 +1112,10 @@ if TYPE_CHECKING:
     from .densevectorfielddefinition import (
         DenseVectorFieldDefinition,
         DenseVectorFieldDefinitionTypedDict,
+    )
+    from .deploymentarchiveresponse import (
+        DeploymentArchiveResponse,
+        DeploymentArchiveResponseTypedDict,
     )
     from .deploymentbuildstate import (
         DeploymentBuildState,
@@ -1443,6 +1466,10 @@ if TYPE_CHECKING:
         GetDatasetsV1ObservabilityDatasetsGetRequest,
         GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict,
     )
+    from .get_deployment_archive_v1_workflows_deployments_name_archive_getop import (
+        GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequest,
+        GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequestTypedDict,
+    )
     from .get_deployment_logsop import (
         GetDeploymentLogsOrder,
         GetDeploymentLogsRequest,
@@ -1569,6 +1596,10 @@ if TYPE_CHECKING:
         GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest,
         GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict,
     )
+    from .get_trigger_v1_triggers_trigger_id_getop import (
+        GetTriggerV1TriggersTriggerIDGetRequest,
+        GetTriggerV1TriggersTriggerIDGetRequestTypedDict,
+    )
     from .get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop import (
         GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest,
         GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict,
@@ -1576,6 +1607,14 @@ if TYPE_CHECKING:
     from .get_voice_v1_audio_voices_voice_id_getop import (
         GetVoiceV1AudioVoicesVoiceIDGetRequest,
         GetVoiceV1AudioVoicesVoiceIDGetRequestTypedDict,
+    )
+    from .get_webhook_signing_secret_v1_webhooks_webhook_id_signing_secret_getop import (
+        GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequest,
+        GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequestTypedDict,
+    )
+    from .get_webhook_v1_webhooks_webhook_id_getop import (
+        GetWebhookV1WebhooksWebhookIDGetRequest,
+        GetWebhookV1WebhooksWebhookIDGetRequestTypedDict,
     )
     from .get_workflow_events_v1_workflows_events_list_getop import (
         GetWorkflowEventsV1WorkflowsEventsListGetRequest,
@@ -2042,6 +2081,14 @@ if TYPE_CHECKING:
         ListServiceAccountsV1ServiceAccountsGetResponse,
         ListServiceAccountsV1ServiceAccountsGetResponseTypedDict,
     )
+    from .list_trigger_events_v1_triggers_trigger_id_events_getop import (
+        ListTriggerEventsV1TriggersTriggerIDEventsGetRequest,
+        ListTriggerEventsV1TriggersTriggerIDEventsGetRequestTypedDict,
+    )
+    from .list_triggers_v1_triggers_getop import (
+        ListTriggersV1TriggersGetRequest,
+        ListTriggersV1TriggersGetRequestTypedDict,
+    )
     from .list_voices_v1_audio_voices_getop import (
         ListVoicesV1AudioVoicesGetRequest,
         ListVoicesV1AudioVoicesGetRequestTypedDict,
@@ -2372,6 +2419,13 @@ if TYPE_CHECKING:
     from .ocrtextblock import OCRTextBlock, OCRTextBlockTypedDict
     from .ocrtitleblock import OCRTitleBlock, OCRTitleBlockTypedDict
     from .ocrusageinfo import OCRUsageInfo, OCRUsageInfoTypedDict
+    from .openapifilesource import OpenAPIFileSource, OpenAPIFileSourceTypedDict
+    from .openapispecsource import (
+        OpenAPISpecSource,
+        OpenAPISpecSourceTypedDict,
+        UnknownOpenAPISpecSource,
+    )
+    from .openapiurlsource import OpenAPIURLSource, OpenAPIURLSourceTypedDict
     from .optimization import Optimization, OptimizationTypedDict
     from .optimizationdetail import OptimizationDetail, OptimizationDetailTypedDict
     from .optimizationreference import (
@@ -3601,10 +3655,18 @@ if TYPE_CHECKING:
         TransferTargetTypedDict,
         UnknownDestination,
     )
+    from .trigger import Trigger, TriggerTypedDict
     from .trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop import (
         TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest,
         TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict,
     )
+    from .triggeraction import TriggerAction, TriggerActionTypedDict
+    from .triggeractiontype import TriggerActionType
+    from .triggerevent import TriggerEvent, TriggerEventTypedDict
+    from .triggereventlist import TriggerEventList, TriggerEventListTypedDict
+    from .triggerhandler import TriggerHandler
+    from .triggersownertype import TriggersOwnerType
+    from .triggerstatusvalue import TriggerStatusValue
     from .turbinemeta import TurbineMeta, TurbineMetaTypedDict
     from .turbinetoollocale import TurbineToolLocale, TurbineToolLocaleTypedDict
     from .turbinetoolmeta import TurbineToolMeta, TurbineToolMetaTypedDict
@@ -3917,6 +3979,14 @@ if TYPE_CHECKING:
     from .voicelistresponse import VoiceListResponse, VoiceListResponseTypedDict
     from .voiceresponse import VoiceResponse, VoiceResponseType, VoiceResponseTypedDict
     from .voiceupdaterequest import VoiceUpdateRequest, VoiceUpdateRequestTypedDict
+    from .webhook import Webhook, WebhookTypedDict
+    from .webhookprovider import WebhookProvider
+    from .webhooksignatureencoding import WebhookSignatureEncoding
+    from .webhooksignaturehashalgorithm import WebhookSignatureHashAlgorithm
+    from .webhooksigningsecret import (
+        WebhookSigningSecret,
+        WebhookSigningSecretTypedDict,
+    )
     from .websearchpremiumtool import (
         WebSearchPremiumTool,
         WebSearchPremiumToolTypedDict,
@@ -4109,6 +4179,10 @@ if TYPE_CHECKING:
         WorkflowsWorkerSpecUpdate,
         WorkflowsWorkerSpecUpdateTypedDict,
     )
+    from .workflowtagsaddrequest import (
+        WorkflowTagsAddRequest,
+        WorkflowTagsAddRequestTypedDict,
+    )
     from .workflowtaskfailedattributes import (
         WorkflowTaskFailedAttributes,
         WorkflowTaskFailedAttributesTypedDict,
@@ -4170,6 +4244,8 @@ __all__ = [
     "ActivityTaskStartedAttributesResponseTypedDict",
     "ActivityTaskStartedResponse",
     "ActivityTaskStartedResponseTypedDict",
+    "AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequest",
+    "AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequestTypedDict",
     "Agent",
     "AgentAliasResponse",
     "AgentAliasResponseTypedDict",
@@ -4565,6 +4641,8 @@ __all__ = [
     "ConnectorMCPPublicUpdateAuthMethod2",
     "ConnectorMCPPublicUpdateAuthMethod2TypedDict",
     "ConnectorMCPPublicUpdateTypedDict",
+    "ConnectorOpenAPISpec",
+    "ConnectorOpenAPISpecTypedDict",
     "ConnectorShareToOrganizationV1Request",
     "ConnectorShareToOrganizationV1RequestTypedDict",
     "ConnectorShareV1Request",
@@ -4782,6 +4860,12 @@ __all__ = [
     "CreateSkillVersionRequestTypedDict",
     "CreateSkillVersionResponse",
     "CreateSkillVersionResponseTypedDict",
+    "CreateTrigger",
+    "CreateTriggerAction",
+    "CreateTriggerActionTypedDict",
+    "CreateTriggerTypedDict",
+    "CreateWebhook",
+    "CreateWebhookTypedDict",
     "CredentialsCreateOrUpdate",
     "CredentialsCreateOrUpdateTypedDict",
     "CredentialsResponse",
@@ -4870,14 +4954,20 @@ __all__ = [
     "DeleteSessionV1AudioSessionsSessionIDDeleteRequestTypedDict",
     "DeleteSkillResponse",
     "DeleteSkillResponseTypedDict",
+    "DeleteTriggerV1TriggersTriggerIDDeleteRequest",
+    "DeleteTriggerV1TriggersTriggerIDDeleteRequestTypedDict",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequest",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequestTypedDict",
+    "DeleteWebhookV1WebhooksWebhookIDDeleteRequest",
+    "DeleteWebhookV1WebhooksWebhookIDDeleteRequestTypedDict",
     "DeltaMessage",
     "DeltaMessageContent",
     "DeltaMessageContentTypedDict",
     "DeltaMessageTypedDict",
     "DenseVectorFieldDefinition",
     "DenseVectorFieldDefinitionTypedDict",
+    "DeploymentArchiveResponse",
+    "DeploymentArchiveResponseTypedDict",
     "DeploymentBuildState",
     "DeploymentBuildStateTypedDict",
     "DeploymentDetailResponse",
@@ -5117,6 +5207,8 @@ __all__ = [
     "GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequestTypedDict",
     "GetDatasetsV1ObservabilityDatasetsGetRequest",
     "GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict",
+    "GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequest",
+    "GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequestTypedDict",
     "GetDeploymentLogsOrder",
     "GetDeploymentLogsRequest",
     "GetDeploymentLogsRequestTypedDict",
@@ -5237,10 +5329,16 @@ __all__ = [
     "GetTraceTypedDict",
     "GetTraces",
     "GetTracesTypedDict",
+    "GetTriggerV1TriggersTriggerIDGetRequest",
+    "GetTriggerV1TriggersTriggerIDGetRequestTypedDict",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest",
     "GetVoiceV1AudioVoicesVoiceIDGetRequestTypedDict",
+    "GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequest",
+    "GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequestTypedDict",
+    "GetWebhookV1WebhooksWebhookIDGetRequest",
+    "GetWebhookV1WebhooksWebhookIDGetRequestTypedDict",
     "GetWorkflowEventsV1WorkflowsEventsListGetRequest",
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest",
@@ -5555,6 +5653,10 @@ __all__ = [
     "ListSkillsResponseTypedDict",
     "ListSortDirection",
     "ListSortField",
+    "ListTriggerEventsV1TriggersTriggerIDEventsGetRequest",
+    "ListTriggerEventsV1TriggersTriggerIDEventsGetRequestTypedDict",
+    "ListTriggersV1TriggersGetRequest",
+    "ListTriggersV1TriggersGetRequestTypedDict",
     "ListVoicesV1AudioVoicesGetRequest",
     "ListVoicesV1AudioVoicesGetRequestTypedDict",
     "ListVoicesV1AudioVoicesGetType",
@@ -5781,6 +5883,12 @@ __all__ = [
     "ObservabilityErrorDetail",
     "ObservabilityErrorDetailTypedDict",
     "OldState",
+    "OpenAPIFileSource",
+    "OpenAPIFileSourceTypedDict",
+    "OpenAPISpecSource",
+    "OpenAPISpecSourceTypedDict",
+    "OpenAPIURLSource",
+    "OpenAPIURLSourceTypedDict",
     "Operator",
     "Optimization",
     "OptimizationDetail",
@@ -6702,8 +6810,20 @@ __all__ = [
     "TransferCallToolTypedDict",
     "TransferTarget",
     "TransferTargetTypedDict",
+    "Trigger",
+    "TriggerAction",
+    "TriggerActionType",
+    "TriggerActionTypedDict",
+    "TriggerEvent",
+    "TriggerEventList",
+    "TriggerEventListTypedDict",
+    "TriggerEventTypedDict",
+    "TriggerHandler",
     "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest",
     "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict",
+    "TriggerStatusValue",
+    "TriggerTypedDict",
+    "TriggersOwnerType",
     "Truncation",
     "TurbineMeta",
     "TurbineMetaTypedDict",
@@ -6750,6 +6870,7 @@ __all__ = [
     "UnknownJudgeOutputUnion",
     "UnknownModelConversationTool",
     "UnknownModelListData",
+    "UnknownOpenAPISpecSource",
     "UnknownPayload",
     "UnknownPipelineConfigSampling",
     "UnknownPrincipal",
@@ -6943,6 +7064,13 @@ __all__ = [
     "WebSearchPremiumToolTypedDict",
     "WebSearchTool",
     "WebSearchToolTypedDict",
+    "Webhook",
+    "WebhookProvider",
+    "WebhookSignatureEncoding",
+    "WebhookSignatureHashAlgorithm",
+    "WebhookSigningSecret",
+    "WebhookSigningSecretTypedDict",
+    "WebhookTypedDict",
     "WhoamiOrganization",
     "WhoamiOrganizationTypedDict",
     "WhoamiResponse",
@@ -7047,6 +7175,8 @@ __all__ = [
     "WorkflowScheduleUpdateRequestTypedDict",
     "WorkflowStreamError",
     "WorkflowStreamErrorTypedDict",
+    "WorkflowTagsAddRequest",
+    "WorkflowTagsAddRequestTypedDict",
     "WorkflowTaskFailedAttributes",
     "WorkflowTaskFailedAttributesTypedDict",
     "WorkflowTaskFailedResponse",
@@ -7088,6 +7218,8 @@ _dynamic_imports: dict[str, str] = {
     "ActivityTaskStartedAttributesResponseTypedDict": ".activitytaskstartedattributesresponse",
     "ActivityTaskStartedResponse": ".activitytaskstartedresponse",
     "ActivityTaskStartedResponseTypedDict": ".activitytaskstartedresponse",
+    "AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequest": ".add_workflow_tags_v1_workflows_workflow_identifier_tags_postop",
+    "AddWorkflowTagsV1WorkflowsWorkflowIdentifierTagsPostRequestTypedDict": ".add_workflow_tags_v1_workflows_workflow_identifier_tags_postop",
     "Agent": ".agent",
     "AgentTool": ".agent",
     "AgentToolTypedDict": ".agent",
@@ -7491,6 +7623,8 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorMCPPublicUpdateAuthMethod2": ".connectormcppublicupdate",
     "ConnectorMCPPublicUpdateAuthMethod2TypedDict": ".connectormcppublicupdate",
     "ConnectorMCPPublicUpdateTypedDict": ".connectormcppublicupdate",
+    "ConnectorOpenAPISpec": ".connectoropenapispec",
+    "ConnectorOpenAPISpecTypedDict": ".connectoropenapispec",
     "ConnectorsQueryFilters": ".connectorsqueryfilters",
     "ConnectorsQueryFiltersTypedDict": ".connectorsqueryfilters",
     "ConnectorTool": ".connectortool",
@@ -7713,6 +7847,12 @@ _dynamic_imports: dict[str, str] = {
     "CreateSkillRequestTypedDict": ".createskillrequest",
     "CreateSkillVersionResponse": ".createskillversionresponse",
     "CreateSkillVersionResponseTypedDict": ".createskillversionresponse",
+    "CreateTrigger": ".createtrigger",
+    "CreateTriggerTypedDict": ".createtrigger",
+    "CreateTriggerAction": ".createtriggeraction",
+    "CreateTriggerActionTypedDict": ".createtriggeraction",
+    "CreateWebhook": ".createwebhook",
+    "CreateWebhookTypedDict": ".createwebhook",
     "CredentialsCreateOrUpdate": ".credentialscreateorupdate",
     "CredentialsCreateOrUpdateTypedDict": ".credentialscreateorupdate",
     "CredentialsResponse": ".credentialsresponse",
@@ -7787,8 +7927,12 @@ _dynamic_imports: dict[str, str] = {
     "DeleteServiceAccountV1ServiceAccountsServiceAccountIDDeleteRequestTypedDict": ".delete_service_account_v1_service_accounts_service_account_id_deleteop",
     "DeleteSessionV1AudioSessionsSessionIDDeleteRequest": ".delete_session_v1_audio_sessions_session_id_deleteop",
     "DeleteSessionV1AudioSessionsSessionIDDeleteRequestTypedDict": ".delete_session_v1_audio_sessions_session_id_deleteop",
+    "DeleteTriggerV1TriggersTriggerIDDeleteRequest": ".delete_trigger_v1_triggers_trigger_id_deleteop",
+    "DeleteTriggerV1TriggersTriggerIDDeleteRequestTypedDict": ".delete_trigger_v1_triggers_trigger_id_deleteop",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequest": ".delete_voice_v1_audio_voices_voice_id_deleteop",
     "DeleteVoiceV1AudioVoicesVoiceIDDeleteRequestTypedDict": ".delete_voice_v1_audio_voices_voice_id_deleteop",
+    "DeleteWebhookV1WebhooksWebhookIDDeleteRequest": ".delete_webhook_v1_webhooks_webhook_id_deleteop",
+    "DeleteWebhookV1WebhooksWebhookIDDeleteRequestTypedDict": ".delete_webhook_v1_webhooks_webhook_id_deleteop",
     "DeleteBatchJobResponse": ".deletebatchjobresponse",
     "DeleteBatchJobResponseTypedDict": ".deletebatchjobresponse",
     "DeleteDatasetRecordsRequest": ".deletedatasetrecordsrequest",
@@ -7813,6 +7957,8 @@ _dynamic_imports: dict[str, str] = {
     "DeltaMessageTypedDict": ".deltamessage",
     "DenseVectorFieldDefinition": ".densevectorfielddefinition",
     "DenseVectorFieldDefinitionTypedDict": ".densevectorfielddefinition",
+    "DeploymentArchiveResponse": ".deploymentarchiveresponse",
+    "DeploymentArchiveResponseTypedDict": ".deploymentarchiveresponse",
     "DeploymentBuildState": ".deploymentbuildstate",
     "DeploymentBuildStateTypedDict": ".deploymentbuildstate",
     "DeploymentDetailResponse": ".deploymentdetailresponse",
@@ -8059,6 +8205,8 @@ _dynamic_imports: dict[str, str] = {
     "GetDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsGetRequestTypedDict": ".get_dataset_records_v1_observability_datasets_dataset_id_records_getop",
     "GetDatasetsV1ObservabilityDatasetsGetRequest": ".get_datasets_v1_observability_datasets_getop",
     "GetDatasetsV1ObservabilityDatasetsGetRequestTypedDict": ".get_datasets_v1_observability_datasets_getop",
+    "GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequest": ".get_deployment_archive_v1_workflows_deployments_name_archive_getop",
+    "GetDeploymentArchiveV1WorkflowsDeploymentsNameArchiveGetRequestTypedDict": ".get_deployment_archive_v1_workflows_deployments_name_archive_getop",
     "GetDeploymentLogsOrder": ".get_deployment_logsop",
     "GetDeploymentLogsRequest": ".get_deployment_logsop",
     "GetDeploymentLogsRequestTypedDict": ".get_deployment_logsop",
@@ -8127,10 +8275,16 @@ _dynamic_imports: dict[str, str] = {
     "GetTraceFieldOptionsV1ObservabilityTracesFieldsFieldNameOptionsGetRequestTypedDict": ".get_trace_field_options_v1_observability_traces_fields_field_name_options_getop",
     "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequest": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
     "GetTraceSpansV1ObservabilityTracesTraceIDSpansGetRequestTypedDict": ".get_trace_spans_v1_observability_traces_trace_id_spans_getop",
+    "GetTriggerV1TriggersTriggerIDGetRequest": ".get_trigger_v1_triggers_trigger_id_getop",
+    "GetTriggerV1TriggersTriggerIDGetRequestTypedDict": ".get_trigger_v1_triggers_trigger_id_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequest": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceSampleAudioV1AudioVoicesVoiceIDSampleGetRequestTypedDict": ".get_voice_sample_audio_v1_audio_voices_voice_id_sample_getop",
     "GetVoiceV1AudioVoicesVoiceIDGetRequest": ".get_voice_v1_audio_voices_voice_id_getop",
     "GetVoiceV1AudioVoicesVoiceIDGetRequestTypedDict": ".get_voice_v1_audio_voices_voice_id_getop",
+    "GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequest": ".get_webhook_signing_secret_v1_webhooks_webhook_id_signing_secret_getop",
+    "GetWebhookSigningSecretV1WebhooksWebhookIDSigningSecretGetRequestTypedDict": ".get_webhook_signing_secret_v1_webhooks_webhook_id_signing_secret_getop",
+    "GetWebhookV1WebhooksWebhookIDGetRequest": ".get_webhook_v1_webhooks_webhook_id_getop",
+    "GetWebhookV1WebhooksWebhookIDGetRequestTypedDict": ".get_webhook_v1_webhooks_webhook_id_getop",
     "GetWorkflowEventsV1WorkflowsEventsListGetRequest": ".get_workflow_events_v1_workflows_events_list_getop",
     "GetWorkflowEventsV1WorkflowsEventsListGetRequestTypedDict": ".get_workflow_events_v1_workflows_events_list_getop",
     "GetWorkflowExecutionHistoryV1WorkflowsExecutionsExecutionIDHistoryGetRequest": ".get_workflow_execution_history_v1_workflows_executions_execution_id_history_getop",
@@ -8463,6 +8617,10 @@ _dynamic_imports: dict[str, str] = {
     "ListServiceAccountsV1ServiceAccountsGetRequestTypedDict": ".list_service_accounts_v1_service_accounts_getop",
     "ListServiceAccountsV1ServiceAccountsGetResponse": ".list_service_accounts_v1_service_accounts_getop",
     "ListServiceAccountsV1ServiceAccountsGetResponseTypedDict": ".list_service_accounts_v1_service_accounts_getop",
+    "ListTriggerEventsV1TriggersTriggerIDEventsGetRequest": ".list_trigger_events_v1_triggers_trigger_id_events_getop",
+    "ListTriggerEventsV1TriggersTriggerIDEventsGetRequestTypedDict": ".list_trigger_events_v1_triggers_trigger_id_events_getop",
+    "ListTriggersV1TriggersGetRequest": ".list_triggers_v1_triggers_getop",
+    "ListTriggersV1TriggersGetRequestTypedDict": ".list_triggers_v1_triggers_getop",
     "ListVoicesV1AudioVoicesGetRequest": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetRequestTypedDict": ".list_voices_v1_audio_voices_getop",
     "ListVoicesV1AudioVoicesGetType": ".list_voices_v1_audio_voices_getop",
@@ -8739,6 +8897,13 @@ _dynamic_imports: dict[str, str] = {
     "OCRTitleBlockTypedDict": ".ocrtitleblock",
     "OCRUsageInfo": ".ocrusageinfo",
     "OCRUsageInfoTypedDict": ".ocrusageinfo",
+    "OpenAPIFileSource": ".openapifilesource",
+    "OpenAPIFileSourceTypedDict": ".openapifilesource",
+    "OpenAPISpecSource": ".openapispecsource",
+    "OpenAPISpecSourceTypedDict": ".openapispecsource",
+    "UnknownOpenAPISpecSource": ".openapispecsource",
+    "OpenAPIURLSource": ".openapiurlsource",
+    "OpenAPIURLSourceTypedDict": ".openapiurlsource",
     "Optimization": ".optimization",
     "OptimizationTypedDict": ".optimization",
     "OptimizationDetail": ".optimizationdetail",
@@ -9634,8 +9799,20 @@ _dynamic_imports: dict[str, str] = {
     "TransferTarget": ".transfertarget",
     "TransferTargetTypedDict": ".transfertarget",
     "UnknownDestination": ".transfertarget",
+    "Trigger": ".trigger",
+    "TriggerTypedDict": ".trigger",
     "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequest": ".trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop",
     "TriggerScheduleV1WorkflowsSchedulesScheduleIDTriggerPostRequestTypedDict": ".trigger_schedule_v1_workflows_schedules_schedule_id_trigger_postop",
+    "TriggerAction": ".triggeraction",
+    "TriggerActionTypedDict": ".triggeraction",
+    "TriggerActionType": ".triggeractiontype",
+    "TriggerEvent": ".triggerevent",
+    "TriggerEventTypedDict": ".triggerevent",
+    "TriggerEventList": ".triggereventlist",
+    "TriggerEventListTypedDict": ".triggereventlist",
+    "TriggerHandler": ".triggerhandler",
+    "TriggersOwnerType": ".triggersownertype",
+    "TriggerStatusValue": ".triggerstatusvalue",
     "TurbineMeta": ".turbinemeta",
     "TurbineMetaTypedDict": ".turbinemeta",
     "TurbineToolLocale": ".turbinetoollocale",
@@ -9841,6 +10018,13 @@ _dynamic_imports: dict[str, str] = {
     "VoiceResponseTypedDict": ".voiceresponse",
     "VoiceUpdateRequest": ".voiceupdaterequest",
     "VoiceUpdateRequestTypedDict": ".voiceupdaterequest",
+    "Webhook": ".webhook",
+    "WebhookTypedDict": ".webhook",
+    "WebhookProvider": ".webhookprovider",
+    "WebhookSignatureEncoding": ".webhooksignatureencoding",
+    "WebhookSignatureHashAlgorithm": ".webhooksignaturehashalgorithm",
+    "WebhookSigningSecret": ".webhooksigningsecret",
+    "WebhookSigningSecretTypedDict": ".webhooksigningsecret",
     "WebSearchPremiumTool": ".websearchpremiumtool",
     "WebSearchPremiumToolTypedDict": ".websearchpremiumtool",
     "WebSearchTool": ".websearchtool",
@@ -9954,6 +10138,8 @@ _dynamic_imports: dict[str, str] = {
     "WorkflowStreamErrorTypedDict": ".workflowstreamerror",
     "WorkflowsWorkerSpecUpdate": ".workflowsworkerspecupdate",
     "WorkflowsWorkerSpecUpdateTypedDict": ".workflowsworkerspecupdate",
+    "WorkflowTagsAddRequest": ".workflowtagsaddrequest",
+    "WorkflowTagsAddRequestTypedDict": ".workflowtagsaddrequest",
     "WorkflowTaskFailedAttributes": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedAttributesTypedDict": ".workflowtaskfailedattributes",
     "WorkflowTaskFailedResponse": ".workflowtaskfailedresponse",
