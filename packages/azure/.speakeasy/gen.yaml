@@ -30,7 +30,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.1.0
+  version: 2.2.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -45,12 +45,18 @@ python:
   authors:
     - Mistral
   baseErrorName: MistralAzureError
+  bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
   constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API in Azure.
+  durationFormat: false
   enableCustomCodeRegions: false
   enumFormat: union
+  errorSchemaValidation: true
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
   fixFlags:
     asyncPaginationSep2025: true
     conflictResistantModelImportsFeb2026: true
@@ -72,18 +78,25 @@ python:
       webhooks: ""
   inferUnionDiscriminators: true
   inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
   license: ""
   maxMethodParams: 999
   methodArguments: infer-optional-args
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
   moduleName: mistralai.azure.client
   multipartArrayFormat: standard
+  optionalDependencies: {}
   outputModelSuffix: output
   packageManager: uv
   packageName: mistralai-azure
   preApplyUnionDiscriminators: true
   pytestFilterWarnings: []
   pytestTimeout: 0
+  rawResponseHelpers: false
   responseFormat: flat
+  responseSchemaValidation: true
   sseFlatResponse: false
   templateVersion: v2
   useAsyncHooks: false
+  uuidFormat: false

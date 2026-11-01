@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 from datetime import datetime
-from mistralai.client.types import BaseModel
-from typing import Dict
-from typing_extensions import TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import Dict, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class GetLogTypedDict(TypedDict):
@@ -28,6 +29,7 @@ class GetLogTypedDict(TypedDict):
     scope_version: str
     scope_attributes: Dict[str, str]
     log_attributes: Dict[str, str]
+    service_account_id: NotRequired[str]
 
 
 class GetLog(BaseModel):
@@ -70,3 +72,21 @@ class GetLog(BaseModel):
     scope_attributes: Dict[str, str]
 
     log_attributes: Dict[str, str]
+
+    service_account_id: Optional[str] = ""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["service_account_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

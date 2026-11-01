@@ -28,6 +28,7 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        include_blocks: Optional[bool] = True,
         confidence_scores_granularity: OptionalNullable[
             models.ConfidenceScoresGranularity
         ] = UNSET,
@@ -48,9 +49,10 @@ class Ocr(BaseSDK):
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
         :param document_annotation_prompt: Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided.
         :param table_format:
-        :param extract_header:
-        :param extract_footer:
-        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
+        :param extract_header: Extract the page header into the response's `header` field and remove it from the markdown content
+        :param extract_footer: Extract the page footer into the response's `footer` field and remove it from the markdown content
+        :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
+        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -62,7 +64,7 @@ class Ocr(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -86,6 +88,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            include_blocks=include_blocks,
             confidence_scores_granularity=confidence_scores_granularity,
         )
 
@@ -168,6 +171,7 @@ class Ocr(BaseSDK):
         table_format: OptionalNullable[models.TableFormat] = UNSET,
         extract_header: Optional[bool] = None,
         extract_footer: Optional[bool] = None,
+        include_blocks: Optional[bool] = True,
         confidence_scores_granularity: OptionalNullable[
             models.ConfidenceScoresGranularity
         ] = UNSET,
@@ -188,9 +192,10 @@ class Ocr(BaseSDK):
         :param document_annotation_format: Structured output class for extracting useful information from the entire document. Only json_schema is valid for this field
         :param document_annotation_prompt: Optional prompt to guide the model in extracting structured output from the entire document. A document_annotation_format must be provided.
         :param table_format:
-        :param extract_header:
-        :param extract_footer:
-        :param confidence_scores_granularity: Granularity for confidence scores: 'word' (per-word scores) or 'page' (aggregate only). Defaults to None (no confidence scores) to keep response payload small.
+        :param extract_header: Extract the page header into the response's `header` field and remove it from the markdown content
+        :param extract_footer: Extract the page footer into the response's `footer` field and remove it from the markdown content
+        :param include_blocks: Return paragraph-level bounding boxes for all content blocks in the response
+        :param confidence_scores_granularity: Granularity for confidence scores: 'page' (aggregate only), 'word' (per-word scores), or 'block' (per-block scores). Defaults to None (no confidence scores) to keep response payload small.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -202,7 +207,7 @@ class Ocr(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 60000
+            timeout_ms = 300000
 
         if server_url is not None:
             base_url = server_url
@@ -226,6 +231,7 @@ class Ocr(BaseSDK):
             table_format=table_format,
             extract_header=extract_header,
             extract_footer=extract_footer,
+            include_blocks=include_blocks,
             confidence_scores_granularity=confidence_scores_granularity,
         )
 

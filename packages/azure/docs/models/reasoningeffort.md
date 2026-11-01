@@ -11,4 +11,9 @@ value: ReasoningEffort = "none"
 ## Values
 
 - `"none"`
+- `"minimal"`
+- `"low"`
+- `"medium"`
 - `"high"`
+- `"xhigh"`
+- `"max"`

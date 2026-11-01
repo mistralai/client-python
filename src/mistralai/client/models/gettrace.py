@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 from datetime import datetime
-from mistralai.client.types import BaseModel, UnrecognizedStr
-from typing import List, Literal, Union
-from typing_extensions import TypedDict
+from mistralai.client.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
+from pydantic import model_serializer
+from typing import List, Literal, Optional, Union
+from typing_extensions import NotRequired, TypedDict
 
 
 GetTraceStatusCode = Union[
@@ -51,6 +52,7 @@ class GetTraceTypedDict(TypedDict):
     first_turn_last_output_message: str
     last_turn_last_input_message: str
     last_turn_last_output_message: str
+    service_account_id: NotRequired[str]
 
 
 class GetTrace(BaseModel):
@@ -121,3 +123,21 @@ class GetTrace(BaseModel):
     last_turn_last_input_message: str
 
     last_turn_last_output_message: str
+
+    service_account_id: Optional[str] = ""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["service_account_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

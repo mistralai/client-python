@@ -5,12 +5,12 @@ Request model for partially updating voice metadata.
 
 ## Fields
 
-| Field                   | Type                    | Required                | Description             |
-| ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| `name`                  | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
-| `languages`             | List[*str*]             | :heavy_minus_sign:      | N/A                     |
-| `gender`                | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
-| `age`                   | *OptionalNullable[int]* | :heavy_minus_sign:      | N/A                     |
-| `tags`                  | List[*str*]             | :heavy_minus_sign:      | N/A                     |
-| `description`           | *OptionalNullable[str]* | :heavy_minus_sign:      | N/A                     |
-| `retention_notice`      | *OptionalNullable[int]* | :heavy_minus_sign:      | N/A                     |
+| Field                                                            | Type                                                             | Required                                                         | Description                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `name`                                                           | *OptionalNullable[str]*                                          | :heavy_minus_sign:                                               | N/A                                                              |
+| `languages`                                                      | List[*str*]                                                      | :heavy_minus_sign:                                               | N/A                                                              |
+| `gender`                                                         | [OptionalNullable[models.VoiceGender]](../models/voicegender.md) | :heavy_minus_sign:                                               | N/A                                                              |
+| `age`                                                            | *OptionalNullable[int]*                                          | :heavy_minus_sign:                                               | N/A                                                              |
+| `tags`                                                           | List[*str*]                                                      | :heavy_minus_sign:                                               | N/A                                                              |
+| `description`                                                    | *OptionalNullable[str]*                                          | :heavy_minus_sign:                                               | N/A                                                              |
+| `retention_notice`                                               | *OptionalNullable[int]*                                          | :heavy_minus_sign:                                               | N/A                                                              |

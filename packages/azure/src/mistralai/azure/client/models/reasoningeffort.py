@@ -6,5 +6,10 @@ from typing import Literal
 
 ReasoningEffort = Literal[
     "none",
+    "minimal",
+    "low",
+    "medium",
     "high",
+    "xhigh",
+    "max",
 ]

@@ -32,7 +32,7 @@ class Skills(BaseSDK):
         :param page_size:
         :param page_token:
         :param alias:
-        :param fields:
+        :param fields: Projection over each listed Skill. definition.description is the only definition path a list accepts; body and assets are read one skill at a time with GetSkill.
         :param sort_field: Defaults to created_at when omitted.
         :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
         :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.
@@ -176,7 +176,7 @@ class Skills(BaseSDK):
         :param page_size:
         :param page_token:
         :param alias:
-        :param fields:
+        :param fields: Projection over each listed Skill. definition.description is the only definition path a list accepts; body and assets are read one skill at a time with GetSkill.
         :param sort_field: Defaults to created_at when omitted.
         :param sort_direction_query_parameter: Defaults to descending for timestamp fields and ascending for text fields.
         :param sort_by: REST-friendly alias for sort.field. Supported values: created_at, last_modified_at, name, title.

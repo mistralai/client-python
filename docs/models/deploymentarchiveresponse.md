@@ -1,0 +1,11 @@
+# DeploymentArchiveResponse
+
+The archive a managed deployment builds from, with a signed URL to download it.
+
+
+## Fields
+
+| Field                                                                                                                 | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `archive_id`                                                                                                          | *str*                                                                                                                 | :heavy_check_mark:                                                                                                    | Mistral Cloud archive the worker builds from                                                                          |
+| `download_url`                                                                                                        | *OptionalNullable[str]*                                                                                               | :heavy_minus_sign:                                                                                                    | A signed URL to download the archive, which expires within 24 hours. Null once Mistral Cloud has deleted the archive. |

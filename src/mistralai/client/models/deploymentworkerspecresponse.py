@@ -21,7 +21,7 @@ from mistralai.client.types import (
 from mistralai.client.utils.unions import parse_open_union
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import BeforeValidator
-from typing import Any, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
@@ -73,16 +73,21 @@ r"""Backend-specific configuration. 'mistral_cloud' is Mistral Cloud; 'kubernete
 
 class DeploymentWorkerSpecResponseTypedDict(TypedDict):
     github_url: str
+    r"""GitHub repository the worker builds from. Empty for a worker built from an archive."""
     backend_spec: BackendSpecTypedDict
     r"""Backend-specific configuration. 'mistral_cloud' is Mistral Cloud; 'kubernetes' is a deployment that already runs on Kubernetes."""
     type: NotRequired[str]
     revision: NotRequired[Nullable[str]]
+    archive_id: NotRequired[Nullable[str]]
+    r"""Archive the worker builds from, if any."""
     restarted_at: NotRequired[Nullable[str]]
     commit: NotRequired[Nullable[GitCommitMetadataTypedDict]]
+    requested_roles: NotRequired[Nullable[List[str]]]
 
 
 class DeploymentWorkerSpecResponse(BaseModel):
     github_url: str
+    r"""GitHub repository the worker builds from. Empty for a worker built from an archive."""
 
     backend_spec: BackendSpec
     r"""Backend-specific configuration. 'mistral_cloud' is Mistral Cloud; 'kubernetes' is a deployment that already runs on Kubernetes."""
@@ -91,14 +96,30 @@ class DeploymentWorkerSpecResponse(BaseModel):
 
     revision: OptionalNullable[str] = UNSET
 
+    archive_id: OptionalNullable[str] = UNSET
+    r"""Archive the worker builds from, if any."""
+
     restarted_at: OptionalNullable[str] = UNSET
 
     commit: OptionalNullable[GitCommitMetadata] = UNSET
 
+    requested_roles: OptionalNullable[List[str]] = UNSET
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["type", "revision", "restarted_at", "commit"])
-        nullable_fields = set(["revision", "restarted_at", "commit"])
+        optional_fields = set(
+            [
+                "type",
+                "revision",
+                "archive_id",
+                "restarted_at",
+                "commit",
+                "requested_roles",
+            ]
+        )
+        nullable_fields = set(
+            ["revision", "archive_id", "restarted_at", "commit", "requested_roles"]
+        )
         serialized = handler(self)
         m = {}
 

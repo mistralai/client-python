@@ -15,3 +15,4 @@ value: BuiltInConnectors = "web_search"
 - `"code_interpreter"`
 - `"image_generation"`
 - `"document_library"`
+- `"mistral_mcp"`
