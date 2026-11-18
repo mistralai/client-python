@@ -149,6 +149,27 @@ class TestResponseFormat(unittest.TestCase):
             rec_strict_json_schema(mathdemo_schema), mathdemo_strict_schema
         )
 
+    def test_rec_strict_json_schema_keeps_dict_value_schema(self):
+        class Item(BaseModel):
+            name: str
+
+        class Inventory(BaseModel):
+            store: str
+            stock: dict[str, int]
+            items: dict[str, Item]
+
+        schema = rec_strict_json_schema(Inventory.model_json_schema())
+        self.assertEqual(schema["additionalProperties"], False)
+        self.assertEqual(
+            schema["properties"]["stock"]["additionalProperties"],
+            {"type": "integer"},
+        )
+        self.assertEqual(
+            schema["properties"]["items"]["additionalProperties"],
+            {"$ref": "#/$defs/Item"},
+        )
+        self.assertEqual(schema["$defs"]["Item"]["additionalProperties"], False)
+
     def test_rec_strict_json_schema_with_numeric_constraints(self):
         """
         Test that rec_strict_json_schema handles JSON Schema constraint keywords

@@ -27,7 +27,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -76,7 +76,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.create(name="<value>", definition={
@@ -125,7 +125,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.get(prompt_id="<id>", version=1)
@@ -168,7 +168,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.delete(prompt_id="<id>")
@@ -208,7 +208,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.update_metadata(prompt_id="<id>")
@@ -252,7 +252,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list_versions(prompt_id="<id>")
@@ -292,7 +292,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.create_version(prompt_id="<id>", definition={
@@ -337,7 +337,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.get_version(prompt_id="<id>", version=1)
@@ -379,7 +379,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.update_version_metadata(prompt_id="<id>", version=1)

@@ -21,7 +21,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.optimizations.list(page_size=50, page=1)
@@ -68,7 +68,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.optimizations.get(optimization_id="fd7cc96b-0c32-4b79-b7e4-63786d9dcfea")
@@ -109,7 +109,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.optimizations.list_trials(optimization_id="54622d5d-6e77-4a86-9908-87b1f8f16424", page_size=50, page=1)

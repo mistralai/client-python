@@ -15,6 +15,7 @@ generation:
     sharedErrorComponentsApr2025: true
     sharedNestedComponentsJan2026: true
     nameOverrideFeb2026: true
+    openSingleValueEnumsOct2026: false
     methodSignaturesApr2024: true
   auth:
     oAuth2ClientCredentialsEnabled: true
@@ -32,7 +33,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 3.7.0
+  version: 4.0.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -49,6 +50,42 @@ python:
   baseErrorName: MistralError
   bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
+  compileCommands:
+    - - uv
+      - lock
+    - - uv
+      - run
+      - python
+      - scripts/prepare_readme.py
+    - - uv
+      - sync
+      - --dev
+    - - uv
+      - run
+      - python
+      - -m
+      - compileall
+      - -q
+      - .
+    - - uv
+      - run
+      - python
+      - -m
+      - pylint
+      - -j=1
+      - src/mistralai/client
+    - - uv
+      - run
+      - python
+      - -m
+      - mypy
+      - src/mistralai/client
+    - - uv
+      - run
+      - python
+      - -m
+      - pyright
+      - src/mistralai/client
   constFieldCasing: normal
   defaultErrorName: SDKError
   description: Python Client SDK for the Mistral AI API.
@@ -87,6 +124,7 @@ python:
   methodArguments: infer-optional-args
   methodTimeoutArgument: timeout-ms
   methodTimeoutUnits: milliseconds
+  modelSerializationMethods: false
   moduleName: mistralai.client
   multipartArrayFormat: standard
   optionalDependencies: {}
@@ -94,6 +132,7 @@ python:
   packageManager: uv
   packageName: mistralai
   preApplyUnionDiscriminators: true
+  preserveUnknownFields: false
   pytestFilterWarnings: []
   pytestTimeout: 0
   rawResponseHelpers: false

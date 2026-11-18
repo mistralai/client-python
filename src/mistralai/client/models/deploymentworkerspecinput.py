@@ -11,7 +11,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
 from typing import List
 from typing_extensions import NotRequired, TypedDict
@@ -19,7 +22,9 @@ from typing_extensions import NotRequired, TypedDict
 
 class DeploymentWorkerSpecInputTypedDict(TypedDict):
     github_url: NotRequired[Nullable[str]]
-    r"""GitHub repository to build the worker from. Set this or 'archive_id', not both."""
+    r"""Deprecated alias of 'repository_url' for a GitHub repository. Set only 'repository_url'."""
+    repository_url: NotRequired[Nullable[str]]
+    r"""Repository to build the worker from, set instead of 'archive_id': a GitHub repository (`https://github.com/<owner>/<repo>`) or a repository on the Mistral git server (`https://api.globalaegis.net/v1/git/<workspace>/<repo>.git`). On the git server you must be able to read the repository; the worker builds from an archive of 'revision' and 'build_directory'."""
     revision: NotRequired[Nullable[str]]
     archive_id: NotRequired[Nullable[str]]
     r"""Mistral Cloud archive to build the worker from instead of a repository. The archive is the whole build context: 'dockerfile_path' is relative to its root, and 'build_directory' must be unset."""
@@ -31,7 +36,10 @@ class DeploymentWorkerSpecInputTypedDict(TypedDict):
 
 class DeploymentWorkerSpecInput(BaseModel):
     github_url: OptionalNullable[str] = UNSET
-    r"""GitHub repository to build the worker from. Set this or 'archive_id', not both."""
+    r"""Deprecated alias of 'repository_url' for a GitHub repository. Set only 'repository_url'."""
+
+    repository_url: OptionalNullable[str] = UNSET
+    r"""Repository to build the worker from, set instead of 'archive_id': a GitHub repository (`https://github.com/<owner>/<repo>`) or a repository on the Mistral git server (`https://api.globalaegis.net/v1/git/<workspace>/<repo>.git`). On the git server you must be able to read the repository; the worker builds from an archive of 'revision' and 'build_directory'."""
 
     revision: OptionalNullable[str] = UNSET
 
@@ -45,18 +53,39 @@ class DeploymentWorkerSpecInput(BaseModel):
     r"""Workspace roles, by name, that the deployment's service account holds beyond `workflow_executor`. Granted only if the deploying user holds them."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
-            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+            [
+                "github_url",
+                "repository_url",
+                "revision",
+                "archive_id",
+                "backend_spec",
+                "requested_roles",
+            ]
         )
         nullable_fields = set(
-            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+            [
+                "github_url",
+                "repository_url",
+                "revision",
+                "archive_id",
+                "backend_spec",
+                "requested_roles",
+            ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

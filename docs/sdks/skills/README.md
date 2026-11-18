@@ -27,7 +27,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.list()
@@ -76,7 +76,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.create(name="<value>", definition={})
@@ -121,7 +121,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.get(skill_id="<id>", version=1)
@@ -164,7 +164,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.delete(skill_id="<id>")
@@ -204,7 +204,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.update_metadata(skill_id="<id>")
@@ -246,7 +246,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.list_versions(skill_id="<id>")
@@ -286,7 +286,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.create_version(skill_id="<id>", definition={})
@@ -329,7 +329,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.get_version(skill_id="<id>", version=1)
@@ -371,7 +371,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.skills.update_version_metadata(skill_id="<id>", version=1)

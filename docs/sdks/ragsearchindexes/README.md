@@ -22,7 +22,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.search_indexes.get_deployment_summaries()
@@ -61,7 +61,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.search_indexes.register_deployment(name="<value>", deployment={
@@ -109,7 +109,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.search_indexes.unregister_deployment(deployment_id="240a5e63-fd68-4806-8290-04cce22b4c37")
@@ -150,7 +150,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.search_indexes.update_index_metrics(deployment_id="b0c2f463-8aef-437d-83ac-d4bfae874584", request_body={

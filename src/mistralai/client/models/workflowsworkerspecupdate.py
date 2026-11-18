@@ -11,7 +11,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
 from typing import List
 from typing_extensions import NotRequired, TypedDict
@@ -19,9 +22,12 @@ from typing_extensions import NotRequired, TypedDict
 
 class WorkflowsWorkerSpecUpdateTypedDict(TypedDict):
     github_url: NotRequired[Nullable[str]]
+    r"""Deprecated alias of 'repository_url' for a GitHub repository. Set only 'repository_url'."""
+    repository_url: NotRequired[Nullable[str]]
+    r"""Rebuild the worker from this repository, on GitHub or the git server, dropping 'archive_id'."""
     revision: NotRequired[Nullable[str]]
     archive_id: NotRequired[Nullable[str]]
-    r"""Rebuild the worker from this archive, dropping 'github_url' and 'revision'. Sending 'github_url' instead moves it back to a repository."""
+    r"""Rebuild the worker from this archive, dropping 'repository_url' and 'revision'. Sending 'repository_url' instead moves it back to a repository."""
     backend_spec: NotRequired[Nullable[DeploymentMistralCloudBackendSpecTypedDict]]
     r"""Backend-specific configuration for the Mistral Cloud backend."""
     requested_roles: NotRequired[Nullable[List[str]]]
@@ -30,11 +36,15 @@ class WorkflowsWorkerSpecUpdateTypedDict(TypedDict):
 
 class WorkflowsWorkerSpecUpdate(BaseModel):
     github_url: OptionalNullable[str] = UNSET
+    r"""Deprecated alias of 'repository_url' for a GitHub repository. Set only 'repository_url'."""
+
+    repository_url: OptionalNullable[str] = UNSET
+    r"""Rebuild the worker from this repository, on GitHub or the git server, dropping 'archive_id'."""
 
     revision: OptionalNullable[str] = UNSET
 
     archive_id: OptionalNullable[str] = UNSET
-    r"""Rebuild the worker from this archive, dropping 'github_url' and 'revision'. Sending 'github_url' instead moves it back to a repository."""
+    r"""Rebuild the worker from this archive, dropping 'repository_url' and 'revision'. Sending 'repository_url' instead moves it back to a repository."""
 
     backend_spec: OptionalNullable[DeploymentMistralCloudBackendSpec] = UNSET
     r"""Backend-specific configuration for the Mistral Cloud backend."""
@@ -43,18 +53,39 @@ class WorkflowsWorkerSpecUpdate(BaseModel):
     r"""The complete workspace-role set after the update, beyond `workflow_executor`. Replaces the current roles; omit it to leave them unchanged, send an empty list to drop all extras. Granted only if the deploying user holds them."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
-            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+            [
+                "github_url",
+                "repository_url",
+                "revision",
+                "archive_id",
+                "backend_spec",
+                "requested_roles",
+            ]
         )
         nullable_fields = set(
-            ["github_url", "revision", "archive_id", "backend_spec", "requested_roles"]
+            [
+                "github_url",
+                "repository_url",
+                "revision",
+                "archive_id",
+                "backend_spec",
+                "requested_roles",
+            ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

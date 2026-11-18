@@ -90,6 +90,7 @@ class _FakeWorkflowsServer:
     def __init__(self, events: list[dict[str, Any]]) -> None:
         self.events = events
         self.stream_start_seqs: list[int] = []
+        self.execution_requests: list[httpx.Request] = []
 
     def _sse_body(self, start_seq: int) -> bytes:
         frames = []
@@ -124,6 +125,7 @@ class _FakeWorkflowsServer:
     def handle(self, request: httpx.Request) -> httpx.Response:
         path = request.url.path
         if request.method == "POST" and path == "/v1/workflows/root-wf/execute":
+            self.execution_requests.append(request)
             return httpx.Response(200, json=self._execution("RUNNING"))
         if path == "/v1/workflows/events/stream":
             start_seq = int(request.url.params.get("start_seq", "0"))
@@ -175,6 +177,24 @@ async def _run(server: _FakeWorkflowsServer) -> list[ConnectorAuthTaskState]:
         )
     assert result.status == "COMPLETED"
     return auth_requests
+
+
+@pytest.mark.asyncio
+async def test_routes_through_deployment_name_without_a_queue_argument() -> None:
+    server = _FakeWorkflowsServer([_completed(ROOT_ID)])
+
+    async with _mistral_client(server) as client:
+        result = await execute_with_connector_auth_async(
+            client,
+            workflow_identifier="root-wf",
+            deployment_name="oauth-worker",
+        )
+
+    assert result.status == "COMPLETED"
+    assert len(server.execution_requests) == 1
+    body = json.loads(server.execution_requests[0].content)
+    assert body["deployment_name"] == "oauth-worker"
+    assert body.get("task_queue") is None
 
 
 @pytest.mark.asyncio

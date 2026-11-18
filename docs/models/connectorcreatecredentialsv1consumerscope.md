@@ -12,4 +12,3 @@ value: ConnectorCreateCredentialsV1ConsumerScope = "user"
 
 - `"user"`
 - `"workspace"`
-- `"organization"`

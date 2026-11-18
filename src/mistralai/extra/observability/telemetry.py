@@ -9,6 +9,13 @@ from typing import TYPE_CHECKING, Any, Final, Literal
 
 from opentelemetry import trace as otel_trace
 
+from mistralai.client._hooks.service_account_auth import (
+    MISTRAL_SA_TOKEN_PATH_ENV,
+    ServiceAccountTokenError,
+    bearer_header,
+    read_service_account_token,
+)
+from mistralai.client.sdkconfiguration import SERVER_GLOBAL, SERVERS
 from mistralai.client.utils import get_security_from_env
 
 from .otel import MISTRAL_SDK_OTEL_TRACER_NAME, OTEL_SERVICE_NAME
@@ -19,6 +26,7 @@ from .redaction import (
 )
 
 if TYPE_CHECKING:
+    import requests
     from opentelemetry.sdk.trace import TracerProvider as SDKTracerProvider
 
     from mistralai.client._hooks.tracing import TracingHook
@@ -27,7 +35,8 @@ if TYPE_CHECKING:
 
 
 MISTRAL_SDK_TELEMETRY_ENV = "MISTRAL_SDK_TELEMETRY"
-MISTRAL_TELEMETRY_ENDPOINT = "https://api.mistral.ai/telemetry/v1/traces"
+MISTRAL_TELEMETRY_PATH = "/telemetry/v1/traces"
+MISTRAL_TELEMETRY_ENDPOINT = f"{SERVERS[SERVER_GLOBAL]}{MISTRAL_TELEMETRY_PATH}"
 MISTRAL_OTLP_TRACES_ENDPOINT_ENV = "MISTRAL_OTLP_TRACES_ENDPOINT"
 TELEMETRY_PROVIDER_DEDICATED: Final[Literal["dedicated"]] = "dedicated"
 TELEMETRY_PROVIDER_GLOBAL: Final[Literal["global"]] = "global"
@@ -114,7 +123,10 @@ def configure_telemetry(
 ) -> bool:
     """Configure telemetry provider mode for a Mistral client.
 
-    By default, this creates an SDK-owned telemetry provider/exporter. Passing
+    By default, this creates an SDK-owned telemetry provider/exporter that sends
+    traces to /telemetry/v1/traces on the client's explicit server_url if set,
+    otherwise to https://api.mistral.ai (also for the named eu/us servers).
+    MISTRAL_OTLP_TRACES_ENDPOINT overrides that endpoint. Passing
     provider="global" clears the per-client provider so SDK spans use the
     global OpenTelemetry provider. Passing a TracerProvider attaches it to this
     client without taking ownership of its lifecycle.
@@ -272,6 +284,7 @@ def configure_telemetry_for_hook(
     api_key = _resolve_api_key_from_security(getattr(sdk_config, "security", None))
     provider = _create_telemetry_tracer_provider(
         api_key=api_key,
+        server_url=getattr(sdk_config, "server_url", None),
         redaction=redaction,
     )
     _attach_telemetry_provider(hook, provider, finalizer_owner or sdk_config)
@@ -290,21 +303,31 @@ def _get_tracing_hook(hooks: Any) -> "TracingHook":
     )
 
 
-def _resolve_api_key_from_security(security: Any) -> str:
+def _resolve_api_key_from_security(security: Any) -> str | None:
+    """Return the API key telemetry exports with, or None for the service-account token.
+
+    Follows the precedence of API calls: an explicit api_key, then the token at
+    MISTRAL_SA_TOKEN_PATH, then MISTRAL_API_KEY.
+    """
     from mistralai.client.models import Security
 
     if callable(security):
         security = security()
 
-    if getattr(security, "api_key", None) is None:
-        security = None
+    api_key = getattr(security, "api_key", None)
+    if api_key is not None:
+        return str(api_key)
 
-    security = get_security_from_env(security, Security)
-    api_key = getattr(security, "api_key", None) if security is not None else None
+    if os.getenv(MISTRAL_SA_TOKEN_PATH_ENV):
+        return None
+
+    env_security = get_security_from_env(None, Security)
+    api_key = getattr(env_security, "api_key", None)
     if api_key is None:
         raise TelemetryConfigurationError(
-            "Mistral telemetry requires an API key. Pass api_key=... to the "
-            "client or set MISTRAL_API_KEY."
+            "Mistral telemetry requires an API key or a service-account token. "
+            "Pass api_key=... to the client, set MISTRAL_SA_TOKEN_PATH, or set "
+            "MISTRAL_API_KEY."
         )
 
     return str(api_key)
@@ -313,8 +336,14 @@ def _resolve_api_key_from_security(security: Any) -> str:
 def _create_telemetry_tracer_provider(
     *,
     api_key: str | None,
+    server_url: str | None = None,
     redaction: RedactionPolicyLike | bool = True,
 ) -> "SDKTracerProvider":
+    """Create the SDK-owned provider exporting to the Mistral telemetry endpoint.
+
+    api_key=None authenticates each export with the service-account token at
+    MISTRAL_SA_TOKEN_PATH instead.
+    """
     (
         batch_span_processor_cls,
         otlp_span_exporter_cls,
@@ -322,15 +351,17 @@ def _create_telemetry_tracer_provider(
         tracer_provider_cls,
     ) = _load_otel_sdk()
 
+    endpoint = _resolve_mistral_telemetry_endpoint(server_url or SERVERS[SERVER_GLOBAL])
     if api_key is None:
-        raise TelemetryConfigurationError(
-            "Mistral telemetry requires an API key. Pass api_key=... to the "
-            "client or set MISTRAL_API_KEY."
+        exporter = otlp_span_exporter_cls(
+            endpoint=endpoint,
+            session=_service_account_session(),
         )
-    exporter = otlp_span_exporter_cls(
-        endpoint=_resolve_mistral_telemetry_endpoint(),
-        headers={"Authorization": _as_bearer_token(api_key)},
-    )
+    else:
+        exporter = otlp_span_exporter_cls(
+            endpoint=endpoint,
+            headers={"Authorization": _as_bearer_token(api_key)},
+        )
     policy = _resolve_redaction(redaction)
     if policy is not None:
         exporter = RedactingSpanExporter(exporter, policy)
@@ -339,6 +370,30 @@ def _create_telemetry_tracer_provider(
     )
     provider.add_span_processor(batch_span_processor_cls(exporter))
     return provider
+
+
+def _service_account_session() -> "requests.Session":
+    """Return a session that authenticates each export with the current SA token.
+
+    The OTLP exporter freezes its headers at construction, but the token file
+    rotates, so the bearer is set by the session's auth hook on every export.
+    A token read failure fails that export only; the exporter logs it.
+    """
+    import requests
+
+    def _authenticate(request: Any) -> Any:
+        token = read_service_account_token()
+        if token is None:
+            raise ServiceAccountTokenError(
+                f"{MISTRAL_SA_TOKEN_PATH_ENV} is no longer set; cannot "
+                "authenticate the telemetry export."
+            )
+        request.headers["Authorization"] = bearer_header(token)
+        return request
+
+    session = requests.Session()
+    session.auth = _authenticate
+    return session
 
 
 def _load_otel_sdk():
@@ -359,11 +414,16 @@ def _load_otel_sdk():
     return BatchSpanProcessor, OTLPSpanExporter, Resource, TracerProvider
 
 
-def _resolve_mistral_telemetry_endpoint() -> str:
-    return os.getenv(
-        MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
-        MISTRAL_TELEMETRY_ENDPOINT,
-    ).strip() or MISTRAL_TELEMETRY_ENDPOINT
+def _resolve_mistral_telemetry_endpoint(server_url: str) -> str:
+    """Return the OTLP traces endpoint for a client.
+
+    MISTRAL_OTLP_TRACES_ENDPOINT wins when it is set. Otherwise the telemetry
+    path is appended to server_url, which is the client's explicit server_url
+    or the global server: the named regional servers do not serve the
+    telemetry route.
+    """
+    override = os.getenv(MISTRAL_OTLP_TRACES_ENDPOINT_ENV, "").strip()
+    return override or f"{server_url.rstrip('/')}{MISTRAL_TELEMETRY_PATH}"
 
 
 def _has_real_global_tracer_provider() -> bool:

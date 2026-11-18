@@ -9,7 +9,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata, validate_const
 import pydantic
 from pydantic import model_serializer
@@ -61,6 +64,8 @@ class GetWorkflowsV1WorkflowsGetRequestTypedDict(TypedDict):
     r"""Filter by archived state. False=exclude archived, True=only archived, None=include all"""
     tags: NotRequired[Nullable[List[str]]]
     r"""Filter to workflows tagged with all listed tags (AND)."""
+    exclude_tags: NotRequired[Nullable[List[str]]]
+    r"""Exclude workflows tagged with any of the listed tags."""
     sort_by: Nullable[Literal["display_name"]]
     r"""Field to sort by"""
     order: NotRequired[GetWorkflowsV1WorkflowsGetOrder]
@@ -118,6 +123,12 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter to workflows tagged with all listed tags (AND)."""
 
+    exclude_tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Exclude workflows tagged with any of the listed tags."""
+
     sort_by: Annotated[
         Annotated[
             OptionalNullable[Literal["display_name"]],
@@ -162,6 +173,9 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
     r"""Fuzzy search query for workflow name, display name, description, or ID"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -172,6 +186,7 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
                 "deployment_status",
                 "archived",
                 "tags",
+                "exclude_tags",
                 "sort_by",
                 "order",
                 "cursor",
@@ -188,16 +203,21 @@ class GetWorkflowsV1WorkflowsGetRequest(BaseModel):
                 "deployment_status",
                 "archived",
                 "tags",
+                "exclude_tags",
                 "sort_by",
                 "cursor",
                 "search",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

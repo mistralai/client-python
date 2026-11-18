@@ -7,7 +7,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 import pydantic
 from pydantic import ConfigDict, model_serializer
 from typing import Any, Dict, Optional
@@ -18,7 +21,7 @@ class ConnectorToolResultMetadataTypedDict(TypedDict):
     r"""MCP-specific result metadata (isError, structuredContent, _meta)."""
 
     is_error: NotRequired[bool]
-    structured_content: NotRequired[Nullable[Dict[str, Any]]]
+    structured_content: NotRequired[Nullable[Any]]
     meta: NotRequired[Nullable[Dict[str, Any]]]
 
 
@@ -33,7 +36,7 @@ class ConnectorToolResultMetadata(BaseModel):
     is_error: Annotated[Optional[bool], pydantic.Field(alias="isError")] = False
 
     structured_content: Annotated[
-        OptionalNullable[Dict[str, Any]], pydantic.Field(alias="structuredContent")
+        OptionalNullable[Any], pydantic.Field(alias="structuredContent")
     ] = UNSET
 
     meta: Annotated[OptionalNullable[Dict[str, Any]], pydantic.Field(alias="_meta")] = (
@@ -49,14 +52,21 @@ class ConnectorToolResultMetadata(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["isError", "structuredContent", "_meta"])
         nullable_fields = set(["structuredContent", "_meta"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (

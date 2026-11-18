@@ -1,12 +1,18 @@
+import contextlib
 import os
 import unittest
+from pathlib import Path
 from typing import TYPE_CHECKING, cast
 from unittest.mock import MagicMock, patch
 
+import httpx2 as httpx
 import pytest
+import requests
 from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import SpanExportResult
 
 from mistralai.client._hooks import SDKHooks
+from mistralai.client._hooks.service_account_auth import ServiceAccountTokenError
 from mistralai.client._hooks.tracing import TracingHook
 from mistralai.client.models import Security
 from mistralai.client.sdkconfiguration import SDKConfiguration
@@ -27,6 +33,7 @@ from mistralai.extra.observability.telemetry import (
     MISTRAL_TELEMETRY_ENDPOINT,
     TelemetryConfigurationError,
     _create_telemetry_tracer_provider,
+    _service_account_session,
     configure_telemetry_for_hook,
 )
 
@@ -151,6 +158,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -215,6 +223,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -233,6 +242,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -316,7 +326,9 @@ class TestTelemetryConfiguration(unittest.TestCase):
         hook = _get_tracing_hook(client)
         self.assertTrue(configured)
         self.assertEqual(create_provider.call_count, 2)
-        create_provider.assert_any_call(api_key="test-key", redaction=False)
+        create_provider.assert_any_call(
+            api_key="test-key", server_url="", redaction=False
+        )
         self.assertTrue(first_provider.shutdown_called)
         self.assertIs(hook.tracer_provider, second_provider)
         self.assertIs(hook._auto_telemetry_provider, second_provider)
@@ -462,6 +474,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="env-key",
+            server_url="",
             redaction=True,
         )
         self.assertIs(_get_tracing_hook(client).tracer_provider, provider)
@@ -502,6 +515,7 @@ class TestTelemetryConfiguration(unittest.TestCase):
         self.assertTrue(configured)
         create_provider.assert_called_once_with(
             api_key="test-key",
+            server_url="",
             redaction=True,
         )
 
@@ -679,6 +693,145 @@ class TestTelemetryConfiguration(unittest.TestCase):
         )
 
 
+class TestTelemetryEndpoint(unittest.TestCase):
+    @staticmethod
+    def _export_for_client(
+        client_options: dict[str, str],
+        auto_enable: bool,
+        endpoint_override: str | None = None,
+    ) -> tuple[dict, str]:
+        from mistralai.client.sdk import Mistral
+
+        env = {MISTRAL_SDK_TELEMETRY_ENV: "dedicated"} if auto_enable else {}
+        if endpoint_override is not None:
+            env[MISTRAL_OTLP_TRACES_ENDPOINT_ENV] = endpoint_override
+        request_urls: list[str] = []
+
+        def handle_request(request: httpx.Request) -> httpx.Response:
+            request_urls.append(str(request.url))
+            return httpx.Response(200, json={"object": "list", "data": []})
+
+        with (
+            patch.dict(os.environ, env, clear=True),
+            patch(
+                "mistralai.extra.observability.telemetry._has_real_global_tracer_provider",
+                return_value=False,
+            ),
+            patch(
+                "opentelemetry.exporter.otlp.proto.http.trace_exporter.OTLPSpanExporter"
+            ) as exporter_class,
+            httpx.Client(transport=httpx.MockTransport(handle_request)) as http_client,
+            Mistral(
+                api_key="test-key",
+                client=http_client,
+                server=client_options.get("server"),
+                server_url=client_options.get("server_url"),
+            ) as client,
+        ):
+            exporter_class.return_value.export.return_value = SpanExportResult.SUCCESS
+            if not auto_enable:
+                configure_telemetry(client)
+            try:
+                client.models.list()
+                provider = _get_tracing_hook(client)._auto_telemetry_provider
+                assert provider is not None
+                assert provider.force_flush()
+                exporter_class.return_value.export.assert_called_once()
+            finally:
+                configure_telemetry(client, provider="global", redaction=False)
+
+        exporter_class.assert_called_once()
+        assert len(request_urls) == 1
+        return dict(exporter_class.call_args.kwargs), request_urls[0]
+
+    def test_telemetry_follows_explicit_server_url(self):
+        """Each case is (client options, API base URL, telemetry base URL).
+
+        Only an explicit server_url moves the telemetry endpoint: the named
+        regional servers do not serve the telemetry route.
+        """
+        cases: list[tuple[dict[str, str], str, str]] = [
+            ({}, "https://api.mistral.ai", "https://api.mistral.ai"),
+            ({"server": "global"}, "https://api.mistral.ai", "https://api.mistral.ai"),
+            ({"server": "eu"}, "https://api.eu.mistral.ai", "https://api.mistral.ai"),
+            ({"server": "us"}, "https://api.us.mistral.ai", "https://api.mistral.ai"),
+            (
+                {"server_url": "https://mistral.example.com"},
+                "https://mistral.example.com",
+                "https://mistral.example.com",
+            ),
+            (
+                {"server_url": "https://llm.acme-corp.io/"},
+                "https://llm.acme-corp.io",
+                "https://llm.acme-corp.io",
+            ),
+            (
+                {"server_url": "https://gateway.internal.net/mistral/"},
+                "https://gateway.internal.net/mistral",
+                "https://gateway.internal.net/mistral",
+            ),
+            (
+                {"server_url": "http://localhost:8080"},
+                "http://localhost:8080",
+                "http://localhost:8080",
+            ),
+            (
+                {"server": "eu", "server_url": "https://mistral.contoso.dev"},
+                "https://mistral.contoso.dev",
+                "https://mistral.contoso.dev",
+            ),
+        ]
+        for client_options, api_base_url, telemetry_base_url in cases:
+            for auto_enable in (False, True):
+                with self.subTest(
+                    client_options=client_options, auto_enable=auto_enable
+                ):
+                    exporter_options, request_url = self._export_for_client(
+                        client_options, auto_enable
+                    )
+                    self.assertEqual(request_url, f"{api_base_url}/v1/models")
+                    self.assertEqual(
+                        exporter_options,
+                        {
+                            "endpoint": f"{telemetry_base_url}/telemetry/v1/traces",
+                            "headers": {"Authorization": "Bearer test-key"},
+                        },
+                    )
+
+    def test_blank_endpoint_override_uses_api_server(self):
+        for endpoint_override in (None, "", "  "):
+            for auto_enable in (False, True):
+                with self.subTest(
+                    endpoint_override=endpoint_override, auto_enable=auto_enable
+                ):
+                    exporter_options, _ = self._export_for_client(
+                        {"server_url": "https://inference.foobar.ai"},
+                        auto_enable,
+                        endpoint_override,
+                    )
+                    self.assertEqual(
+                        exporter_options["endpoint"],
+                        "https://inference.foobar.ai/telemetry/v1/traces",
+                    )
+
+    def test_endpoint_override_takes_precedence(self):
+        for auto_enable in (False, True):
+            with self.subTest(auto_enable=auto_enable):
+                exporter_options, request_url = self._export_for_client(
+                    {"server_url": "https://proxy.widgets.org"},
+                    auto_enable,
+                    "  https://collector.example.com/v1/traces  ",
+                )
+                self.assertEqual(request_url, "https://proxy.widgets.org/v1/models")
+                self.assertEqual(
+                    exporter_options,
+                    {
+                        "endpoint": "https://collector.example.com/v1/traces",
+                        "headers": {"Authorization": "Bearer test-key"},
+                    },
+                )
+
+
 _TELEMETRY_LOGGER = "mistralai.extra.observability.telemetry"
 
 
@@ -751,7 +904,9 @@ class TestTelemetryRedaction:
             policy = RegexRedactionPolicy()
             configure_telemetry(client, provider="dedicated", redaction=policy)
 
-        create_provider.assert_called_once_with(api_key="test-key", redaction=policy)
+        create_provider.assert_called_once_with(
+            api_key="test-key", server_url="", redaction=policy
+        )
 
     def test_dedicated_mode_forwards_default_redaction_to_provider(self):
         # Wiring test
@@ -762,7 +917,9 @@ class TestTelemetryRedaction:
             client = _make_client(api_key="test-key")
             configure_telemetry(client, provider="dedicated")
 
-        create_provider.assert_called_once_with(api_key="test-key", redaction=True)
+        create_provider.assert_called_once_with(
+            api_key="test-key", server_url="", redaction=True
+        )
 
     def test_global_mode_warns_by_default(self, caplog):
         client = _make_client(api_key="test-key")
@@ -787,6 +944,208 @@ class TestTelemetryRedaction:
         with caplog.at_level("WARNING", logger=_TELEMETRY_LOGGER):
             configure_telemetry(client, provider=TracerProvider(), redaction=False)
         assert not [r for r in caplog.records if r.name == _TELEMETRY_LOGGER]
+
+
+@pytest.fixture
+def clean_telemetry_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    for name in (
+        "MISTRAL_API_KEY",
+        "MISTRAL_SA_TOKEN_PATH",
+        MISTRAL_SDK_TELEMETRY_ENV,
+        MISTRAL_OTLP_TRACES_ENDPOINT_ENV,
+    ):
+        monkeypatch.delenv(name, raising=False)
+
+
+@pytest.fixture
+def sa_token(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    token_file = tmp_path / "token"
+    token_file.write_text("sa-token-v1\n")
+    monkeypatch.setenv("MISTRAL_SA_TOKEN_PATH", str(token_file))
+    return token_file
+
+
+@pytest.mark.usefixtures("clean_telemetry_env")
+class TestServiceAccountTelemetry:
+    @pytest.mark.parametrize(
+        ("client_key", "env_key", "use_sa_token", "expected"),
+        [
+            ("explicit-key", "env-key", True, "explicit-key"),
+            (None, "env-key", True, None),
+            (None, "env-key", False, "env-key"),
+        ],
+    )
+    def test_credential_follows_api_call_precedence(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+        client_key: str | None,
+        env_key: str,
+        use_sa_token: bool,
+        expected: str | None,
+    ):
+        """None means the exporter authenticates with the service-account token."""
+        monkeypatch.setenv("MISTRAL_API_KEY", env_key)
+        if use_sa_token:
+            token_file = tmp_path / "token"
+            token_file.write_text("sa-token")
+            monkeypatch.setenv("MISTRAL_SA_TOKEN_PATH", str(token_file))
+        monkeypatch.setenv(MISTRAL_SDK_TELEMETRY_ENV, "dedicated")
+
+        with patch(
+            "mistralai.extra.observability.telemetry._create_telemetry_tracer_provider",
+            return_value=FakeProvider(),
+        ) as create_provider:
+            client = _make_client(api_key=client_key)
+            assert _configure_for_hook(client)
+
+        assert create_provider.call_args.kwargs["api_key"] == expected
+
+    def test_exporter_authenticates_with_a_session_instead_of_static_headers(
+        self, sa_token: Path
+    ):
+        with patch(
+            "mistralai.extra.observability.telemetry._load_otel_sdk",
+            return_value=(
+                FakeSpanProcessor,
+                FakeExporter,
+                FakeResource,
+                FakeTracerProvider,
+            ),
+        ):
+            FakeExporter.instances.clear()
+            _create_telemetry_tracer_provider(api_key=None)
+
+        kwargs = FakeExporter.instances[0].kwargs
+        assert "headers" not in kwargs
+        assert _sent_authorization(kwargs["session"]) == "Bearer sa-token-v1"
+
+    def test_each_export_reads_the_rotated_token(self, sa_token: Path):
+        session = _service_account_session()
+        assert _sent_authorization(session) == "Bearer sa-token-v1"
+
+        sa_token.write_text("sa-token-v2\n")
+
+        assert _sent_authorization(session) == "Bearer sa-token-v2"
+
+    def test_unreadable_token_fails_the_export(self, sa_token: Path):
+        session = _service_account_session()
+        sa_token.unlink()
+
+        with pytest.raises(ServiceAccountTokenError):
+            _sent_authorization(session)
+
+
+def _sent_authorization(session: object) -> str | bytes | None:
+    """Return the Authorization header a POST through session would send."""
+    assert isinstance(session, requests.Session)
+    request = session.prepare_request(
+        requests.Request("POST", "https://telemetry.test/v1/traces")
+    )
+    return request.headers.get("Authorization")
+
+
+@pytest.mark.usefixtures("clean_telemetry_env")
+class TestTelemetrySetupNeverFailsApiCalls:
+    @staticmethod
+    def _list_models_twice() -> list[str | None]:
+        from mistralai.client.sdk import Mistral
+
+        sent: list[str | None] = []
+
+        def handle(request: httpx.Request) -> httpx.Response:
+            sent.append(request.headers.get("Authorization"))
+            return httpx.Response(200, json={"object": "list", "data": []})
+
+        with (
+            patch(
+                "mistralai.extra.observability.telemetry._has_real_global_tracer_provider",
+                return_value=False,
+            ),
+            httpx.Client(transport=httpx.MockTransport(handle)) as http_client,
+            Mistral(server_url="https://api.mistral.ai", client=http_client) as client,
+        ):
+            client.models.list()
+            client.models.list()
+        return sent
+
+    @pytest.mark.parametrize(
+        ("env", "load_otel_sdk_error"),
+        [
+            ({MISTRAL_SDK_TELEMETRY_ENV: "dedicated"}, None),
+            (
+                {MISTRAL_SDK_TELEMETRY_ENV: "dedicated", "MISTRAL_API_KEY": "env-key"},
+                TelemetryConfigurationError("pip install 'mistralai[telemetry]'"),
+            ),
+            ({MISTRAL_SDK_TELEMETRY_ENV: "maybe", "MISTRAL_API_KEY": "env-key"}, None),
+        ],
+        ids=["no-credential", "missing-telemetry-extra", "invalid-setting"],
+    )
+    def test_warns_once_and_keeps_calling_the_api(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+        caplog: pytest.LogCaptureFixture,
+        env: dict[str, str],
+        load_otel_sdk_error: Exception | None,
+    ):
+        for name, value in env.items():
+            monkeypatch.setenv(name, value)
+
+        with (
+            patch(
+                "mistralai.extra.observability.telemetry._load_otel_sdk",
+                side_effect=load_otel_sdk_error,
+            )
+            if load_otel_sdk_error
+            else contextlib.nullcontext(),
+            caplog.at_level("WARNING", logger="mistralai.client._hooks.tracing"),
+        ):
+            sent = self._list_models_twice()
+
+        assert len(sent) == 2
+        warnings = [
+            r for r in caplog.records if r.name == "mistralai.client._hooks.tracing"
+        ]
+        assert len(warnings) == 1
+        assert "telemetry is disabled" in warnings[0].getMessage()
+
+    def test_service_account_client_exports_with_dedicated_telemetry(
+        self, monkeypatch: pytest.MonkeyPatch, sa_token: Path
+    ):
+        from mistralai.client.sdk import Mistral
+
+        monkeypatch.setenv(MISTRAL_SDK_TELEMETRY_ENV, "dedicated")
+
+        def handle(request: httpx.Request) -> httpx.Response:
+            return httpx.Response(200, json={"object": "list", "data": []})
+
+        with (
+            patch(
+                "mistralai.extra.observability.telemetry._has_real_global_tracer_provider",
+                return_value=False,
+            ),
+            patch(
+                "opentelemetry.exporter.otlp.proto.http.trace_exporter.OTLPSpanExporter"
+            ) as exporter_class,
+            httpx.Client(transport=httpx.MockTransport(handle)) as http_client,
+            Mistral(server_url="https://api.mistral.ai", client=http_client) as client,
+        ):
+            exporter_class.return_value.export.return_value = SpanExportResult.SUCCESS
+            client.models.list()
+            provider = _get_tracing_hook(client)._auto_telemetry_provider
+            assert provider is not None
+            assert provider.force_flush()
+
+        exported = [
+            span
+            for call in exporter_class.return_value.export.call_args_list
+            for span in call.args[0]
+        ]
+        assert [span.name for span in exported] == ["list_models_v1_models_get"]
+        exporter_class.assert_called_once()
+        assert _sent_authorization(exporter_class.call_args.kwargs["session"]) == (
+            "Bearer sa-token-v1"
+        )
 
 
 if __name__ == "__main__":

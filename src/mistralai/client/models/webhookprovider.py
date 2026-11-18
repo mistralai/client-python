@@ -14,6 +14,7 @@ WebhookProvider = Union[
         "linear",
         "microsoft",
         "ashby",
+        "whatsapp",
         "custom",
     ],
     UnrecognizedStr,

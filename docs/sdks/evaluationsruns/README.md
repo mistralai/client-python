@@ -23,7 +23,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.runs.search(evaluation_slug="<value>", page_size=50, page=1)
@@ -76,7 +76,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.runs.search_all(page_size=50, page=1)
@@ -119,7 +119,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.runs.get(run_id="c120b634-146a-4ae3-bd38-b7a168c4c8ce")
@@ -160,7 +160,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.runs.get_statistics(run_id="a38473a2-532a-4cb8-9320-a7f617d16595")
@@ -201,7 +201,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.evaluations.runs.compute_statistics(run_id="c5e1142f-de29-45b2-b29c-fe37e6509c8a")

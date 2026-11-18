@@ -14,7 +14,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import get_discriminator, validate_const
 import pydantic
 from pydantic import Discriminator, Tag, model_serializer
@@ -68,7 +71,7 @@ class ConnectorMCPPublicUpdateTypedDict(TypedDict):
     icon_url: NotRequired[Nullable[str]]
     r"""The optional url of the icon you want to associate to the connector."""
     server: NotRequired[Nullable[str]]
-    r"""New connector server URL."""
+    r"""New connector server URL. Only private connectors can change it; for shared connectors, it must equal the current server URL."""
     auth_methods: NotRequired[
         Nullable[List[ConnectorMCPPublicUpdateAuthMethod2TypedDict]]
     ]
@@ -92,7 +95,7 @@ class ConnectorMCPPublicUpdate(BaseModel):
     r"""The optional url of the icon you want to associate to the connector."""
 
     server: OptionalNullable[str] = UNSET
-    r"""New connector server URL."""
+    r"""New connector server URL. Only private connectors can change it; for shared connectors, it must equal the current server URL."""
 
     auth_methods: OptionalNullable[List[ConnectorMCPPublicUpdateAuthMethod2]] = UNSET
     r"""Authentication methods supported by the connector."""
@@ -106,6 +109,9 @@ class ConnectorMCPPublicUpdate(BaseModel):
     r"""Optional system prompt for the connector."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -129,11 +135,15 @@ class ConnectorMCPPublicUpdate(BaseModel):
                 "system_prompt",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

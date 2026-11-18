@@ -8,11 +8,9 @@ from unittest.mock import AsyncMock
 
 import pytest
 from livekit import rtc
-from pydantic import ValidationError
 
 from mistralai.client.models import (
     AudioSessionCreateResponse,
-    AudioTurnConfig,
     VoiceAgentFunctionTool,
 )
 from mistralai.client.models import AudioSessionCreateResponse as SessionCreateResponse
@@ -25,14 +23,13 @@ from mistralai.extra.voice_agents.events import (
     DisconnectedEvent,
     UnknownVoiceAgentEvent,
     VoiceAgentErrorEvent,
-    VoiceAgentSessionUpdatedEvent,
     VoiceAgentStateChangedEvent,
     VoiceAgentToolCallEndedEvent,
     VoiceAgentTranscriptEvent,
     parse_voice_agent_event,
 )
 from mistralai.extra.voice_agents.session import VoiceAgentSession
-from mistralai.extra.voice_agents.tools import FunctionHandler, function_tool
+from mistralai.extra.voice_agents.tools import function_tool
 from mistralai.extra.voice_agents.transport import LiveKitTransport
 
 
@@ -332,15 +329,6 @@ async def test_close_releases_callers_waiting_for_the_agent():
 
 
 @pytest.mark.asyncio
-async def test_session_update_on_a_closed_transport_fails_without_waiting():
-    transport = LiveKitTransport(make_session()._session_response, emit=AsyncMock())
-    await transport.close()
-
-    with pytest.raises(VoiceAgentConnectionError, match="Voice session is not connected"):
-        await asyncio.wait_for(transport.send_session_update("{}"), timeout=1)
-
-
-@pytest.mark.asyncio
 async def test_agent_disconnect_emits_fatal_error_and_closes_session():
     session = VoiceAgentSession(
         make_session()._session_response,
@@ -630,159 +618,6 @@ def test_tool_call_ended_carries_status_and_text_result(status, result):
 
 
 @pytest.mark.asyncio
-async def test_session_update_rpc_targets_agent_participant():
-    transport = LiveKitTransport(make_session()._session_response, emit=AsyncMock())
-    transport._rtc = rtc
-    perform_rpc = AsyncMock(return_value="{}")
-    transport._room = SimpleNamespace(
-        remote_participants={
-            "human": SimpleNamespace(
-                kind=rtc.ParticipantKind.PARTICIPANT_KIND_STANDARD, attributes={}
-            ),
-            "agent-worker": SimpleNamespace(
-                kind=rtc.ParticipantKind.PARTICIPANT_KIND_AGENT, attributes={}
-            ),
-        },
-        local_participant=SimpleNamespace(perform_rpc=perform_rpc),
-    )
-    transport._agent_present.set()
-
-    await transport.send_session_update("{}")
-
-    assert perform_rpc.await_args is not None
-    assert perform_rpc.await_args.kwargs["destination_identity"] == "agent-worker"
-
-
-@pytest.mark.asyncio
-async def test_session_update_times_out_when_the_agent_never_joins(monkeypatch):
-    monkeypatch.setattr(transport_module, "AGENT_JOIN_TIMEOUT_S", 0.01)
-    transport = LiveKitTransport(make_session()._session_response, emit=AsyncMock())
-    transport._rtc = rtc
-    transport._room = SimpleNamespace(
-        remote_participants={
-            "human": SimpleNamespace(
-                kind=rtc.ParticipantKind.PARTICIPANT_KIND_STANDARD, attributes={}
-            ),
-        },
-    )
-
-    with pytest.raises(VoiceAgentConnectionError, match="did not join within"):
-        await transport.send_session_update("{}")
-
-
-@pytest.mark.asyncio
-async def test_session_update_waits_for_an_agent_joining_after_connect():
-    transport = LiveKitTransport(make_session()._session_response, emit=AsyncMock())
-    transport._rtc = rtc
-    perform_rpc = AsyncMock(return_value="{}")
-    transport._room = SimpleNamespace(
-        remote_participants={},
-        local_participant=SimpleNamespace(perform_rpc=perform_rpc),
-    )
-
-    updating = asyncio.create_task(transport.send_session_update("{}"))
-    await asyncio.sleep(0)
-    assert not updating.done()
-
-    agent = SimpleNamespace(
-        kind=rtc.ParticipantKind.PARTICIPANT_KIND_AGENT, attributes={}
-    )
-    transport._room.remote_participants["agent-worker"] = agent
-    transport._on_participant_connected(agent)
-    await asyncio.wait_for(updating, timeout=1)
-
-    assert perform_rpc.await_args is not None
-    assert perform_rpc.await_args.kwargs["destination_identity"] == "agent-worker"
-
-
-def make_update_session(
-    *function_handlers: FunctionHandler, server_tools: list[dict[str, Any]]
-) -> VoiceAgentSession:
-    session = make_session()
-    transport = LiveKitTransport(
-        session._session_response, emit=AsyncMock(), function_handlers=list(function_handlers)
-    )
-    cast(Any, transport).send_session_update = AsyncMock(
-        return_value=json.dumps(session_updated_payload(server_tools))
-    )
-    session._transport = transport
-    return session
-
-
-def session_updated_payload(tools: list[dict[str, Any]]) -> dict[str, Any]:
-    return {
-        "type": "session.updated",
-        "ts": 1.0,
-        "session": {
-            "instructions": "",
-            "tools": tools,
-            "turn": {"allow_interruptions": True},
-            "llm": {"model": "mistral-medium"},
-            "stt": {
-                "model": "voxtral-mini",
-                "language": None,
-                "context_bias": None,
-                "target_streaming_delay_ms": None,
-                "turn_detection": None,
-            },
-            "tts": {"model": "voxtral-tts", "voice_id": "alloy"},
-            "welcome_message": None,
-        },
-    }
-
-
-def call_payload(name: str) -> str:
-    return json.dumps({"name": name, "arguments": {}})
-
-
-@function_tool
-def get_weather() -> str:
-    return "sunny"
-
-
-@function_tool
-def get_time() -> str:
-    return "noon"
-
-
-@pytest.mark.asyncio
-async def test_update_keeps_handlers_for_removed_tools_for_in_flight_calls():
-    session = make_update_session(get_weather, server_tools=[get_time.to_wire()])
-
-    await session.update(tools=[get_time])
-
-    transport = cast(Any, session._transport)
-    assert (
-        await transport._dispatch_function_call(call_payload("get_weather")) == "sunny"
-    )
-    assert await transport._dispatch_function_call(call_payload("get_time")) == "noon"
-
-
-@pytest.mark.asyncio
-async def test_update_with_dict_declared_function_tool_keeps_existing_handler():
-    session = make_update_session(get_weather, server_tools=[get_weather.to_wire()])
-
-    await session.update(tools=[get_weather.to_wire()])
-
-    transport = cast(Any, session._transport)
-    assert (
-        await transport._dispatch_function_call(call_payload("get_weather")) == "sunny"
-    )
-
-
-@pytest.mark.asyncio
-async def test_update_only_registers_function_handlers_confirmed_by_server():
-    session = make_update_session(server_tools=[{"type": "web_search"}])
-
-    await session.update(tools=[get_time])
-
-    with pytest.raises(rtc.RpcError) as raised:
-        await cast(Any, session._transport)._dispatch_function_call(call_payload("get_time"))
-
-    assert raised.value.code == transport_module.FUNCTION_CALL_NO_HANDLER_CODE
-
-
-@pytest.mark.asyncio
 async def test_malformed_function_call_is_rejected_as_a_bad_request():
     emit = AsyncMock()
     transport = LiveKitTransport(make_session()._session_response, emit=emit)
@@ -792,98 +627,6 @@ async def test_malformed_function_call_is_rejected_as_a_bad_request():
 
     assert raised.value.code == transport_module.FUNCTION_CALL_INVALID_PAYLOAD_CODE
     emit.assert_not_awaited()
-
-
-@pytest.mark.asyncio
-async def test_update_sends_nested_turn_and_parses_nested_response():
-    session = make_update_session(get_time, server_tools=[get_time.to_wire()])
-
-    result = await session.update(
-        instructions="Be brief.",
-        tools=[get_time],
-        turn={"allow_interruptions": False},
-    )
-
-    sent = json.loads(cast(Any, session._transport).send_session_update.await_args.args[0])
-    assert sent == {
-        "instructions": "Be brief.",
-        "tools": [get_time.to_wire()],
-        "turn": {"allow_interruptions": False},
-    }
-    assert isinstance(result, VoiceAgentSessionUpdatedEvent)
-    config = result.session
-    assert config.turn.allow_interruptions is True
-    assert config.llm.model == "mistral-medium"
-    assert config.stt.model == "voxtral-mini"
-    assert (config.tts.model, config.tts.voice_id) == ("voxtral-tts", "alloy")
-    assert [
-        tool.model_dump(mode="json", exclude_unset=True) for tool in cast(Any, config.tools)
-    ] == [get_time.to_wire()]
-
-
-@pytest.mark.asyncio
-async def test_update_does_not_emit_locally():
-    # The server broadcasts session.updated to every participant, the caller
-    # included, so emitting here too would deliver it twice.
-    session = make_update_session(server_tools=[])
-    emitted = []
-    session.on("session_updated", emitted.append)
-
-    await session.update(instructions="Be brief.")
-
-    assert emitted == []
-
-
-@pytest.mark.asyncio
-async def test_update_wraps_a_malformed_server_reply():
-    session = make_update_session(server_tools=[])
-    cast(Any, session._transport).send_session_update = AsyncMock(
-        return_value='{"type": "session.updated"}'
-    )
-
-    with pytest.raises(
-        VoiceAgentConnectionError, match="Invalid session update response"
-    ) as raised:
-        await session.update(instructions="Be brief.")
-
-    assert isinstance(raised.value.__cause__, ValidationError)
-
-
-@pytest.mark.asyncio
-async def test_session_updated_event_is_delivered_as_generated_model():
-    session = make_session()
-    seen = []
-    session.on("session_updated", seen.append)
-
-    name, event = parse_voice_agent_event(
-        session_updated_payload([{"type": "hang_up"}])
-    )
-
-    assert name == "session_updated"
-    assert isinstance(event, VoiceAgentSessionUpdatedEvent)
-    await session._handle_transport_event(name, event)
-    assert seen == [event]
-
-
-@pytest.mark.asyncio
-async def test_update_omits_unset_fields_from_payload():
-    session = make_update_session(server_tools=[])
-
-    await session.update(instructions="Be brief.")
-
-    sent = json.loads(cast(Any, session._transport).send_session_update.await_args.args[0])
-    assert sent == {"instructions": "Be brief."}
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize("turn", [{}, AudioTurnConfig()])
-async def test_update_empty_turn_does_not_send_defaults(turn):
-    session = make_update_session(server_tools=[])
-
-    await session.update(turn=turn)
-
-    sent = json.loads(cast(Any, session._transport).send_session_update.await_args.args[0])
-    assert sent == {"turn": {}}
 
 
 @pytest.mark.asyncio
@@ -1199,9 +942,8 @@ async def test_close_without_connecting_deletes_remote_session(runtime):
 LIFECYCLE_CALLS = [
     lambda session: session.send_audio(b"\x00\x00"),
     lambda session: session.set_input_enabled(False),
-    lambda session: session.update(instructions="Be brief."),
 ]
-LIFECYCLE_IDS = ["send_audio", "set_input_enabled", "update"]
+LIFECYCLE_IDS = ["send_audio", "set_input_enabled"]
 
 
 @pytest.mark.asyncio

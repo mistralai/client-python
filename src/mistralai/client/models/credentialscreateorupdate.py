@@ -11,7 +11,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
 from typing_extensions import NotRequired, TypedDict
 
@@ -26,7 +29,7 @@ class CredentialsCreateOrUpdateTypedDict(TypedDict):
     is_default: NotRequired[Nullable[bool]]
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
     credentials: NotRequired[Nullable[ConnectionCredentialsInputTypedDict]]
-    r"""The credential data (headers, bearer_token, or OAuth2 client credentials)."""
+    r"""The credential data (headers, query_params, bearer_token, or OAuth2 client credentials)."""
 
 
 class CredentialsCreateOrUpdate(BaseModel):
@@ -42,17 +45,24 @@ class CredentialsCreateOrUpdate(BaseModel):
     r"""Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged."""
 
     credentials: OptionalNullable[ConnectionCredentialsInput] = UNSET
-    r"""The credential data (headers, bearer_token, or OAuth2 client credentials)."""
+    r"""The credential data (headers, query_params, bearer_token, or OAuth2 client credentials)."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["title", "is_default", "credentials"])
         nullable_fields = set(["title", "is_default", "credentials"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

@@ -52,7 +52,7 @@ class Connectors(BaseSDK):
                 ...  # error.code, error.message
         """
         return create_mcp_client(
-            self.sdk_configuration,
+            self,
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
         )
@@ -75,7 +75,7 @@ class Connectors(BaseSDK):
         are returned unchanged.
         """
         return create_http_client(
-            self.sdk_configuration,
+            self,
             connector_id_or_name=connector_id_or_name,
             credentials_name=credentials_name,
         )
@@ -168,6 +168,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
             return unmarshal_json_response(models.Connector, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -268,6 +273,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
             return unmarshal_json_response(models.Connector, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3325,14 +3335,14 @@ class Connectors(BaseSDK):
     ) -> models.MessageResponse:
         r"""Create consumer credentials for a connector.
 
-        Create consumer credentials for a given connector and consumer scope (organization, workspace, user)
+        Create consumer credentials for a given connector and consumer scope (workspace, user)
 
         :param connector_id_or_name:
         :param consumer_scope:
         :param name: Name of the credentials. Use this name to access or modify your credentials.
         :param title: Human-readable title for the credentials.
         :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param credentials: The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3416,6 +3426,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "401", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3451,14 +3466,14 @@ class Connectors(BaseSDK):
     ) -> models.MessageResponse:
         r"""Create consumer credentials for a connector.
 
-        Create consumer credentials for a given connector and consumer scope (organization, workspace, user)
+        Create consumer credentials for a given connector and consumer scope (workspace, user)
 
         :param connector_id_or_name:
         :param consumer_scope:
         :param name: Name of the credentials. Use this name to access or modify your credentials.
         :param title: Human-readable title for the credentials.
         :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param credentials: The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3542,6 +3557,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "401", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3584,7 +3604,7 @@ class Connectors(BaseSDK):
         :param name: Name of the credentials. Use this name to access or modify your credentials.
         :param title: Human-readable title for the credentials.
         :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param credentials: The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3668,6 +3688,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "401", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -3710,7 +3735,7 @@ class Connectors(BaseSDK):
         :param name: Name of the credentials. Use this name to access or modify your credentials.
         :param title: Human-readable title for the credentials.
         :param is_default: Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged.
-        :param credentials: The credential data (headers, bearer_token, or OAuth2 client credentials).
+        :param credentials: The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3794,6 +3819,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.MessageResponse, http_res)
+        if utils.match_response(http_res, "401", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -4301,6 +4331,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Connector, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res
@@ -4410,6 +4445,11 @@ class Connectors(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Connector, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.ConnectorErrorResponseData, http_res
+            )
+            raise errors.ConnectorErrorResponse(response_data, http_res)
         if utils.match_response(http_res, "422", "application/json"):
             response_data = unmarshal_json_response(
                 errors.HTTPValidationErrorData, http_res

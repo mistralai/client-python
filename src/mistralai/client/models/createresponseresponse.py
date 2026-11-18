@@ -36,7 +36,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, Field, SerializeAsAny, model_serializer
@@ -49,7 +52,9 @@ Code = Literal[
     "server_error",
     "rate_limit_exceeded",
     "invalid_prompt",
+    "data_residency_mismatch",
     "bio_policy",
+    "misalignment_policy_violation",
     "vector_store_timeout",
     "invalid_image",
     "invalid_image_format",
@@ -68,9 +73,116 @@ Code = Literal[
 ]
 
 
+class ResponsesMisalignmentSteerTypedDict(TypedDict):
+    message: str
+
+
+class ResponsesMisalignmentSteer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
+    message: str
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+
+class ResponsesMisalignmentTypedDict(TypedDict):
+    detailed_explanation: NotRequired[Nullable[str]]
+    error_type: NotRequired[Nullable[str]]
+    review_target: NotRequired[Nullable[str]]
+    steer: NotRequired[Nullable[ResponsesMisalignmentSteerTypedDict]]
+
+
+class ResponsesMisalignment(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
+    detailed_explanation: OptionalNullable[str] = None
+
+    error_type: OptionalNullable[str] = None
+
+    review_target: OptionalNullable[str] = None
+
+    steer: OptionalNullable[ResponsesMisalignmentSteer] = UNSET
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(
+            ["detailed_explanation", "error_type", "review_target", "steer"]
+        )
+        nullable_fields = set(
+            ["detailed_explanation", "error_type", "review_target", "steer"]
+        )
+        null_default_fields = set(
+            ["detailed_explanation", "error_type", "review_target"]
+        )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
+            val = serialized.get(k, serialized.get(n))
+            serialized.pop(k, serialized.pop(n, None))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (
+                    self.__pydantic_fields_set__.intersection({n})
+                    or k in null_default_fields
+                )  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+        for k, v in serialized.items():
+            m[k] = v
+
+        return m
+
+
+ResponsesErrorReason = Literal[
+    "invalid_output_format",
+    "generation_failed",
+    "missing_finish_reason",
+]
+
+
 class ResponsesErrorTypedDict(TypedDict):
     code: Code
     message: str
+    reason: ResponsesErrorReason
+    misalignment: NotRequired[Nullable[ResponsesMisalignmentTypedDict]]
+    param: NotRequired[Nullable[str]]
+    type: NotRequired[Nullable[str]]
 
 
 class ResponsesError(BaseModel):
@@ -83,32 +195,13 @@ class ResponsesError(BaseModel):
 
     message: str
 
-    @property
-    def additional_properties(self):
-        return self.__pydantic_extra__
+    reason: ResponsesErrorReason
 
-    @additional_properties.setter
-    def additional_properties(self, value):
-        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+    misalignment: OptionalNullable[ResponsesMisalignment] = UNSET
 
+    param: OptionalNullable[str] = None
 
-Reason = Literal[
-    "max_output_tokens",
-    "content_filter",
-]
-
-
-class ResponsesIncompleteDetailsTypedDict(TypedDict):
-    reason: NotRequired[Nullable[Reason]]
-
-
-class ResponsesIncompleteDetails(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
-    )
-    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
-
-    reason: OptionalNullable[Reason] = None
+    type: OptionalNullable[str] = None
 
     @property
     def additional_properties(self):
@@ -119,15 +212,90 @@ class ResponsesIncompleteDetails(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["reason"])
-        nullable_fields = set(["reason"])
-        null_default_fields = set(["reason"])
+        optional_fields = set(["misalignment", "param", "type"])
+        nullable_fields = set(["misalignment", "param", "type"])
+        null_default_fields = set(["param", "type"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
+            val = serialized.get(k, serialized.get(n))
+            serialized.pop(k, serialized.pop(n, None))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (
+                    self.__pydantic_fields_set__.intersection({n})
+                    or k in null_default_fields
+                )  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+        for k, v in serialized.items():
+            m[k] = v
+
+        return m
+
+
+ResponsesIncompleteDetailsReason = Literal[
+    "max_output_tokens",
+    "max_messages",
+    "content_filter",
+    "steered",
+]
+
+
+class ResponsesIncompleteDetailsTypedDict(TypedDict):
+    reason: NotRequired[Nullable[ResponsesIncompleteDetailsReason]]
+
+
+class ResponsesIncompleteDetails(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True, arbitrary_types_allowed=True, extra="allow"
+    )
+    __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
+
+    reason: OptionalNullable[ResponsesIncompleteDetailsReason] = None
+
+    @property
+    def additional_properties(self):
+        return self.__pydantic_extra__
+
+    @additional_properties.setter
+    def additional_properties(self, value):
+        self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["reason"])
+        nullable_fields = set(["reason"])
+        null_default_fields = set(["reason"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
@@ -222,15 +390,22 @@ class CreateResponseResponseResponsesSupportedReasoning(BaseModel):
     effort: OptionalNullable[ResponsesSupportedReasoningEffort] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["effort"])
         nullable_fields = set(["effort"])
         null_default_fields = set(["effort"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
@@ -257,6 +432,8 @@ ServiceTier = Literal[
     "flex",
     "scale",
     "priority",
+    "fast",
+    "ultrafast",
 ]
 
 
@@ -334,15 +511,22 @@ class ResponsesTextConfigResponsesFormatTextJSONSchemaConfig(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["description", "strict"])
         nullable_fields = set(["description", "strict"])
         null_default_fields = set(["description", "strict"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
@@ -444,15 +628,22 @@ class CreateResponseResponseResponsesTextConfig(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["format", "verbosity"])
         nullable_fields = set(["format", "verbosity"])
         null_default_fields = set(["verbosity"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (
@@ -630,6 +821,9 @@ class CreateResponseResponse(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -703,11 +897,15 @@ class CreateResponseResponse(BaseModel):
                 "user",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (

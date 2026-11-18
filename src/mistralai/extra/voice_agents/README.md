@@ -157,7 +157,7 @@ not a live runtime. `close[_async](session_id=...)` performs remote REST deletio
 
 ## Events and manual audio
 
-The six `VoiceAgent*Event` models are generated in `mistralai.client.models` and
+The five `VoiceAgent*Event` models are generated in `mistralai.client.models` and
 re-exported from `mistralai.extra.voice_agents`. The unified `VoiceAgentErrorEvent`
 is used for both remote and local errors. Connected/disconnected, unhandled tools,
 unknown packets, event unions and transport abstractions remain handwritten.

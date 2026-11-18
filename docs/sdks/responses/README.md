@@ -13,7 +13,7 @@ Stateless Responses API for text, images, reasoning, function calls, and streami
 
 Create a response.
 
-Generate a model response from text or image inputs. The response can
+Generate a model response from text, image, or file inputs. The response can
 include text, reasoning, and function calls. Set stream to true to
 receive Server-Sent Events.
 
@@ -30,7 +30,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.responses.create(model="V90", input=[], parallel_tool_calls=True, stream=False, additional_properties={
@@ -104,7 +104,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.responses.count_input_tokens(model="Corvette", input="<value>", parallel_tool_calls=True, additional_properties={

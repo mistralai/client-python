@@ -27,7 +27,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.list(limit=10, offset=0, type_="all")
@@ -43,7 +43,7 @@ with Mistral(
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | `limit`                                                                                           | *Optional[int]*                                                                                   | :heavy_minus_sign:                                                                                | Maximum number of voices to return                                                                |
 | `offset`                                                                                          | *Optional[int]*                                                                                   | :heavy_minus_sign:                                                                                | Offset for pagination                                                                             |
-| `type`                                                                                            | [Optional[models.ListVoicesV1AudioVoicesGetType]](../../models/listvoicesv1audiovoicesgettype.md) | :heavy_minus_sign:                                                                                | Filter the voices between customs and presets                                                     |
+| `type_`                                                                                           | [Optional[models.ListVoicesV1AudioVoicesGetType]](../../models/listvoicesv1audiovoicesgettype.md) | :heavy_minus_sign:                                                                                | Filter the voices between customs and presets                                                     |
 | `retries`                                                                                         | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                  | :heavy_minus_sign:                                                                                | Configuration to override the default retry behavior of the client.                               |
 
 ### Response
@@ -70,7 +70,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.create(name="<value>", retention_notice=30)
@@ -120,7 +120,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.delete(voice_id="f42bf0d7-8a10-4b98-bbfa-589a232209d2")
@@ -161,7 +161,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.update(voice_id="030a6b20-e287-414d-9a77-6b76a4a56c9d")
@@ -209,7 +209,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.get(voice_id="<id>")
@@ -250,7 +250,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.get_sample_audio(voice_id="<id>")
@@ -291,7 +291,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.voices.search(page_size=10, type_="all")
@@ -309,7 +309,7 @@ with Mistral(
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `page_size`                                                                     | *Optional[int]*                                                                 | :heavy_minus_sign:                                                              | Maximum number of voices to return                                              |
 | `page_token`                                                                    | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | Cursor returned as next_page_token by the previous page                         |
-| `type`                                                                          | [Optional[models.AudioV2VoicesListType]](../../models/audiov2voiceslisttype.md) | :heavy_minus_sign:                                                              | Filter the voices between customs and presets                                   |
+| `type_`                                                                         | [Optional[models.AudioV2VoicesListType]](../../models/audiov2voiceslisttype.md) | :heavy_minus_sign:                                                              | Filter the voices between customs and presets                                   |
 | `gender`                                                                        | List[[models.VoiceGender](../../models/voicegender.md)]                         | :heavy_minus_sign:                                                              | Keep voices matching any of these genders                                       |
 | `language`                                                                      | List[*str*]                                                                     | :heavy_minus_sign:                                                              | Keep voices supporting any of these languages                                   |
 | `query`                                                                         | *OptionalNullable[str]*                                                         | :heavy_minus_sign:                                                              | Case-insensitive match on voice name                                            |

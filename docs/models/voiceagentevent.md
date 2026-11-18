@@ -15,12 +15,6 @@ value: models.VoiceAgentStateChangedEvent = /* values here */
 value: models.VoiceAgentErrorEvent = /* values here */
 ```
 
-### `models.VoiceAgentSessionUpdatedEvent`
-
-```python
-value: models.VoiceAgentSessionUpdatedEvent = /* values here */
-```
-
 ### `models.VoiceAgentToolCallEndedEvent`
 
 ```python

@@ -78,7 +78,7 @@ async def get_oauth_server_metadata(server_url: str) -> AuthorizationServerMetad
         issuer=server_url,
         authorization_endpoint=f"{server_url}/authorize",
         token_endpoint=f"{server_url}/token",
-        register_endpoint=f"{server_url}/register",
+        registration_endpoint=f"{server_url}/register",
         response_types_supported=["code"],
         response_modes_supported=["query"],
         grant_types_supported=["authorization_code", "refresh_token"],

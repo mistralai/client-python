@@ -26,7 +26,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.create(name="<value>", workspace_id="cf2146d0-158c-4b19-b8b1-ca0c68f41143")
@@ -77,7 +77,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.list(offset=251948, limit=234499, workspace_id="96e67917-4b94-4dc0-b61a-bd713aa8a4e6", include_deleted=False)
@@ -127,7 +127,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.list_assignable_roles(workspace_id="e9326c4d-7aff-483b-9353-303bf1802e99")
@@ -159,7 +159,7 @@ with Mistral(
 
 Retrieve a service account.
 
-Requires the Workspace admin (`workspace_admin`) role.
+Requires the `see_all_workspace_service_accounts` or `read_workspace_service_account` permission.
 
 ### Example Usage
 
@@ -170,7 +170,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.get(service_account_id="68d1ecd2-32cb-473b-ae76-6d87e59f4cd1")
@@ -213,7 +213,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.update(service_account_id="2f4d1ce1-d8ad-4a87-b31b-308088fc2a76")
@@ -257,7 +257,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.beta.service_accounts.delete(service_account_id="10f960e0-abaa-4060-9000-249255e07c45")
@@ -295,7 +295,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.set_roles(service_account_id="d4686916-124a-42f1-966f-9248b120b13c", role_ids=[
@@ -341,7 +341,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.service_accounts.list_roles(service_account_id="0c629f5d-1a74-4b83-a740-14410ecdea21")

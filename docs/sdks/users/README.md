@@ -24,7 +24,7 @@ import os
 with Mistral() as mistral:
 
     res = mistral.beta.users.get_identity(security=models.UsersAPIGetIdentitySecurity(
-        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH"),
     ))
 
     # Handle response
@@ -67,7 +67,7 @@ import os
 with Mistral() as mistral:
 
     res = mistral.beta.users.list_organizations(security=models.UsersAPIListOrganizationsSecurity(
-        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH"),
     ), offset=0, limit=100)
 
     while res is not None:
@@ -112,7 +112,7 @@ import os
 with Mistral() as mistral:
 
     res = mistral.beta.users.list_workspaces(security=models.UsersAPIListWorkspacesSecurity(
-        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH", ""),
+        dashboard_user_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_CONTEXT_AUTH"),
     ), organization_id="1a2b3c4d-5e6f-4a8b-9c0d-1e2f3a4b5c6d", offset=0, limit=100)
 
     while res is not None:
@@ -159,7 +159,7 @@ import os
 with Mistral() as mistral:
 
     res = mistral.beta.users.whoami(security=models.UsersAPIWhoamiSecurity(
-        dashboard_user_or_service_account_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_OR_SERVICE_ACCOUNT_CONTEXT_AUTH", ""),
+        dashboard_user_or_service_account_context_auth=os.getenv("MISTRAL_DASHBOARD_USER_OR_SERVICE_ACCOUNT_CONTEXT_AUTH"),
     ))
 
     # Handle response

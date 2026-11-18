@@ -33,7 +33,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.create(name="<value>", config=models.ManagedIndexConfig(
@@ -54,7 +54,7 @@ with Mistral(
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `name`                                                                    | *str*                                                                     | :heavy_check_mark:                                                        | N/A                                                                       |
 | `config`                                                                  | [models.ManagedIndexConfig](../../models/managedindexconfig.md)           | :heavy_check_mark:                                                        | N/A                                                                       |
-| `schema_`                                                                 | [Optional[models.ManagedIndexFields]](../../models/managedindexfields.md) | :heavy_minus_sign:                                                        | N/A                                                                       |
+| `schema`                                                                  | [Optional[models.ManagedIndexFields]](../../models/managedindexfields.md) | :heavy_minus_sign:                                                        | N/A                                                                       |
 | `retries`                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)          | :heavy_minus_sign:                                                        | Configuration to override the default retry behavior of the client.       |
 
 ### Response
@@ -81,7 +81,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.list(page_size=20)
@@ -128,7 +128,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.get(index_name="<value>")
@@ -169,7 +169,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.update(index_name="<value>", schema={})
@@ -184,7 +184,7 @@ with Mistral(
 | Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `index_name`                                                        | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
-| `schema_`                                                           | [models.ManagedIndexFields](../../models/managedindexfields.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
+| `schema`                                                            | [models.ManagedIndexFields](../../models/managedindexfields.md)     | :heavy_check_mark:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -210,7 +210,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.delete(index_name="<value>")
@@ -240,7 +240,7 @@ with Mistral(
 
 ## ingest_documents
 
-Validates and persists documents. Always returns 200; each document is reported as accepted or rejected in the response body.
+Validates and persists documents. Returns 200 with each document reported as accepted or rejected in the response body, or 403 once the index holds its limit of chunks.
 
 ### Example Usage
 
@@ -251,7 +251,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.ingest_documents(index_name="<value>", documents=[])
@@ -293,7 +293,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.delete_documents(index_name="<value>", document_ids=[
@@ -339,7 +339,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.search(index_name="<value>", retriever=models.RRFRetriever(
@@ -391,7 +391,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.navigate(index_name="<value>", source_id="<id>", start_offset=46390, end_offset=670471, direction="next", top_k=1, content_type="content")
@@ -438,7 +438,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.read(index_name="<value>", source_id="<id>", top_k=20, content_type="content")
@@ -484,7 +484,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.grep(index_name="<value>", source_id="<id>", pattern="<value>", top_k=5, content_type="content")
@@ -530,7 +530,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.get_chunk(index_name="<value>", chunk_id="<id>")
@@ -572,7 +572,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.get_index_summary(language="de", index_name="<value>")
@@ -620,7 +620,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
@@ -665,7 +665,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.set_index_summary(language="nl", index_name="<value>", content="<value>", status="handwritten", translated=False)

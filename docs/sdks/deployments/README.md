@@ -31,7 +31,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.deployments.unharden_deployment(deployment_id="f88c4734-ec6d-4ded-bc49-47a41d4be24b")
@@ -67,10 +67,10 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
-    res = mistral.workflows.deployments.list_deployments(active_only=True, order="desc")
+    res = mistral.workflows.deployments.list_deployments(active_only=True, order="desc", limit=100)
 
     # Handle response
     print(res)
@@ -90,7 +90,7 @@ with Mistral(
 | `search`                                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Filter deployments by name or ID prefix                                                                                                                                                   |
 | `order_by`                                                                                                                                                                                | [OptionalNullable[models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy]](../../models/listdeploymentsv1workflowsdeploymentsgetorderby.md)                                               | :heavy_minus_sign:                                                                                                                                                                        | Field to sort by. When omitted, active and managed deployments are grouped first, then sorted by created_at. When set, results are sorted purely by the specified field with no grouping. |
 | `order`                                                                                                                                                                                   | [Optional[models.ListDeploymentsV1WorkflowsDeploymentsGetOrder]](../../models/listdeploymentsv1workflowsdeploymentsgetorder.md)                                                           | :heavy_minus_sign:                                                                                                                                                                        | Sort direction. Applied to order_by when set, or within each activity group when omitted.                                                                                                 |
-| `limit`                                                                                                                                                                                   | *OptionalNullable[int]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Maximum number of deployments to return                                                                                                                                                   |
+| `limit`                                                                                                                                                                                   | *Optional[int]*                                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                        | Maximum number of deployments to return                                                                                                                                                   |
 | `cursor`                                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Cursor from a previous response for pagination                                                                                                                                            |
 | `workspace_id`                                                                                                                                                                            | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Workspace ID to scope the request to. Defaults to the caller's context.                                                                                                                   |
 | `repository_url`                                                                                                                                                                          | *OptionalNullable[str]*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                        | Filter managed deployments by source repository URL (exact match)                                                                                                                         |
@@ -121,7 +121,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.create_deployment(name="<value>", spec={}, hardened=False)
@@ -165,7 +165,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.update_deployment(name="<value>")
@@ -208,7 +208,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.delete_deployment(name="<value>")
@@ -249,7 +249,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.get_deployment(name="<value>")
@@ -291,7 +291,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.stop_deployment(name="<value>")
@@ -332,7 +332,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.start_deployment(name="<value>")
@@ -373,7 +373,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.restart_deployment(name="<value>")
@@ -414,7 +414,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.list_deployment_workers(name="<value>", limit=50)
@@ -461,7 +461,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.get_deployment_archive(name="<value>")
@@ -508,7 +508,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.get_deployment_logs(name="<value>", order="asc", limit=50)
@@ -560,7 +560,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.deployments.stream_deployment_logs(name="<value>")

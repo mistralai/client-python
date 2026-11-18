@@ -2,12 +2,14 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
+from datetime import datetime
 from mistralai.client import errors, models, utils
 from mistralai.client._hooks import HookContext
 from mistralai.client.evaluations_projects import EvaluationsProjects
 from mistralai.client.evaluations_records import EvaluationsRecords
 from mistralai.client.evaluations_runs import EvaluationsRuns
 from mistralai.client.optimizations import Optimizations
+from mistralai.client.scorers import Scorers
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
@@ -19,6 +21,7 @@ class Evaluations(BaseSDK):
     runs: EvaluationsRuns
     records: EvaluationsRecords
     optimizations: Optimizations
+    scorers: Scorers
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -38,6 +41,7 @@ class Evaluations(BaseSDK):
         self.optimizations = Optimizations(
             self.sdk_configuration, parent_ref=self.parent_ref
         )
+        self.scorers = Scorers(self.sdk_configuration, parent_ref=self.parent_ref)
 
     def create_pipeline(
         self,
@@ -283,6 +287,8 @@ class Evaluations(BaseSDK):
         self,
         *,
         enabled: OptionalNullable[bool] = UNSET,
+        from_: OptionalNullable[datetime] = UNSET,
+        to: OptionalNullable[datetime] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
         q: OptionalNullable[str] = UNSET,
@@ -294,6 +300,8 @@ class Evaluations(BaseSDK):
         r"""List pipelines
 
         :param enabled:
+        :param from_:
+        :param to:
         :param page_size:
         :param page:
         :param q:
@@ -317,6 +325,8 @@ class Evaluations(BaseSDK):
 
         request = models.ListPipelinesV1ObservabilityPipelinesGetRequest(
             enabled=enabled,
+            from_=from_,
+            to=to,
             page_size=page_size,
             page=page,
             q=q,
@@ -387,6 +397,8 @@ class Evaluations(BaseSDK):
         self,
         *,
         enabled: OptionalNullable[bool] = UNSET,
+        from_: OptionalNullable[datetime] = UNSET,
+        to: OptionalNullable[datetime] = UNSET,
         page_size: Optional[int] = 50,
         page: Optional[int] = 1,
         q: OptionalNullable[str] = UNSET,
@@ -398,6 +410,8 @@ class Evaluations(BaseSDK):
         r"""List pipelines
 
         :param enabled:
+        :param from_:
+        :param to:
         :param page_size:
         :param page:
         :param q:
@@ -421,6 +435,8 @@ class Evaluations(BaseSDK):
 
         request = models.ListPipelinesV1ObservabilityPipelinesGetRequest(
             enabled=enabled,
+            from_=from_,
+            to=to,
             page_size=page_size,
             page=page,
             q=q,

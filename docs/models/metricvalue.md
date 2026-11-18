@@ -15,3 +15,9 @@ value: float = /* values here */
 value: int = /* values here */
 ```
 
+### `datetime`
+
+```python
+value: datetime = /* values here */
+```
+

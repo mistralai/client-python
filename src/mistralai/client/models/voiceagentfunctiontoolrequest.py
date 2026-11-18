@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .functionrequest import FunctionRequest, FunctionRequestTypedDict
+from .generatedtoolfiller import GeneratedToolFiller, GeneratedToolFillerTypedDict
 from .statictoolfiller import StaticToolFiller, StaticToolFillerTypedDict
 from mistralai.client.types import (
     BaseModel,
@@ -9,19 +10,33 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
+from pydantic import Field, SerializeAsAny, model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Literal, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+VoiceAgentFunctionToolRequestFillerTypedDict = TypeAliasType(
+    "VoiceAgentFunctionToolRequestFillerTypedDict",
+    Union[StaticToolFillerTypedDict, GeneratedToolFillerTypedDict],
+)
+
+
+VoiceAgentFunctionToolRequestFiller = Annotated[
+    Union[GeneratedToolFiller, StaticToolFiller], Field(discriminator="type")
+]
 
 
 class VoiceAgentFunctionToolRequestTypedDict(TypedDict):
     function: FunctionRequestTypedDict
     type: Literal["function"]
-    filler: NotRequired[Nullable[StaticToolFillerTypedDict]]
+    filler: NotRequired[Nullable[VoiceAgentFunctionToolRequestFillerTypedDict]]
     timeout_ms: NotRequired[Nullable[int]]
 
 
@@ -33,19 +48,28 @@ class VoiceAgentFunctionToolRequest(BaseModel):
         pydantic.Field(alias="type"),
     ] = "function"
 
-    filler: OptionalNullable[StaticToolFiller] = UNSET
+    filler: SerializeAsAny[OptionalNullable[VoiceAgentFunctionToolRequestFiller]] = (
+        UNSET
+    )
 
     timeout_ms: OptionalNullable[int] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["filler", "timeout_ms"])
         nullable_fields = set(["filler", "timeout_ms"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

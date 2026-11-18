@@ -53,11 +53,9 @@ logger = logging.getLogger(__name__)
 
 SAMPLE_RATE = 48_000
 FUNCTION_TOOL_RPC_METHOD = "mistral.function_tool"
-SESSION_UPDATE_RPC_METHOD = "mistral.session_update"
 FUNCTION_CALL_INVALID_PAYLOAD_CODE = 2400
 FUNCTION_CALL_NO_HANDLER_CODE = 2404
 FUNCTION_CALL_HANDLER_FAILED_CODE = 1
-AGENT_JOIN_TIMEOUT_S = 30.0
 
 _TRANSPORT_DISCONNECT_REASONS: dict[str, TransportDisconnectReason] = {
     "CLIENT_INITIATED": "client_closed",
@@ -118,14 +116,6 @@ class Transport(ABC):
     @abstractmethod
     async def set_input_enabled(self, enabled: bool) -> None:
         """Mute or unmute the local audio input track."""
-
-    @abstractmethod
-    async def send_session_update(self, payload: str) -> str:
-        """Send a JSON session update to the agent and return its JSON reply."""
-
-    @abstractmethod
-    def add_function_handlers(self, function_handlers: list[FunctionHandler]) -> None:
-        """Register additional local handlers, replacing any with the same name."""
 
     @abstractmethod
     async def close(self) -> None:
@@ -233,35 +223,6 @@ class LiveKitTransport(Transport):
                 FUNCTION_CALL_HANDLER_FAILED_CODE,
                 f"function `{tool.name}` failed: {exc}",
             ) from exc
-
-    def add_function_handlers(self, function_handlers: list[FunctionHandler]) -> None:
-        # Handlers are only ever added or overridden, never dropped: the agent
-        # applies tool changes at the next turn boundary, so a call already in
-        # flight may still target a tool the latest update removed.
-        self._tools_by_name |= {tool.name: tool for tool in function_handlers}
-
-    async def send_session_update(self, payload: str) -> str:
-        try:
-            await asyncio.wait_for(self.wait_for_agent(), timeout=AGENT_JOIN_TIMEOUT_S)
-        except asyncio.TimeoutError as exc:
-            raise VoiceAgentConnectionError(
-                f"Agent did not join within {AGENT_JOIN_TIMEOUT_S:g}s"
-            ) from exc
-        if self._room is None or self._closing:
-            raise VoiceAgentConnectionError("Voice session is not connected")
-        agent_identity = self._find_agent_identity(self._room)
-        return await self._room.local_participant.perform_rpc(
-            destination_identity=agent_identity,
-            method=SESSION_UPDATE_RPC_METHOD,
-            payload=payload,
-            response_timeout=5.0,
-        )
-
-    def _find_agent_identity(self, room: Any) -> str:
-        for identity, participant in room.remote_participants.items():
-            if _is_agent_participant(self._rtc, participant):
-                return identity
-        raise VoiceAgentConnectionError("No voice agent found in the session")
 
     async def send_audio(self, audio: bytes) -> None:
         if self._audio_source is None:

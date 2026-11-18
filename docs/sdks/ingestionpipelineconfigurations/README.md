@@ -21,7 +21,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.ingestion_pipeline_configurations.list()
@@ -60,7 +60,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.ingestion_pipeline_configurations.register(name="<value>")
@@ -104,7 +104,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.rag.ingestion_pipeline_configurations.update_run_info(id="6b630c1b-b57e-4237-a015-ff6247cbbcf8", execution_time=parse_datetime("2024-06-27T06:29:04.390Z"), chunks_count=983906)

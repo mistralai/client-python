@@ -10,7 +10,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
@@ -39,7 +39,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
@@ -68,7 +68,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.upload(file={
@@ -93,7 +93,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.files.upload_async(file={
@@ -118,7 +118,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.agents.complete(messages=[
@@ -147,7 +147,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.agents.complete_async(messages=[
@@ -176,7 +176,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.embeddings.create(model="mistral-embed", inputs=[
@@ -201,7 +201,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.embeddings.create_async(model="mistral-embed", inputs=[

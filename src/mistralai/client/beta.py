@@ -5,6 +5,7 @@ from .sdkconfiguration import SDKConfiguration
 from mistralai.client.beta_agents import BetaAgents
 from mistralai.client.beta_context import BetaContext
 from mistralai.client.beta_prompts import BetaPrompts
+from mistralai.client.billing import Billing
 from mistralai.client.connectors import Connectors
 from mistralai.client.conversations import Conversations
 from mistralai.client.libraries import Libraries
@@ -36,6 +37,7 @@ class Beta(BaseSDK):
     triggers: Triggers
     webhooks: Webhooks
     users: Users
+    billing: Billing
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -64,3 +66,4 @@ class Beta(BaseSDK):
         self.triggers = Triggers(self.sdk_configuration, parent_ref=self.parent_ref)
         self.webhooks = Webhooks(self.sdk_configuration, parent_ref=self.parent_ref)
         self.users = Users(self.sdk_configuration, parent_ref=self.parent_ref)
+        self.billing = Billing(self.sdk_configuration, parent_ref=self.parent_ref)

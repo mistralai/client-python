@@ -33,7 +33,7 @@ class Voices(BaseSDK):
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
-        :param type: Filter the voices between customs and presets
+        :param type_: Filter the voices between customs and presets
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -141,7 +141,7 @@ class Voices(BaseSDK):
 
         :param limit: Maximum number of voices to return
         :param offset: Offset for pagination
-        :param type: Filter the voices between customs and presets
+        :param type_: Filter the voices between customs and presets
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1324,7 +1324,7 @@ class Voices(BaseSDK):
 
         :param page_size: Maximum number of voices to return
         :param page_token: Cursor returned as next_page_token by the previous page
-        :param type: Filter the voices between customs and presets
+        :param type_: Filter the voices between customs and presets
         :param gender: Keep voices matching any of these genders
         :param language: Keep voices supporting any of these languages
         :param query: Case-insensitive match on voice name
@@ -1470,7 +1470,7 @@ class Voices(BaseSDK):
 
         :param page_size: Maximum number of voices to return
         :param page_token: Cursor returned as next_page_token by the previous page
-        :param type: Filter the voices between customs and presets
+        :param type_: Filter the voices between customs and presets
         :param gender: Keep voices matching any of these genders
         :param language: Keep voices supporting any of these languages
         :param query: Case-insensitive match on voice name

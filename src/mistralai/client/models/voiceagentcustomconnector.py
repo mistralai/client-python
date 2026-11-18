@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .apikeyauth import APIKeyAuth, APIKeyAuthTypedDict
+from .generatedtoolfiller import GeneratedToolFiller, GeneratedToolFillerTypedDict
 from .oauth2tokenauth import OAuth2TokenAuth, OAuth2TokenAuthTypedDict
 from .statictoolfiller import StaticToolFiller, StaticToolFillerTypedDict
 from .toolconfiguration import ToolConfiguration, ToolConfigurationTypedDict
@@ -12,7 +13,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 from mistralai.client.utils.unions import parse_open_union
 import pydantic
@@ -58,14 +62,53 @@ VoiceAgentCustomConnectorAuthorization = Annotated[
 ]
 
 
+VoiceAgentCustomConnectorFillerTypedDict = TypeAliasType(
+    "VoiceAgentCustomConnectorFillerTypedDict",
+    Union[StaticToolFillerTypedDict, GeneratedToolFillerTypedDict],
+)
+
+
+class UnknownVoiceAgentCustomConnectorFiller(BaseModel):
+    r"""A VoiceAgentCustomConnectorFiller variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_VOICE_AGENT_CUSTOM_CONNECTOR_FILLER_VARIANTS: dict[str, Any] = {
+    "generated": GeneratedToolFiller,
+    "static": StaticToolFiller,
+}
+
+
+VoiceAgentCustomConnectorFiller = Annotated[
+    Union[
+        GeneratedToolFiller, StaticToolFiller, UnknownVoiceAgentCustomConnectorFiller
+    ],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_VOICE_AGENT_CUSTOM_CONNECTOR_FILLER_VARIANTS,
+            unknown_cls=UnknownVoiceAgentCustomConnectorFiller,
+            union_name="VoiceAgentCustomConnectorFiller",
+        )
+    ),
+]
+
+
 class VoiceAgentCustomConnectorTypedDict(TypedDict):
     connector_id: str
     type: Literal["connector"]
     authorization: NotRequired[
         Nullable[VoiceAgentCustomConnectorAuthorizationTypedDict]
     ]
+    r"""Deprecated: per-request connector credentials will be removed. Authenticate the connector through the Connectors API instead."""
     tool_configuration: NotRequired[Nullable[ToolConfigurationTypedDict]]
-    filler: NotRequired[Nullable[StaticToolFillerTypedDict]]
+    filler: NotRequired[Nullable[VoiceAgentCustomConnectorFillerTypedDict]]
 
 
 class VoiceAgentCustomConnector(BaseModel):
@@ -76,21 +119,34 @@ class VoiceAgentCustomConnector(BaseModel):
         pydantic.Field(alias="type"),
     ] = "connector"
 
-    authorization: OptionalNullable[VoiceAgentCustomConnectorAuthorization] = UNSET
+    authorization: Annotated[
+        OptionalNullable[VoiceAgentCustomConnectorAuthorization],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+    r"""Deprecated: per-request connector credentials will be removed. Authenticate the connector through the Connectors API instead."""
 
     tool_configuration: OptionalNullable[ToolConfiguration] = UNSET
 
-    filler: OptionalNullable[StaticToolFiller] = UNSET
+    filler: OptionalNullable[VoiceAgentCustomConnectorFiller] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["authorization", "tool_configuration", "filler"])
         nullable_fields = set(["authorization", "tool_configuration", "filler"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

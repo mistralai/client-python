@@ -17,7 +17,7 @@ Files API
 
 Upload a file that can be used across various endpoints.
 
-The size of individual files can be a maximum of 512 MB. The Fine-tuning API only supports .jsonl files.
+The size of individual files can be a maximum of 512 MB.
 
 Please contact us if you need to increase these storage limits.
 
@@ -30,7 +30,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.upload(file={
@@ -76,7 +76,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.list(page=0, page_size=100, include_total=True)
@@ -123,7 +123,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.retrieve(file_id="f2a27685-ca4e-4dc2-9f2b-88c422c3e0f6")
@@ -163,7 +163,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.delete(file_id="3b6d45eb-e30b-416f-8019-f47e2e93d930")
@@ -203,7 +203,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.download(file_id="f8919994-a4a1-46b2-8b5b-06335a4300ce")
@@ -243,7 +243,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.get_signed_url(file_id="06a020ab-355c-49a6-b19d-304b7c01699f", expiry=24)
