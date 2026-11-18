@@ -32,7 +32,7 @@ class Schedules(BaseSDK):
         :param workflow_name: Filter by exact workflow name
         :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
         :param status: Filter by schedule status: 'active' or 'paused'
-        :param search: Prefix search query for workflow name
+        :param search: Fuzzy search query for workflow name, display name, description, or ID
         :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method
@@ -178,7 +178,7 @@ class Schedules(BaseSDK):
         :param workflow_name: Filter by exact workflow name
         :param user_id: Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.
         :param status: Filter by schedule status: 'active' or 'paused'
-        :param search: Prefix search query for workflow name
+        :param search: Fuzzy search query for workflow name, display name, description, or ID
         :param page_size: Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).
         :param next_page_token: Token for the next page of results
         :param retries: Override the default retry configuration for this method

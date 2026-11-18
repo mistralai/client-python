@@ -2,20 +2,12 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-import json
 import logging
 from collections import defaultdict
 from collections.abc import Awaitable, Callable
 from typing import TYPE_CHECKING, Any, Literal, NoReturn, overload
 
-from pydantic import ValidationError
-
-from mistralai.client.models import (
-    AudioSessionCreateResponse as SessionCreateResponse,
-    AudioTurnConfig,
-    AudioTurnConfigTypedDict,
-    VoiceAgentFunctionTool,
-)
+from mistralai.client.models import AudioSessionCreateResponse as SessionCreateResponse
 
 from .audio import AudioInterface
 from .errors import VoiceAgentConnectionError, VoiceAgentError
@@ -25,7 +17,6 @@ from .events import (
     DisconnectReason,
     VoiceAgentErrorEvent,
     UnknownVoiceAgentEvent,
-    VoiceAgentSessionUpdatedEvent,
     VoiceAgentToolCallEndedEvent,
     VoiceAgentToolCallStartedEvent,
     VoiceAgentTranscriptEvent,
@@ -34,7 +25,7 @@ from .events import (
     VoiceEvent,
     VoiceEventName,
 )
-from .tools import FunctionHandler, Tool, VoiceAgentTool, check_function_handlers
+from .tools import FunctionHandler, check_function_handlers
 
 if TYPE_CHECKING:
     from .transport import Transport
@@ -161,13 +152,6 @@ class VoiceAgentSession:
     @overload
     def on(self, event: Literal["unknown"], handler: Callable[[UnknownVoiceAgentEvent], Any]) -> Callable[[], None]: ...
 
-    @overload
-    def on(
-        self,
-        event: Literal["session_updated"],
-        handler: Callable[[VoiceAgentSessionUpdatedEvent], Any],
-    ) -> Callable[[], None]: ...
-
     def on(
         self,
         event: VoiceEventName,
@@ -245,13 +229,6 @@ class VoiceAgentSession:
 
     @overload
     def off(self, event: Literal["unknown"], handler: Callable[[UnknownVoiceAgentEvent], Any]) -> None: ...
-
-    @overload
-    def off(
-        self,
-        event: Literal["session_updated"],
-        handler: Callable[[VoiceAgentSessionUpdatedEvent], Any],
-    ) -> None: ...
 
     def off(self, event: VoiceEventName, handler: EventHandler) -> None:
         handlers = self._handlers[event]
@@ -374,58 +351,6 @@ class VoiceAgentSession:
                 log_unhandled=False,
             )
             raise
-
-    async def update(
-        self,
-        *,
-        instructions: str | None = None,
-        tools: list[Tool | FunctionHandler | dict[str, Any]] | None = None,
-        turn: AudioTurnConfig | AudioTurnConfigTypedDict | None = None,
-    ) -> VoiceAgentSessionUpdatedEvent:
-        """Update the live session configuration.
-
-        ``instructions`` and ``tools`` take effect at the next turn boundary;
-        ``turn.allow_interruptions`` applies immediately. The returned event reflects
-        the full committed config as confirmed by the server. Every participant,
-        this one included, also receives it as a ``session_updated`` event.
-        """
-        transport = self._require_transport()
-        # An update is a patch: omitted fields must not overwrite live values.
-        payload: dict[str, Any] = {}
-        if instructions is not None:
-            payload["instructions"] = instructions
-        if tools is not None:
-            payload["tools"] = [
-                tool.to_wire()
-                if isinstance(tool, (FunctionHandler, VoiceAgentTool))
-                else VoiceAgentTool.model_validate(tool).to_wire()
-                for tool in tools
-            ]
-        if turn is not None:
-            payload["turn"] = AudioTurnConfig.model_validate(turn).model_dump(
-                mode="json", exclude_unset=True
-            )
-        handlers_by_name = {
-            tool.name: tool for tool in tools or [] if isinstance(tool, FunctionHandler)
-        }
-        response = await transport.send_session_update(json.dumps(payload))
-        try:
-            result = VoiceAgentSessionUpdatedEvent.model_validate_json(response)
-        except ValidationError as exc:
-            raise VoiceAgentConnectionError(
-                f"Invalid session update response: {exc}"
-            ) from exc
-
-        # The server may drop tools it cannot run, so trust its response over the request.
-        confirmed_names = {
-            tool.function.name
-            for tool in result.session.tools or []
-            if isinstance(tool, VoiceAgentFunctionTool)
-        }
-        transport.add_function_handlers(
-            [tool for name, tool in handlers_by_name.items() if name in confirmed_names]
-        )
-        return result
 
     async def close(self, *, reason: DisconnectReason | None = None) -> None:
         """Idempotently close local resources and delete the remote session.

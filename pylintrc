@@ -100,10 +100,6 @@ recursive=no
 # source root.
 source-roots=src
 
-# When enabled, pylint would attempt to guess common misconfiguration and emit
-# user-friendly hints instead of false-positive error messages.
-suggestion-mode=yes
-
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
 unsafe-load-any-extension=no
@@ -446,6 +442,7 @@ disable=raw-checker-failed,
         too-many-instance-attributes,
         wrong-import-order,
         too-many-arguments,
+        too-many-positional-arguments,
         broad-exception-raised,
         too-few-public-methods,
         too-many-branches,
@@ -468,7 +465,9 @@ disable=raw-checker-failed,
         wildcard-import,
         unused-wildcard-import,
         too-many-return-statements,
-        redefined-builtin
+        redefined-builtin,
+        arguments-differ,
+        unidiomatic-typecheck
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

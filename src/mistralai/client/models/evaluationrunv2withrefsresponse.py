@@ -5,6 +5,7 @@ from .evaluationrunscorev2 import EvaluationRunScoreV2, EvaluationRunScoreV2Type
 from .evaluatorstatistics import EvaluatorStatistics, EvaluatorStatisticsTypedDict
 from .evaluatorv2 import EvaluatorV2, EvaluatorV2TypedDict
 from .goalresult import GoalResult, GoalResultTypedDict
+from .principaltype import PrincipalType
 from .runevaluationsummary import RunEvaluationSummary, RunEvaluationSummaryTypedDict
 from .runoptimizationref import RunOptimizationRef, RunOptimizationRefTypedDict
 from .runprojectsummary import RunProjectSummary, RunProjectSummaryTypedDict
@@ -16,7 +17,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 import pydantic
 from pydantic import model_serializer
 from typing import Any, Dict, List, Optional
@@ -36,8 +40,13 @@ class EvaluationRunV2WithRefsResponseTypedDict(TypedDict):
     metadata: Dict[str, Any]
     num_generations: int
     evaluators: List[EvaluatorV2TypedDict]
+    creator_type: NotRequired[PrincipalType]
     run_info: NotRequired[Nullable[Dict[str, Any]]]
     status: NotRequired[str]
+    record_count: NotRequired[Nullable[int]]
+    r"""Records whose results were uploaded so far, failed or not. Null for runs created before this counter existed."""
+    failed_record_count: NotRequired[Nullable[int]]
+    r"""Records whose task or at least one score failed, out of `record_count`. Failed tasks and scores are left out of `statistics`, `goal_results` and `passed`. Null for runs created before this counter existed."""
     dataset_id: NotRequired[Nullable[str]]
     run_evaluators: NotRequired[List[EvaluatorV2TypedDict]]
     system: NotRequired[Nullable[SystemV2TypedDict]]
@@ -75,9 +84,17 @@ class EvaluationRunV2WithRefsResponse(BaseModel):
 
     evaluators: List[EvaluatorV2]
 
+    creator_type: Optional[PrincipalType] = None
+
     run_info: OptionalNullable[Dict[str, Any]] = UNSET
 
     status: Optional[str] = "completed"
+
+    record_count: OptionalNullable[int] = UNSET
+    r"""Records whose results were uploaded so far, failed or not. Null for runs created before this counter existed."""
+
+    failed_record_count: OptionalNullable[int] = UNSET
+    r"""Records whose task or at least one score failed, out of `record_count`. Failed tasks and scores are left out of `statistics`, `goal_results` and `passed`. Null for runs created before this counter existed."""
 
     dataset_id: OptionalNullable[str] = UNSET
 
@@ -100,11 +117,17 @@ class EvaluationRunV2WithRefsResponse(BaseModel):
     project: OptionalNullable[RunProjectSummary] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "creator_type",
                 "run_info",
                 "status",
+                "record_count",
+                "failed_record_count",
                 "dataset_id",
                 "run_evaluators",
                 "system",
@@ -122,6 +145,8 @@ class EvaluationRunV2WithRefsResponse(BaseModel):
                 "deleted_at",
                 "description",
                 "run_info",
+                "record_count",
+                "failed_record_count",
                 "dataset_id",
                 "system",
                 "passed",
@@ -130,11 +155,15 @@ class EvaluationRunV2WithRefsResponse(BaseModel):
                 "project",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

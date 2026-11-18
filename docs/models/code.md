@@ -13,7 +13,9 @@ value: Code = "server_error"
 - `"server_error"`
 - `"rate_limit_exceeded"`
 - `"invalid_prompt"`
+- `"data_residency_mismatch"`
 - `"bio_policy"`
+- `"misalignment_policy_violation"`
 - `"vector_store_timeout"`
 - `"invalid_image"`
 - `"invalid_image_format"`

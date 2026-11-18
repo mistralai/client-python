@@ -30,7 +30,7 @@ class ContextSearchIndexes(BaseSDK):
 
         :param name:
         :param config:
-        :param schema_:
+        :param schema:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -141,7 +141,7 @@ class ContextSearchIndexes(BaseSDK):
 
         :param name:
         :param config:
-        :param schema_:
+        :param schema:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -729,7 +729,7 @@ class ContextSearchIndexes(BaseSDK):
         Records a new schema for the managed search index and applies it asynchronously. The index keeps serving its current schema until the new one is on disk; poll it until status is ready. Additive only: the new schema must keep every field the current one has.
 
         :param index_name:
-        :param schema_:
+        :param schema:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -830,7 +830,7 @@ class ContextSearchIndexes(BaseSDK):
         Records a new schema for the managed search index and applies it asynchronously. The index keeps serving its current schema until the new one is on disk; poll it until status is ready. Additive only: the new schema must keep every field the current one has.
 
         :param index_name:
-        :param schema_:
+        :param schema:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1118,7 +1118,7 @@ class ContextSearchIndexes(BaseSDK):
     ) -> models.IngestDocumentsResponse:
         r"""Ingest documents into a managed index
 
-        Validates and persists documents. Always returns 200; each document is reported as accepted or rejected in the response body.
+        Validates and persists documents. Returns 200 with each document reported as accepted or rejected in the response body, or 403 once the index holds its limit of chunks.
 
         :param index_name:
         :param documents:
@@ -1206,7 +1206,7 @@ class ContextSearchIndexes(BaseSDK):
                 errors.HTTPValidationErrorData, http_res
             )
             raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+        if utils.match_response(http_res, ["403", "404", "409", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -1227,7 +1227,7 @@ class ContextSearchIndexes(BaseSDK):
     ) -> models.IngestDocumentsResponse:
         r"""Ingest documents into a managed index
 
-        Validates and persists documents. Always returns 200; each document is reported as accepted or rejected in the response body.
+        Validates and persists documents. Returns 200 with each document reported as accepted or rejected in the response body, or 403 once the index holds its limit of chunks.
 
         :param index_name:
         :param documents:
@@ -1315,7 +1315,7 @@ class ContextSearchIndexes(BaseSDK):
                 errors.HTTPValidationErrorData, http_res
             )
             raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["404", "409", "4XX"], "*"):
+        if utils.match_response(http_res, ["403", "404", "409", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, "5XX", "*"):
@@ -1640,7 +1640,7 @@ class ContextSearchIndexes(BaseSDK):
                 errors.HTTPValidationErrorData, http_res
             )
             raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "409", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "404", "409", "429", "4XX"], "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, ["500", "5XX"], "*"):
@@ -1747,7 +1747,7 @@ class ContextSearchIndexes(BaseSDK):
                 errors.HTTPValidationErrorData, http_res
             )
             raise errors.HTTPValidationError(response_data, http_res)
-        if utils.match_response(http_res, ["400", "404", "409", "4XX"], "*"):
+        if utils.match_response(http_res, ["400", "404", "409", "429", "4XX"], "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.SDKError("API error occurred", http_res, http_res_text)
         if utils.match_response(http_res, ["500", "5XX"], "*"):

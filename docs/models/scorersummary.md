@@ -1,0 +1,16 @@
+# ScorerSummary
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `slug`                                                               | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `name`                                                               | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `description`                                                        | *Nullable[str]*                                                      | :heavy_check_mark:                                                   | N/A                                                                  |
+| `kind`                                                               | [models.ScorerKind](../models/scorerkind.md)                         | :heavy_check_mark:                                                   | N/A                                                                  |
+| `is_ootb`                                                            | *bool*                                                               | :heavy_check_mark:                                                   | N/A                                                                  |
+| `creator_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `creator_type`                                                       | [Optional[models.PrincipalType]](../models/principaltype.md)         | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |

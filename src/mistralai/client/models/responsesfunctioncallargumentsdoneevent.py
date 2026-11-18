@@ -13,7 +13,6 @@ from typing_extensions import Annotated, TypedDict
 class ResponsesFunctionCallArgumentsDoneEventTypedDict(TypedDict):
     arguments: str
     item_id: str
-    name: str
     output_index: int
     sequence_number: int
     type: Literal["response.function_call_arguments.done"]
@@ -28,8 +27,6 @@ class ResponsesFunctionCallArgumentsDoneEvent(BaseModel):
     arguments: str
 
     item_id: str
-
-    name: str
 
     output_index: int
 

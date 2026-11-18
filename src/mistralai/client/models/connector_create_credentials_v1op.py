@@ -14,7 +14,6 @@ from typing_extensions import Annotated, TypedDict
 ConnectorCreateCredentialsV1ConsumerScope = Literal[
     "user",
     "workspace",
-    "organization",
 ]
 
 

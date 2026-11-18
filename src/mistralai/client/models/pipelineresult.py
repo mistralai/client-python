@@ -11,6 +11,8 @@ class PipelineResultTypedDict(TypedDict):
     trace_id: str
     span_id: str
     span_name: str
+    operation_name: str
+    tool_name: str
     duration_ns: int
     evaluated_at: datetime
     judge_scores: Dict[str, float]
@@ -24,6 +26,10 @@ class PipelineResult(BaseModel):
     span_id: str
 
     span_name: str
+
+    operation_name: str
+
+    tool_name: str
 
     duration_ns: int
 

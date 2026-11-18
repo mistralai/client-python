@@ -55,7 +55,7 @@ class MCPClientSSE(MCPClientBase):
 
     @cached_property
     def base_url(self) -> str:
-        return self._sse_params.url.rstrip("/sse")
+        return self._sse_params.url.rstrip("/").removesuffix("/sse")
 
     def set_oauth_params(self, oauth_params: OAuthParams):
         """Update the oauth params and client accordingly."""

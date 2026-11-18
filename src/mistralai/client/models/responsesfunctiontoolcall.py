@@ -7,7 +7,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, Field, SerializeAsAny, model_serializer
@@ -91,6 +94,7 @@ class ResponsesFunctionToolCallTypedDict(TypedDict):
     name: str
     type: Literal["function_call"]
     id: NotRequired[Nullable[str]]
+    async_: NotRequired[Nullable[bool]]
     caller: NotRequired[Nullable[ResponsesFunctionToolCallCallerTypedDict]]
     namespace: NotRequired[Nullable[str]]
     status: NotRequired[Nullable[ResponsesFunctionToolCallStatus]]
@@ -117,6 +121,8 @@ class ResponsesFunctionToolCall(BaseModel):
 
     id: OptionalNullable[str] = None
 
+    async_: Annotated[OptionalNullable[bool], pydantic.Field(alias="async")] = None
+
     caller: SerializeAsAny[OptionalNullable[ResponsesFunctionToolCallCaller]] = UNSET
 
     namespace: OptionalNullable[str] = None
@@ -132,15 +138,22 @@ class ResponsesFunctionToolCall(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["id", "caller", "namespace", "status"])
-        nullable_fields = set(["id", "caller", "namespace", "status"])
-        null_default_fields = set(["id", "namespace", "status"])
+        optional_fields = set(["id", "async", "caller", "namespace", "status"])
+        nullable_fields = set(["id", "async", "caller", "namespace", "status"])
+        null_default_fields = set(["id", "async", "namespace", "status"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (

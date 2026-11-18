@@ -4,7 +4,13 @@ from __future__ import annotations
 from .basemodelcard import BaseModelCard, BaseModelCardTypedDict
 from .ftmodelcard import FTModelCard, FTModelCardTypedDict
 from functools import partial
-from mistralai.client.types import BaseModel, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils.unions import parse_open_union
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import BeforeValidator
@@ -58,13 +64,20 @@ class ModelList(BaseModel):
     data: Optional[List[ModelListData]] = None
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["object", "data"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:

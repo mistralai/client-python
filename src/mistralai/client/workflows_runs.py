@@ -33,7 +33,8 @@ class WorkflowsRuns(BaseSDK):
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
         workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
-        include_internal: Optional[bool] = True,
+        exclude_workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
+        include_internal: Optional[bool] = False,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         search_key: OptionalNullable[Iterable[str]] = UNSET,
@@ -57,6 +58,7 @@ class WorkflowsRuns(BaseSDK):
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param workflow_tags: Filter to runs of workflows tagged with all listed tags (AND).
+        :param exclude_workflow_tags: Exclude runs of workflows tagged with any of the listed tags.
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -95,6 +97,9 @@ class WorkflowsRuns(BaseSDK):
             end_time_before=end_time_before,
             user_id=user_id,
             workflow_tags=utils.unmarshal(workflow_tags, OptionalNullable[List[str]]),
+            exclude_workflow_tags=utils.unmarshal(
+                exclude_workflow_tags, OptionalNullable[List[str]]
+            ),
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -175,6 +180,7 @@ class WorkflowsRuns(BaseSDK):
                 end_time_before=end_time_before,
                 user_id=user_id,
                 workflow_tags=workflow_tags,
+                exclude_workflow_tags=exclude_workflow_tags,
                 include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,
@@ -228,7 +234,8 @@ class WorkflowsRuns(BaseSDK):
         end_time_before: OptionalNullable[datetime] = UNSET,
         user_id: OptionalNullable[str] = UNSET,
         workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
-        include_internal: Optional[bool] = True,
+        exclude_workflow_tags: OptionalNullable[Iterable[str]] = UNSET,
+        include_internal: Optional[bool] = False,
         page_size: Optional[int] = 50,
         next_page_token: OptionalNullable[str] = UNSET,
         search_key: OptionalNullable[Iterable[str]] = UNSET,
@@ -252,6 +259,7 @@ class WorkflowsRuns(BaseSDK):
         :param end_time_before: Include runs with end_time <= value. Running executions (no end_time) are excluded; use the status filter to include them.
         :param user_id: Filter by user id. Use 'current' to filter by the authenticated user
         :param workflow_tags: Filter to runs of workflows tagged with all listed tags (AND).
+        :param exclude_workflow_tags: Exclude runs of workflows tagged with any of the listed tags.
         :param include_internal: Include runs of internal/technical workflows (e.g. parallel-execution)
         :param page_size: Number of items per page
         :param next_page_token: Token for the next page of results
@@ -290,6 +298,9 @@ class WorkflowsRuns(BaseSDK):
             end_time_before=end_time_before,
             user_id=user_id,
             workflow_tags=utils.unmarshal(workflow_tags, OptionalNullable[List[str]]),
+            exclude_workflow_tags=utils.unmarshal(
+                exclude_workflow_tags, OptionalNullable[List[str]]
+            ),
             include_internal=include_internal,
             page_size=page_size,
             next_page_token=next_page_token,
@@ -375,6 +386,7 @@ class WorkflowsRuns(BaseSDK):
                 end_time_before=end_time_before,
                 user_id=user_id,
                 workflow_tags=workflow_tags,
+                exclude_workflow_tags=exclude_workflow_tags,
                 include_internal=include_internal,
                 page_size=page_size,
                 next_page_token=next_cursor,

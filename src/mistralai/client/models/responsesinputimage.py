@@ -7,7 +7,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, model_serializer
@@ -24,8 +27,15 @@ ResponsesInputImageDetail = Literal[
 ]
 
 
+ResponsesInputImageTTL = Literal[
+    "30m",
+    "12h",
+]
+
+
 class ResponsesInputImageResponsesPromptCacheBreakpointTypedDict(TypedDict):
     mode: Literal["explicit"]
+    ttl: NotRequired[Nullable[ResponsesInputImageTTL]]
 
 
 class ResponsesInputImageResponsesPromptCacheBreakpoint(BaseModel):
@@ -39,6 +49,8 @@ class ResponsesInputImageResponsesPromptCacheBreakpoint(BaseModel):
         pydantic.Field(alias="mode"),
     ] = "explicit"
 
+    ttl: OptionalNullable[ResponsesInputImageTTL] = UNSET
+
     @property
     def additional_properties(self):
         return self.__pydantic_extra__
@@ -46,6 +58,41 @@ class ResponsesInputImageResponsesPromptCacheBreakpoint(BaseModel):
     @additional_properties.setter
     def additional_properties(self, value):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["ttl"])
+        nullable_fields = set(["ttl"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
+            val = serialized.get(k, serialized.get(n))
+            serialized.pop(k, serialized.pop(n, None))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
+
+            if val != UNSET_SENTINEL:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
+        for k, v in serialized.items():
+            m[k] = v
+
+        return m
 
 
 class ResponsesInputImageTypedDict(TypedDict):
@@ -90,14 +137,21 @@ class ResponsesInputImage(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["file_id", "image_url", "prompt_cache_breakpoint"])
         nullable_fields = set(["file_id", "image_url", "prompt_cache_breakpoint"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (

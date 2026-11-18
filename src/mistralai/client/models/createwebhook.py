@@ -12,7 +12,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import NotRequired, TypedDict
@@ -27,19 +30,25 @@ class CreateWebhookTypedDict(TypedDict):
     r"""Signing secret provided by the third-party provider"""
     encryption_key: NotRequired[Nullable[str]]
     r"""Encryption key used to decrypt webhook payloads"""
+    url_verification_token: NotRequired[Nullable[str]]
+    r"""Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers"""
     expires_at: NotRequired[Nullable[datetime]]
     signature_hash_algorithm: NotRequired[Nullable[WebhookSignatureHashAlgorithm]]
     signature_header_name: NotRequired[Nullable[str]]
     validity_period_second: NotRequired[Nullable[int]]
+    r"""Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300"""
     signature_extractor_regex: NotRequired[Nullable[str]]
     r"""Regex to extract signature, eg sha256=(.*)"""
     timestamp_extractor_regex: NotRequired[Nullable[str]]
+    r"""Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)"""
     signature_payload_pattern: NotRequired[Nullable[str]]
     r"""Pattern for signature payload, eg {body} or {timestamp}.{body}"""
     signature_encoding: NotRequired[Nullable[WebhookSignatureEncoding]]
     success_status_code: NotRequired[Nullable[int]]
-    event_type_path: NotRequired[Nullable[str]]
-    r"""Path to extract event type, eg body.type or headers.X-GitHub-Event"""
+    event_type_pattern: NotRequired[Nullable[str]]
+    r"""Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}"""
+    event_id_pattern: NotRequired[Nullable[str]]
+    r"""Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body"""
 
 
 class CreateWebhook(BaseModel):
@@ -56,6 +65,9 @@ class CreateWebhook(BaseModel):
     encryption_key: OptionalNullable[str] = UNSET
     r"""Encryption key used to decrypt webhook payloads"""
 
+    url_verification_token: OptionalNullable[str] = UNSET
+    r"""Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers"""
+
     expires_at: OptionalNullable[datetime] = UNSET
 
     signature_hash_algorithm: OptionalNullable[WebhookSignatureHashAlgorithm] = UNSET
@@ -63,11 +75,13 @@ class CreateWebhook(BaseModel):
     signature_header_name: OptionalNullable[str] = UNSET
 
     validity_period_second: OptionalNullable[int] = UNSET
+    r"""Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300"""
 
     signature_extractor_regex: OptionalNullable[str] = UNSET
     r"""Regex to extract signature, eg sha256=(.*)"""
 
     timestamp_extractor_regex: OptionalNullable[str] = UNSET
+    r"""Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)"""
 
     signature_payload_pattern: OptionalNullable[str] = UNSET
     r"""Pattern for signature payload, eg {body} or {timestamp}.{body}"""
@@ -76,16 +90,23 @@ class CreateWebhook(BaseModel):
 
     success_status_code: OptionalNullable[int] = UNSET
 
-    event_type_path: OptionalNullable[str] = UNSET
-    r"""Path to extract event type, eg body.type or headers.X-GitHub-Event"""
+    event_type_pattern: OptionalNullable[str] = UNSET
+    r"""Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}"""
+
+    event_id_pattern: OptionalNullable[str] = UNSET
+    r"""Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
                 "owner_type",
                 "secret",
                 "encryption_key",
+                "url_verification_token",
                 "expires_at",
                 "signature_hash_algorithm",
                 "signature_header_name",
@@ -95,13 +116,15 @@ class CreateWebhook(BaseModel):
                 "signature_payload_pattern",
                 "signature_encoding",
                 "success_status_code",
-                "event_type_path",
+                "event_type_pattern",
+                "event_id_pattern",
             ]
         )
         nullable_fields = set(
             [
                 "secret",
                 "encryption_key",
+                "url_verification_token",
                 "expires_at",
                 "signature_hash_algorithm",
                 "signature_header_name",
@@ -111,14 +134,19 @@ class CreateWebhook(BaseModel):
                 "signature_payload_pattern",
                 "signature_encoding",
                 "success_status_code",
-                "event_type_path",
+                "event_type_pattern",
+                "event_id_pattern",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

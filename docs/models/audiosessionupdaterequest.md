@@ -1,0 +1,10 @@
+# AudioSessionUpdateRequest
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `instructions`                                                                           | *OptionalNullable[str]*                                                                  | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `tools`                                                                                  | List[[models.AudioSessionUpdateRequestTool](../models/audiosessionupdaterequesttool.md)] | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `turn`                                                                                   | [OptionalNullable[models.AudioSessionTurnUpdate]](../models/audiosessionturnupdate.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |

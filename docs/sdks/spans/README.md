@@ -10,6 +10,7 @@
 * [search_span_evaluations](#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](#search_latest_span_evaluations) - Search latest span evaluations
 * [search_pipeline_results](#search_pipeline_results) - Search pipeline results
+* [list_pipeline_result_fields](#list_pipeline_result_fields) - Get pipeline result field definitions
 * [list_span_fields](#list_span_fields) - Get span field definitions
 * [list_span_eval_fields](#list_span_eval_fields) - Get span evaluation field definitions
 * [fetch_span_field_options](#fetch_span_field_options) - Get options for a span field
@@ -28,7 +29,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.search_spans(page_size=50)
@@ -73,7 +74,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.aggregate(metric={
@@ -124,7 +125,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.aggregate_span_evaluations(metric={
@@ -175,7 +176,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.search_span_evaluations(page_size=50)
@@ -220,7 +221,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.search_latest_span_evaluations(page_size=50)
@@ -265,7 +266,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.search_pipeline_results(pipeline_config_slugs=[
@@ -300,6 +301,47 @@ with Mistral(
 | errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
 | errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
+## list_pipeline_result_fields
+
+Get pipeline result field definitions
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="get_pipeline_result_fields_v1_observability_pipelines__pipeline_id__results_fields_get" method="get" path="/v1/observability/pipelines/{pipeline_id}/results/fields" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY"),
+) as mistral:
+
+    res = mistral.beta.observability.spans.list_pipeline_result_fields(pipeline_id="c02f0afc-c7d2-483f-9977-c21cacf90d8d")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `pipeline_id`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.GetPipelineResultFields](../../models/getpipelineresultfields.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
 ## list_span_fields
 
 Get span field definitions
@@ -313,7 +355,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.list_span_fields()
@@ -353,7 +395,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.list_span_eval_fields()
@@ -393,7 +435,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.fetch_span_field_options(field_name="<value>")
@@ -436,7 +478,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.spans.fetch_span_eval_field_options(field_name="<value>")

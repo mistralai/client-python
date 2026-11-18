@@ -27,7 +27,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import validate_const
 import pydantic
 from pydantic import ConfigDict, Field, SerializeAsAny, model_serializer
@@ -92,11 +95,13 @@ ResponsesFunctionCallOutputStatus = Literal[
 
 
 class ResponsesFunctionCallOutputTypedDict(TypedDict):
-    call_id: str
     output: ResponsesFunctionCallOutputOutput2TypedDict
+    call_id: str
     type: Literal["function_call_output"]
     id: NotRequired[Nullable[str]]
     caller: NotRequired[Nullable[ResponsesFunctionCallOutputCallerTypedDict]]
+    name: NotRequired[Nullable[str]]
+    namespace: NotRequired[Nullable[str]]
     status: NotRequired[Nullable[ResponsesFunctionCallOutputStatus]]
 
 
@@ -106,9 +111,9 @@ class ResponsesFunctionCallOutput(BaseModel):
     )
     __pydantic_extra__: Dict[str, Any] = pydantic.Field(init=False)
 
-    call_id: str
-
     output: ResponsesFunctionCallOutputOutput2
+
+    call_id: str
 
     type: Annotated[
         Annotated[
@@ -122,6 +127,10 @@ class ResponsesFunctionCallOutput(BaseModel):
 
     caller: SerializeAsAny[OptionalNullable[ResponsesFunctionCallOutputCaller]] = UNSET
 
+    name: OptionalNullable[str] = UNSET
+
+    namespace: OptionalNullable[str] = UNSET
+
     status: OptionalNullable[ResponsesFunctionCallOutputStatus] = UNSET
 
     @property
@@ -133,14 +142,21 @@ class ResponsesFunctionCallOutput(BaseModel):
         self.__pydantic_extra__ = value  # pyright: ignore[reportIncompatibleVariableOverride]
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["id", "caller", "status"])
-        nullable_fields = set(["id", "caller", "status"])
+        optional_fields = set(["id", "caller", "name", "namespace", "status"])
+        nullable_fields = set(["id", "caller", "name", "namespace", "status"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             serialized.pop(k, serialized.pop(n, None))
             is_nullable_and_explicitly_set = (

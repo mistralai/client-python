@@ -16,6 +16,8 @@ from mistralai.extra.connectors_gateway_errors import (
 if TYPE_CHECKING:
     from mcp import ClientSession
 
+    from mistralai.client.basesdk import BaseSDK
+
 MCPClientContext = AbstractAsyncContextManager["ClientSession"]
 
 _DEFAULT_TIMEOUT_MS = 300_000
@@ -49,6 +51,14 @@ def _security_request_hook(
     return add_security_headers
 
 
+def _get_request_hooks(
+    sdk_configuration: SDKConfiguration,
+) -> list[Callable[[httpx.Request], Awaitable[None]]]:
+    if sdk_configuration.async_client_supplied:
+        return []
+    return [_security_request_hook(sdk_configuration)]
+
+
 def _gateway_url(
     sdk_configuration: SDKConfiguration,
     connector_id_or_name: str,
@@ -78,9 +88,12 @@ def _ensure_allowed_url(url: httpx.URL, allowed_base_url: httpx.URL) -> None:
     request_path = url.raw_path.split(b"?", 1)[0]
     is_subpath = request_path == base_path or request_path.startswith(base_path + b"/")
     relative_path = request_path[len(base_path) :].lstrip(b"/")
+    # Servers percent-decode the path, so "%2e%2e" and "..%2F" can still traverse.
+    # Encoded slashes alone are allowed: "heads%2Fmain" is a valid path parameter.
     has_dot_segments = any(
-        unquote(segment.decode("ascii")) in {".", ".."}
+        part in {".", ".."}
         for segment in relative_path.split(b"/")
+        for part in unquote(segment.decode("ascii")).split("/")
     )
     if not same_origin or not is_subpath or has_dot_segments:
         raise ValueError(
@@ -88,16 +101,53 @@ def _ensure_allowed_url(url: httpx.URL, allowed_base_url: httpx.URL) -> None:
         )
 
 
-def _new_httpx_client(**kwargs: Any) -> httpx.AsyncClient:
-    return httpx.AsyncClient(**kwargs)
+class _AsyncClientTransport(httpx.AsyncBaseTransport):
+    """Send gateway requests through the SDK client without taking ownership.
+
+    Holds the SDK instance, not just its client, so the SDK's weakref finalizer
+    cannot close a default client while the gateway client borrows it.
+    """
+
+    def __init__(self, sdk_client: "BaseSDK") -> None:
+        self._sdk_client = sdk_client
+        async_client = sdk_client.sdk_configuration.async_client
+        if async_client is None:
+            raise ValueError("The Mistral SDK async client is closed")
+        self._async_client = async_client
+
+    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+        merged_request = self._async_client.build_request(
+            request.method,
+            request.url,
+            params=request.url.params,
+            headers=request.headers,
+        )
+        # Keep the original body stream and timeout extensions intact.
+        request.url = merged_request.url
+        request.headers = merged_request.headers
+        return await self._async_client.send(
+            request,
+            stream=True,
+            follow_redirects=False,
+        )
+
+
+def _new_httpx_client(
+    sdk_client: "BaseSDK", **kwargs: Any
+) -> httpx.AsyncClient:
+    return httpx.AsyncClient(transport=_AsyncClientTransport(sdk_client), **kwargs)
 
 
 def _create_mcp_http_client(
-    sdk_configuration: SDKConfiguration,
+    sdk_client: "BaseSDK",
     *,
     credentials_name: str | None,
 ) -> httpx.AsyncClient:
+    sdk_configuration = sdk_client.sdk_configuration
+    request_hooks = _get_request_hooks(sdk_configuration)
+
     return _new_httpx_client(
+        sdk_client,
         headers=_request_headers(
             sdk_configuration,
             credentials_name=credentials_name,
@@ -108,7 +158,7 @@ def _create_mcp_http_client(
         ),
         follow_redirects=False,
         event_hooks={
-            "request": [_security_request_hook(sdk_configuration)],
+            "request": request_hooks,
             "response": [raise_connectors_gateway_error],
         },
     )
@@ -116,7 +166,7 @@ def _create_mcp_http_client(
 
 @asynccontextmanager
 async def mcp_client(
-    sdk_configuration: SDKConfiguration,
+    sdk_client: "BaseSDK",
     *,
     connector_id_or_name: str,
     credentials_name: str | None = None,
@@ -130,8 +180,9 @@ async def mcp_client(
             "MCP support requires the 'mistralai[mcp]' optional dependency."
         ) from exc
 
+    sdk_configuration = sdk_client.sdk_configuration
     http_client = _create_mcp_http_client(
-        sdk_configuration,
+        sdk_client,
         credentials_name=credentials_name,
     )
     gateway_url = _gateway_url(
@@ -165,12 +216,13 @@ async def mcp_client(
 
 
 def http_client(
-    sdk_configuration: SDKConfiguration,
+    sdk_client: "BaseSDK",
     *,
     connector_id_or_name: str,
     credentials_name: str | None = None,
 ) -> httpx.AsyncClient:
     """Create an HTTP client targeting a connector through the gateway."""
+    sdk_configuration = sdk_client.sdk_configuration
     gateway_url = _gateway_url(
         sdk_configuration,
         connector_id_or_name,
@@ -181,7 +233,11 @@ def http_client(
     async def ensure_allowed_request(request: httpx.Request) -> None:
         _ensure_allowed_url(request.url, gateway_url)
 
+    request_hooks = _get_request_hooks(sdk_configuration)
+    request_hooks.insert(0, ensure_allowed_request)
+
     return _new_httpx_client(
+        sdk_client,
         base_url=base_url,
         headers=_request_headers(
             sdk_configuration,
@@ -190,10 +246,7 @@ def http_client(
         timeout=_timeout(sdk_configuration),
         follow_redirects=False,
         event_hooks={
-            "request": [
-                ensure_allowed_request,
-                _security_request_hook(sdk_configuration),
-            ],
+            "request": request_hooks,
             "response": [raise_connectors_gateway_error],
         },
     )

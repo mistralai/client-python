@@ -306,6 +306,7 @@ class Workflows(BaseSDK):
         deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
+        exclude_tags: OptionalNullable[Iterable[str]] = UNSET,
         order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
@@ -325,6 +326,7 @@ class Workflows(BaseSDK):
         :param deployment_status: Filter by deployment activity. active=only active, inactive=only inactive, None=no filter
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param tags: Filter to workflows tagged with all listed tags (AND).
+        :param exclude_tags: Exclude workflows tagged with any of the listed tags.
         :param order: Sort direction
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
@@ -360,6 +362,7 @@ class Workflows(BaseSDK):
             deployment_status=deployment_status,
             archived=archived,
             tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
+            exclude_tags=utils.unmarshal(exclude_tags, OptionalNullable[List[str]]),
             order=order,
             cursor=cursor,
             limit=limit,
@@ -435,6 +438,7 @@ class Workflows(BaseSDK):
                 deployment_status=deployment_status,
                 archived=archived,
                 tags=tags,
+                exclude_tags=exclude_tags,
                 order=order,
                 cursor=next_cursor,
                 limit=limit,
@@ -481,6 +485,7 @@ class Workflows(BaseSDK):
         deployment_status: OptionalNullable[models.DeploymentStatus] = UNSET,
         archived: OptionalNullable[bool] = UNSET,
         tags: OptionalNullable[Iterable[str]] = UNSET,
+        exclude_tags: OptionalNullable[Iterable[str]] = UNSET,
         order: Optional[models.GetWorkflowsV1WorkflowsGetOrder] = "asc",
         cursor: OptionalNullable[str] = UNSET,
         limit: Optional[int] = 50,
@@ -500,6 +505,7 @@ class Workflows(BaseSDK):
         :param deployment_status: Filter by deployment activity. active=only active, inactive=only inactive, None=no filter
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param tags: Filter to workflows tagged with all listed tags (AND).
+        :param exclude_tags: Exclude workflows tagged with any of the listed tags.
         :param order: Sort direction
         :param cursor: The cursor for pagination
         :param limit: The maximum number of workflows to return
@@ -535,6 +541,7 @@ class Workflows(BaseSDK):
             deployment_status=deployment_status,
             archived=archived,
             tags=utils.unmarshal(tags, OptionalNullable[List[str]]),
+            exclude_tags=utils.unmarshal(exclude_tags, OptionalNullable[List[str]]),
             order=order,
             cursor=cursor,
             limit=limit,
@@ -615,6 +622,7 @@ class Workflows(BaseSDK):
                 deployment_status=deployment_status,
                 archived=archived,
                 tags=tags,
+                exclude_tags=exclude_tags,
                 order=order,
                 cursor=next_cursor,
                 limit=limit,
@@ -658,6 +666,7 @@ class Workflows(BaseSDK):
         archived: OptionalNullable[bool] = UNSET,
         with_workflow: Optional[bool] = False,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        exclude_tags: OptionalNullable[Iterable[str]] = UNSET,
         limit: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -676,6 +685,7 @@ class Workflows(BaseSDK):
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
+        :param exclude_tags: Exclude registrations of workflows tagged with any of the listed tags.
         :param limit: The maximum number of workflows versions to return
         :param cursor: The cursor for pagination
         :param retries: Override the default retry configuration for this method
@@ -706,6 +716,7 @@ class Workflows(BaseSDK):
             archived=archived,
             with_workflow=with_workflow,
             available_in_chat_assistant=available_in_chat_assistant,
+            exclude_tags=utils.unmarshal(exclude_tags, OptionalNullable[List[str]]),
             limit=limit,
             cursor=cursor,
         )
@@ -783,6 +794,7 @@ class Workflows(BaseSDK):
         archived: OptionalNullable[bool] = UNSET,
         with_workflow: Optional[bool] = False,
         available_in_chat_assistant: OptionalNullable[bool] = UNSET,
+        exclude_tags: OptionalNullable[Iterable[str]] = UNSET,
         limit: Optional[int] = 50,
         cursor: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -801,6 +813,7 @@ class Workflows(BaseSDK):
         :param archived: Filter by archived state. False=exclude archived, True=only archived, None=include all
         :param with_workflow: Whether to include the workflow definition
         :param available_in_chat_assistant: Whether to only return workflows available in chat assistant
+        :param exclude_tags: Exclude registrations of workflows tagged with any of the listed tags.
         :param limit: The maximum number of workflows versions to return
         :param cursor: The cursor for pagination
         :param retries: Override the default retry configuration for this method
@@ -831,6 +844,7 @@ class Workflows(BaseSDK):
             archived=archived,
             with_workflow=with_workflow,
             available_in_chat_assistant=available_in_chat_assistant,
+            exclude_tags=utils.unmarshal(exclude_tags, OptionalNullable[List[str]]),
             limit=limit,
             cursor=cursor,
         )
@@ -939,7 +953,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 300000
+            timeout_ms = 630000
 
         if server_url is not None:
             base_url = server_url
@@ -1078,7 +1092,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 300000
+            timeout_ms = 630000
 
         if server_url is not None:
             base_url = server_url
@@ -1220,7 +1234,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 300000
+            timeout_ms = 630000
 
         if server_url is not None:
             base_url = server_url
@@ -1362,7 +1376,7 @@ class Workflows(BaseSDK):
             timeout_ms = self.sdk_configuration.timeout_ms
 
         if timeout_ms is None:
-            timeout_ms = 300000
+            timeout_ms = 630000
 
         if server_url is not None:
             base_url = server_url

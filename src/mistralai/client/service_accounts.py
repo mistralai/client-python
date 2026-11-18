@@ -743,7 +743,7 @@ class ServiceAccounts(BaseSDK):
 
         Retrieve a service account.
 
-        Requires the Workspace admin (`workspace_admin`) role.
+        Requires the `see_all_workspace_service_accounts` or `read_workspace_service_account` permission.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method
@@ -840,7 +840,7 @@ class ServiceAccounts(BaseSDK):
 
         Retrieve a service account.
 
-        Requires the Workspace admin (`workspace_admin`) role.
+        Requires the `see_all_workspace_service_accounts` or `read_workspace_service_account` permission.
 
         :param service_account_id:
         :param retries: Override the default retry configuration for this method

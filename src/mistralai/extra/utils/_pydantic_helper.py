@@ -3,8 +3,9 @@ from typing import Any
 
 def rec_strict_json_schema(schema_node: Any) -> Any:
     """
-    Recursively set the additionalProperties property to False for all objects in the JSON Schema.
-    This makes the JSON Schema strict (i.e. no additional properties are allowed).
+    Recursively set the additionalProperties property to False for all objects in the JSON Schema
+    that do not define it already, such as dict fields whose value schema it holds.
+    This makes the JSON Schema strict (i.e. no undeclared properties are allowed).
     """
     # Include int and float as terminal types to handle JSON Schema constraint keywords
     # like minLength, maxLength, minItems, maxItems, minimum, maximum, etc.
@@ -12,7 +13,7 @@ def rec_strict_json_schema(schema_node: Any) -> Any:
         return schema_node
     if isinstance(schema_node, dict):
         if "type" in schema_node and schema_node["type"] == "object":
-            schema_node["additionalProperties"] = False
+            schema_node.setdefault("additionalProperties", False)
         for key, value in schema_node.items():
             schema_node[key] = rec_strict_json_schema(value)
     elif isinstance(schema_node, list):

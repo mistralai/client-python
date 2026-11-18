@@ -35,7 +35,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution(execution_id="<id>", include_search_keys=False)
@@ -77,7 +77,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_history(execution_id="<id>", decode_payloads=True)
@@ -119,7 +119,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.signal_workflow_execution(execution_id="<id>", name="<value>")
@@ -162,7 +162,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.query_workflow_execution(execution_id="<id>", name="<value>")
@@ -205,7 +205,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.executions.terminate_workflow_execution(execution_id="<id>")
@@ -241,7 +241,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.batch_terminate_workflow_executions(execution_ids=[
@@ -285,7 +285,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.executions.cancel_workflow_execution(execution_id="<id>")
@@ -321,7 +321,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.batch_cancel_workflow_executions(execution_ids=[])
@@ -362,7 +362,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.executions.reset_workflow(execution_id="<id>", event_id=24149, exclude_signals=False, exclude_updates=False)
@@ -402,7 +402,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.update_workflow_execution(execution_id="<id>", name="<value>")
@@ -445,7 +445,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_trace_info(execution_id="<id>")
@@ -486,7 +486,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_trace_otel(execution_id="<id>")
@@ -527,7 +527,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_trace_summary(execution_id="<id>")
@@ -568,7 +568,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_trace_events(execution_id="<id>", merge_same_id_events=False, include_internal_events=False)
@@ -611,7 +611,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.stream(execution_id="<id>")
@@ -659,7 +659,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.get_workflow_execution_logs(execution_id="<id>", order="asc", limit=50)
@@ -710,7 +710,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.executions.stream_workflow_execution_logs(execution_id="<id>")

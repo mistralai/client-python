@@ -23,7 +23,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.triggers.create(event_source_id="07adfb82-bcd1-462d-94df-cd3f8421627e", handler="spaces", action={
@@ -72,7 +72,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.triggers.list()
@@ -115,7 +115,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.triggers.get(trigger_id="8a031c37-160a-4451-9fb0-960dab51da01")
@@ -156,7 +156,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.beta.triggers.delete(trigger_id="c36bea2b-c2da-4ac5-b1bf-26d98b1c90b3")
@@ -192,7 +192,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.triggers.list_events(trigger_id="a4a77501-7106-45dd-ba40-61b80d862c18", limit=10)

@@ -26,7 +26,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.schedules.get_schedules()
@@ -45,7 +45,7 @@ with Mistral(
 | `workflow_name`                                                                                                                 | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Filter by exact workflow name                                                                                                   |
 | `user_id`                                                                                                                       | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Filter by user ID. Pass 'current' to resolve to the authenticated user's ID.                                                    |
 | `status`                                                                                                                        | [OptionalNullable[models.GetSchedulesV1WorkflowsSchedulesGetStatus]](../../models/getschedulesv1workflowsschedulesgetstatus.md) | :heavy_minus_sign:                                                                                                              | Filter by schedule status: 'active' or 'paused'                                                                                 |
-| `search`                                                                                                                        | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Prefix search query for workflow name                                                                                           |
+| `search`                                                                                                                        | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Fuzzy search query for workflow name, display name, description, or ID                                                          |
 | `page_size`                                                                                                                     | *OptionalNullable[int]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination).  |
 | `next_page_token`                                                                                                               | *OptionalNullable[str]*                                                                                                         | :heavy_minus_sign:                                                                                                              | Token for the next page of results                                                                                              |
 | `retries`                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                | :heavy_minus_sign:                                                                                                              | Configuration to override the default retry behavior of the client.                                                             |
@@ -74,7 +74,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.schedules.schedule_workflow(schedule={
@@ -94,7 +94,7 @@ with Mistral(
 | `workflow_registration_id`                                                                                                                                                                                                                                                                | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | The ID of the workflow registration to schedule                                                                                                                                                                                                                                           |
 | `workflow_version_id`                                                                                                                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | Deprecated: use workflow_registration_id                                                                                                                                                                                                                                                  |
 | `workflow_identifier`                                                                                                                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | The name or ID of the workflow to schedule                                                                                                                                                                                                                                                |
-| `workflow_task_queue`                                                                                                                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated. Use deployment_name instead.                                                                                                                 |
+| `workflow_task_queue`                                                                                                                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated. Use deployment_name instead.                                                                                                                    |
 | `schedule_id`                                                                                                                                                                                                                                                                             | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | Allows you to specify a custom schedule ID. If not provided, a random ID will be generated.                                                                                                                                                                                               |
 | `deployment_name`                                                                                                                                                                                                                                                                         | *OptionalNullable[str]*                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | Name of the deployment to route this schedule to                                                                                                                                                                                                                                          |
 | `retries`                                                                                                                                                                                                                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                                                                                                                        | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                       |
@@ -123,7 +123,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.schedules.get_schedule(schedule_id="<id>")
@@ -164,7 +164,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.schedules.unschedule_workflow(schedule_id="<id>")
@@ -200,7 +200,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.schedules.update_schedule(schedule_id="<id>", schedule={})
@@ -242,7 +242,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.schedules.pause_schedule(schedule_id="<id>")
@@ -279,7 +279,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.schedules.resume_schedule(schedule_id="<id>")
@@ -316,7 +316,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.workflows.schedules.trigger_schedule(schedule_id="<id>")

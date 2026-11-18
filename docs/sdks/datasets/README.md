@@ -32,7 +32,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.create(name="<value>", description="citizen whoever sustenance necessary vibrant openly")
@@ -74,7 +74,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.list(page_size=50, page=1)
@@ -117,7 +117,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.fetch(dataset_id="036fa362-e080-4fa5-beff-a334a70efb58")
@@ -158,7 +158,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.beta.observability.datasets.delete(dataset_id="baf961a3-bb8e-4085-89ef-de9c5d8c4e77")
@@ -194,7 +194,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.update(dataset_id="95be9afc-fc05-44a6-af9f-2362de1224f9")
@@ -237,7 +237,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.list_records(dataset_id="444d2a88-e636-4bc0-ab6c-919bedaed112", page_size=50, page=1)
@@ -280,7 +280,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.create_record(dataset_id="4c54ed13-1459-44e1-8696-1a6df06f7177", payload={
@@ -334,7 +334,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.import_from_file(dataset_id="1c96c925-cc58-4529-863d-9fe66a6f1924", file_id="<id>")
@@ -376,7 +376,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.import_from_playground(dataset_id="5cb42584-5fcf-4837-997a-6a67c5e6900d", conversation_ids=[])
@@ -418,7 +418,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.import_from_spans(dataset_id="fd9efcfd-d8a6-4c7b-82cb-b2f9bde2b4bf", span_references=[
@@ -477,7 +477,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.import_from_dataset_records(dataset_id="ada96a08-d724-4e5c-9111-aaf1bdb7d588", dataset_record_ids=[
@@ -522,7 +522,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.export_to_jsonl(dataset_id="d521add6-d909-4a69-a460-cb880d87b773")
@@ -563,7 +563,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.fetch_task(dataset_id="b64b504e-58a2-4d52-979b-e2634b301235", task_id="1713cde2-dea1-410d-851e-8cea964ffa14")
@@ -605,7 +605,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.observability.datasets.list_tasks(dataset_id="29903443-7f9c-42a6-9b6b-fc5cbef4191a", page_size=50, page=1)

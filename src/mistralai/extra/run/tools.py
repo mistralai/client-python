@@ -108,6 +108,7 @@ def _get_function_parameters(
 
         if isinstance(default, FieldInfo):
             field_info = default
+            default = ...
         else:
             # If the annotation is Annotated[..., Field(...)] extract the Field and annotation
             # Otherwise, just use the annotation as-is
@@ -144,7 +145,12 @@ def _get_function_parameters(
             if raw_default is not _PYDANTIC_UNDEFINED:
                 fields[p.name] = (typed, raw_default)
             else:
-                fields[p.name] = (typed, ...)
+                fields[p.name] = (typed, default)
+        elif default is not ...:
+            fields[p.name] = (
+                Annotated[cast(type, annotation), field_info],  # type: ignore[valid-type]
+                default,
+            )
         else:
             fields[p.name] = (cast(type, annotation), field_info)
 

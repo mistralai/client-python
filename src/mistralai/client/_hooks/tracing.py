@@ -50,11 +50,7 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
     def before_request(
         self, hook_ctx: BeforeRequestContext, request: httpx.Request
     ) -> Union[httpx.Request, Exception]:
-        telemetry_configured = configure_telemetry_for_hook(
-            self,
-            hook_ctx.config,
-            respect_global_provider=True,
-        )
+        telemetry_configured = self._configure_telemetry(hook_ctx)
         should_trace = (
             telemetry_configured
             or self.tracer_provider is not None
@@ -86,6 +82,29 @@ class TracingHook(BeforeRequestHook, AfterSuccessHook, AfterErrorHook):
                 getattr(hook_ctx.config, "async_client", None)
             )
         return request
+
+    def _configure_telemetry(self, hook_ctx: BeforeRequestContext) -> bool:
+        """Auto-configure telemetry, disabling it for this client if that fails.
+
+        Telemetry must never fail the API call it observes: a setup error (no
+        credential, missing optional dependencies, invalid setting) is logged
+        once and the client keeps working without telemetry. An explicit
+        configure_telemetry(client) call still raises.
+        """
+        try:
+            return configure_telemetry_for_hook(
+                self,
+                hook_ctx.config,
+                respect_global_provider=True,
+            )
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            self._telemetry_auto_disabled = True
+            logger.warning(
+                "Mistral SDK telemetry is disabled for this client because it "
+                "could not be configured: %s",
+                exc,
+            )
+            return False
 
     @staticmethod
     def _get_span(response: Optional[httpx.Response]) -> Optional[Span]:

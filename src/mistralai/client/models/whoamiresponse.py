@@ -15,7 +15,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils.unions import parse_open_union
 from pydantic import ConfigDict, model_serializer
 from pydantic.functional_validators import BeforeValidator
@@ -72,6 +75,8 @@ class WhoamiResponseTypedDict(TypedDict):
 
     principal: PrincipalTypedDict
     r"""The authenticated principal: either a user or a service account."""
+    customer_id: NotRequired[Nullable[str]]
+    r"""The billing customer identifier from the authenticated session. Identifies the billing account, not the organization (organization.id); the IDs are not interchangeable. Null when no customer is selected."""
     organization: NotRequired[Nullable[WhoamiOrganizationTypedDict]]
     r"""The organization the caller's session is scoped to, when set."""
     workspace: NotRequired[Nullable[UserIdentityWorkspaceTypedDict]]
@@ -90,6 +95,9 @@ class WhoamiResponse(BaseModel):
     principal: Principal
     r"""The authenticated principal: either a user or a service account."""
 
+    customer_id: OptionalNullable[str] = UNSET
+    r"""The billing customer identifier from the authenticated session. Identifies the billing account, not the organization (organization.id); the IDs are not interchangeable. Null when no customer is selected."""
+
     organization: OptionalNullable[WhoamiOrganization] = UNSET
     r"""The organization the caller's session is scoped to, when set."""
 
@@ -97,14 +105,21 @@ class WhoamiResponse(BaseModel):
     r"""The workspace the caller's session is scoped to, when set."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["organization", "workspace"])
-        nullable_fields = set(["organization", "workspace"])
+        optional_fields = set(["customer_id", "organization", "workspace"])
+        nullable_fields = set(["customer_id", "organization", "workspace"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

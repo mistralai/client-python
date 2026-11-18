@@ -322,13 +322,11 @@ async def _validate_run(
     if isinstance(inputs, str):
         input_entries.append(MessageInputEntry(role="user", content=inputs))
     else:
+        input_adapter: pydantic.TypeAdapter[InputEntries] = pydantic.TypeAdapter(
+            InputEntries
+        )
         for input in inputs:
-            if isinstance(input, dict):
-                input_entries.append(
-                    pydantic.TypeAdapter(InputEntries).validate_python(input)
-                )
-            elif isinstance(input, FunctionResultEntry):
-                input_entries.append(input)
+            input_entries.append(input_adapter.validate_python(input))
     run_result = RunResult(
         input_entries=input_entries,
         output_model=run_ctx.output_format,

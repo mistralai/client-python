@@ -11,7 +11,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
 from typing import Awaitable, Callable, Literal, Optional, Union
@@ -33,7 +36,7 @@ class GetSchedulesV1WorkflowsSchedulesGetRequestTypedDict(TypedDict):
     status: NotRequired[Nullable[GetSchedulesV1WorkflowsSchedulesGetStatus]]
     r"""Filter by schedule status: 'active' or 'paused'"""
     search: NotRequired[Nullable[str]]
-    r"""Prefix search query for workflow name"""
+    r"""Fuzzy search query for workflow name, display name, description, or ID"""
     page_size: NotRequired[Nullable[int]]
     r"""Number of items per page. Omitting this parameter fetches all results at once (deprecated — pass page_size to use pagination)."""
     next_page_token: NotRequired[Nullable[str]]
@@ -63,7 +66,7 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
         OptionalNullable[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = UNSET
-    r"""Prefix search query for workflow name"""
+    r"""Fuzzy search query for workflow name, display name, description, or ID"""
 
     page_size: Annotated[
         OptionalNullable[int],
@@ -78,6 +81,9 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
     r"""Token for the next page of results"""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -99,11 +105,15 @@ class GetSchedulesV1WorkflowsSchedulesGetRequest(BaseModel):
                 "next_page_token",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields
