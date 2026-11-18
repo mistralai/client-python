@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .basetaskstatus import BaseTaskStatus
 from .datasetimportresult import DatasetImportResult, DatasetImportResultTypedDict
+from .principaltype import PrincipalType
 from datetime import datetime
 from mistralai.client.types import (
     BaseModel,
@@ -10,8 +11,12 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
+from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -24,6 +29,7 @@ class DatasetImportTaskTypedDict(TypedDict):
     dataset_id: str
     workspace_id: str
     status: BaseTaskStatus
+    creator_type: NotRequired[PrincipalType]
     progress: NotRequired[Nullable[int]]
     message: NotRequired[Nullable[str]]
     result: NotRequired[Nullable[DatasetImportResultTypedDict]]
@@ -46,6 +52,8 @@ class DatasetImportTask(BaseModel):
 
     status: BaseTaskStatus
 
+    creator_type: Optional[PrincipalType] = None
+
     progress: OptionalNullable[int] = UNSET
 
     message: OptionalNullable[str] = UNSET
@@ -53,14 +61,21 @@ class DatasetImportTask(BaseModel):
     result: OptionalNullable[DatasetImportResult] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["progress", "message", "result"])
+        optional_fields = set(["creator_type", "progress", "message", "result"])
         nullable_fields = set(["deleted_at", "progress", "message", "result"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

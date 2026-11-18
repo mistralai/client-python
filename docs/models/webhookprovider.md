@@ -21,4 +21,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"linear"`
 - `"microsoft"`
 - `"ashby"`
+- `"whatsapp"`
 - `"custom"`

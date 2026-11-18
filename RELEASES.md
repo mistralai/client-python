@@ -1795,3 +1795,195 @@ Based on:
 - [python v3.7.0] .
 ### Releases
 - [PyPI v3.7.0] https://pypi.org/project/mistralai/3.7.0 - .
+
+## 2026-11-18 20:25:31
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Stable compatibility changes
+Removed from the stable API surface (7):
+- `ResponsesFunctionCallArgumentsDoneEvent.name`
+- `LiveKitTransport.add_function_handlers`
+- `LiveKitTransport.send_session_update`
+- `StaticToolFiller.serialize_model`
+- `Transport.add_function_handlers`
+- `Transport.send_session_update`
+- `VoiceAgentSession.update`
+
+Now required on an existing stable model (1):
+- `ResponsesError.reason`
+#### Stable type changes
+Changed types or signatures on the stable surface (21):
+- `CustomConnector.authorization: OptionalNullable[CustomConnectorAuthorization] -> Annotated[OptionalNullable[CustomConnectorAuthorization], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `HangUpTool.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[HangUpToolFiller]`
+- `HangUpToolTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[HangUpToolFillerTypedDict]]`
+- `ListDeploymentsV1WorkflowsDeploymentsGetRequest.limit: Annotated[OptionalNullable[int], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))] -> Annotated[Optional[int], FieldMetadata(query=QueryParamMetadata(style='form', explode=True))]`
+- `ListDeploymentsV1WorkflowsDeploymentsGetRequestTypedDict.limit: NotRequired[Nullable[int]] -> NotRequired[int]`
+- `ResponsesIncompleteDetails.reason: OptionalNullable[Reason] -> OptionalNullable[ResponsesIncompleteDetailsReason]`
+- `ResponsesIncompleteDetailsTypedDict.reason: NotRequired[Nullable[Reason]] -> NotRequired[Nullable[ResponsesIncompleteDetailsReason]]`
+- `StaticToolFiller.type: Annotated[Annotated[Optional[Literal['static']], AfterValidator(validate_const('static'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Literal['static'], AfterValidator(validate_const('static'))], pydantic.Field(alias='type')]`
+- `TransferCallTool.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[TransferCallToolFiller]`
+- `TransferCallToolTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[TransferCallToolFillerTypedDict]]`
+- `VoiceAgentCustomConnector.authorization: OptionalNullable[VoiceAgentCustomConnectorAuthorization] -> Annotated[OptionalNullable[VoiceAgentCustomConnectorAuthorization], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `VoiceAgentCustomConnector.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[VoiceAgentCustomConnectorFiller]`
+- `VoiceAgentCustomConnectorTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[VoiceAgentCustomConnectorFillerTypedDict]]`
+- `VoiceAgentDocumentLibraryTool.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[VoiceAgentDocumentLibraryToolFiller]`
+- `VoiceAgentDocumentLibraryToolTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[VoiceAgentDocumentLibraryToolFillerTypedDict]]`
+- `VoiceAgentFunctionTool.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[VoiceAgentFunctionToolFiller]`
+- `VoiceAgentFunctionToolRequest.filler: OptionalNullable[StaticToolFiller] -> SerializeAsAny[OptionalNullable[VoiceAgentFunctionToolRequestFiller]]`
+- `VoiceAgentFunctionToolRequestTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[VoiceAgentFunctionToolRequestFillerTypedDict]]`
+- `VoiceAgentFunctionToolTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[VoiceAgentFunctionToolFillerTypedDict]]`
+- `VoiceAgentWebSearchTool.filler: OptionalNullable[StaticToolFiller] -> OptionalNullable[VoiceAgentWebSearchToolFiller]`
+- `VoiceAgentWebSearchToolTypedDict.filler: NotRequired[Nullable[StaticToolFillerTypedDict]] -> NotRequired[Nullable[VoiceAgentWebSearchToolFillerTypedDict]]`
+#### Beta surface changes
+Removed from the beta surface (107):
+- `CreateJudgeRequest`
+- `DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest`
+- `GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest`
+- `GetJudgesV1ObservabilityJudgesGetRequest`
+- `Judge`
+- `JudgeClassificationOutput`
+- `JudgeClassificationOutputOption`
+- `JudgeConversationRequest`
+- `JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest`
+- `JudgeDatasetRecordRequest`
+- `JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest`
+- `JudgeOutput`
+- `JudgeRegressionOutput`
+- `Judges`
+- `ListJudgesResponse`
+- `PaginatedResultJudgePreview`
+- `UnknownJudgeOutputUnion`
+- `UpdateJudgeRequest`
+- `UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest`
+- `VoiceAgentSessionUpdatedEvent`
+- `CreateJudgeRequest.description`
+- `CreateJudgeRequest.instructions`
+- `CreateJudgeRequest.model_name`
+- `CreateJudgeRequest.name`
+- `CreateJudgeRequest.output`
+- ...and 82 more
+
+Changed types or signatures in beta (5):
+- `ConnectorToolResultMetadata.structured_content: Annotated[OptionalNullable[Dict[str, Any]], pydantic.Field(alias='structuredContent')] -> Annotated[OptionalNullable[Any], pydantic.Field(alias='structuredContent')]`
+- `ConnectorToolResultMetadataTypedDict.structured_content: NotRequired[Nullable[Dict[str, Any]]] -> NotRequired[Nullable[Any]]`
+- `OtelFieldDefinition.supported_operators: List[SupportedOperator] -> List[OtelFieldDefinitionSupportedOperator]`
+- `Webhook.event_type_path: Nullable[str] -> Annotated[OptionalNullable[str], pydantic.Field(deprecated='warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.')]`
+- `WebhookTypedDict.event_type_path: Nullable[str] -> NotRequired[Nullable[str]]`
+
+Now required on an existing beta model (4):
+- `Beta.billing`
+- `Evaluations.scorers`
+- `PipelineResult.operation_name`
+- `PipelineResult.tool_name`
+</details>
+
+### API changes
+#### Migrating from legacy judges
+
+Legacy judges were migrated to scorers, and `client.beta.observability.judges` and
+`client.beta.observability.datasets.records.judge()` are removed. Use
+`client.beta.observability.evaluations.scorers` (`list`, `create`, `get`, `update`);
+migrated judges are already listed there. Older SDK versions calling the judge
+endpoints get `410 Gone` with error code `JUDGE_WRITES_FROZEN`. Scoring a single
+conversation or dataset record on demand is no longer available; run scorers through
+an evaluation pipeline or an evaluation run.
+
+#### Breaking changes
+
+- Changed field `limit` in `sdk.workflows.deployments.list_deployments()`.
+- Removed field `name` from response `[].data.union(response.function_call_arguments.done)` in `sdk.responses.create()`.
+- Added enum values `data_residency_mismatch` and `misalignment_policy_violation` to response `code` in `sdk.responses.create()`.
+- Added enum values `max_messages` and `steered` to response `reason` in `sdk.responses.create()`.
+- Added enum values `fast` and `ultrafast` to response `service_tier` in `sdk.responses.create()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.list_versions()` and `sdk.audio.agents.list()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()` and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.agents.update()`, `sdk.audio.agents.get()`, and `sdk.audio.agents.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+- Changed field `filler` in `sdk.audio.sessions.create()`.
+
+#### Beta API changes
+
+- Removed beta operations: `sdk.beta.observability.judges.update()`, `sdk.beta.observability.judges.delete()`, `sdk.beta.observability.judges.judge_conversation()`, `sdk.beta.observability.datasets.records.judge()`, `sdk.beta.observability.judges.create()`, `sdk.beta.observability.judges.fetch()`, and `sdk.beta.observability.judges.list()`.
+- Added variant `date-time` to response `metric_value` in `sdk.beta.observability.traces.aggregate()`, `sdk.beta.observability.spans.aggregate()`, and `sdk.beta.observability.spans.aggregate_span_evaluations()`.
+- Changed field `structured_content` in `sdk.beta.connectors.call_tool()`.
+- Removed enum value `organization` from request `consumer_scope` in `sdk.beta.connectors.create_credentials()`.
+- Removed field `event_type_path` from request in `sdk.beta.webhooks.create()`.
+
+#### Added operations
+
+Stable:
+
+- `sdk.audio.sessions.update()`
+
+Beta:
+
+- `sdk.beta.billing.get_subscription()`
+- `sdk.beta.billing.get_budget()`
+- `sdk.beta.observability.spans.list_pipeline_result_fields()`
+- `sdk.beta.observability.evaluations.scorers.update()`
+- `sdk.beta.observability.evaluations.scorers.get()`
+- `sdk.beta.observability.evaluations.scorers.create()`
+- `sdk.beta.observability.evaluations.scorers.list()`
+
+#### Schema changes
+
+- Added enum values `evaluation_run_input_record_conflict` and `judge_writes_frozen` across beta observability traces, beta observability spans, beta observability evaluations runs, beta observability datasets, beta observability datasets records, beta observability evaluations, beta observability evaluations projects, beta observability evaluations records, beta observability evaluations optimizations, beta observability logs (58 operations).
+- Added request field `query_params` in `sdk.beta.connectors.create_credentials()` and `sdk.beta.connectors.update_credentials()`.
+- Added field `status[401]` in `sdk.beta.connectors.create_credentials()` and `sdk.beta.connectors.update_credentials()`.
+- Added response fields `repository_url` and `last_phase_changed_at` across workflows deployments (8 operations).
+- Added request fields `ttl`, `name`, `namespace`, and `async` in `sdk.responses.create()` and `sdk.responses.count_input_tokens()`.
+- Added response fields `misalignment`, `param`, `reason`, `type`, and `async` in `sdk.responses.create()`.
+- Added request fields `event_id_pattern`, `event_type_pattern`, and `url_verification_token` in `sdk.beta.webhooks.create()`.
+- Added request enum value `whatsapp` in `sdk.beta.webhooks.create()`.
+- Added response fields `event_id_pattern`, `event_type_pattern`, and `url_verification_token` across beta webhooks, beta triggers (6 operations).
+- Changed response field `event_type_path` across beta webhooks, beta triggers (6 operations).
+- Added response enum value `whatsapp` across beta webhooks, beta triggers (6 operations).
+- Added response field `http_proxy_enabled` in `sdk.beta.connectors.get()`, `sdk.beta.connectors.list()`, `sdk.beta.connectors.create()`, and `sdk.beta.connectors.update()`.
+- Added response field `owner_type` in `sdk.beta.observability.datasets.list()`, `sdk.beta.observability.datasets.create()`, `sdk.beta.observability.datasets.fetch()`, and `sdk.beta.observability.datasets.update()`.
+- Added response field `creator_type` across beta observability datasets, beta observability evaluations, beta observability evaluations projects, beta observability evaluations runs, beta observability evaluations optimizations (16 operations).
+- Added request fields `from` and `to` in `sdk.beta.observability.evaluations.list_pipelines()`.
+- Added response fields `failed_record_count` and `record_count` in `sdk.beta.observability.evaluations.runs.search()`, `sdk.beta.observability.evaluations.runs.search_all()`, `sdk.beta.observability.evaluations.runs.get()`, and `sdk.beta.observability.evaluations.optimizations.list_trials()`.
+- Added response fields `operation_name` and `tool_name` in `sdk.beta.observability.spans.search_pipeline_results()`.
+- Added field `status[400]` in `sdk.beta.connectors.create()` and `sdk.beta.connectors.update()`.
+- Added field `status[403]` in `sdk.beta.context.search_indexes.ingest_documents()`.
+- Added field `status[429]` in `sdk.beta.context.search_indexes.search()`.
+- Added response field `customer_id` in `sdk.beta.users.whoami()`.
+- Added response field `bridge_metadata` in `sdk.audio.sessions.get()` and `sdk.audio.agents.list_sessions()`.
+- Added request field `metadata` in `sdk.realtime.sessions.create()`.
+- Added request field `exclude_tags` in `sdk.workflows.get_workflows()` and `sdk.workflows.get_workflow_registrations()`.
+- Added request field `exclude_workflow_tags` in `sdk.workflows.runs.list_runs()`.
+- Added response field `user_id` in `sdk.workflows.schedules.get_schedules()` and `sdk.workflows.schedules.get_schedule()`.
+- Added request field `repository_url` in `sdk.workflows.deployments.create_deployment()` and `sdk.workflows.deployments.update_deployment()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.807.0 (2.956.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.8.0] .
+### Releases
+- [PyPI v3.8.0] https://pypi.org/project/mistralai/3.8.0 - .

@@ -4,14 +4,21 @@ from typing import Any, cast
 
 import aiohttp
 from gcloud.aio.storage import Storage
+from pydantic import HttpUrl
 
 from .blob_storage import BlobNotFoundError, BlobStorage
 
 
 class GCSBlobStorage(BlobStorage):
-    def __init__(self, bucket_id: str, prefix: str | None = None):
+    def __init__(
+        self,
+        bucket_id: str,
+        prefix: str | None = None,
+        api_root: HttpUrl | None = None,
+    ):
         self.bucket_id = bucket_id
         self.prefix = prefix or ""
+        self.api_root = api_root
         self._storage: Storage | None = None
         self._session: aiohttp.ClientSession | None = None
 
@@ -32,7 +39,15 @@ class GCSBlobStorage(BlobStorage):
         # `requests.Session` while the async package really binds
         # `aiohttp.ClientSession` -- what we pass. Cast rather than
         # `type: ignore`, which older gcloud-aio-auth would report as unused.
-        self._storage = Storage(session=cast(Any, self._session))
+        if self.api_root:
+            self._storage = Storage(
+                session=cast(Any, self._session),
+                api_root=str(self.api_root).rstrip("/"),
+                # gcloud-aio treats any custom api_root as an emulator and drops auth and TLS without this
+                api_is_dev=False,
+            )
+        else:
+            self._storage = Storage(session=cast(Any, self._session))
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:

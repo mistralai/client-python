@@ -153,6 +153,43 @@ class TestCreateToolCallDescriptions(unittest.TestCase):
         self.assertEqual(props["limit"]["default"], 10)
         self.assertEqual(props["limit"]["minimum"], 1)
 
+    # -- Annotated[..., Field(...)] with a parameter default ------------------
+
+    def test_annotated_field_parameter_default_without_docstring_entry(self):
+        def get_weather(
+            city: Annotated[str, Field(description="City name")],
+            unit: Annotated[
+                str, Field(description="celsius or fahrenheit")
+            ] = "celsius",
+        ) -> str:
+            """Get the weather."""
+            return ""
+
+        params = create_tool_call(get_weather).function.parameters
+        self.assertEqual(params["required"], ["city"])
+        self.assertEqual(params["properties"]["unit"]["default"], "celsius")
+        self.assertEqual(
+            params["properties"]["unit"]["description"], "celsius or fahrenheit"
+        )
+
+    def test_annotated_field_parameter_default_with_docstring(self):
+        def get_weather(
+            city: str, unit: Annotated[str, Field(min_length=1)] = "celsius"
+        ) -> str:
+            """Get the weather.
+
+            Args:
+                city: The city.
+                unit: The unit.
+            """
+            return ""
+
+        params = create_tool_call(get_weather).function.parameters
+        self.assertEqual(params["required"], ["city"])
+        self.assertEqual(params["properties"]["unit"]["default"], "celsius")
+        self.assertEqual(params["properties"]["unit"]["description"], "The unit.")
+        self.assertEqual(params["properties"]["unit"]["minLength"], 1)
+
     # -- Edge cases ------------------------------------------------------------
 
     def test_undocumented_param_has_no_description_key(self):

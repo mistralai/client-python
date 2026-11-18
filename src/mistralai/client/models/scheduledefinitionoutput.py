@@ -19,7 +19,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
 from typing import Any, List, Optional
 from typing_extensions import NotRequired, TypedDict
@@ -65,6 +68,8 @@ class ScheduleDefinitionOutputTypedDict(TypedDict):
     r"""Remaining workflow executions before this schedule stops triggering automatically. null means unlimited; 0 means the limit has been reached and the schedule is exhausted."""
     deployment_name: NotRequired[Nullable[str]]
     r"""Name of the deployment this schedule targets."""
+    user_id: NotRequired[Nullable[str]]
+    r"""ID of the user who created the schedule."""
     note: NotRequired[Nullable[str]]
     r"""Human-readable note associated with the current pause or resume state."""
     future_executions: NotRequired[List[ScheduleFutureExecutionTypedDict]]
@@ -128,6 +133,9 @@ class ScheduleDefinitionOutput(BaseModel):
     deployment_name: OptionalNullable[str] = UNSET
     r"""Name of the deployment this schedule targets."""
 
+    user_id: OptionalNullable[str] = UNSET
+    r"""ID of the user who created the schedule."""
+
     note: OptionalNullable[str] = UNSET
     r"""Human-readable note associated with the current pause or resume state."""
 
@@ -138,6 +146,9 @@ class ScheduleDefinitionOutput(BaseModel):
     r"""Most recent scheduled executions (10 most recent, newest last)."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -152,6 +163,7 @@ class ScheduleDefinitionOutput(BaseModel):
                 "policy",
                 "remaining_executions",
                 "deployment_name",
+                "user_id",
                 "note",
                 "future_executions",
                 "recent_executions",
@@ -165,14 +177,19 @@ class ScheduleDefinitionOutput(BaseModel):
                 "time_zone_name",
                 "remaining_executions",
                 "deployment_name",
+                "user_id",
                 "note",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

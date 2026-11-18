@@ -74,13 +74,13 @@ ResponsesStreamFrameDataTypedDict = TypeAliasType(
         ResponsesOutputItemDoneEventTypedDict,
         ResponsesFunctionCallArgumentsDeltaEventTypedDict,
         ResponsesErrorEventTypedDict,
+        ResponsesFunctionCallArgumentsDoneEventTypedDict,
         ResponsesContentPartAddedEventTypedDict,
         ResponsesReasoningTextDeltaEventTypedDict,
         ResponsesReasoningTextDoneEventTypedDict,
         ResponsesContentPartDoneEventTypedDict,
-        ResponsesFunctionCallArgumentsDoneEventTypedDict,
-        ResponsesTextDeltaEventTypedDict,
         ResponsesTextDoneEventTypedDict,
+        ResponsesTextDeltaEventTypedDict,
     ],
 )
 

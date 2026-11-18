@@ -25,7 +25,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.list(page_size=10)
@@ -70,7 +70,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.create(name="<value>", configuration={})
@@ -113,7 +113,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.get(agent_id="967ae3d5-7e26-4ae8-9f9e-4dd9ab8fbfb9")
@@ -155,7 +155,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.update(agent_id="70039ed8-34b8-4a49-ac83-e37ca84d423b", name="<value>", configuration={})
@@ -199,7 +199,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.audio.agents.delete(agent_id="b6128dca-4b79-48e5-ab7f-d746ef13d05b")
@@ -235,7 +235,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.list_versions(agent_id="89c92180-d7a8-47e4-98cc-96e5539d54cc", page_size=10)
@@ -280,7 +280,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.agents.list_sessions(agent_id="8acd4f69-1e55-4801-85fe-b7864f46c0ac", page_size=10)

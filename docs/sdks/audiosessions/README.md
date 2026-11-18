@@ -6,6 +6,7 @@
 
 * [create](#create) - Create an agent session
 * [get](#get) - Get session status
+* [update](#update) - Update a live agent session
 * [close](#close) - Stop an agent session
 
 ## create
@@ -21,7 +22,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.sessions.create()
@@ -70,7 +71,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.audio.sessions.get(session_id="4f4cc199-091a-4c84-bbe2-7e1c1dfeb849")
@@ -98,6 +99,55 @@ with Mistral(
 | errors.HTTPValidationError | 422                        | application/json           |
 | errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
 
+## update
+
+Update the instructions, tools or turn handling of a live session.
+
+The agent applies the update at its next turn boundary, so it is not yet
+applied when this returns.
+The agent's `session_updated` and `session_update_failed` webhooks report
+the outcome to your server.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="update_session_v1_audio_sessions__session_id__patch" method="patch" path="/v1/audio/sessions/{session_id}" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY"),
+) as mistral:
+
+    res = mistral.audio.sessions.update(session_id="e7fa5d49-3528-45a6-942c-da6c39ecb063")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `session_id`                                                                                | *str*                                                                                       | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `instructions`                                                                              | *OptionalNullable[str]*                                                                     | :heavy_minus_sign:                                                                          | N/A                                                                                         |
+| `tools`                                                                                     | List[[models.AudioSessionUpdateRequestTool](../../models/audiosessionupdaterequesttool.md)] | :heavy_minus_sign:                                                                          | N/A                                                                                         |
+| `turn`                                                                                      | [OptionalNullable[models.AudioSessionTurnUpdate]](../../models/audiosessionturnupdate.md)   | :heavy_minus_sign:                                                                          | N/A                                                                                         |
+| `retries`                                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                            | :heavy_minus_sign:                                                                          | Configuration to override the default retry behavior of the client.                         |
+
+### Response
+
+**[models.AudioSessionUpdateResponse](../../models/audiosessionupdateresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
 ## close
 
 Stop an audio agent session and release its resources.
@@ -111,7 +161,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.audio.sessions.close(session_id="ce48313c-2e04-4918-9c23-e227a406a9e0")

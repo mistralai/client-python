@@ -22,7 +22,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.events.get_stream_events(scope="*", activity_name="*", activity_id="*", workflow_name="*", workflow_exec_id="*", root_workflow_exec_id="*", parent_workflow_exec_id="*", stream="*", start_seq=0)
@@ -76,7 +76,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.workflows.events.get_workflow_events(limit=100)

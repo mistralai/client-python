@@ -13,7 +13,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 from mistralai.client.utils import FieldMetadata, QueryParamMetadata
 from pydantic import model_serializer
 from typing import Awaitable, Callable, List, Literal, Optional, Union
@@ -75,6 +78,8 @@ class ListRunsV1WorkflowsRunsGetRequestTypedDict(TypedDict):
     r"""Filter by user id. Use 'current' to filter by the authenticated user"""
     workflow_tags: NotRequired[Nullable[List[str]]]
     r"""Filter to runs of workflows tagged with all listed tags (AND)."""
+    exclude_workflow_tags: NotRequired[Nullable[List[str]]]
+    r"""Exclude runs of workflows tagged with any of the listed tags."""
     include_internal: NotRequired[bool]
     r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
     page_size: NotRequired[int]
@@ -164,10 +169,16 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     ] = UNSET
     r"""Filter to runs of workflows tagged with all listed tags (AND)."""
 
+    exclude_workflow_tags: Annotated[
+        OptionalNullable[List[str]],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = UNSET
+    r"""Exclude runs of workflows tagged with any of the listed tags."""
+
     include_internal: Annotated[
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = True
+    ] = False
     r"""Include runs of internal/technical workflows (e.g. parallel-execution)"""
 
     page_size: Annotated[
@@ -189,6 +200,9 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
     r"""Filter executions by search key as repeated entries (max 3, AND'd together). 'key:value' matches a similar value, 'key==:value' matches the exact value, a bare 'key' matches executions that have the key set at all, and 'key==' matches executions whose value for the key is null."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(
             [
@@ -205,6 +219,7 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_before",
                 "user_id",
                 "workflow_tags",
+                "exclude_workflow_tags",
                 "include_internal",
                 "page_size",
                 "next_page_token",
@@ -225,15 +240,20 @@ class ListRunsV1WorkflowsRunsGetRequest(BaseModel):
                 "end_time_before",
                 "user_id",
                 "workflow_tags",
+                "exclude_workflow_tags",
                 "next_page_token",
                 "search_key",
             ]
         )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

@@ -42,7 +42,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.create(request={
@@ -70,10 +70,11 @@ with Mistral(
 
 ### Errors
 
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| errors.ConnectorErrorResponse | 400                           | application/json              |
+| errors.HTTPValidationError    | 422                           | application/json              |
+| errors.SDKError               | 4XX, 5XX                      | \*/\*                         |
 
 ## list
 
@@ -88,7 +89,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.list(page_size=100)
@@ -131,7 +132,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.get_auth_url(connector_id_or_name="<value>", github_installation_link=False)
@@ -177,7 +178,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.share(connector_id="cf748b50-632b-46d6-98c3-b015086cb194")
@@ -218,7 +219,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.unshare(connector_id="d5bd99ac-c46d-43bb-835c-cb4833bf101d")
@@ -259,7 +260,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.share_to_organization(connector_id="9dc7017e-ae2f-451c-9b03-623aab4aecde")
@@ -300,7 +301,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.unshare_from_organization(connector_id="def26f6b-c03a-4deb-9726-3771c1dd3388")
@@ -341,7 +342,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.activate_for_consumer(connector_id="1637d954-8ef0-4080-9228-89d4c05c915f", consumer_scope="workspace")
@@ -383,7 +384,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.deactivate_for_consumer(connector_id="1266a170-0379-4b3f-9305-d10fd2a83d29", consumer_scope="workspace")
@@ -427,7 +428,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.call_tool(tool_name="<value>", connector_id_or_name="<value>")
@@ -471,7 +472,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.list_tools(connector_id_or_name="<value>", page_size=100, refresh=False, pretty=False)
@@ -516,7 +517,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.get_authentication_methods(connector_id_or_name="<value>")
@@ -557,7 +558,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.list_organization_credentials(connector_id_or_name="<value>", fetch_default=False)
@@ -600,7 +601,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.list_workspace_credentials(connector_id_or_name="<value>", fetch_default=False)
@@ -643,7 +644,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.list_user_credentials(connector_id_or_name="<value>", fetch_default=False)
@@ -686,7 +687,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.delete_all_user_credentials(connector_id_or_name="5d332e4a-b496-4634-bfa5-8233e837b143")
@@ -716,7 +717,7 @@ with Mistral(
 
 ## create_credentials
 
-Create consumer credentials for a given connector and consumer scope (organization, workspace, user)
+Create consumer credentials for a given connector and consumer scope (workspace, user)
 
 ### Example Usage
 
@@ -727,10 +728,10 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
-    res = mistral.beta.connectors.create_credentials(connector_id_or_name="b7170011-bca4-40c2-8f3d-4f646a544062", consumer_scope="organization", name="<value>")
+    res = mistral.beta.connectors.create_credentials(connector_id_or_name="b7170011-bca4-40c2-8f3d-4f646a544062", consumer_scope="workspace", name="<value>")
 
     # Handle response
     print(res)
@@ -746,7 +747,7 @@ with Mistral(
 | `name`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | *str*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Name of the credentials. Use this name to access or modify your credentials.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `title`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Human-readable title for the credentials.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `is_default`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | *OptionalNullable[bool]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged. |
-| `credentials`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [OptionalNullable[models.ConnectionCredentialsInput]](../../models/connectioncredentialsinput.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | The credential data (headers, bearer_token, or OAuth2 client credentials).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `credentials`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [OptionalNullable[models.ConnectionCredentialsInput]](../../models/connectioncredentialsinput.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `retries`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ### Response
@@ -755,10 +756,11 @@ with Mistral(
 
 ### Errors
 
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| errors.ConnectorErrorResponse | 401                           | application/json              |
+| errors.HTTPValidationError    | 422                           | application/json              |
+| errors.SDKError               | 4XX, 5XX                      | \*/\*                         |
 
 ## update_credentials
 
@@ -773,7 +775,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.update_credentials(connector_id_or_name="7b7eceb1-b6c5-44e4-8382-f2bba1886c77", consumer_scope="workspace", name="<value>")
@@ -792,7 +794,7 @@ with Mistral(
 | `name`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | *str*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Name of the credentials. Use this name to access or modify your credentials.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `title`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Human-readable title for the credentials.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `is_default`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | *OptionalNullable[bool]*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Controls whether this credential is the default for its auth method. On creation: if no credential exists yet for this auth method, the credential is automatically set as default when is_default is true or omitted; setting is_default to false is rejected because a default must exist. If other credentials already exist, setting is_default to true promotes this credential (demoting the previous default); false or omitted creates it as non-default. On update: true promotes this credential, false is rejected if it is currently the default (promote another credential first), omitted leaves the default status unchanged. |
-| `credentials`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [OptionalNullable[models.ConnectionCredentialsInput]](../../models/connectioncredentialsinput.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | The credential data (headers, bearer_token, or OAuth2 client credentials).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `credentials`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | [OptionalNullable[models.ConnectionCredentialsInput]](../../models/connectioncredentialsinput.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | The credential data (headers, query_params, bearer_token, or OAuth2 client credentials).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `retries`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ### Response
@@ -801,10 +803,11 @@ with Mistral(
 
 ### Errors
 
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| errors.ConnectorErrorResponse | 401                           | application/json              |
+| errors.HTTPValidationError    | 422                           | application/json              |
+| errors.SDKError               | 4XX, 5XX                      | \*/\*                         |
 
 ## delete_credentials
 
@@ -819,7 +822,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.delete_credentials(credentials_name="<value>", connector_id_or_name="<value>", consumer_scope="user")
@@ -862,7 +865,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.get(connector_id_or_name="<value>", fetch_user_data=False)
@@ -904,7 +907,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.update(connector_id="81d30634-113f-4dce-a89e-7786be2d8693", request_body={
@@ -930,10 +933,11 @@ with Mistral(
 
 ### Errors
 
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| errors.HTTPValidationError | 422                        | application/json           |
-| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| errors.ConnectorErrorResponse | 400                           | application/json              |
+| errors.HTTPValidationError    | 422                           | application/json              |
+| errors.SDKError               | 4XX, 5XX                      | \*/\*                         |
 
 ## delete
 
@@ -948,7 +952,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.connectors.delete(connector_id="5c3269fe-6a18-4216-b1fb-b093005874cd")

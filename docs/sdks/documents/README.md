@@ -31,7 +31,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.list(library_id="5c3ca4cd-62bc-4c71-ad8a-1531ae80d078", page_size=100, page=0, sort_by="created_at", sort_order="desc")
@@ -43,16 +43,16 @@ with Mistral(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                | Type                                                                                                                                                                                     | Required                                                                                                                                                                                 | Description                                                                                                                                                                              |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `library_id`                                                                                                                                                                             | *str*                                                                                                                                                                                    | :heavy_check_mark:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `search`                                                                                                                                                                                 | *OptionalNullable[str]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `page_size`                                                                                                                                                                              | *Optional[int]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `page`                                                                                                                                                                                   | *Optional[int]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `filters_attributes`                                                                                                                                                                     | *OptionalNullable[str]*                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                       | : warning: ** DEPRECATED **: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated: this parameter will be removed in a future version. |
-| `sort_by`                                                                                                                                                                                | *Optional[str]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `sort_order`                                                                                                                                                                             | *Optional[str]*                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                       | N/A                                                                                                                                                                                      |
-| `retries`                                                                                                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                         | :heavy_minus_sign:                                                                                                                                                                       | Configuration to override the default retry behavior of the client.                                                                                                                      |
+| Parameter                                                                                                                                                                             | Type                                                                                                                                                                                  | Required                                                                                                                                                                              | Description                                                                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `library_id`                                                                                                                                                                          | *str*                                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `search`                                                                                                                                                                              | *OptionalNullable[str]*                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `page_size`                                                                                                                                                                           | *Optional[int]*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `page`                                                                                                                                                                                | *Optional[int]*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `filters_attributes`                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                    | :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.<br/><br/>Deprecated: this parameter will be removed in a future version. |
+| `sort_by`                                                                                                                                                                             | *Optional[str]*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `sort_order`                                                                                                                                                                          | *Optional[str]*                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                    | N/A                                                                                                                                                                                   |
+| `retries`                                                                                                                                                                             | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                      | :heavy_minus_sign:                                                                                                                                                                    | Configuration to override the default retry behavior of the client.                                                                                                                   |
 
 ### Response
 
@@ -78,7 +78,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
@@ -123,7 +123,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.get(library_id="03d908c8-90a1-44fd-bf3a-8490fb7c9a03", document_id="90973aec-0508-4375-8b00-91d732414745")
@@ -165,7 +165,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.update(library_id="2a41249e-52ca-4436-b755-25ce3a9bfb53", document_id="bc26fa54-e5d9-4269-bedf-86bed5471c7d")
@@ -212,7 +212,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.libraries_documents_update_v1(library_id="3ddd8d93-dca5-4a6d-980d-173226c35742", document_id="2a25e44c-b160-40ca-b5c2-b65fb2fcae34")
@@ -257,7 +257,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.beta.libraries.documents.delete(library_id="005daae9-d42e-407d-82d7-2261c6a1496c", document_id="edc236b0-baff-49a9-884b-4ca36a258da4")
@@ -294,7 +294,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.text_content(library_id="1d177215-3b6b-45ba-9fa9-baf773223bec", document_id="60214c91-2aba-4692-a4e6-a53365de8caf")
@@ -338,7 +338,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.status(library_id="e6906f70-368f-4155-80da-c1718f01bc43", document_id="2c904915-d831-4e9d-a345-8ce405bcef66")
@@ -380,7 +380,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.get_signed_url(library_id="23cf6904-a602-4ee8-9f5b-8efc557c336d", document_id="48598486-df71-4994-acbb-1133c72efa8c")
@@ -422,7 +422,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.extracted_text_signed_url(library_id="a6f15de3-1e82-4f95-af82-851499042ef8", document_id="9749d4f9-24e5-4ca2-99a3-a406863f805d")
@@ -464,7 +464,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     mistral.beta.libraries.documents.reprocess(library_id="51b29371-de8f-4ba4-932b-a0bafb3a7f64", document_id="3052422c-49ca-45ac-a918-cadb35d61fd8")

@@ -205,7 +205,7 @@ class Deployments(BaseSDK):
             models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
         ] = UNSET,
         order: Optional[models.ListDeploymentsV1WorkflowsDeploymentsGetOrder] = "desc",
-        limit: OptionalNullable[int] = UNSET,
+        limit: Optional[int] = 100,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
         repository_url: OptionalNullable[str] = UNSET,
@@ -341,7 +341,7 @@ class Deployments(BaseSDK):
             models.ListDeploymentsV1WorkflowsDeploymentsGetOrderBy
         ] = UNSET,
         order: Optional[models.ListDeploymentsV1WorkflowsDeploymentsGetOrder] = "desc",
-        limit: OptionalNullable[int] = UNSET,
+        limit: Optional[int] = 100,
         cursor: OptionalNullable[str] = UNSET,
         workspace_id: OptionalNullable[str] = UNSET,
         repository_url: OptionalNullable[str] = UNSET,

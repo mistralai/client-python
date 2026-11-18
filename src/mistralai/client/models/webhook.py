@@ -6,9 +6,19 @@ from .webhookprovider import WebhookProvider
 from .webhooksignatureencoding import WebhookSignatureEncoding
 from .webhooksignaturehashalgorithm import WebhookSignatureHashAlgorithm
 from datetime import datetime
-from mistralai.client.types import BaseModel, Nullable, UNSET_SENTINEL
+from mistralai.client.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
+from mistralai.client.types.basemodel import current_filtered_dump
+import pydantic
 from pydantic import model_serializer
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class WebhookTypedDict(TypedDict):
@@ -30,10 +40,14 @@ class WebhookTypedDict(TypedDict):
     signature_payload_pattern: Nullable[str]
     signature_encoding: Nullable[WebhookSignatureEncoding]
     success_status_code: Nullable[int]
-    event_type_path: Nullable[str]
     expires_at: Nullable[datetime]
     created_at: datetime
     updated_at: datetime
+    url_verification_token: NotRequired[Nullable[str]]
+    r"""Token the provider echoes back when verifying the URL (WhatsApp: the Verify token)"""
+    event_type_path: NotRequired[Nullable[str]]
+    event_type_pattern: NotRequired[Nullable[str]]
+    event_id_pattern: NotRequired[Nullable[str]]
 
 
 class Webhook(BaseModel):
@@ -73,24 +87,78 @@ class Webhook(BaseModel):
 
     success_status_code: Nullable[int]
 
-    event_type_path: Nullable[str]
-
     expires_at: Nullable[datetime]
 
     created_at: datetime
 
     updated_at: datetime
 
+    url_verification_token: OptionalNullable[str] = UNSET
+    r"""Token the provider echoes back when verifying the URL (WhatsApp: the Verify token)"""
+
+    event_type_path: Annotated[
+        OptionalNullable[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = UNSET
+
+    event_type_pattern: OptionalNullable[str] = UNSET
+
+    event_id_pattern: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "url_verification_token",
+                "event_type_path",
+                "event_type_pattern",
+                "event_id_pattern",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "url_verified",
+                "url_verification_token",
+                "signature_hash_algorithm",
+                "signature_header_name",
+                "validity_period_second",
+                "signature_extractor_regex",
+                "timestamp_extractor_regex",
+                "signature_payload_pattern",
+                "signature_encoding",
+                "success_status_code",
+                "event_type_path",
+                "event_type_pattern",
+                "event_id_pattern",
+                "expires_at",
+            ]
+        )
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                m[k] = val
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
+                    m[k] = val
 
         return m

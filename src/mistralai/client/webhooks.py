@@ -179,6 +179,7 @@ class Webhooks(BaseSDK):
         owner_type: Optional[models.TriggersOwnerType] = None,
         secret: OptionalNullable[str] = UNSET,
         encryption_key: OptionalNullable[str] = UNSET,
+        url_verification_token: OptionalNullable[str] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         signature_hash_algorithm: OptionalNullable[
             models.WebhookSignatureHashAlgorithm
@@ -190,7 +191,8 @@ class Webhooks(BaseSDK):
         signature_payload_pattern: OptionalNullable[str] = UNSET,
         signature_encoding: OptionalNullable[models.WebhookSignatureEncoding] = UNSET,
         success_status_code: OptionalNullable[int] = UNSET,
-        event_type_path: OptionalNullable[str] = UNSET,
+        event_type_pattern: OptionalNullable[str] = UNSET,
+        event_id_pattern: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -203,16 +205,18 @@ class Webhooks(BaseSDK):
         :param owner_type:
         :param secret: Signing secret provided by the third-party provider
         :param encryption_key: Encryption key used to decrypt webhook payloads
+        :param url_verification_token: Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers
         :param expires_at:
         :param signature_hash_algorithm:
         :param signature_header_name:
-        :param validity_period_second:
+        :param validity_period_second: Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300
         :param signature_extractor_regex: Regex to extract signature, eg sha256=(.*)
-        :param timestamp_extractor_regex:
+        :param timestamp_extractor_regex: Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)
         :param signature_payload_pattern: Pattern for signature payload, eg {body} or {timestamp}.{body}
         :param signature_encoding:
         :param success_status_code:
-        :param event_type_path: Path to extract event type, eg body.type or headers.X-GitHub-Event
+        :param event_type_pattern: Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}
+        :param event_id_pattern: Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -237,6 +241,7 @@ class Webhooks(BaseSDK):
             name=name,
             secret=secret,
             encryption_key=encryption_key,
+            url_verification_token=url_verification_token,
             expires_at=expires_at,
             signature_hash_algorithm=signature_hash_algorithm,
             signature_header_name=signature_header_name,
@@ -246,7 +251,8 @@ class Webhooks(BaseSDK):
             signature_payload_pattern=signature_payload_pattern,
             signature_encoding=signature_encoding,
             success_status_code=success_status_code,
-            event_type_path=event_type_path,
+            event_type_pattern=event_type_pattern,
+            event_id_pattern=event_id_pattern,
         )
 
         req = self._build_request(
@@ -319,6 +325,7 @@ class Webhooks(BaseSDK):
         owner_type: Optional[models.TriggersOwnerType] = None,
         secret: OptionalNullable[str] = UNSET,
         encryption_key: OptionalNullable[str] = UNSET,
+        url_verification_token: OptionalNullable[str] = UNSET,
         expires_at: OptionalNullable[datetime] = UNSET,
         signature_hash_algorithm: OptionalNullable[
             models.WebhookSignatureHashAlgorithm
@@ -330,7 +337,8 @@ class Webhooks(BaseSDK):
         signature_payload_pattern: OptionalNullable[str] = UNSET,
         signature_encoding: OptionalNullable[models.WebhookSignatureEncoding] = UNSET,
         success_status_code: OptionalNullable[int] = UNSET,
-        event_type_path: OptionalNullable[str] = UNSET,
+        event_type_pattern: OptionalNullable[str] = UNSET,
+        event_id_pattern: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -343,16 +351,18 @@ class Webhooks(BaseSDK):
         :param owner_type:
         :param secret: Signing secret provided by the third-party provider
         :param encryption_key: Encryption key used to decrypt webhook payloads
+        :param url_verification_token: Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers
         :param expires_at:
         :param signature_hash_algorithm:
         :param signature_header_name:
-        :param validity_period_second:
+        :param validity_period_second: Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300
         :param signature_extractor_regex: Regex to extract signature, eg sha256=(.*)
-        :param timestamp_extractor_regex:
+        :param timestamp_extractor_regex: Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)
         :param signature_payload_pattern: Pattern for signature payload, eg {body} or {timestamp}.{body}
         :param signature_encoding:
         :param success_status_code:
-        :param event_type_path: Path to extract event type, eg body.type or headers.X-GitHub-Event
+        :param event_type_pattern: Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}
+        :param event_id_pattern: Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -377,6 +387,7 @@ class Webhooks(BaseSDK):
             name=name,
             secret=secret,
             encryption_key=encryption_key,
+            url_verification_token=url_verification_token,
             expires_at=expires_at,
             signature_hash_algorithm=signature_hash_algorithm,
             signature_header_name=signature_header_name,
@@ -386,7 +397,8 @@ class Webhooks(BaseSDK):
             signature_payload_pattern=signature_payload_pattern,
             signature_encoding=signature_encoding,
             success_status_code=success_status_code,
-            event_type_path=event_type_path,
+            event_type_pattern=event_type_pattern,
+            event_id_pattern=event_id_pattern,
         )
 
         req = self._build_request_async(

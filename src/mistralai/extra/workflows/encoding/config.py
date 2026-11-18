@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Annotated, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, SecretStr
+from pydantic import BaseModel, Field, HttpUrl, SecretStr
 
 
 class StorageProvider(str, Enum):
@@ -21,6 +21,7 @@ class BlobStorageConfig(BaseModel):
 
     # GCS settings
     bucket_id: Optional[str] = None
+    api_root: Optional[HttpUrl] = None
 
     # S3 settings
     bucket_name: Optional[str] = None

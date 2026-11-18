@@ -12,7 +12,10 @@ from mistralai.client.types import (
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
+from mistralai.client.types.basemodel import current_filtered_dump
 import pydantic
 from pydantic import model_serializer
 from typing import Optional
@@ -22,6 +25,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ConnectionPreferenceTypedDict(TypedDict):
     tool_configuration: ToolExecutionConfigurationTypedDict
     consumer_type: NotRequired[Nullable[ConsumerType]]
+    http_proxy_enabled: NotRequired[Nullable[bool]]
+    r"""Whether raw HTTP calls through this connector are allowed at this level. Only applies to HTTP connectors: null when the level has no opinion, always the case for other connectors. False at any level switches them off for this level and the ones below."""
     name: NotRequired[str]
     r"""Deprecated: always `default`, a connection holds a single preference."""
     is_default: NotRequired[Nullable[bool]]
@@ -32,6 +37,9 @@ class ConnectionPreference(BaseModel):
     tool_configuration: ToolExecutionConfiguration
 
     consumer_type: OptionalNullable[ConsumerType] = UNSET
+
+    http_proxy_enabled: OptionalNullable[bool] = UNSET
+    r"""Whether raw HTTP calls through this connector are allowed at this level. Only applies to HTTP connectors: null when the level has no opinion, always the case for other connectors. False at any level switches them off for this level and the ones below."""
 
     name: Annotated[
         Optional[str],
@@ -50,14 +58,23 @@ class ConnectionPreference(BaseModel):
     r"""Deprecated: always `true`."""
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
-        optional_fields = set(["consumer_type", "name", "is_default"])
-        nullable_fields = set(["consumer_type", "is_default"])
+        optional_fields = set(
+            ["consumer_type", "http_proxy_enabled", "name", "is_default"]
+        )
+        nullable_fields = set(["consumer_type", "http_proxy_enabled", "is_default"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

@@ -5,7 +5,6 @@ from typing import Any, Literal, Union
 from mistralai.client.models import State as AgentState
 from mistralai.client.models import (
     VoiceAgentErrorEvent,
-    VoiceAgentSessionUpdatedEvent,
     VoiceAgentStateChangedEvent,
     VoiceAgentToolCallEndedEvent,
     VoiceAgentToolCallStartedEvent,
@@ -20,7 +19,6 @@ __all__ = [
     "VoiceAgentErrorEvent",
     "VoiceAgentTranscriptEvent",
     "VoiceAgentStateChangedEvent",
-    "VoiceAgentSessionUpdatedEvent",
     "ConnectedEvent",
     "DisconnectedEvent",
     "UnhandledToolEvent",
@@ -82,7 +80,6 @@ VoiceEventName = Literal[
     "unhandled_tool",
     "agent_state_changed",
     "error",
-    "session_updated",
     "unknown",
 ]
 VoiceEvent = Union[
@@ -96,7 +93,6 @@ VoiceEvent = Union[
     VoiceAgentErrorEvent,
     VoiceAgentTranscriptEvent,
     VoiceAgentStateChangedEvent,
-    VoiceAgentSessionUpdatedEvent,
 ]
 
 _MESSAGE_MODELS: dict[
@@ -105,15 +101,13 @@ _MESSAGE_MODELS: dict[
     | type[VoiceAgentToolCallEndedEvent]
     | type[VoiceAgentErrorEvent]
     | type[VoiceAgentTranscriptEvent]
-    | type[VoiceAgentStateChangedEvent]
-    | type[VoiceAgentSessionUpdatedEvent],
+    | type[VoiceAgentStateChangedEvent],
 ] = {
     "tool_call.started": VoiceAgentToolCallStartedEvent,
     "tool_call.ended": VoiceAgentToolCallEndedEvent,
     "error": VoiceAgentErrorEvent,
     "transcription.segment": VoiceAgentTranscriptEvent,
     "agent.state.changed": VoiceAgentStateChangedEvent,
-    "session.updated": VoiceAgentSessionUpdatedEvent,
 }
 _EVENT_NAMES: dict[str, VoiceEventName] = {
     "tool_call.started": "tool_call_started",
@@ -121,7 +115,6 @@ _EVENT_NAMES: dict[str, VoiceEventName] = {
     "error": "error",
     "transcription.segment": "transcript",
     "agent.state.changed": "agent_state_changed",
-    "session.updated": "session_updated",
 }
 
 

@@ -3,7 +3,7 @@
 
 ## Fields
 
-| Field                         | Type                          | Required                      | Description                   |
-| ----------------------------- | ----------------------------- | ----------------------------- | ----------------------------- |
-| `type`                        | *Optional[Literal["static"]]* | :heavy_minus_sign:            | N/A                           |
-| `text`                        | *str*                         | :heavy_check_mark:            | N/A                           |
+| Field               | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `type`              | *Literal["static"]* | :heavy_check_mark:  | N/A                 |
+| `text`              | *str*               | :heavy_check_mark:  | N/A                 |

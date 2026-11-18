@@ -2,10 +2,6 @@
 
 from __future__ import annotations
 from .voiceagenterrorevent import VoiceAgentErrorEvent, VoiceAgentErrorEventTypedDict
-from .voiceagentsessionupdatedevent import (
-    VoiceAgentSessionUpdatedEvent,
-    VoiceAgentSessionUpdatedEventTypedDict,
-)
 from .voiceagentstatechangedevent import (
     VoiceAgentStateChangedEvent,
     VoiceAgentStateChangedEventTypedDict,
@@ -31,7 +27,6 @@ from typing_extensions import Annotated, TypeAliasType
 VoiceAgentEventTypedDict = TypeAliasType(
     "VoiceAgentEventTypedDict",
     Union[
-        VoiceAgentSessionUpdatedEventTypedDict,
         VoiceAgentStateChangedEventTypedDict,
         VoiceAgentToolCallStartedEventTypedDict,
         VoiceAgentErrorEventTypedDict,
@@ -45,7 +40,6 @@ VoiceAgentEvent = Annotated[
     Union[
         Annotated[VoiceAgentStateChangedEvent, Tag("agent.state.changed")],
         Annotated[VoiceAgentErrorEvent, Tag("error")],
-        Annotated[VoiceAgentSessionUpdatedEvent, Tag("session.updated")],
         Annotated[VoiceAgentToolCallEndedEvent, Tag("tool_call.ended")],
         Annotated[VoiceAgentToolCallStartedEvent, Tag("tool_call.started")],
         Annotated[VoiceAgentTranscriptEvent, Tag("transcription.segment")],

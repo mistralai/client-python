@@ -1,4 +1,6 @@
+import gc
 import json
+import weakref
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from typing import Any
@@ -10,14 +12,10 @@ from mcp import ClientSession, MCPError
 from mcp.types import TextContent
 
 from mistralai.client import Mistral
-from mistralai.extra import connectors_gateway
 from mistralai.extra.connectors_gateway import ConnectorsGatewayError
 from mistralai.extra.connectors_gateway_errors import (
     raise_connectors_gateway_error,
 )
-
-ConnectorClientHandler = Callable[[httpx.Request], Any]
-ConnectorClientTransport = Callable[[ConnectorClientHandler], None]
 
 # Contract source: connectors-gateway/connectors_gateway/helpers/proxy_status.py,
 # proxy_status_headers(). Connector upstream values are stripped by
@@ -28,37 +26,17 @@ CONNECTORS_GATEWAY_ERROR_HEADER = (
 )
 
 
-@pytest.fixture
-def use_connector_transport(
-    monkeypatch: pytest.MonkeyPatch,
-) -> ConnectorClientTransport:
-    def install(handler: ConnectorClientHandler) -> None:
-        def new_httpx_client(**kwargs: Any) -> httpx.AsyncClient:
-            return httpx.AsyncClient(
-                **kwargs,
-                transport=httpx.MockTransport(handler),
-            )
-
-        monkeypatch.setattr(
-            connectors_gateway,
-            "_new_httpx_client",
-            new_httpx_client,
-        )
-
-    return install
-
-
 @asynccontextmanager
 async def _mistral_client(
     handler: Callable[[httpx.Request], Any],
     *,
     api_key: Any = "test-api-key",
-    auth: Any = None,
+    async_client: httpx.AsyncClient | None = None,
     timeout_ms: int | None = None,
 ) -> AsyncIterator[Mistral]:
-    async_client = httpx.AsyncClient(
+    client_supplied = async_client is not None
+    async_client = async_client or httpx.AsyncClient(
         transport=httpx.MockTransport(handler),
-        auth=auth,
         cookies={"sdk-cookie": "preserved"},
     )
     sync_client = httpx.Client(
@@ -67,22 +45,24 @@ async def _mistral_client(
         )
     )
     try:
-        yield Mistral(
+        mistral = Mistral(
             api_key=api_key,
             server_url="https://api.example.test",
             client=sync_client,
             async_client=async_client,
             timeout_ms=timeout_ms,
         )
+        # A client passed to Mistral() is caller-supplied in sdk_configuration, so
+        # the gateway helpers skip the SDK auth hooks.
+        mistral.sdk_configuration.async_client_supplied = client_supplied
+        yield mistral
     finally:
         await async_client.aclose()
         sync_client.close()
 
 
 @pytest.mark.asyncio
-async def test_mcp_client_opens_official_session_through_gateway(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_mcp_client_opens_official_session_through_gateway() -> None:
     requests: list[httpx.Request] = []
 
     async def handler(request: httpx.Request) -> httpx.Response:
@@ -124,11 +104,8 @@ async def test_mcp_client_opens_official_session_through_gateway(
             json={"jsonrpc": "2.0", "id": payload["id"], "result": result},
         )
 
-    use_connector_transport(handler)
-
     async with _mistral_client(
         handler,
-        auth=httpx.BasicAuth("client", "password"),
         timeout_ms=1_234,
     ) as mistral:
         async with mistral.beta.connectors.mcp_client(
@@ -161,17 +138,13 @@ async def test_mcp_client_opens_official_session_through_gateway(
 
 
 @pytest.mark.asyncio
-async def test_mcp_client_raises_connectors_gateway_error_during_initialization(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_mcp_client_raises_connectors_gateway_error_during_initialization() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(
             400,
             headers={"proxy-status": CONNECTORS_GATEWAY_ERROR_HEADER},
             json={"detail": "The connector does not support MCP"},
         )
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         with pytest.raises(ConnectorsGatewayError) as exc_info:
@@ -192,9 +165,7 @@ async def test_mcp_client_raises_connectors_gateway_error_during_initialization(
 
 
 @pytest.mark.asyncio
-async def test_mcp_client_raises_connectors_gateway_error_for_tool_call(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_mcp_client_raises_connectors_gateway_error_for_tool_call() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
         payload = json.loads(request.content)
         method = payload["method"]
@@ -240,8 +211,6 @@ async def test_mcp_client_raises_connectors_gateway_error_for_tool_call(
             )
         raise AssertionError(f"Unexpected MCP method: {method}")
 
-    use_connector_transport(handler)
-
     async with _mistral_client(handler) as mistral:
         with pytest.raises(ConnectorsGatewayError) as exc_info:
             with anyio.fail_after(1):
@@ -284,11 +253,7 @@ async def _upstream_mcp_handler(request: httpx.Request) -> httpx.Response:
 
 
 @pytest.mark.asyncio
-async def test_mcp_client_raises_upstream_mcp_error_unwrapped(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
-    use_connector_transport(_upstream_mcp_handler)
-
+async def test_mcp_client_raises_upstream_mcp_error_unwrapped() -> None:
     async with _mistral_client(_upstream_mcp_handler) as mistral:
         with pytest.raises(MCPError) as exc_info:
             with anyio.fail_after(1):
@@ -302,10 +267,7 @@ async def test_mcp_client_raises_upstream_mcp_error_unwrapped(
 
 
 @pytest.mark.asyncio
-async def test_mcp_client_reraises_caller_error_unchanged(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
-    use_connector_transport(_upstream_mcp_handler)
+async def test_mcp_client_reraises_caller_error_unchanged() -> None:
     cause = KeyError("result")
     caller_error = ValueError("caller failure")
 
@@ -322,9 +284,7 @@ async def test_mcp_client_reraises_caller_error_unchanged(
 
 
 @pytest.mark.asyncio
-async def test_http_client_targets_connector_gateway(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_targets_connector_gateway() -> None:
     captured: list[httpx.Request] = []
 
     async def handler(request: httpx.Request) -> httpx.Response:
@@ -335,11 +295,8 @@ async def test_http_client_targets_connector_gateway(
             headers=[("set-cookie", "a=1"), ("set-cookie", "b=2")],
         )
 
-    use_connector_transport(handler)
-
     async with _mistral_client(
         handler,
-        auth=httpx.BasicAuth("client", "password"),
         timeout_ms=1_234,
     ) as mistral:
         sdk_http_client = mistral.sdk_configuration.async_client
@@ -368,8 +325,8 @@ async def test_http_client_targets_connector_gateway(
 
         assert not sdk_http_client.is_closed
         assert sdk_http_client.cookies.get("sdk-cookie") == "preserved"
-        assert sdk_http_client.cookies.get("a") is None
-        assert sdk_http_client.cookies.get("b") is None
+        assert sdk_http_client.cookies.get("a") == "1"
+        assert sdk_http_client.cookies.get("b") == "2"
 
     assert response.status_code == 418
     assert response.content == b"upstream response"
@@ -377,7 +334,7 @@ async def test_http_client_targets_connector_gateway(
 
     request = captured[0]
     assert request.url.raw_path == (
-        b"/v1/connectors-gateway/http%20connector/http/items/search?q=hello%20world"
+        b"/v1/connectors-gateway/http%20connector/http/items/search?q=hello+world"
     )
     assert request.headers["authorization"] == "Bearer caller-value"
     assert request.headers["x-credentials-name"] == "secondary"
@@ -387,17 +344,13 @@ async def test_http_client_targets_connector_gateway(
 
 
 @pytest.mark.asyncio
-async def test_http_client_raises_connectors_gateway_error(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_raises_connectors_gateway_error() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(
             400,
             headers={"proxy-status": CONNECTORS_GATEWAY_ERROR_HEADER},
             json={"detail": "The connector does not support HTTP"},
         )
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         async with mistral.beta.connectors.http_client(
@@ -495,9 +448,7 @@ async def test_raise_connectors_gateway_error_parses_proxy_status(
 
 
 @pytest.mark.asyncio
-async def test_http_client_ignores_other_proxy_status_members(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_ignores_other_proxy_status_members() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(
             502,
@@ -507,8 +458,6 @@ async def test_http_client_ignores_other_proxy_status_members(
                 )
             },
         )
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         async with mistral.beta.connectors.http_client(
@@ -523,16 +472,12 @@ async def test_http_client_ignores_other_proxy_status_members(
 
 
 @pytest.mark.asyncio
-async def test_http_client_does_not_follow_redirects_by_default(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_does_not_follow_redirects_by_default() -> None:
     requests: list[httpx.Request] = []
 
     async def handler(request: httpx.Request) -> httpx.Response:
         requests.append(request)
         return httpx.Response(302, headers={"location": "/next"})
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         async with mistral.beta.connectors.http_client(
@@ -545,16 +490,12 @@ async def test_http_client_does_not_follow_redirects_by_default(
 
 
 @pytest.mark.asyncio
-async def test_http_client_rejects_absolute_urls(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_rejects_absolute_urls() -> None:
     requests: list[httpx.Request] = []
 
     async def handler(request: httpx.Request) -> httpx.Response:
         requests.append(request)
         return httpx.Response(200)
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         async with mistral.beta.connectors.http_client(
@@ -570,18 +511,18 @@ async def test_http_client_rejects_absolute_urls(
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("url", ["../models", "/items/%2e%2e/models"])
+@pytest.mark.parametrize(
+    "url",
+    ["../models", "/items/%2e%2e/models", "..%2Fmodels", "items%2F..%2F..%2Fmodels"],
+)
 async def test_http_client_rejects_paths_outside_connector(
     url: str,
-    use_connector_transport: ConnectorClientTransport,
 ) -> None:
     requests: list[httpx.Request] = []
 
     async def handler(request: httpx.Request) -> httpx.Response:
         requests.append(request)
         return httpx.Response(200)
-
-    use_connector_transport(handler)
 
     async with _mistral_client(handler) as mistral:
         async with mistral.beta.connectors.http_client(
@@ -597,17 +538,33 @@ async def test_http_client_rejects_paths_outside_connector(
 
 
 @pytest.mark.asyncio
-async def test_http_client_resolves_callable_api_key_for_each_request(
-    use_connector_transport: ConnectorClientTransport,
-) -> None:
+async def test_http_client_allows_encoded_slash_path_parameters() -> None:
+    requests: list[httpx.Request] = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200)
+
+    async with _mistral_client(handler) as mistral:
+        async with mistral.beta.connectors.http_client(
+            connector_id_or_name="github",
+        ) as client:
+            response = await client.get("repos/o/r/git/ref/heads%2Fmain")
+
+    assert response.status_code == 200
+    assert requests[0].url.raw_path == (
+        b"/v1/connectors-gateway/github/http/repos/o/r/git/ref/heads%2Fmain"
+    )
+
+
+@pytest.mark.asyncio
+async def test_http_client_resolves_callable_api_key_for_each_request() -> None:
     authorization_headers: list[str] = []
     api_key = {"value": "first-key"}
 
     async def handler(request: httpx.Request) -> httpx.Response:
         authorization_headers.append(request.headers["authorization"])
         return httpx.Response(200)
-
-    use_connector_transport(handler)
 
     async with _mistral_client(
         handler,
@@ -621,3 +578,177 @@ async def test_http_client_resolves_callable_api_key_for_each_request(
             await client.get("second")
 
     assert authorization_headers == ["Bearer first-key", "Bearer second-key"]
+
+
+def _unexpected_sdk_request(request: httpx.Request) -> httpx.Response:
+    raise AssertionError(f"Unexpected request on the SDK client: {request.url}")
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("authentication", ["headers", "auth", "hook"])
+async def test_http_client_sends_through_configured_client(
+    authentication: str,
+) -> None:
+    requests: list[httpx.Request] = []
+    hooked: list[httpx.URL] = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(302, headers={"location": "/next"})
+
+    async def authenticate(request: httpx.Request) -> None:
+        hooked.append(request.url)
+        if authentication == "hook":
+            request.headers["authorization"] = "Bearer hook"
+
+    configured_client = httpx.AsyncClient(
+        transport=httpx.MockTransport(handler),
+        headers={"authorization": "Bearer supplied", "x-tenant": "acme"},
+        params={"tenant": "acme"},
+        auth=httpx.BasicAuth("user", "password") if authentication == "auth" else None,
+        event_hooks={"request": [authenticate]},
+        follow_redirects=True,
+    )
+
+    async def body() -> AsyncIterator[bytes]:
+        yield b"streaming "
+        yield b"body"
+
+    async with _mistral_client(
+        _unexpected_sdk_request, async_client=configured_client
+    ) as mistral:
+        async with mistral.beta.connectors.http_client(
+            connector_id_or_name="github",
+            credentials_name="work",
+        ) as client:
+            response = await client.post("user?q=search", content=body(), timeout=1.234)
+            with pytest.raises(
+                ValueError,
+                match="must target the configured connector",
+            ):
+                await client.get("..%2Fmodels")
+
+        assert not configured_client.is_closed
+        await configured_client.get("https://api.example.test/v1/models", follow_redirects=False)
+
+    assert configured_client.is_closed
+    assert response.status_code == 302
+    assert len(requests) == 2
+    assert hooked == [request.url for request in requests]
+    request = requests[0]
+    assert request.url.path == "/v1/connectors-gateway/github/http/user"
+    assert request.url.params == httpx.QueryParams({"tenant": "acme", "q": "search"})
+    assert request.headers["authorization"] == {
+        "headers": "Bearer supplied",
+        "auth": "Basic dXNlcjpwYXNzd29yZA==",
+        "hook": "Bearer hook",
+    }[authentication]
+    assert request.headers["x-tenant"] == "acme"
+    assert request.headers["x-credentials-name"] == "work"
+    assert request.content == b"streaming body"
+    assert request.extensions["timeout"]["read"] == 1.234
+
+
+@pytest.mark.asyncio
+async def test_http_client_with_configured_client_replays_gateway_cookies() -> None:
+    cookie_headers: list[str | None] = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        cookie_headers.append(request.headers.get("cookie"))
+        return httpx.Response(200, headers={"set-cookie": "session=abc; Path=/"})
+
+    configured_client = httpx.AsyncClient(
+        transport=httpx.MockTransport(handler),
+        cookies={"session": "initial"},
+    )
+
+    async with _mistral_client(
+        _unexpected_sdk_request, async_client=configured_client
+    ) as mistral:
+        async with mistral.beta.connectors.http_client(
+            connector_id_or_name="github",
+        ) as client:
+            await client.get("first")
+            await client.get("second")
+
+    assert cookie_headers == ["session=initial", "session=abc"]
+
+
+@pytest.mark.asyncio
+async def test_mcp_client_sends_through_configured_client() -> None:
+    requests: list[httpx.Request] = []
+
+    async def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return await _upstream_mcp_handler(request)
+
+    configured_client = httpx.AsyncClient(
+        transport=httpx.MockTransport(handler),
+        headers={"authorization": "Bearer supplied"},
+    )
+
+    async with _mistral_client(
+        _unexpected_sdk_request, async_client=configured_client
+    ) as mistral:
+        with anyio.fail_after(1):
+            async with mistral.beta.connectors.mcp_client(
+                connector_id_or_name="github",
+            ):
+                pass
+
+        assert not configured_client.is_closed
+
+    assert configured_client.is_closed
+    assert [json.loads(request.content)["method"] for request in requests] == [
+        "initialize",
+        "notifications/initialized",
+    ]
+    for request in requests:
+        assert request.url.raw_path == b"/v1/connectors-gateway/github/mcp"
+        assert request.headers["authorization"] == "Bearer supplied"
+        assert request.extensions["timeout"]["read"] == 300
+
+
+@pytest.mark.asyncio
+async def test_http_client_pins_the_sdk_while_open() -> None:
+    async def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200)
+
+    async_client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    sync_client = httpx.Client(
+        transport=httpx.MockTransport(
+            lambda request: httpx.Response(500, request=request)
+        )
+    )
+    try:
+        sdk_http_client = async_client
+
+        def build_gateway_client() -> tuple[httpx.AsyncClient, weakref.ref[Mistral]]:
+            mistral = Mistral(
+                api_key="test-api-key",
+                server_url="https://api.example.test",
+                client=sync_client,
+                async_client=async_client,
+            )
+            return (
+                mistral.beta.connectors.http_client(connector_id_or_name="github"),
+                weakref.ref(mistral),
+            )
+
+        gateway_client, mistral_ref = build_gateway_client()
+        gc.collect()
+
+        assert mistral_ref() is not None
+        assert not sdk_http_client.is_closed
+
+        response = await gateway_client.get("user")
+        await gateway_client.aclose()
+        del gateway_client
+
+        gc.collect()
+        assert mistral_ref() is None
+    finally:
+        await async_client.aclose()
+        sync_client.close()
+
+    assert response.status_code == 200

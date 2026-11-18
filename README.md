@@ -170,7 +170,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.chat.complete(model="mistral-large-latest", messages=[
@@ -199,7 +199,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.chat.complete_async(model="mistral-large-latest", messages=[
@@ -228,7 +228,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.files.upload(file={
@@ -253,7 +253,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.files.upload_async(file={
@@ -278,7 +278,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.agents.complete(messages=[
@@ -307,7 +307,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.agents.complete_async(messages=[
@@ -336,7 +336,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.embeddings.create(model="mistral-embed", inputs=[
@@ -361,7 +361,7 @@ import os
 async def main():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
 
         res = await mistral.embeddings.create_async(model="mistral-embed", inputs=[
@@ -502,6 +502,7 @@ print(res.choices[0].message.content)
 
 * [create](docs/sdks/audiosessions/README.md#create) - Create an agent session
 * [get](docs/sdks/audiosessions/README.md#get) - Get session status
+* [update](docs/sdks/audiosessions/README.md#update) - Update a live agent session
 * [close](docs/sdks/audiosessions/README.md#close) - Stop an agent session
 
 ### [Audio.Speech](docs/sdks/speech/README.md)
@@ -545,6 +546,11 @@ print(res.choices[0].message.content)
 * [create_version_alias](docs/sdks/betaagents/README.md#create_version_alias) - Create or update an agent version alias.
 * [list_version_aliases](docs/sdks/betaagents/README.md#list_version_aliases) - List all aliases for an agent.
 * [delete_version_alias](docs/sdks/betaagents/README.md#delete_version_alias) - Delete an agent version alias.
+
+### [Beta.Billing](docs/sdks/billing/README.md)
+
+* [get_budget](docs/sdks/billing/README.md#get_budget) - Get Budget
+* [get_subscription](docs/sdks/billing/README.md#get_subscription) - Get Subscription
 
 ### [Beta.Connectors](docs/sdks/connectors/README.md)
 
@@ -654,7 +660,6 @@ print(res.choices[0].message.content)
 * [fetch](docs/sdks/datasetsrecords/README.md#fetch) - Get the content of a given dataset record
 * [delete](docs/sdks/datasetsrecords/README.md#delete) - Delete a record from a dataset
 * [bulk_delete](docs/sdks/datasetsrecords/README.md#bulk_delete) - Delete multiple records from datasets
-* [judge](docs/sdks/datasetsrecords/README.md#judge) - Run Judge on a dataset record based on the given options
 * [update_payload](docs/sdks/datasetsrecords/README.md#update_payload) - Update a dataset record payload
 * [update_properties](docs/sdks/datasetsrecords/README.md#update_properties) - Update dataset record properties
 
@@ -692,14 +697,12 @@ print(res.choices[0].message.content)
 * [get_statistics](docs/sdks/evaluationsruns/README.md#get_statistics) - Get statistics for a specific evaluation run
 * [compute_statistics](docs/sdks/evaluationsruns/README.md#compute_statistics) - Compute statistics for a specific evaluation run with optional filters
 
-### [Beta.Observability.Judges](docs/sdks/judges/README.md)
+#### [Beta.Observability.Evaluations.Scorers](docs/sdks/scorers/README.md)
 
-* [create](docs/sdks/judges/README.md#create) - Create a new judge
-* [list](docs/sdks/judges/README.md#list) - Get judges with optional filtering and search
-* [fetch](docs/sdks/judges/README.md#fetch) - Get judge by id
-* [delete](docs/sdks/judges/README.md#delete) - Delete a judge
-* [update](docs/sdks/judges/README.md#update) - Update a judge
-* [judge_conversation](docs/sdks/judges/README.md#judge_conversation) - Run a saved judge on a conversation
+* [list](docs/sdks/scorers/README.md#list) - List scorers
+* [create](docs/sdks/scorers/README.md#create) - Create a scorer
+* [get](docs/sdks/scorers/README.md#get) - Get a scorer by slug
+* [update](docs/sdks/scorers/README.md#update) - Edit a scorer
 
 ### [Beta.Observability.Logs](docs/sdks/logs/README.md)
 
@@ -715,6 +718,7 @@ print(res.choices[0].message.content)
 * [search_span_evaluations](docs/sdks/spans/README.md#search_span_evaluations) - Search span evaluations
 * [search_latest_span_evaluations](docs/sdks/spans/README.md#search_latest_span_evaluations) - Search latest span evaluations
 * [search_pipeline_results](docs/sdks/spans/README.md#search_pipeline_results) - Search pipeline results
+* [list_pipeline_result_fields](docs/sdks/spans/README.md#list_pipeline_result_fields) - Get pipeline result field definitions
 * [list_span_fields](docs/sdks/spans/README.md#list_span_fields) - Get span field definitions
 * [list_span_eval_fields](docs/sdks/spans/README.md#list_span_eval_fields) - Get span evaluation field definitions
 * [fetch_span_field_options](docs/sdks/spans/README.md#fetch_span_field_options) - Get options for a span field
@@ -956,7 +960,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.conversations.start_stream(inputs=[
@@ -1001,7 +1005,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.context.search_indexes.generate_index_summary(language="en", index_name="<value>", force=False)
@@ -1033,7 +1037,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -1062,7 +1066,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.libraries.documents.upload(library_id="a02150d9-5ee0-4877-b62c-28b1fcdf3b76", file={
@@ -1089,7 +1093,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list(,
@@ -1111,7 +1115,7 @@ import os
 
 with Mistral(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -1145,7 +1149,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
     res = None
     try:
@@ -1173,7 +1177,7 @@ with Mistral(
 **Primary error:**
 * [`MistralError`](./src/mistralai/client/errors/mistralerror.py): The base class for HTTP error responses.
 
-<details><summary>Less common errors (7)</summary>
+<details><summary>Less common errors (8)</summary>
 
 <br />
 
@@ -1184,8 +1188,9 @@ with Mistral(
 
 
 **Inherit from [`MistralError`](./src/mistralai/client/errors/mistralerror.py)**:
-* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 189 of 302 methods.*
-* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 65 of 302 methods.*
+* [`HTTPValidationError`](./src/mistralai/client/errors/httpvalidationerror.py): Validation Error. Status code `422`. Applicable to 190 of 303 methods.*
+* [`ObservabilityError`](./src/mistralai/client/errors/observabilityerror.py): Bad Request - Invalid request parameters or data. Applicable to 63 of 303 methods.*
+* [`ConnectorErrorResponse`](./src/mistralai/client/errors/connectorerrorresponse.py): Applicable to 4 of 303 methods.*
 * [`ResponseValidationError`](./src/mistralai/client/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -1215,7 +1220,7 @@ import os
 
 with Mistral(
     server="global",
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -1237,7 +1242,7 @@ import os
 
 with Mistral(
     server_url="https://api.mistral.ai",
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -1352,7 +1357,7 @@ import os
 
 
 with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY", ""),
+    api_key=os.getenv("MISTRAL_API_KEY"),
 ) as mistral:
 
     res = mistral.beta.prompts.list()
@@ -1396,18 +1401,20 @@ import os
 def main():
 
     with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
         # Rest of application here...
+        pass
 
 
 # Or when using async:
 async def amain():
 
     async with Mistral(
-        api_key=os.getenv("MISTRAL_API_KEY", ""),
+        api_key=os.getenv("MISTRAL_API_KEY"),
     ) as mistral:
         # Rest of application here...
+        pass
 ```
 <!-- End Resource Management [resource-management] -->
 
@@ -1482,6 +1489,12 @@ with Mistral(api_key=os.environ["MISTRAL_API_KEY"]) as client:
         messages=[{"role": "user", "content": "Hello!"}],
     )
 ```
+
+In dedicated mode, traces go to `/telemetry/v1/traces` on the client's `server_url` if one is set, otherwise to `https://api.mistral.ai`, including for the named `eu`/`us` servers. The regional hosts do not serve that route, so use `server="eu"` rather than `server_url="https://api.eu.mistral.ai"`. Set `MISTRAL_OTLP_TRACES_ENDPOINT` to send traces to a separate collector.
+
+The exporter authenticates like API calls: an explicit `api_key`, then the token at `MISTRAL_SA_TOKEN_PATH` (re-read on every export, so rotation is picked up), then `MISTRAL_API_KEY`.
+
+Telemetry never fails an API call. If telemetry enabled through `MISTRAL_SDK_TELEMETRY` cannot be set up, for example because no credential is available or the `telemetry` extra is not installed, the client logs one warning and keeps working without telemetry. An explicit `configure_telemetry(client)` call raises instead.
 
 ### Provider modes
 
@@ -1570,9 +1583,9 @@ configure_telemetry(
 | Variable | Description | Default |
 | -------- | ----------- | ------- |
 | `MISTRAL_SDK_TELEMETRY` | Auto-enable telemetry: `dedicated`, `global`, or `false`. | unset (disabled) |
-| `MISTRAL_OTLP_TRACES_ENDPOINT` | Override the OTLP traces endpoint used in dedicated mode. | `https://api.mistral.ai/telemetry/v1/traces` |
+| `MISTRAL_OTLP_TRACES_ENDPOINT` | Override the OTLP traces endpoint used in dedicated mode. | Client `server_url` + `/telemetry/v1/traces` if set, otherwise `https://api.mistral.ai/telemetry/v1/traces` |
 | `MISTRAL_SDK_DEBUG_TRACING` | Set to `true` for verbose tracing logs. | `false` |
-| `MISTRAL_API_KEY` | Used as the bearer token for the dedicated-mode exporter. | — |
+| `MISTRAL_API_KEY` | Used as the bearer token for the dedicated-mode exporter when the client has no `api_key` and no service-account token. | — |
 
 Runnable examples live in [`examples/mistral/observability`](/examples/mistral/observability).
 

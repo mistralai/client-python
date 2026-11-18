@@ -101,6 +101,7 @@ async def get_blob_storage(
         storage = GCSBlobStorage(
             bucket_id=blob_storage_config.bucket_id,
             prefix=prefix,
+            api_root=blob_storage_config.api_root,
         )
 
     elif blob_storage_config.storage_provider == StorageProvider.S3:

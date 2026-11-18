@@ -2,26 +2,69 @@
 
 from __future__ import annotations
 from .function import Function, FunctionTypedDict
+from .generatedtoolfiller import GeneratedToolFiller, GeneratedToolFillerTypedDict
 from .statictoolfiller import StaticToolFiller, StaticToolFillerTypedDict
+from functools import partial
 from mistralai.client.types import (
     BaseModel,
     Nullable,
     OptionalNullable,
     UNSET,
     UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
 )
-from pydantic import model_serializer
-from typing import Literal, Optional
-from typing_extensions import NotRequired, TypedDict
+from mistralai.client.types.basemodel import current_filtered_dump
+from mistralai.client.utils.unions import parse_open_union
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 VoiceAgentFunctionToolType = Literal["function",]
 
 
+VoiceAgentFunctionToolFillerTypedDict = TypeAliasType(
+    "VoiceAgentFunctionToolFillerTypedDict",
+    Union[StaticToolFillerTypedDict, GeneratedToolFillerTypedDict],
+)
+
+
+class UnknownVoiceAgentFunctionToolFiller(BaseModel):
+    r"""A VoiceAgentFunctionToolFiller variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_VOICE_AGENT_FUNCTION_TOOL_FILLER_VARIANTS: dict[str, Any] = {
+    "generated": GeneratedToolFiller,
+    "static": StaticToolFiller,
+}
+
+
+VoiceAgentFunctionToolFiller = Annotated[
+    Union[GeneratedToolFiller, StaticToolFiller, UnknownVoiceAgentFunctionToolFiller],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_VOICE_AGENT_FUNCTION_TOOL_FILLER_VARIANTS,
+            unknown_cls=UnknownVoiceAgentFunctionToolFiller,
+            union_name="VoiceAgentFunctionToolFiller",
+        )
+    ),
+]
+
+
 class VoiceAgentFunctionToolTypedDict(TypedDict):
     function: FunctionTypedDict
     type: NotRequired[VoiceAgentFunctionToolType]
-    filler: NotRequired[Nullable[StaticToolFillerTypedDict]]
+    filler: NotRequired[Nullable[VoiceAgentFunctionToolFillerTypedDict]]
     timeout_ms: NotRequired[Nullable[int]]
 
 
@@ -30,19 +73,26 @@ class VoiceAgentFunctionTool(BaseModel):
 
     type: Optional[VoiceAgentFunctionToolType] = "function"
 
-    filler: OptionalNullable[StaticToolFiller] = UNSET
+    filler: OptionalNullable[VoiceAgentFunctionToolFiller] = UNSET
 
     timeout_ms: OptionalNullable[int] = UNSET
 
     @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
     def serialize_model(self, handler):
         optional_fields = set(["type", "filler", "timeout_ms"])
         nullable_fields = set(["filler", "timeout_ms"])
+        exclude_none = current_exclude_none()
+        skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
-            k = f.alias or n
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and skip_filtered:
+                continue
             val = serialized.get(k, serialized.get(n))
             is_nullable_and_explicitly_set = (
                 k in nullable_fields

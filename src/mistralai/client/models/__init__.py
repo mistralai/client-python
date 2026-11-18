@@ -213,6 +213,10 @@ if TYPE_CHECKING:
         MetricValueTypedDict,
     )
     from .aliaslist import AliasList, AliasListTypedDict
+    from .amazonconnectcontact import (
+        AmazonConnectContact,
+        AmazonConnectContactTypedDict,
+    )
     from .annotations import Annotations, AnnotationsTypedDict, Audience
     from .apiendpoint import APIEndpoint
     from .apikeyauth import APIKeyAuth, APIKeyAuthTypedDict
@@ -323,6 +327,21 @@ if TYPE_CHECKING:
         TranscriptTypedDict,
         UnknownTranscript,
     )
+    from .audiosessionturnupdate import (
+        AudioSessionTurnUpdate,
+        AudioSessionTurnUpdateTypedDict,
+    )
+    from .audiosessionupdaterequest import (
+        AudioSessionUpdateRequest,
+        AudioSessionUpdateRequestTool,
+        AudioSessionUpdateRequestToolTypedDict,
+        AudioSessionUpdateRequestTypedDict,
+    )
+    from .audiosessionupdateresponse import (
+        AudioSessionUpdateResponse,
+        AudioSessionUpdateResponseStatus,
+        AudioSessionUpdateResponseTypedDict,
+    )
     from .audiospeechcapabilities import (
         AudioSpeechCapabilities,
         AudioSpeechCapabilitiesTypedDict,
@@ -384,6 +403,14 @@ if TYPE_CHECKING:
     from .batchjobstatus import BatchJobStatus
     from .batchrequest import BatchRequest, BatchRequestTypedDict
     from .bearerauthmethod import BearerAuthMethod, BearerAuthMethodTypedDict
+    from .billing_api_public_get_budgetop import (
+        BillingAPIPublicGetBudgetSecurity,
+        BillingAPIPublicGetBudgetSecurityTypedDict,
+    )
+    from .billing_api_public_get_subscriptionop import (
+        BillingAPIPublicGetSubscriptionSecurity,
+        BillingAPIPublicGetSubscriptionSecurityTypedDict,
+    )
     from .blobresourcecontents import (
         BlobResourceContents,
         BlobResourceContentsTypedDict,
@@ -393,6 +420,7 @@ if TYPE_CHECKING:
         BoolArrayFieldDefinitionTypedDict,
     )
     from .boolfielddefinition import BoolFieldDefinition, BoolFieldDefinitionTypedDict
+    from .budgetdetail import BudgetDetail, BudgetDetailTypedDict
     from .builtinconnectors import BuiltInConnectors
     from .cancel_workflow_execution_v1_workflows_executions_execution_id_cancel_postop import (
         CancelWorkflowExecutionV1WorkflowsExecutionsExecutionIDCancelPostRequest,
@@ -637,6 +665,7 @@ if TYPE_CHECKING:
         ConnectorCallToolRequest,
         ConnectorCallToolRequestTypedDict,
     )
+    from .connectorerrorcode import ConnectorErrorCode
     from .connectorlocale import ConnectorLocale, ConnectorLocaleTypedDict
     from .connectormcppublicupdate import (
         ConnectorMCPPublicUpdate,
@@ -835,12 +864,6 @@ if TYPE_CHECKING:
         CreateIngestionPipelineConfigurationRequest,
         CreateIngestionPipelineConfigurationRequestTypedDict,
     )
-    from .createjudgerequest import (
-        CreateJudgeRequest,
-        CreateJudgeRequestOutput,
-        CreateJudgeRequestOutputTypedDict,
-        CreateJudgeRequestTypedDict,
-    )
     from .createlibraryrequest import (
         CreateLibraryRequest,
         CreateLibraryRequestTypedDict,
@@ -913,11 +936,16 @@ if TYPE_CHECKING:
         CreateResponseResponseToolTypedDict,
         CreateResponseResponseTypedDict,
         PromptCacheRetention,
-        Reason,
         ResponsesError,
+        ResponsesErrorReason,
         ResponsesErrorTypedDict,
         ResponsesIncompleteDetails,
+        ResponsesIncompleteDetailsReason,
         ResponsesIncompleteDetailsTypedDict,
+        ResponsesMisalignment,
+        ResponsesMisalignmentSteer,
+        ResponsesMisalignmentSteerTypedDict,
+        ResponsesMisalignmentTypedDict,
         ResponsesSupportedReasoningEffort,
         ResponsesTextConfigFormat,
         ResponsesTextConfigFormatTypedDict,
@@ -933,6 +961,7 @@ if TYPE_CHECKING:
         ServiceTier,
         Truncation,
     )
+    from .createscorerrequest import CreateScorerRequest, CreateScorerRequestTypedDict
     from .createserviceaccountrequest import (
         CreateServiceAccountRequest,
         CreateServiceAccountRequestTypedDict,
@@ -1043,10 +1072,6 @@ if TYPE_CHECKING:
     from .delete_index_v1_context_search_indexes_index_name_deleteop import (
         DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequest,
         DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequestTypedDict,
-    )
-    from .delete_judge_v1_observability_judges_judge_id_deleteop import (
-        DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest,
-        DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequestTypedDict,
     )
     from .delete_model_v1_models_model_id_deleteop import (
         DeleteModelV1ModelsModelIDDeleteRequest,
@@ -1197,6 +1222,11 @@ if TYPE_CHECKING:
     from .documentlibrarytool import DocumentLibraryTool, DocumentLibraryToolTypedDict
     from .documenttextcontent import DocumentTextContent, DocumentTextContentTypedDict
     from .documenturlchunk import DocumentURLChunk, DocumentURLChunkTypedDict
+    from .edit_scorer_v1_observability_scorers_scorer_slug_patchop import (
+        EditScorerV1ObservabilityScorersScorerSlugPatchRequest,
+        EditScorerV1ObservabilityScorersScorerSlugPatchRequestTypedDict,
+    )
+    from .editscorerrequest import EditScorerRequest, EditScorerRequestTypedDict
     from .elicitationcapability import (
         ElicitationCapability,
         ElicitationCapabilityTypedDict,
@@ -1223,6 +1253,7 @@ if TYPE_CHECKING:
     from .encodingformat import EncodingFormat
     from .encryptedpatchvalue import EncryptedPatchValue, EncryptedPatchValueTypedDict
     from .entitytype import EntityType
+    from .enumconstraints import EnumConstraints, EnumConstraintsTypedDict
     from .equal import Equal, EqualTypedDict, EqualValue, EqualValueTypedDict
     from .evaluationbooleanresultspec import (
         EvaluationBooleanResultSpec,
@@ -1392,6 +1423,7 @@ if TYPE_CHECKING:
         FloatArrayFieldDefinition,
         FloatArrayFieldDefinitionTypedDict,
     )
+    from .floatconstraints import FloatConstraints, FloatConstraintsTypedDict
     from .floatfielddefinition import (
         FloatFieldDefinition,
         FloatFieldDefinitionTypedDict,
@@ -1433,6 +1465,13 @@ if TYPE_CHECKING:
         GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequestTypedDict,
         SummaryStreamTypes,
         SummaryStreamTypesTypedDict,
+    )
+    from .generatedtoolfiller import (
+        Fallback,
+        FallbackTypedDict,
+        GeneratedToolFiller,
+        GeneratedToolFillerTypedDict,
+        UnknownFallback,
     )
     from .get_agent_v1_audio_agents_agent_id_getop import (
         GetAgentV1AudioAgentsAgentIDGetRequest,
@@ -1495,14 +1534,6 @@ if TYPE_CHECKING:
         GetIndexV1ContextSearchIndexesIndexNameGetRequest,
         GetIndexV1ContextSearchIndexesIndexNameGetRequestTypedDict,
     )
-    from .get_judge_by_id_v1_observability_judges_judge_id_getop import (
-        GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest,
-        GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict,
-    )
-    from .get_judges_v1_observability_judges_getop import (
-        GetJudgesV1ObservabilityJudgesGetRequest,
-        GetJudgesV1ObservabilityJudgesGetRequestTypedDict,
-    )
     from .get_log_field_options_v1_observability_logs_fields_field_name_options_getop import (
         GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest,
         GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict,
@@ -1515,6 +1546,10 @@ if TYPE_CHECKING:
     from .get_optimization_v1_observability_optimizations_optimization_id_getop import (
         GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequest,
         GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequestTypedDict,
+    )
+    from .get_pipeline_result_fields_v1_observability_pipelines_pipeline_id_results_fields_getop import (
+        GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequest,
+        GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequestTypedDict,
     )
     from .get_pipeline_v1_observability_pipelines_pipeline_id_getop import (
         GetPipelineV1ObservabilityPipelinesPipelineIDGetRequest,
@@ -1550,6 +1585,10 @@ if TYPE_CHECKING:
         GetSchedulesV1WorkflowsSchedulesGetResponse,
         GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict,
         GetSchedulesV1WorkflowsSchedulesGetStatus,
+    )
+    from .get_scorer_v1_observability_scorers_scorer_slug_getop import (
+        GetScorerV1ObservabilityScorersScorerSlugGetRequest,
+        GetScorerV1ObservabilityScorersScorerSlugGetRequestTypedDict,
     )
     from .get_service_account_v1_service_accounts_service_account_id_getop import (
         GetServiceAccountV1ServiceAccountsServiceAccountIDGetRequest,
@@ -1675,6 +1714,7 @@ if TYPE_CHECKING:
         GetWorkflowsV1WorkflowsGetStatus,
         GetWorkflowsV1WorkflowsGetStatusTypedDict,
     )
+    from .getbudgetresponse import GetBudgetResponse, GetBudgetResponseTypedDict
     from .getdeploymentsummariesresponse import (
         GetDeploymentSummariesResponse,
         GetDeploymentSummariesResponseTypedDict,
@@ -1700,6 +1740,13 @@ if TYPE_CHECKING:
     from .getlogfieldoptions import GetLogFieldOptions, GetLogFieldOptionsTypedDict
     from .getlogfields import GetLogFields, GetLogFieldsTypedDict
     from .getlogs import GetLogs, GetLogsTypedDict
+    from .getpipelineresultfields import (
+        FieldDefinition,
+        FieldDefinitionTypedDict,
+        GetPipelineResultFields,
+        GetPipelineResultFieldsTypedDict,
+        UnknownFieldDefinition,
+    )
     from .getpipelineresults import GetPipelineResults, GetPipelineResultsTypedDict
     from .getsignedurlresponse import (
         GetSignedURLResponse,
@@ -1719,6 +1766,10 @@ if TYPE_CHECKING:
     from .getspanfieldoptions import GetSpanFieldOptions, GetSpanFieldOptionsTypedDict
     from .getspanfields import GetSpanFields, GetSpanFieldsTypedDict
     from .getspans import GetSpans, GetSpansTypedDict
+    from .getsubscriptionresponse import (
+        GetSubscriptionResponse,
+        GetSubscriptionResponseTypedDict,
+    )
     from .getsummaryresponsesummary import (
         GetSummaryResponseSummary,
         GetSummaryResponseSummaryTypedDict,
@@ -1754,7 +1805,13 @@ if TYPE_CHECKING:
     from .grepmode import GrepMode
     from .greprequest import GrepRequest, GrepRequestTypedDict
     from .guardrailconfig import GuardrailConfig, GuardrailConfigTypedDict
-    from .hanguptool import HangUpTool, HangUpToolTypedDict
+    from .hanguptool import (
+        HangUpTool,
+        HangUpToolFiller,
+        HangUpToolFillerTypedDict,
+        HangUpToolTypedDict,
+        UnknownHangUpToolFiller,
+    )
     from .httpconnector import HTTPConnector, HTTPConnectorTypedDict
     from .httpstatus import HTTPStatus
     from .imagecontent import ImageContent, ImageContentTypedDict
@@ -1874,44 +1931,7 @@ if TYPE_CHECKING:
     from .jsonpatchreplace import JSONPatchReplace, JSONPatchReplaceTypedDict
     from .jsonpayloadresponse import JSONPayloadResponse, JSONPayloadResponseTypedDict
     from .jsonschema import JSONSchema, JSONSchemaTypedDict
-    from .judge import (
-        Judge,
-        JudgeOutputUnion,
-        JudgeOutputUnionTypedDict,
-        JudgeTypedDict,
-        UnknownJudgeOutputUnion,
-    )
-    from .judge_conversation_v1_observability_judges_judge_id_live_judging_postop import (
-        JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest,
-        JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict,
-    )
-    from .judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop import (
-        JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest,
-        JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict,
-    )
-    from .judgeclassificationoutput import (
-        JudgeClassificationOutput,
-        JudgeClassificationOutputTypedDict,
-    )
-    from .judgeclassificationoutputoption import (
-        JudgeClassificationOutputOption,
-        JudgeClassificationOutputOptionTypedDict,
-    )
-    from .judgeconversationrequest import (
-        JudgeConversationRequest,
-        JudgeConversationRequestTypedDict,
-    )
-    from .judgedatasetrecordrequest import (
-        JudgeDatasetRecordRequest,
-        JudgeDatasetRecordRequestTypedDict,
-    )
     from .judgedefinitionv1 import JudgeDefinitionV1, JudgeDefinitionV1TypedDict
-    from .judgeoutput import Answer, AnswerTypedDict, JudgeOutput, JudgeOutputTypedDict
-    from .judgeoutputtype import JudgeOutputType
-    from .judgeregressionoutput import (
-        JudgeRegressionOutput,
-        JudgeRegressionOutputTypedDict,
-    )
     from .keywordarrayfielddefinition import (
         KeywordArrayFieldDefinition,
         KeywordArrayFieldDefinitionTypedDict,
@@ -2071,6 +2091,10 @@ if TYPE_CHECKING:
         ListRunsV1WorkflowsRunsGetStatusTypedDict,
         SortBy,
     )
+    from .list_scorers_v1_observability_scorers_getop import (
+        ListScorersV1ObservabilityScorersGetRequest,
+        ListScorersV1ObservabilityScorersGetRequestTypedDict,
+    )
     from .list_service_account_roles_v1_service_accounts_service_account_id_roles_getop import (
         ListServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesGetRequest,
         ListServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesGetRequestTypedDict,
@@ -2127,7 +2151,6 @@ if TYPE_CHECKING:
         ListEvaluationRunsResponseTypedDict,
     )
     from .listfilesresponse import ListFilesResponse, ListFilesResponseTypedDict
-    from .listjudgesresponse import ListJudgesResponse, ListJudgesResponseTypedDict
     from .listlibrariesresponse import (
         ListLibrariesResponse,
         ListLibrariesResponseTypedDict,
@@ -2153,6 +2176,7 @@ if TYPE_CHECKING:
         ListPromptVersionsResponse,
         ListPromptVersionsResponseTypedDict,
     )
+    from .listscorersresponse import ListScorersResponse, ListScorersResponseTypedDict
     from .listserviceaccountrolesresponse import (
         ListServiceAccountRolesResponse,
         ListServiceAccountRolesResponseTypedDict,
@@ -2179,6 +2203,8 @@ if TYPE_CHECKING:
         ListWorkspacesResponse,
         ListWorkspacesResponseTypedDict,
     )
+    from .llmjudgeconfig import LlmJudgeConfig, LlmJudgeConfigTypedDict
+    from .llmjudgeparams import LlmJudgeParams, LlmJudgeParamsTypedDict
     from .llmjudgereference import LlmJudgeReference, LlmJudgeReferenceTypedDict
     from .locationtype import LocationType
     from .loggingcapability import LoggingCapability, LoggingCapabilityTypedDict
@@ -2445,11 +2471,21 @@ if TYPE_CHECKING:
         OrderByClauseDirection,
         OrderByClauseTypedDict,
     )
+    from .otelenumfielddefinition import (
+        OtelEnumFieldDefinition,
+        OtelEnumFieldDefinitionSupportedOperator,
+        OtelEnumFieldDefinitionTypedDict,
+    )
     from .otelfielddefinition import (
         OtelFieldDefinition,
+        OtelFieldDefinitionSupportedOperator,
         OtelFieldDefinitionType,
         OtelFieldDefinitionTypedDict,
-        SupportedOperator,
+    )
+    from .otelfloatfielddefinition import (
+        OtelFloatFieldDefinition,
+        OtelFloatFieldDefinitionSupportedOperator,
+        OtelFloatFieldDefinitionTypedDict,
     )
     from .otlpdestination import OTLPDestination, OTLPDestinationTypedDict
     from .outputcontentchunks import OutputContentChunks, OutputContentChunksTypedDict
@@ -2482,10 +2518,6 @@ if TYPE_CHECKING:
         PaginatedResultEvaluationV2,
         PaginatedResultEvaluationV2TypedDict,
     )
-    from .paginatedresultjudgepreview import (
-        PaginatedResultJudgePreview,
-        PaginatedResultJudgePreviewTypedDict,
-    )
     from .paginatedresultoptimization import (
         PaginatedResultOptimization,
         PaginatedResultOptimizationTypedDict,
@@ -2501,6 +2533,10 @@ if TYPE_CHECKING:
     from .paginatedresultproject import (
         PaginatedResultProject,
         PaginatedResultProjectTypedDict,
+    )
+    from .paginatedresultscorersummary import (
+        PaginatedResultScorerSummary,
+        PaginatedResultScorerSummaryTypedDict,
     )
     from .paginationinfo import PaginationInfo, PaginationInfoTypedDict
     from .paginationresponse import PaginationResponse, PaginationResponseTypedDict
@@ -2919,6 +2955,7 @@ if TYPE_CHECKING:
         ResponsesInputFileDetail,
         ResponsesInputFileResponsesPromptCacheBreakpoint,
         ResponsesInputFileResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputFileTTL,
         ResponsesInputFileTypedDict,
     )
     from .responsesinputfilecontent import (
@@ -2926,6 +2963,7 @@ if TYPE_CHECKING:
         ResponsesInputFileContentDetail,
         ResponsesInputFileContentResponsesPromptCacheBreakpoint,
         ResponsesInputFileContentResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputFileContentTTL,
         ResponsesInputFileContentTypedDict,
     )
     from .responsesinputimage import (
@@ -2933,6 +2971,7 @@ if TYPE_CHECKING:
         ResponsesInputImageDetail,
         ResponsesInputImageResponsesPromptCacheBreakpoint,
         ResponsesInputImageResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputImageTTL,
         ResponsesInputImageTypedDict,
     )
     from .responsesinputimagecontent import (
@@ -2940,18 +2979,21 @@ if TYPE_CHECKING:
         ResponsesInputImageContentDetail,
         ResponsesInputImageContentResponsesPromptCacheBreakpoint,
         ResponsesInputImageContentResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputImageContentTTL,
         ResponsesInputImageContentTypedDict,
     )
     from .responsesinputtext import (
         ResponsesInputText,
         ResponsesInputTextResponsesPromptCacheBreakpoint,
         ResponsesInputTextResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputTextTTL,
         ResponsesInputTextTypedDict,
     )
     from .responsesinputtextcontent import (
         ResponsesInputTextContent,
         ResponsesInputTextContentResponsesPromptCacheBreakpoint,
         ResponsesInputTextContentResponsesPromptCacheBreakpointTypedDict,
+        ResponsesInputTextContentTTL,
         ResponsesInputTextContentTypedDict,
     )
     from .responsesinputtokensdetails import (
@@ -3160,6 +3202,10 @@ if TYPE_CHECKING:
     )
     from .scorefiltergroup import ScoreFilterGroup, ScoreFilterGroupTypedDict
     from .scoreoperator import ScoreOperator
+    from .scorer import Scorer, ScorerTypedDict
+    from .scorerkind import ScorerKind
+    from .scorersummary import ScorerSummary, ScorerSummaryTypedDict
+    from .scorerversion import ScorerVersion, ScorerVersionTypedDict
     from .scoresortinput import ScoreSortInput, ScoreSortInputTypedDict
     from .search_all_evaluation_runs_v2_v1_observability_evaluation_runs_v2_search_postop import (
         SearchAllEvaluationRunsV2V1ObservabilityEvaluationRunsV2SearchPostRequest,
@@ -3647,7 +3693,13 @@ if TYPE_CHECKING:
         TranscriptionStreamTextDelta,
         TranscriptionStreamTextDeltaTypedDict,
     )
-    from .transfercalltool import TransferCallTool, TransferCallToolTypedDict
+    from .transfercalltool import (
+        TransferCallTool,
+        TransferCallToolFiller,
+        TransferCallToolFillerTypedDict,
+        TransferCallToolTypedDict,
+        UnknownTransferCallToolFiller,
+    )
     from .transfertarget import (
         Destination,
         DestinationTypedDict,
@@ -3742,10 +3794,6 @@ if TYPE_CHECKING:
         UpdateIndexV1ContextSearchIndexesIndexNamePutRequest,
         UpdateIndexV1ContextSearchIndexesIndexNamePutRequestTypedDict,
     )
-    from .update_judge_v1_observability_judges_judge_id_putop import (
-        UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest,
-        UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict,
-    )
     from .update_pipeline_v1_observability_pipelines_pipeline_id_putop import (
         UpdatePipelineV1ObservabilityPipelinesPipelineIDPutRequest,
         UpdatePipelineV1ObservabilityPipelinesPipelineIDPutRequestTypedDict,
@@ -3761,6 +3809,10 @@ if TYPE_CHECKING:
     from .update_service_account_v1_service_accounts_service_account_id_patchop import (
         UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequest,
         UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequestTypedDict,
+    )
+    from .update_session_v1_audio_sessions_session_id_patchop import (
+        UpdateSessionV1AudioSessionsSessionIDPatchRequest,
+        UpdateSessionV1AudioSessionsSessionIDPatchRequestTypedDict,
     )
     from .update_voice_v1_audio_voices_voice_id_patchop import (
         UpdateVoiceV1AudioVoicesVoiceIDPatchRequest,
@@ -3816,12 +3868,6 @@ if TYPE_CHECKING:
         UpdateInvocationBodyInput,
         UpdateInvocationBodyInputTypedDict,
         UpdateInvocationBodyTypedDict,
-    )
-    from .updatejudgerequest import (
-        UpdateJudgeRequest,
-        UpdateJudgeRequestOutput,
-        UpdateJudgeRequestOutputTypedDict,
-        UpdateJudgeRequestTypedDict,
     )
     from .updatelibraryrequest import (
         UpdateLibraryRequest,
@@ -3920,13 +3966,19 @@ if TYPE_CHECKING:
     from .vectordtype import VectorDType
     from .voiceagentcustomconnector import (
         UnknownVoiceAgentCustomConnectorAuthorization,
+        UnknownVoiceAgentCustomConnectorFiller,
         VoiceAgentCustomConnector,
         VoiceAgentCustomConnectorAuthorization,
         VoiceAgentCustomConnectorAuthorizationTypedDict,
+        VoiceAgentCustomConnectorFiller,
+        VoiceAgentCustomConnectorFillerTypedDict,
         VoiceAgentCustomConnectorTypedDict,
     )
     from .voiceagentdocumentlibrarytool import (
+        UnknownVoiceAgentDocumentLibraryToolFiller,
         VoiceAgentDocumentLibraryTool,
+        VoiceAgentDocumentLibraryToolFiller,
+        VoiceAgentDocumentLibraryToolFillerTypedDict,
         VoiceAgentDocumentLibraryToolTypedDict,
     )
     from .voiceagenterrorevent import (
@@ -3936,17 +3988,18 @@ if TYPE_CHECKING:
     )
     from .voiceagentevent import VoiceAgentEvent, VoiceAgentEventTypedDict
     from .voiceagentfunctiontool import (
+        UnknownVoiceAgentFunctionToolFiller,
         VoiceAgentFunctionTool,
+        VoiceAgentFunctionToolFiller,
+        VoiceAgentFunctionToolFillerTypedDict,
         VoiceAgentFunctionToolType,
         VoiceAgentFunctionToolTypedDict,
     )
     from .voiceagentfunctiontoolrequest import (
         VoiceAgentFunctionToolRequest,
+        VoiceAgentFunctionToolRequestFiller,
+        VoiceAgentFunctionToolRequestFillerTypedDict,
         VoiceAgentFunctionToolRequestTypedDict,
-    )
-    from .voiceagentsessionupdatedevent import (
-        VoiceAgentSessionUpdatedEvent,
-        VoiceAgentSessionUpdatedEventTypedDict,
     )
     from .voiceagentstatechangedevent import (
         OldState,
@@ -3969,7 +4022,10 @@ if TYPE_CHECKING:
         VoiceAgentTranscriptEventTypedDict,
     )
     from .voiceagentwebsearchtool import (
+        UnknownVoiceAgentWebSearchToolFiller,
         VoiceAgentWebSearchTool,
+        VoiceAgentWebSearchToolFiller,
+        VoiceAgentWebSearchToolFillerTypedDict,
         VoiceAgentWebSearchToolTypedDict,
     )
     from .voicecreaterequest import VoiceCreateRequest, VoiceCreateRequestTypedDict
@@ -4346,6 +4402,8 @@ __all__ = [
     "AggregationTypedDict",
     "AliasList",
     "AliasListTypedDict",
+    "AmazonConnectContact",
+    "AmazonConnectContactTypedDict",
     "And",
     "AndMatch",
     "AndMatchTypedDict",
@@ -4354,8 +4412,6 @@ __all__ = [
     "AnnotationTypedDict",
     "Annotations",
     "AnnotationsTypedDict",
-    "Answer",
-    "AnswerTypedDict",
     "ArchiveModelResponse",
     "ArchiveModelResponseTypedDict",
     "ArchiveWorkflowV1WorkflowsWorkflowIdentifierArchivePutRequest",
@@ -4425,6 +4481,15 @@ __all__ = [
     "AudioSessionResponse",
     "AudioSessionResponseStatus",
     "AudioSessionResponseTypedDict",
+    "AudioSessionTurnUpdate",
+    "AudioSessionTurnUpdateTypedDict",
+    "AudioSessionUpdateRequest",
+    "AudioSessionUpdateRequestTool",
+    "AudioSessionUpdateRequestToolTypedDict",
+    "AudioSessionUpdateRequestTypedDict",
+    "AudioSessionUpdateResponse",
+    "AudioSessionUpdateResponseStatus",
+    "AudioSessionUpdateResponseTypedDict",
     "AudioSpeechCapabilities",
     "AudioSpeechCapabilitiesTypedDict",
     "AudioTTSConfig",
@@ -4482,6 +4547,10 @@ __all__ = [
     "BatchRequestTypedDict",
     "BearerAuthMethod",
     "BearerAuthMethodTypedDict",
+    "BillingAPIPublicGetBudgetSecurity",
+    "BillingAPIPublicGetBudgetSecurityTypedDict",
+    "BillingAPIPublicGetSubscriptionSecurity",
+    "BillingAPIPublicGetSubscriptionSecurityTypedDict",
     "BlobResourceContents",
     "BlobResourceContentsTypedDict",
     "Block",
@@ -4492,6 +4561,8 @@ __all__ = [
     "BoolArrayFieldDefinitionTypedDict",
     "BoolFieldDefinition",
     "BoolFieldDefinitionTypedDict",
+    "BudgetDetail",
+    "BudgetDetailTypedDict",
     "BuiltInConnectors",
     "CancelWorkflowExecutionV1WorkflowsExecutionsExecutionIDCancelPostRequest",
     "CancelWorkflowExecutionV1WorkflowsExecutionsExecutionIDCancelPostRequestTypedDict",
@@ -4617,6 +4688,7 @@ __all__ = [
     "ConnectorDeleteCredentialsRequestTypedDict",
     "ConnectorDeleteV1Request",
     "ConnectorDeleteV1RequestTypedDict",
+    "ConnectorErrorCode",
     "ConnectorGetAuthURLV1Request",
     "ConnectorGetAuthURLV1RequestTypedDict",
     "ConnectorGetAuthenticationMethodsV1Request",
@@ -4789,10 +4861,6 @@ __all__ = [
     "CreateIndexV1ContextSearchIndexesPostResponseTypedDict",
     "CreateIngestionPipelineConfigurationRequest",
     "CreateIngestionPipelineConfigurationRequestTypedDict",
-    "CreateJudgeRequest",
-    "CreateJudgeRequestOutput",
-    "CreateJudgeRequestOutputTypedDict",
-    "CreateJudgeRequestTypedDict",
     "CreateLibraryRequest",
     "CreateLibraryRequestTypedDict",
     "CreateManagedIndexRequest",
@@ -4852,6 +4920,8 @@ __all__ = [
     "CreateResponseResponseTypedDict",
     "CreateResponseV1ResponsesPostResponse",
     "CreateResponseV1ResponsesPostResponseTypedDict",
+    "CreateScorerRequest",
+    "CreateScorerRequestTypedDict",
     "CreateServiceAccountRequest",
     "CreateServiceAccountRequestTypedDict",
     "CreateSkillRequest",
@@ -4936,8 +5006,6 @@ __all__ = [
     "DeleteFileResponseTypedDict",
     "DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequest",
     "DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequestTypedDict",
-    "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest",
-    "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequestTypedDict",
     "DeleteManagedIndexResponse",
     "DeleteManagedIndexResponseTypedDict",
     "DeleteModelResponse",
@@ -5028,6 +5096,10 @@ __all__ = [
     "DocumentUnionTypedDict",
     "DocumentUpload",
     "DocumentUploadTypedDict",
+    "EditScorerRequest",
+    "EditScorerRequestTypedDict",
+    "EditScorerV1ObservabilityScorersScorerSlugPatchRequest",
+    "EditScorerV1ObservabilityScorersScorerSlugPatchRequestTypedDict",
     "ElicitationCapability",
     "ElicitationCapabilityTypedDict",
     "EmbeddedResource",
@@ -5050,6 +5122,8 @@ __all__ = [
     "EntityType",
     "Entry",
     "EntryTypedDict",
+    "EnumConstraints",
+    "EnumConstraintsTypedDict",
     "Equal",
     "EqualTypedDict",
     "EqualValue",
@@ -5127,6 +5201,8 @@ __all__ = [
     "FTModelCardTypedDict",
     "Failure",
     "FailureTypedDict",
+    "Fallback",
+    "FallbackTypedDict",
     "FeedResultGetLog",
     "FeedResultGetLogTypedDict",
     "FeedResultGetPipelineResult",
@@ -5137,6 +5213,8 @@ __all__ = [
     "FeedResultGetSpanTypedDict",
     "FeedResultGetTrace",
     "FeedResultGetTraceTypedDict",
+    "FieldDefinition",
+    "FieldDefinitionTypedDict",
     "FieldSortInput",
     "FieldSortInputTypedDict",
     "File",
@@ -5163,6 +5241,8 @@ __all__ = [
     "FineTunedModelCapabilitiesTypedDict",
     "FloatArrayFieldDefinition",
     "FloatArrayFieldDefinitionTypedDict",
+    "FloatConstraints",
+    "FloatConstraintsTypedDict",
     "FloatFieldDefinition",
     "FloatFieldDefinitionTypedDict",
     "FormElicitationCapability",
@@ -5191,8 +5271,12 @@ __all__ = [
     "GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostLanguage",
     "GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequest",
     "GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequestTypedDict",
+    "GeneratedToolFiller",
+    "GeneratedToolFillerTypedDict",
     "GetAgentV1AudioAgentsAgentIDGetRequest",
     "GetAgentV1AudioAgentsAgentIDGetRequestTypedDict",
+    "GetBudgetResponse",
+    "GetBudgetResponseTypedDict",
     "GetChunkIndexV1ContextSearchIndexesIndexNameChunksChunkIDGetRequest",
     "GetChunkIndexV1ContextSearchIndexesIndexNameChunksChunkIDGetRequestTypedDict",
     "GetDatasetByIDV1ObservabilityDatasetsDatasetIDGetRequest",
@@ -5235,10 +5319,6 @@ __all__ = [
     "GetFileResponseTypedDict",
     "GetIndexV1ContextSearchIndexesIndexNameGetRequest",
     "GetIndexV1ContextSearchIndexesIndexNameGetRequestTypedDict",
-    "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest",
-    "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict",
-    "GetJudgesV1ObservabilityJudgesGetRequest",
-    "GetJudgesV1ObservabilityJudgesGetRequestTypedDict",
     "GetLog",
     "GetLogFieldOptions",
     "GetLogFieldOptionsTypedDict",
@@ -5254,6 +5334,10 @@ __all__ = [
     "GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetRequestTypedDict",
     "GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequest",
     "GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequestTypedDict",
+    "GetPipelineResultFields",
+    "GetPipelineResultFieldsTypedDict",
+    "GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequest",
+    "GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequestTypedDict",
     "GetPipelineResults",
     "GetPipelineResultsTypedDict",
     "GetPipelineV1ObservabilityPipelinesPipelineIDGetRequest",
@@ -5275,6 +5359,8 @@ __all__ = [
     "GetSchedulesV1WorkflowsSchedulesGetResponse",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict",
     "GetSchedulesV1WorkflowsSchedulesGetStatus",
+    "GetScorerV1ObservabilityScorersScorerSlugGetRequest",
+    "GetScorerV1ObservabilityScorersScorerSlugGetRequestTypedDict",
     "GetServiceAccountV1ServiceAccountsServiceAccountIDGetRequest",
     "GetServiceAccountV1ServiceAccountsServiceAccountIDGetRequestTypedDict",
     "GetSessionV1AudioSessionsSessionIDGetRequest",
@@ -5312,6 +5398,8 @@ __all__ = [
     "GetStreamEventsV1WorkflowsEventsStreamGetRequestTypedDict",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBody",
     "GetStreamEventsV1WorkflowsEventsStreamGetResponseBodyTypedDict",
+    "GetSubscriptionResponse",
+    "GetSubscriptionResponseTypedDict",
     "GetSummaryResponseSummary",
     "GetSummaryResponseSummaryTypedDict",
     "GetTrace",
@@ -5405,6 +5493,8 @@ __all__ = [
     "HTTPConnectorTypedDict",
     "HTTPStatus",
     "HangUpTool",
+    "HangUpToolFiller",
+    "HangUpToolFillerTypedDict",
     "HangUpToolTypedDict",
     "IPAPhoneme",
     "ImageContent",
@@ -5491,29 +5581,8 @@ __all__ = [
     "JobsAPIRoutesFineTuningUpdateFineTunedModelRequestTypedDict",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
     "JobsAPIRoutesFineTuningUpdateFineTunedModelResponseTypedDict",
-    "Judge",
-    "JudgeClassificationOutput",
-    "JudgeClassificationOutputOption",
-    "JudgeClassificationOutputOptionTypedDict",
-    "JudgeClassificationOutputTypedDict",
-    "JudgeConversationRequest",
-    "JudgeConversationRequestTypedDict",
-    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest",
-    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict",
-    "JudgeDatasetRecordRequest",
-    "JudgeDatasetRecordRequestTypedDict",
-    "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest",
-    "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict",
     "JudgeDefinitionV1",
     "JudgeDefinitionV1TypedDict",
-    "JudgeOutput",
-    "JudgeOutputType",
-    "JudgeOutputTypedDict",
-    "JudgeOutputUnion",
-    "JudgeOutputUnionTypedDict",
-    "JudgeRegressionOutput",
-    "JudgeRegressionOutputTypedDict",
-    "JudgeTypedDict",
     "KeywordArrayFieldDefinition",
     "KeywordArrayFieldDefinitionTypedDict",
     "KeywordFieldDefinition",
@@ -5604,8 +5673,6 @@ __all__ = [
     "ListIndexesV1ContextSearchIndexesGetRequestTypedDict",
     "ListIndexesV1ContextSearchIndexesGetResponse",
     "ListIndexesV1ContextSearchIndexesGetResponseTypedDict",
-    "ListJudgesResponse",
-    "ListJudgesResponseTypedDict",
     "ListLibrariesResponse",
     "ListLibrariesResponseTypedDict",
     "ListManagedIndexesResponse",
@@ -5635,6 +5702,10 @@ __all__ = [
     "ListRunsV1WorkflowsRunsGetResponseTypedDict",
     "ListRunsV1WorkflowsRunsGetStatus",
     "ListRunsV1WorkflowsRunsGetStatusTypedDict",
+    "ListScorersResponse",
+    "ListScorersResponseTypedDict",
+    "ListScorersV1ObservabilityScorersGetRequest",
+    "ListScorersV1ObservabilityScorersGetRequestTypedDict",
     "ListServiceAccountRolesResponse",
     "ListServiceAccountRolesResponseTypedDict",
     "ListServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesGetRequest",
@@ -5666,6 +5737,10 @@ __all__ = [
     "ListWorkflowEventResponseTypedDict",
     "ListWorkspacesResponse",
     "ListWorkspacesResponseTypedDict",
+    "LlmJudgeConfig",
+    "LlmJudgeConfigTypedDict",
+    "LlmJudgeParams",
+    "LlmJudgeParamsTypedDict",
     "LlmJudgeReference",
     "LlmJudgeReferenceTypedDict",
     "Loc",
@@ -5908,9 +5983,16 @@ __all__ = [
     "OrderByClause",
     "OrderByClauseDirection",
     "OrderByClauseTypedDict",
+    "OtelEnumFieldDefinition",
+    "OtelEnumFieldDefinitionSupportedOperator",
+    "OtelEnumFieldDefinitionTypedDict",
     "OtelFieldDefinition",
+    "OtelFieldDefinitionSupportedOperator",
     "OtelFieldDefinitionType",
     "OtelFieldDefinitionTypedDict",
+    "OtelFloatFieldDefinition",
+    "OtelFloatFieldDefinitionSupportedOperator",
+    "OtelFloatFieldDefinitionTypedDict",
     "OutputContentChunks",
     "OutputContentChunksTypedDict",
     "OwnerType",
@@ -5932,8 +6014,6 @@ __all__ = [
     "PaginatedResultEvaluationRunV2WithRefsResponseTypedDict",
     "PaginatedResultEvaluationV2",
     "PaginatedResultEvaluationV2TypedDict",
-    "PaginatedResultJudgePreview",
-    "PaginatedResultJudgePreviewTypedDict",
     "PaginatedResultOptimization",
     "PaginatedResultOptimizationTrialWithObservations",
     "PaginatedResultOptimizationTrialWithObservationsTypedDict",
@@ -5942,6 +6022,8 @@ __all__ = [
     "PaginatedResultPipelineTypedDict",
     "PaginatedResultProject",
     "PaginatedResultProjectTypedDict",
+    "PaginatedResultScorerSummary",
+    "PaginatedResultScorerSummaryTypedDict",
     "PaginationInfo",
     "PaginationInfoTypedDict",
     "PaginationResponse",
@@ -6111,7 +6193,6 @@ __all__ = [
     "RealtimeTranscriptionSessionUpdatePayloadTypedDict",
     "RealtimeTranscriptionSessionUpdated",
     "RealtimeTranscriptionSessionUpdatedTypedDict",
-    "Reason",
     "ReasoningEffort",
     "RecordSortField",
     "ReferenceChunk",
@@ -6218,6 +6299,7 @@ __all__ = [
     "ResponsesError",
     "ResponsesErrorEvent",
     "ResponsesErrorEventTypedDict",
+    "ResponsesErrorReason",
     "ResponsesErrorTypedDict",
     "ResponsesFailedEvent",
     "ResponsesFailedEventTypedDict",
@@ -6251,6 +6333,7 @@ __all__ = [
     "ResponsesInProgressEvent",
     "ResponsesInProgressEventTypedDict",
     "ResponsesIncompleteDetails",
+    "ResponsesIncompleteDetailsReason",
     "ResponsesIncompleteDetailsTypedDict",
     "ResponsesIncompleteEvent",
     "ResponsesIncompleteEventTypedDict",
@@ -6259,28 +6342,34 @@ __all__ = [
     "ResponsesInputFileContentDetail",
     "ResponsesInputFileContentResponsesPromptCacheBreakpoint",
     "ResponsesInputFileContentResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputFileContentTTL",
     "ResponsesInputFileContentTypedDict",
     "ResponsesInputFileDetail",
     "ResponsesInputFileResponsesPromptCacheBreakpoint",
     "ResponsesInputFileResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputFileTTL",
     "ResponsesInputFileTypedDict",
     "ResponsesInputImage",
     "ResponsesInputImageContent",
     "ResponsesInputImageContentDetail",
     "ResponsesInputImageContentResponsesPromptCacheBreakpoint",
     "ResponsesInputImageContentResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputImageContentTTL",
     "ResponsesInputImageContentTypedDict",
     "ResponsesInputImageDetail",
     "ResponsesInputImageResponsesPromptCacheBreakpoint",
     "ResponsesInputImageResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputImageTTL",
     "ResponsesInputImageTypedDict",
     "ResponsesInputText",
     "ResponsesInputTextContent",
     "ResponsesInputTextContentResponsesPromptCacheBreakpoint",
     "ResponsesInputTextContentResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputTextContentTTL",
     "ResponsesInputTextContentTypedDict",
     "ResponsesInputTextResponsesPromptCacheBreakpoint",
     "ResponsesInputTextResponsesPromptCacheBreakpointTypedDict",
+    "ResponsesInputTextTTL",
     "ResponsesInputTextTypedDict",
     "ResponsesInputTokensDetails",
     "ResponsesInputTokensDetailsTypedDict",
@@ -6290,6 +6379,10 @@ __all__ = [
     "ResponsesMessageRole",
     "ResponsesMessageStatus",
     "ResponsesMessageTypedDict",
+    "ResponsesMisalignment",
+    "ResponsesMisalignmentSteer",
+    "ResponsesMisalignmentSteerTypedDict",
+    "ResponsesMisalignmentTypedDict",
     "ResponsesNamespaceTool",
     "ResponsesNamespaceToolTool",
     "ResponsesNamespaceToolToolTypedDict",
@@ -6429,6 +6522,13 @@ __all__ = [
     "ScoreOperator",
     "ScoreSortInput",
     "ScoreSortInputTypedDict",
+    "Scorer",
+    "ScorerKind",
+    "ScorerSummary",
+    "ScorerSummaryTypedDict",
+    "ScorerTypedDict",
+    "ScorerVersion",
+    "ScorerVersionTypedDict",
     "SearchAllEvaluationRunsResponse",
     "SearchAllEvaluationRunsResponseTypedDict",
     "SearchAllEvaluationRunsV2V1ObservabilityEvaluationRunsV2SearchPostRequest",
@@ -6625,7 +6725,6 @@ __all__ = [
     "SummaryStatusDollarDefs",
     "SummaryStreamTypes",
     "SummaryStreamTypesTypedDict",
-    "SupportedOperator",
     "Syntax",
     "SystemFilter",
     "SystemFilterTypedDict",
@@ -6807,6 +6906,8 @@ __all__ = [
     "TranscriptionStreamTextDelta",
     "TranscriptionStreamTextDeltaTypedDict",
     "TransferCallTool",
+    "TransferCallToolFiller",
+    "TransferCallToolFillerTypedDict",
     "TransferCallToolTypedDict",
     "TransferTarget",
     "TransferTargetTypedDict",
@@ -6864,10 +6965,12 @@ __all__ = [
     "UnknownDocumentFields",
     "UnknownEmbedding",
     "UnknownEvaluationResultSpec",
+    "UnknownFallback",
+    "UnknownFieldDefinition",
     "UnknownGetDeploymentSummariesResponseDeploymentDeployment",
+    "UnknownHangUpToolFiller",
     "UnknownJSONPatch",
     "UnknownJobsAPIRoutesFineTuningUpdateFineTunedModelResponse",
-    "UnknownJudgeOutputUnion",
     "UnknownModelConversationTool",
     "UnknownModelListData",
     "UnknownOpenAPISpecSource",
@@ -6881,7 +6984,12 @@ __all__ = [
     "UnknownStatistic",
     "UnknownTranscript",
     "UnknownTranscriptionStreamEventsData",
+    "UnknownTransferCallToolFiller",
     "UnknownVoiceAgentCustomConnectorAuthorization",
+    "UnknownVoiceAgentCustomConnectorFiller",
+    "UnknownVoiceAgentDocumentLibraryToolFiller",
+    "UnknownVoiceAgentFunctionToolFiller",
+    "UnknownVoiceAgentWebSearchToolFiller",
     "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest",
     "UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequestTypedDict",
     "UnscheduleWorkflowV1WorkflowsSchedulesScheduleIDDeleteRequest",
@@ -6928,12 +7036,6 @@ __all__ = [
     "UpdateInvocationBodyInput",
     "UpdateInvocationBodyInputTypedDict",
     "UpdateInvocationBodyTypedDict",
-    "UpdateJudgeRequest",
-    "UpdateJudgeRequestOutput",
-    "UpdateJudgeRequestOutputTypedDict",
-    "UpdateJudgeRequestTypedDict",
-    "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest",
-    "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict",
     "UpdateLibraryRequest",
     "UpdateLibraryRequestTypedDict",
     "UpdateManagedIndexRequest",
@@ -6964,6 +7066,8 @@ __all__ = [
     "UpdateServiceAccountRequestTypedDict",
     "UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequest",
     "UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequestTypedDict",
+    "UpdateSessionV1AudioSessionsSessionIDPatchRequest",
+    "UpdateSessionV1AudioSessionsSessionIDPatchRequestTypedDict",
     "UpdateSkillRequest",
     "UpdateSkillRequestTypedDict",
     "UpdateSkillVersionRequest",
@@ -7020,8 +7124,12 @@ __all__ = [
     "VoiceAgentCustomConnector",
     "VoiceAgentCustomConnectorAuthorization",
     "VoiceAgentCustomConnectorAuthorizationTypedDict",
+    "VoiceAgentCustomConnectorFiller",
+    "VoiceAgentCustomConnectorFillerTypedDict",
     "VoiceAgentCustomConnectorTypedDict",
     "VoiceAgentDocumentLibraryTool",
+    "VoiceAgentDocumentLibraryToolFiller",
+    "VoiceAgentDocumentLibraryToolFillerTypedDict",
     "VoiceAgentDocumentLibraryToolTypedDict",
     "VoiceAgentErrorEvent",
     "VoiceAgentErrorEventSource",
@@ -7029,12 +7137,14 @@ __all__ = [
     "VoiceAgentEvent",
     "VoiceAgentEventTypedDict",
     "VoiceAgentFunctionTool",
+    "VoiceAgentFunctionToolFiller",
+    "VoiceAgentFunctionToolFillerTypedDict",
     "VoiceAgentFunctionToolRequest",
+    "VoiceAgentFunctionToolRequestFiller",
+    "VoiceAgentFunctionToolRequestFillerTypedDict",
     "VoiceAgentFunctionToolRequestTypedDict",
     "VoiceAgentFunctionToolType",
     "VoiceAgentFunctionToolTypedDict",
-    "VoiceAgentSessionUpdatedEvent",
-    "VoiceAgentSessionUpdatedEventTypedDict",
     "VoiceAgentStateChangedEvent",
     "VoiceAgentStateChangedEventTypedDict",
     "VoiceAgentToolCallEndedEvent",
@@ -7046,6 +7156,8 @@ __all__ = [
     "VoiceAgentTranscriptEventRole",
     "VoiceAgentTranscriptEventTypedDict",
     "VoiceAgentWebSearchTool",
+    "VoiceAgentWebSearchToolFiller",
+    "VoiceAgentWebSearchToolFillerTypedDict",
     "VoiceAgentWebSearchToolTypedDict",
     "VoiceCreateRequest",
     "VoiceCreateRequestTypedDict",
@@ -7325,6 +7437,8 @@ _dynamic_imports: dict[str, str] = {
     "MetricValueTypedDict": ".aggregationrow",
     "AliasList": ".aliaslist",
     "AliasListTypedDict": ".aliaslist",
+    "AmazonConnectContact": ".amazonconnectcontact",
+    "AmazonConnectContactTypedDict": ".amazonconnectcontact",
     "Annotations": ".annotations",
     "AnnotationsTypedDict": ".annotations",
     "Audience": ".annotations",
@@ -7402,6 +7516,15 @@ _dynamic_imports: dict[str, str] = {
     "Transcript": ".audiosessionresponse",
     "TranscriptTypedDict": ".audiosessionresponse",
     "UnknownTranscript": ".audiosessionresponse",
+    "AudioSessionTurnUpdate": ".audiosessionturnupdate",
+    "AudioSessionTurnUpdateTypedDict": ".audiosessionturnupdate",
+    "AudioSessionUpdateRequest": ".audiosessionupdaterequest",
+    "AudioSessionUpdateRequestTool": ".audiosessionupdaterequest",
+    "AudioSessionUpdateRequestToolTypedDict": ".audiosessionupdaterequest",
+    "AudioSessionUpdateRequestTypedDict": ".audiosessionupdaterequest",
+    "AudioSessionUpdateResponse": ".audiosessionupdateresponse",
+    "AudioSessionUpdateResponseStatus": ".audiosessionupdateresponse",
+    "AudioSessionUpdateResponseTypedDict": ".audiosessionupdateresponse",
     "AudioSpeechCapabilities": ".audiospeechcapabilities",
     "AudioSpeechCapabilitiesTypedDict": ".audiospeechcapabilities",
     "AudioSTTConfig": ".audiosttconfig",
@@ -7453,12 +7576,18 @@ _dynamic_imports: dict[str, str] = {
     "BatchRequestTypedDict": ".batchrequest",
     "BearerAuthMethod": ".bearerauthmethod",
     "BearerAuthMethodTypedDict": ".bearerauthmethod",
+    "BillingAPIPublicGetBudgetSecurity": ".billing_api_public_get_budgetop",
+    "BillingAPIPublicGetBudgetSecurityTypedDict": ".billing_api_public_get_budgetop",
+    "BillingAPIPublicGetSubscriptionSecurity": ".billing_api_public_get_subscriptionop",
+    "BillingAPIPublicGetSubscriptionSecurityTypedDict": ".billing_api_public_get_subscriptionop",
     "BlobResourceContents": ".blobresourcecontents",
     "BlobResourceContentsTypedDict": ".blobresourcecontents",
     "BoolArrayFieldDefinition": ".boolarrayfielddefinition",
     "BoolArrayFieldDefinitionTypedDict": ".boolarrayfielddefinition",
     "BoolFieldDefinition": ".boolfielddefinition",
     "BoolFieldDefinitionTypedDict": ".boolfielddefinition",
+    "BudgetDetail": ".budgetdetail",
+    "BudgetDetailTypedDict": ".budgetdetail",
     "BuiltInConnectors": ".builtinconnectors",
     "CancelWorkflowExecutionV1WorkflowsExecutionsExecutionIDCancelPostRequest": ".cancel_workflow_execution_v1_workflows_executions_execution_id_cancel_postop",
     "CancelWorkflowExecutionV1WorkflowsExecutionsExecutionIDCancelPostRequestTypedDict": ".cancel_workflow_execution_v1_workflows_executions_execution_id_cancel_postop",
@@ -7615,6 +7744,7 @@ _dynamic_imports: dict[str, str] = {
     "ConnectorAuthenticationHeaderTypedDict": ".connectorauthenticationheader",
     "ConnectorCallToolRequest": ".connectorcalltoolrequest",
     "ConnectorCallToolRequestTypedDict": ".connectorcalltoolrequest",
+    "ConnectorErrorCode": ".connectorerrorcode",
     "ConnectorLocale": ".connectorlocale",
     "ConnectorLocaleTypedDict": ".connectorlocale",
     "ConnectorMCPPublicUpdate": ".connectormcppublicupdate",
@@ -7760,10 +7890,6 @@ _dynamic_imports: dict[str, str] = {
     "CreateHTTPConnectorRequestTypedDict": ".createhttpconnectorrequest",
     "CreateIngestionPipelineConfigurationRequest": ".createingestionpipelineconfigurationrequest",
     "CreateIngestionPipelineConfigurationRequestTypedDict": ".createingestionpipelineconfigurationrequest",
-    "CreateJudgeRequest": ".createjudgerequest",
-    "CreateJudgeRequestOutput": ".createjudgerequest",
-    "CreateJudgeRequestOutputTypedDict": ".createjudgerequest",
-    "CreateJudgeRequestTypedDict": ".createjudgerequest",
     "CreateLibraryRequest": ".createlibraryrequest",
     "CreateLibraryRequestTypedDict": ".createlibraryrequest",
     "OwnerType": ".createlibraryrequest",
@@ -7822,11 +7948,16 @@ _dynamic_imports: dict[str, str] = {
     "CreateResponseResponseToolTypedDict": ".createresponseresponse",
     "CreateResponseResponseTypedDict": ".createresponseresponse",
     "PromptCacheRetention": ".createresponseresponse",
-    "Reason": ".createresponseresponse",
     "ResponsesError": ".createresponseresponse",
+    "ResponsesErrorReason": ".createresponseresponse",
     "ResponsesErrorTypedDict": ".createresponseresponse",
     "ResponsesIncompleteDetails": ".createresponseresponse",
+    "ResponsesIncompleteDetailsReason": ".createresponseresponse",
     "ResponsesIncompleteDetailsTypedDict": ".createresponseresponse",
+    "ResponsesMisalignment": ".createresponseresponse",
+    "ResponsesMisalignmentSteer": ".createresponseresponse",
+    "ResponsesMisalignmentSteerTypedDict": ".createresponseresponse",
+    "ResponsesMisalignmentTypedDict": ".createresponseresponse",
     "ResponsesSupportedReasoningEffort": ".createresponseresponse",
     "ResponsesTextConfigFormat": ".createresponseresponse",
     "ResponsesTextConfigFormatTypedDict": ".createresponseresponse",
@@ -7841,6 +7972,8 @@ _dynamic_imports: dict[str, str] = {
     "ResponsesUsageTypedDict": ".createresponseresponse",
     "ServiceTier": ".createresponseresponse",
     "Truncation": ".createresponseresponse",
+    "CreateScorerRequest": ".createscorerrequest",
+    "CreateScorerRequestTypedDict": ".createscorerrequest",
     "CreateServiceAccountRequest": ".createserviceaccountrequest",
     "CreateServiceAccountRequestTypedDict": ".createserviceaccountrequest",
     "CreateSkillRequest": ".createskillrequest",
@@ -7917,8 +8050,6 @@ _dynamic_imports: dict[str, str] = {
     "DeleteDocumentsV1ContextSearchIndexesIndexNameDocumentsDeleteRequestTypedDict": ".delete_documents_v1_context_search_indexes_index_name_documents_deleteop",
     "DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequest": ".delete_index_v1_context_search_indexes_index_name_deleteop",
     "DeleteIndexV1ContextSearchIndexesIndexNameDeleteRequestTypedDict": ".delete_index_v1_context_search_indexes_index_name_deleteop",
-    "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequest": ".delete_judge_v1_observability_judges_judge_id_deleteop",
-    "DeleteJudgeV1ObservabilityJudgesJudgeIDDeleteRequestTypedDict": ".delete_judge_v1_observability_judges_judge_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequest": ".delete_model_v1_models_model_id_deleteop",
     "DeleteModelV1ModelsModelIDDeleteRequestTypedDict": ".delete_model_v1_models_model_id_deleteop",
     "DeletePipelineV1ObservabilityPipelinesPipelineIDDeleteRequest": ".delete_pipeline_v1_observability_pipelines_pipeline_id_deleteop",
@@ -8015,6 +8146,10 @@ _dynamic_imports: dict[str, str] = {
     "DocumentTextContentTypedDict": ".documenttextcontent",
     "DocumentURLChunk": ".documenturlchunk",
     "DocumentURLChunkTypedDict": ".documenturlchunk",
+    "EditScorerV1ObservabilityScorersScorerSlugPatchRequest": ".edit_scorer_v1_observability_scorers_scorer_slug_patchop",
+    "EditScorerV1ObservabilityScorersScorerSlugPatchRequestTypedDict": ".edit_scorer_v1_observability_scorers_scorer_slug_patchop",
+    "EditScorerRequest": ".editscorerrequest",
+    "EditScorerRequestTypedDict": ".editscorerrequest",
     "ElicitationCapability": ".elicitationcapability",
     "ElicitationCapabilityTypedDict": ".elicitationcapability",
     "EmbeddedResource": ".embeddedresource",
@@ -8035,6 +8170,8 @@ _dynamic_imports: dict[str, str] = {
     "EncryptedPatchValue": ".encryptedpatchvalue",
     "EncryptedPatchValueTypedDict": ".encryptedpatchvalue",
     "EntityType": ".entitytype",
+    "EnumConstraints": ".enumconstraints",
+    "EnumConstraintsTypedDict": ".enumconstraints",
     "Equal": ".equal",
     "EqualTypedDict": ".equal",
     "EqualValue": ".equal",
@@ -8155,6 +8292,8 @@ _dynamic_imports: dict[str, str] = {
     "FineTunedModelCapabilitiesTypedDict": ".finetunedmodelcapabilities",
     "FloatArrayFieldDefinition": ".floatarrayfielddefinition",
     "FloatArrayFieldDefinitionTypedDict": ".floatarrayfielddefinition",
+    "FloatConstraints": ".floatconstraints",
+    "FloatConstraintsTypedDict": ".floatconstraints",
     "FloatFieldDefinition": ".floatfielddefinition",
     "FloatFieldDefinitionTypedDict": ".floatfielddefinition",
     "FormElicitationCapability": ".formelicitationcapability",
@@ -8189,6 +8328,11 @@ _dynamic_imports: dict[str, str] = {
     "GenerateManagedIndexSummaryPostV1ContextSearchIndexesIndexNameSummaryFieldLanguagePostRequestTypedDict": ".generate_managed_index_summary_post_v1_context_search_indexes_index_name_summary_field_language_postop",
     "SummaryStreamTypes": ".generate_managed_index_summary_post_v1_context_search_indexes_index_name_summary_field_language_postop",
     "SummaryStreamTypesTypedDict": ".generate_managed_index_summary_post_v1_context_search_indexes_index_name_summary_field_language_postop",
+    "Fallback": ".generatedtoolfiller",
+    "FallbackTypedDict": ".generatedtoolfiller",
+    "GeneratedToolFiller": ".generatedtoolfiller",
+    "GeneratedToolFillerTypedDict": ".generatedtoolfiller",
+    "UnknownFallback": ".generatedtoolfiller",
     "GetAgentV1AudioAgentsAgentIDGetRequest": ".get_agent_v1_audio_agents_agent_id_getop",
     "GetAgentV1AudioAgentsAgentIDGetRequestTypedDict": ".get_agent_v1_audio_agents_agent_id_getop",
     "GetChunkIndexV1ContextSearchIndexesIndexNameChunksChunkIDGetRequest": ".get_chunk_index_v1_context_search_indexes_index_name_chunks_chunk_id_getop",
@@ -8220,10 +8364,6 @@ _dynamic_imports: dict[str, str] = {
     "GetEvaluationV2V1ObservabilityEvaluationsV2EvaluationSlugGetRequestTypedDict": ".get_evaluation_v2_v1_observability_evaluations_v2_evaluation_slug_getop",
     "GetIndexV1ContextSearchIndexesIndexNameGetRequest": ".get_index_v1_context_search_indexes_index_name_getop",
     "GetIndexV1ContextSearchIndexesIndexNameGetRequestTypedDict": ".get_index_v1_context_search_indexes_index_name_getop",
-    "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequest": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
-    "GetJudgeByIDV1ObservabilityJudgesJudgeIDGetRequestTypedDict": ".get_judge_by_id_v1_observability_judges_judge_id_getop",
-    "GetJudgesV1ObservabilityJudgesGetRequest": ".get_judges_v1_observability_judges_getop",
-    "GetJudgesV1ObservabilityJudgesGetRequestTypedDict": ".get_judges_v1_observability_judges_getop",
     "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequest": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
     "GetLogFieldOptionsV1ObservabilityLogsFieldsFieldNameOptionsGetRequestTypedDict": ".get_log_field_options_v1_observability_logs_fields_field_name_options_getop",
     "GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetLanguage": ".get_managed_index_summary_v1_context_search_indexes_index_name_summary_field_language_getop",
@@ -8231,6 +8371,8 @@ _dynamic_imports: dict[str, str] = {
     "GetManagedIndexSummaryV1ContextSearchIndexesIndexNameSummaryFieldLanguageGetRequestTypedDict": ".get_managed_index_summary_v1_context_search_indexes_index_name_summary_field_language_getop",
     "GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequest": ".get_optimization_v1_observability_optimizations_optimization_id_getop",
     "GetOptimizationV1ObservabilityOptimizationsOptimizationIDGetRequestTypedDict": ".get_optimization_v1_observability_optimizations_optimization_id_getop",
+    "GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequest": ".get_pipeline_result_fields_v1_observability_pipelines_pipeline_id_results_fields_getop",
+    "GetPipelineResultFieldsV1ObservabilityPipelinesPipelineIDResultsFieldsGetRequestTypedDict": ".get_pipeline_result_fields_v1_observability_pipelines_pipeline_id_results_fields_getop",
     "GetPipelineV1ObservabilityPipelinesPipelineIDGetRequest": ".get_pipeline_v1_observability_pipelines_pipeline_id_getop",
     "GetPipelineV1ObservabilityPipelinesPipelineIDGetRequestTypedDict": ".get_pipeline_v1_observability_pipelines_pipeline_id_getop",
     "GetProjectEvaluationsV2V1ObservabilityProjectsProjectSlugEvaluationsV2GetRequest": ".get_project_evaluations_v2_v1_observability_projects_project_slug_evaluations_v2_getop",
@@ -8250,6 +8392,8 @@ _dynamic_imports: dict[str, str] = {
     "GetSchedulesV1WorkflowsSchedulesGetResponse": ".get_schedules_v1_workflows_schedules_getop",
     "GetSchedulesV1WorkflowsSchedulesGetResponseTypedDict": ".get_schedules_v1_workflows_schedules_getop",
     "GetSchedulesV1WorkflowsSchedulesGetStatus": ".get_schedules_v1_workflows_schedules_getop",
+    "GetScorerV1ObservabilityScorersScorerSlugGetRequest": ".get_scorer_v1_observability_scorers_scorer_slug_getop",
+    "GetScorerV1ObservabilityScorersScorerSlugGetRequestTypedDict": ".get_scorer_v1_observability_scorers_scorer_slug_getop",
     "GetServiceAccountV1ServiceAccountsServiceAccountIDGetRequest": ".get_service_account_v1_service_accounts_service_account_id_getop",
     "GetServiceAccountV1ServiceAccountsServiceAccountIDGetRequestTypedDict": ".get_service_account_v1_service_accounts_service_account_id_getop",
     "GetSessionV1AudioSessionsSessionIDGetRequest": ".get_session_v1_audio_sessions_session_id_getop",
@@ -8318,6 +8462,8 @@ _dynamic_imports: dict[str, str] = {
     "GetWorkflowsV1WorkflowsGetResponseTypedDict": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetStatus": ".get_workflows_v1_workflows_getop",
     "GetWorkflowsV1WorkflowsGetStatusTypedDict": ".get_workflows_v1_workflows_getop",
+    "GetBudgetResponse": ".getbudgetresponse",
+    "GetBudgetResponseTypedDict": ".getbudgetresponse",
     "GetDeploymentSummariesResponse": ".getdeploymentsummariesresponse",
     "GetDeploymentSummariesResponseTypedDict": ".getdeploymentsummariesresponse",
     "GetDeploymentSummariesResponseDeployment": ".getdeploymentsummariesresponsedeployment",
@@ -8340,6 +8486,11 @@ _dynamic_imports: dict[str, str] = {
     "GetLogFieldsTypedDict": ".getlogfields",
     "GetLogs": ".getlogs",
     "GetLogsTypedDict": ".getlogs",
+    "FieldDefinition": ".getpipelineresultfields",
+    "FieldDefinitionTypedDict": ".getpipelineresultfields",
+    "GetPipelineResultFields": ".getpipelineresultfields",
+    "GetPipelineResultFieldsTypedDict": ".getpipelineresultfields",
+    "UnknownFieldDefinition": ".getpipelineresultfields",
     "GetPipelineResults": ".getpipelineresults",
     "GetPipelineResultsTypedDict": ".getpipelineresults",
     "GetSignedURLResponse": ".getsignedurlresponse",
@@ -8361,6 +8512,8 @@ _dynamic_imports: dict[str, str] = {
     "GetSpanFieldsTypedDict": ".getspanfields",
     "GetSpans": ".getspans",
     "GetSpansTypedDict": ".getspans",
+    "GetSubscriptionResponse": ".getsubscriptionresponse",
+    "GetSubscriptionResponseTypedDict": ".getsubscriptionresponse",
     "GetSummaryResponseSummary": ".getsummaryresponsesummary",
     "GetSummaryResponseSummaryTypedDict": ".getsummaryresponsesummary",
     "GetTrace": ".gettrace",
@@ -8399,7 +8552,10 @@ _dynamic_imports: dict[str, str] = {
     "GuardrailConfig": ".guardrailconfig",
     "GuardrailConfigTypedDict": ".guardrailconfig",
     "HangUpTool": ".hanguptool",
+    "HangUpToolFiller": ".hanguptool",
+    "HangUpToolFillerTypedDict": ".hanguptool",
     "HangUpToolTypedDict": ".hanguptool",
+    "UnknownHangUpToolFiller": ".hanguptool",
     "HTTPConnector": ".httpconnector",
     "HTTPConnectorTypedDict": ".httpconnector",
     "HTTPStatus": ".httpstatus",
@@ -8493,32 +8649,8 @@ _dynamic_imports: dict[str, str] = {
     "JSONPayloadResponseTypedDict": ".jsonpayloadresponse",
     "JSONSchema": ".jsonschema",
     "JSONSchemaTypedDict": ".jsonschema",
-    "Judge": ".judge",
-    "JudgeOutputUnion": ".judge",
-    "JudgeOutputUnionTypedDict": ".judge",
-    "JudgeTypedDict": ".judge",
-    "UnknownJudgeOutputUnion": ".judge",
-    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequest": ".judge_conversation_v1_observability_judges_judge_id_live_judging_postop",
-    "JudgeConversationV1ObservabilityJudgesJudgeIDLiveJudgingPostRequestTypedDict": ".judge_conversation_v1_observability_judges_judge_id_live_judging_postop",
-    "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequest": ".judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop",
-    "JudgeDatasetRecordV1ObservabilityDatasetRecordsDatasetRecordIDLiveJudgingPostRequestTypedDict": ".judge_dataset_record_v1_observability_dataset_records_dataset_record_id_live_judging_postop",
-    "JudgeClassificationOutput": ".judgeclassificationoutput",
-    "JudgeClassificationOutputTypedDict": ".judgeclassificationoutput",
-    "JudgeClassificationOutputOption": ".judgeclassificationoutputoption",
-    "JudgeClassificationOutputOptionTypedDict": ".judgeclassificationoutputoption",
-    "JudgeConversationRequest": ".judgeconversationrequest",
-    "JudgeConversationRequestTypedDict": ".judgeconversationrequest",
-    "JudgeDatasetRecordRequest": ".judgedatasetrecordrequest",
-    "JudgeDatasetRecordRequestTypedDict": ".judgedatasetrecordrequest",
     "JudgeDefinitionV1": ".judgedefinitionv1",
     "JudgeDefinitionV1TypedDict": ".judgedefinitionv1",
-    "Answer": ".judgeoutput",
-    "AnswerTypedDict": ".judgeoutput",
-    "JudgeOutput": ".judgeoutput",
-    "JudgeOutputTypedDict": ".judgeoutput",
-    "JudgeOutputType": ".judgeoutputtype",
-    "JudgeRegressionOutput": ".judgeregressionoutput",
-    "JudgeRegressionOutputTypedDict": ".judgeregressionoutput",
     "KeywordArrayFieldDefinition": ".keywordarrayfielddefinition",
     "KeywordArrayFieldDefinitionTypedDict": ".keywordarrayfielddefinition",
     "KeywordFieldDefinition": ".keywordfielddefinition",
@@ -8611,6 +8743,8 @@ _dynamic_imports: dict[str, str] = {
     "ListRunsV1WorkflowsRunsGetStatus": ".list_runs_v1_workflows_runs_getop",
     "ListRunsV1WorkflowsRunsGetStatusTypedDict": ".list_runs_v1_workflows_runs_getop",
     "SortBy": ".list_runs_v1_workflows_runs_getop",
+    "ListScorersV1ObservabilityScorersGetRequest": ".list_scorers_v1_observability_scorers_getop",
+    "ListScorersV1ObservabilityScorersGetRequestTypedDict": ".list_scorers_v1_observability_scorers_getop",
     "ListServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesGetRequest": ".list_service_account_roles_v1_service_accounts_service_account_id_roles_getop",
     "ListServiceAccountRolesV1ServiceAccountsServiceAccountIDRolesGetRequestTypedDict": ".list_service_account_roles_v1_service_accounts_service_account_id_roles_getop",
     "ListServiceAccountsV1ServiceAccountsGetRequest": ".list_service_accounts_v1_service_accounts_getop",
@@ -8642,8 +8776,6 @@ _dynamic_imports: dict[str, str] = {
     "ListEvaluationRunsResponseTypedDict": ".listevaluationrunsresponse",
     "ListFilesResponse": ".listfilesresponse",
     "ListFilesResponseTypedDict": ".listfilesresponse",
-    "ListJudgesResponse": ".listjudgesresponse",
-    "ListJudgesResponseTypedDict": ".listjudgesresponse",
     "ListLibrariesResponse": ".listlibrariesresponse",
     "ListLibrariesResponseTypedDict": ".listlibrariesresponse",
     "ListManagedIndexesResponse": ".listmanagedindexesresponse",
@@ -8658,6 +8790,8 @@ _dynamic_imports: dict[str, str] = {
     "ListPromptsResponseTypedDict": ".listpromptsresponse",
     "ListPromptVersionsResponse": ".listpromptversionsresponse",
     "ListPromptVersionsResponseTypedDict": ".listpromptversionsresponse",
+    "ListScorersResponse": ".listscorersresponse",
+    "ListScorersResponseTypedDict": ".listscorersresponse",
     "ListServiceAccountRolesResponse": ".listserviceaccountrolesresponse",
     "ListServiceAccountRolesResponseTypedDict": ".listserviceaccountrolesresponse",
     "ListServiceAccountsResponse": ".listserviceaccountsresponse",
@@ -8676,6 +8810,10 @@ _dynamic_imports: dict[str, str] = {
     "ListWorkflowEventResponseTypedDict": ".listworkfloweventresponse",
     "ListWorkspacesResponse": ".listworkspacesresponse",
     "ListWorkspacesResponseTypedDict": ".listworkspacesresponse",
+    "LlmJudgeConfig": ".llmjudgeconfig",
+    "LlmJudgeConfigTypedDict": ".llmjudgeconfig",
+    "LlmJudgeParams": ".llmjudgeparams",
+    "LlmJudgeParamsTypedDict": ".llmjudgeparams",
     "LlmJudgeReference": ".llmjudgereference",
     "LlmJudgeReferenceTypedDict": ".llmjudgereference",
     "LocationType": ".locationtype",
@@ -8917,10 +9055,16 @@ _dynamic_imports: dict[str, str] = {
     "OrderByClause": ".orderbyclause",
     "OrderByClauseDirection": ".orderbyclause",
     "OrderByClauseTypedDict": ".orderbyclause",
+    "OtelEnumFieldDefinition": ".otelenumfielddefinition",
+    "OtelEnumFieldDefinitionSupportedOperator": ".otelenumfielddefinition",
+    "OtelEnumFieldDefinitionTypedDict": ".otelenumfielddefinition",
     "OtelFieldDefinition": ".otelfielddefinition",
+    "OtelFieldDefinitionSupportedOperator": ".otelfielddefinition",
     "OtelFieldDefinitionType": ".otelfielddefinition",
     "OtelFieldDefinitionTypedDict": ".otelfielddefinition",
-    "SupportedOperator": ".otelfielddefinition",
+    "OtelFloatFieldDefinition": ".otelfloatfielddefinition",
+    "OtelFloatFieldDefinitionSupportedOperator": ".otelfloatfielddefinition",
+    "OtelFloatFieldDefinitionTypedDict": ".otelfloatfielddefinition",
     "OTLPDestination": ".otlpdestination",
     "OTLPDestinationTypedDict": ".otlpdestination",
     "OutputContentChunks": ".outputcontentchunks",
@@ -8941,8 +9085,6 @@ _dynamic_imports: dict[str, str] = {
     "PaginatedResultEvaluationRunV2WithRefsResponseTypedDict": ".paginatedresultevaluationrunv2withrefsresponse",
     "PaginatedResultEvaluationV2": ".paginatedresultevaluationv2",
     "PaginatedResultEvaluationV2TypedDict": ".paginatedresultevaluationv2",
-    "PaginatedResultJudgePreview": ".paginatedresultjudgepreview",
-    "PaginatedResultJudgePreviewTypedDict": ".paginatedresultjudgepreview",
     "PaginatedResultOptimization": ".paginatedresultoptimization",
     "PaginatedResultOptimizationTypedDict": ".paginatedresultoptimization",
     "PaginatedResultOptimizationTrialWithObservations": ".paginatedresultoptimizationtrialwithobservations",
@@ -8951,6 +9093,8 @@ _dynamic_imports: dict[str, str] = {
     "PaginatedResultPipelineTypedDict": ".paginatedresultpipeline",
     "PaginatedResultProject": ".paginatedresultproject",
     "PaginatedResultProjectTypedDict": ".paginatedresultproject",
+    "PaginatedResultScorerSummary": ".paginatedresultscorersummary",
+    "PaginatedResultScorerSummaryTypedDict": ".paginatedresultscorersummary",
     "PaginationInfo": ".paginationinfo",
     "PaginationInfoTypedDict": ".paginationinfo",
     "PaginationResponse": ".paginationresponse",
@@ -9248,29 +9392,35 @@ _dynamic_imports: dict[str, str] = {
     "ResponsesInputFileDetail": ".responsesinputfile",
     "ResponsesInputFileResponsesPromptCacheBreakpoint": ".responsesinputfile",
     "ResponsesInputFileResponsesPromptCacheBreakpointTypedDict": ".responsesinputfile",
+    "ResponsesInputFileTTL": ".responsesinputfile",
     "ResponsesInputFileTypedDict": ".responsesinputfile",
     "ResponsesInputFileContent": ".responsesinputfilecontent",
     "ResponsesInputFileContentDetail": ".responsesinputfilecontent",
     "ResponsesInputFileContentResponsesPromptCacheBreakpoint": ".responsesinputfilecontent",
     "ResponsesInputFileContentResponsesPromptCacheBreakpointTypedDict": ".responsesinputfilecontent",
+    "ResponsesInputFileContentTTL": ".responsesinputfilecontent",
     "ResponsesInputFileContentTypedDict": ".responsesinputfilecontent",
     "ResponsesInputImage": ".responsesinputimage",
     "ResponsesInputImageDetail": ".responsesinputimage",
     "ResponsesInputImageResponsesPromptCacheBreakpoint": ".responsesinputimage",
     "ResponsesInputImageResponsesPromptCacheBreakpointTypedDict": ".responsesinputimage",
+    "ResponsesInputImageTTL": ".responsesinputimage",
     "ResponsesInputImageTypedDict": ".responsesinputimage",
     "ResponsesInputImageContent": ".responsesinputimagecontent",
     "ResponsesInputImageContentDetail": ".responsesinputimagecontent",
     "ResponsesInputImageContentResponsesPromptCacheBreakpoint": ".responsesinputimagecontent",
     "ResponsesInputImageContentResponsesPromptCacheBreakpointTypedDict": ".responsesinputimagecontent",
+    "ResponsesInputImageContentTTL": ".responsesinputimagecontent",
     "ResponsesInputImageContentTypedDict": ".responsesinputimagecontent",
     "ResponsesInputText": ".responsesinputtext",
     "ResponsesInputTextResponsesPromptCacheBreakpoint": ".responsesinputtext",
     "ResponsesInputTextResponsesPromptCacheBreakpointTypedDict": ".responsesinputtext",
+    "ResponsesInputTextTTL": ".responsesinputtext",
     "ResponsesInputTextTypedDict": ".responsesinputtext",
     "ResponsesInputTextContent": ".responsesinputtextcontent",
     "ResponsesInputTextContentResponsesPromptCacheBreakpoint": ".responsesinputtextcontent",
     "ResponsesInputTextContentResponsesPromptCacheBreakpointTypedDict": ".responsesinputtextcontent",
+    "ResponsesInputTextContentTTL": ".responsesinputtextcontent",
     "ResponsesInputTextContentTypedDict": ".responsesinputtextcontent",
     "ResponsesInputTokensDetails": ".responsesinputtokensdetails",
     "ResponsesInputTokensDetailsTypedDict": ".responsesinputtokensdetails",
@@ -9412,6 +9562,13 @@ _dynamic_imports: dict[str, str] = {
     "ScoreFilterGroup": ".scorefiltergroup",
     "ScoreFilterGroupTypedDict": ".scorefiltergroup",
     "ScoreOperator": ".scoreoperator",
+    "Scorer": ".scorer",
+    "ScorerTypedDict": ".scorer",
+    "ScorerKind": ".scorerkind",
+    "ScorerSummary": ".scorersummary",
+    "ScorerSummaryTypedDict": ".scorersummary",
+    "ScorerVersion": ".scorerversion",
+    "ScorerVersionTypedDict": ".scorerversion",
     "ScoreSortInput": ".scoresortinput",
     "ScoreSortInputTypedDict": ".scoresortinput",
     "SearchAllEvaluationRunsV2V1ObservabilityEvaluationRunsV2SearchPostRequest": ".search_all_evaluation_runs_v2_v1_observability_evaluation_runs_v2_search_postop",
@@ -9793,7 +9950,10 @@ _dynamic_imports: dict[str, str] = {
     "TranscriptionStreamTextDelta": ".transcriptionstreamtextdelta",
     "TranscriptionStreamTextDeltaTypedDict": ".transcriptionstreamtextdelta",
     "TransferCallTool": ".transfercalltool",
+    "TransferCallToolFiller": ".transfercalltool",
+    "TransferCallToolFillerTypedDict": ".transfercalltool",
     "TransferCallToolTypedDict": ".transfercalltool",
+    "UnknownTransferCallToolFiller": ".transfercalltool",
     "Destination": ".transfertarget",
     "DestinationTypedDict": ".transfertarget",
     "TransferTarget": ".transfertarget",
@@ -9858,8 +10018,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequestTypedDict": ".update_index_metrics_v1_rag_deployments_deployment_id_metrics_putop",
     "UpdateIndexV1ContextSearchIndexesIndexNamePutRequest": ".update_index_v1_context_search_indexes_index_name_putop",
     "UpdateIndexV1ContextSearchIndexesIndexNamePutRequestTypedDict": ".update_index_v1_context_search_indexes_index_name_putop",
-    "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequest": ".update_judge_v1_observability_judges_judge_id_putop",
-    "UpdateJudgeV1ObservabilityJudgesJudgeIDPutRequestTypedDict": ".update_judge_v1_observability_judges_judge_id_putop",
     "UpdatePipelineV1ObservabilityPipelinesPipelineIDPutRequest": ".update_pipeline_v1_observability_pipelines_pipeline_id_putop",
     "UpdatePipelineV1ObservabilityPipelinesPipelineIDPutRequestTypedDict": ".update_pipeline_v1_observability_pipelines_pipeline_id_putop",
     "UpdateRunInfoV1RagIngestionPipelineConfigurationsIDRunInfoPutRequest": ".update_run_info_v1_rag_ingestion_pipeline_configurations_id_run_info_putop",
@@ -9868,6 +10026,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateScheduleV1WorkflowsSchedulesScheduleIDPatchRequestTypedDict": ".update_schedule_v1_workflows_schedules_schedule_id_patchop",
     "UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequest": ".update_service_account_v1_service_accounts_service_account_id_patchop",
     "UpdateServiceAccountV1ServiceAccountsServiceAccountIDPatchRequestTypedDict": ".update_service_account_v1_service_accounts_service_account_id_patchop",
+    "UpdateSessionV1AudioSessionsSessionIDPatchRequest": ".update_session_v1_audio_sessions_session_id_patchop",
+    "UpdateSessionV1AudioSessionsSessionIDPatchRequestTypedDict": ".update_session_v1_audio_sessions_session_id_patchop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequest": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateVoiceV1AudioVoicesVoiceIDPatchRequestTypedDict": ".update_voice_v1_audio_voices_voice_id_patchop",
     "UpdateWorkflowExecutionV1WorkflowsExecutionsExecutionIDUpdatesPostRequest": ".update_workflow_execution_v1_workflows_executions_execution_id_updates_postop",
@@ -9902,10 +10062,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdateInvocationBodyInput": ".updateinvocationbody",
     "UpdateInvocationBodyInputTypedDict": ".updateinvocationbody",
     "UpdateInvocationBodyTypedDict": ".updateinvocationbody",
-    "UpdateJudgeRequest": ".updatejudgerequest",
-    "UpdateJudgeRequestOutput": ".updatejudgerequest",
-    "UpdateJudgeRequestOutputTypedDict": ".updatejudgerequest",
-    "UpdateJudgeRequestTypedDict": ".updatejudgerequest",
     "UpdateLibraryRequest": ".updatelibraryrequest",
     "UpdateLibraryRequestTypedDict": ".updatelibraryrequest",
     "UpdateManagedIndexRequest": ".updatemanagedindexrequest",
@@ -9973,24 +10129,33 @@ _dynamic_imports: dict[str, str] = {
     "ValidationErrorTypedDict": ".validationerror",
     "VectorDType": ".vectordtype",
     "UnknownVoiceAgentCustomConnectorAuthorization": ".voiceagentcustomconnector",
+    "UnknownVoiceAgentCustomConnectorFiller": ".voiceagentcustomconnector",
     "VoiceAgentCustomConnector": ".voiceagentcustomconnector",
     "VoiceAgentCustomConnectorAuthorization": ".voiceagentcustomconnector",
     "VoiceAgentCustomConnectorAuthorizationTypedDict": ".voiceagentcustomconnector",
+    "VoiceAgentCustomConnectorFiller": ".voiceagentcustomconnector",
+    "VoiceAgentCustomConnectorFillerTypedDict": ".voiceagentcustomconnector",
     "VoiceAgentCustomConnectorTypedDict": ".voiceagentcustomconnector",
+    "UnknownVoiceAgentDocumentLibraryToolFiller": ".voiceagentdocumentlibrarytool",
     "VoiceAgentDocumentLibraryTool": ".voiceagentdocumentlibrarytool",
+    "VoiceAgentDocumentLibraryToolFiller": ".voiceagentdocumentlibrarytool",
+    "VoiceAgentDocumentLibraryToolFillerTypedDict": ".voiceagentdocumentlibrarytool",
     "VoiceAgentDocumentLibraryToolTypedDict": ".voiceagentdocumentlibrarytool",
     "VoiceAgentErrorEvent": ".voiceagenterrorevent",
     "VoiceAgentErrorEventSource": ".voiceagenterrorevent",
     "VoiceAgentErrorEventTypedDict": ".voiceagenterrorevent",
     "VoiceAgentEvent": ".voiceagentevent",
     "VoiceAgentEventTypedDict": ".voiceagentevent",
+    "UnknownVoiceAgentFunctionToolFiller": ".voiceagentfunctiontool",
     "VoiceAgentFunctionTool": ".voiceagentfunctiontool",
+    "VoiceAgentFunctionToolFiller": ".voiceagentfunctiontool",
+    "VoiceAgentFunctionToolFillerTypedDict": ".voiceagentfunctiontool",
     "VoiceAgentFunctionToolType": ".voiceagentfunctiontool",
     "VoiceAgentFunctionToolTypedDict": ".voiceagentfunctiontool",
     "VoiceAgentFunctionToolRequest": ".voiceagentfunctiontoolrequest",
+    "VoiceAgentFunctionToolRequestFiller": ".voiceagentfunctiontoolrequest",
+    "VoiceAgentFunctionToolRequestFillerTypedDict": ".voiceagentfunctiontoolrequest",
     "VoiceAgentFunctionToolRequestTypedDict": ".voiceagentfunctiontoolrequest",
-    "VoiceAgentSessionUpdatedEvent": ".voiceagentsessionupdatedevent",
-    "VoiceAgentSessionUpdatedEventTypedDict": ".voiceagentsessionupdatedevent",
     "OldState": ".voiceagentstatechangedevent",
     "State": ".voiceagentstatechangedevent",
     "VoiceAgentStateChangedEvent": ".voiceagentstatechangedevent",
@@ -10003,7 +10168,10 @@ _dynamic_imports: dict[str, str] = {
     "VoiceAgentTranscriptEvent": ".voiceagenttranscriptevent",
     "VoiceAgentTranscriptEventRole": ".voiceagenttranscriptevent",
     "VoiceAgentTranscriptEventTypedDict": ".voiceagenttranscriptevent",
+    "UnknownVoiceAgentWebSearchToolFiller": ".voiceagentwebsearchtool",
     "VoiceAgentWebSearchTool": ".voiceagentwebsearchtool",
+    "VoiceAgentWebSearchToolFiller": ".voiceagentwebsearchtool",
+    "VoiceAgentWebSearchToolFillerTypedDict": ".voiceagentwebsearchtool",
     "VoiceAgentWebSearchToolTypedDict": ".voiceagentwebsearchtool",
     "VoiceCreateRequest": ".voicecreaterequest",
     "VoiceCreateRequestTypedDict": ".voicecreaterequest",
