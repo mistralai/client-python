@@ -85,6 +85,7 @@ DEFAULT_SENSITIVE_ATTRIBUTE_FRAGMENTS: Final[frozenset[str]] = frozenset(
         "password",
         "payload",
         "prompt",
+        "result",
         "secret",
         "set_cookie",
         "token",
