@@ -109,7 +109,7 @@ class AgentsCompletionRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
-    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide. Note: on third-party models (for example GLM), the schema is still enforced, but field descriptions may not influence the output; put field-level requirements in the prompt."""
     tools: NotRequired[Nullable[List[AgentsCompletionRequestToolTypedDict]]]
     tool_choice: NotRequired[AgentsCompletionRequestToolChoiceTypedDict]
     presence_penalty: NotRequired[Nullable[float]]
@@ -159,7 +159,7 @@ class AgentsCompletionRequest(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
     response_format: Optional[ResponseFormat] = None
-    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide. Note: on third-party models (for example GLM), the schema is still enforced, but field descriptions may not influence the output; put field-level requirements in the prompt."""
 
     tools: OptionalNullable[List[AgentsCompletionRequestTool]] = UNSET
 

@@ -32,16 +32,29 @@ SimpleNumericStatisticSpecKind = Union[
 
 
 class SimpleNumericStatisticSpecTypedDict(TypedDict):
-    r"""A scalar numeric reduction with no parameters (``avg``/``sum``/``min``/``max``/``std``/``count``)."""
+    r"""A scalar numeric reduction (``avg``/``sum``/``min``/``max``/``std``/``count``).
+
+    ``weight_key`` (``avg`` only) turns the mean into a weighted mean, ``sum(w * x) / sum(w)``, where
+    each score's weight ``w`` is read from its ``metadata`` under that key. Scores whose weight is
+    missing, non-numeric or negative are left out of that statistic.
+    """
 
     kind: SimpleNumericStatisticSpecKind
+    weight_key: NotRequired[Nullable[str]]
     goal: NotRequired[Nullable[GoalSpecTypedDict]]
 
 
 class SimpleNumericStatisticSpec(BaseModel):
-    r"""A scalar numeric reduction with no parameters (``avg``/``sum``/``min``/``max``/``std``/``count``)."""
+    r"""A scalar numeric reduction (``avg``/``sum``/``min``/``max``/``std``/``count``).
+
+    ``weight_key`` (``avg`` only) turns the mean into a weighted mean, ``sum(w * x) / sum(w)``, where
+    each score's weight ``w`` is read from its ``metadata`` under that key. Scores whose weight is
+    missing, non-numeric or negative are left out of that statistic.
+    """
 
     kind: SimpleNumericStatisticSpecKind
+
+    weight_key: OptionalNullable[str] = UNSET
 
     goal: OptionalNullable[GoalSpec] = UNSET
 
@@ -50,8 +63,8 @@ class SimpleNumericStatisticSpec(BaseModel):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["goal"])
-        nullable_fields = set(["goal"])
+        optional_fields = set(["weight_key", "goal"])
+        nullable_fields = set(["weight_key", "goal"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

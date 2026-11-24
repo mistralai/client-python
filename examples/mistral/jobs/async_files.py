@@ -15,9 +15,11 @@ async def main():
     # Create a new file
     created_file = await client.files.upload_async(
         file=File(
-            file_name="training_file.jsonl",
-            content=open("examples/fixtures/ft_training_file.jsonl", "rb").read(),
-        )
+            file_name="batch_file.jsonl",
+            # One Batch API request per line: a custom_id and the request body.
+            content=b'{"custom_id": "0", "body": {"messages": [{"role": "user", "content": "What is the best French cheese?"}]}}\n',
+        ),
+        purpose="batch",
     )
     print(created_file)
 

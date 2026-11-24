@@ -18,6 +18,19 @@ from .transcriptionstreamtextdelta import (
     TranscriptionStreamTextDelta,
     TranscriptionStreamTextDeltaTypedDict,
 )
+from .turndetectioneagerendevent import (
+    TurnDetectionEagerEndEvent,
+    TurnDetectionEagerEndEventTypedDict,
+)
+from .turndetectionendevent import TurnDetectionEndEvent, TurnDetectionEndEventTypedDict
+from .turndetectionresumeevent import (
+    TurnDetectionResumeEvent,
+    TurnDetectionResumeEventTypedDict,
+)
+from .turndetectionstartevent import (
+    TurnDetectionStartEvent,
+    TurnDetectionStartEventTypedDict,
+)
 from functools import partial
 from mistralai.client.types import BaseModel
 from mistralai.client.utils.unions import parse_open_union
@@ -30,8 +43,12 @@ from typing_extensions import Annotated, TypeAliasType, TypedDict
 TranscriptionStreamEventsDataTypedDict = TypeAliasType(
     "TranscriptionStreamEventsDataTypedDict",
     Union[
+        TurnDetectionStartEventTypedDict,
+        TurnDetectionEagerEndEventTypedDict,
+        TurnDetectionResumeEventTypedDict,
         TranscriptionStreamTextDeltaTypedDict,
         TranscriptionStreamLanguageTypedDict,
+        TurnDetectionEndEventTypedDict,
         TranscriptionStreamSegmentDeltaTypedDict,
         TranscriptionStreamDoneTypedDict,
     ],
@@ -53,6 +70,10 @@ _TRANSCRIPTION_STREAM_EVENTS_DATA_VARIANTS: dict[str, Any] = {
     "transcription.language": TranscriptionStreamLanguage,
     "transcription.segment": TranscriptionStreamSegmentDelta,
     "transcription.text.delta": TranscriptionStreamTextDelta,
+    "turn.eager_end": TurnDetectionEagerEndEvent,
+    "turn.end": TurnDetectionEndEvent,
+    "turn.resume": TurnDetectionResumeEvent,
+    "turn.start": TurnDetectionStartEvent,
 }
 
 
@@ -62,6 +83,10 @@ TranscriptionStreamEventsData = Annotated[
         TranscriptionStreamLanguage,
         TranscriptionStreamSegmentDelta,
         TranscriptionStreamTextDelta,
+        TurnDetectionEagerEndEvent,
+        TurnDetectionEndEvent,
+        TurnDetectionResumeEvent,
+        TurnDetectionStartEvent,
         UnknownTranscriptionStreamEventsData,
     ],
     BeforeValidator(

@@ -36,7 +36,7 @@ with Mistral(
     res = mistral.files.upload(file={
         "file_name": "example.file",
         "content": open("example.file", "rb"),
-    }, visibility="workspace")
+    }, visibility="workspace", purpose="batch")
 
     # Handle response
     print(res)

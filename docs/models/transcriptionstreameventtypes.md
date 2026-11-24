@@ -18,3 +18,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"transcription.segment"`
 - `"transcription.text.delta"`
 - `"transcription.done"`
+- `"turn.start"`
+- `"turn.eager_end"`
+- `"turn.resume"`
+- `"turn.end"`

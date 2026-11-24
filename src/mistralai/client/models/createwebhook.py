@@ -26,6 +26,8 @@ class CreateWebhookTypedDict(TypedDict):
     name: str
     r"""Human-readable name for this webhook"""
     owner_type: NotRequired[TriggersOwnerType]
+    description: NotRequired[Nullable[str]]
+    r"""What this webhook is used for"""
     secret: NotRequired[Nullable[str]]
     r"""Signing secret provided by the third-party provider"""
     encryption_key: NotRequired[Nullable[str]]
@@ -40,11 +42,14 @@ class CreateWebhookTypedDict(TypedDict):
     signature_extractor_regex: NotRequired[Nullable[str]]
     r"""Regex to extract signature, eg sha256=(.*)"""
     timestamp_extractor_regex: NotRequired[Nullable[str]]
-    r"""Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)"""
+    r"""Regex to extract the timestamp from the rendered timestamp_pattern (the signature header by default), used as {timestamp}, eg t=([^,]+). Defaults to the whole value when timestamp_pattern is set"""
+    timestamp_pattern: NotRequired[Nullable[str]]
+    r"""Pattern for the timestamp used as {timestamp}, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {headers.X-Slack-Request-Timestamp} or {body.webhookTimestamp}. Defaults to the signature header when timestamp_extractor_regex is set"""
     signature_payload_pattern: NotRequired[Nullable[str]]
     r"""Pattern for signature payload, eg {body} or {timestamp}.{body}"""
     signature_encoding: NotRequired[Nullable[WebhookSignatureEncoding]]
     success_status_code: NotRequired[Nullable[int]]
+    r"""HTTP status code returned for accepted deliveries, eg 200"""
     event_type_pattern: NotRequired[Nullable[str]]
     r"""Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}"""
     event_id_pattern: NotRequired[Nullable[str]]
@@ -58,6 +63,9 @@ class CreateWebhook(BaseModel):
     r"""Human-readable name for this webhook"""
 
     owner_type: Optional[TriggersOwnerType] = None
+
+    description: OptionalNullable[str] = UNSET
+    r"""What this webhook is used for"""
 
     secret: OptionalNullable[str] = UNSET
     r"""Signing secret provided by the third-party provider"""
@@ -81,7 +89,10 @@ class CreateWebhook(BaseModel):
     r"""Regex to extract signature, eg sha256=(.*)"""
 
     timestamp_extractor_regex: OptionalNullable[str] = UNSET
-    r"""Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)"""
+    r"""Regex to extract the timestamp from the rendered timestamp_pattern (the signature header by default), used as {timestamp}, eg t=([^,]+). Defaults to the whole value when timestamp_pattern is set"""
+
+    timestamp_pattern: OptionalNullable[str] = UNSET
+    r"""Pattern for the timestamp used as {timestamp}, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {headers.X-Slack-Request-Timestamp} or {body.webhookTimestamp}. Defaults to the signature header when timestamp_extractor_regex is set"""
 
     signature_payload_pattern: OptionalNullable[str] = UNSET
     r"""Pattern for signature payload, eg {body} or {timestamp}.{body}"""
@@ -89,6 +100,7 @@ class CreateWebhook(BaseModel):
     signature_encoding: OptionalNullable[WebhookSignatureEncoding] = UNSET
 
     success_status_code: OptionalNullable[int] = UNSET
+    r"""HTTP status code returned for accepted deliveries, eg 200"""
 
     event_type_pattern: OptionalNullable[str] = UNSET
     r"""Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}"""
@@ -104,6 +116,7 @@ class CreateWebhook(BaseModel):
         optional_fields = set(
             [
                 "owner_type",
+                "description",
                 "secret",
                 "encryption_key",
                 "url_verification_token",
@@ -113,6 +126,7 @@ class CreateWebhook(BaseModel):
                 "validity_period_second",
                 "signature_extractor_regex",
                 "timestamp_extractor_regex",
+                "timestamp_pattern",
                 "signature_payload_pattern",
                 "signature_encoding",
                 "success_status_code",
@@ -122,6 +136,7 @@ class CreateWebhook(BaseModel):
         )
         nullable_fields = set(
             [
+                "description",
                 "secret",
                 "encryption_key",
                 "url_verification_token",
@@ -131,6 +146,7 @@ class CreateWebhook(BaseModel):
                 "validity_period_second",
                 "signature_extractor_regex",
                 "timestamp_extractor_regex",
+                "timestamp_pattern",
                 "signature_payload_pattern",
                 "signature_encoding",
                 "success_status_code",

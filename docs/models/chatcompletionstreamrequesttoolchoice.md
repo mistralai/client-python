@@ -5,15 +5,15 @@ Controls which (if any) tool is called by the model. `none` means the model will
 
 ## Supported Types
 
-### `models.ToolChoice`
-
-```python
-value: models.ToolChoice = /* values here */
-```
-
 ### `models.ToolChoiceEnum`
 
 ```python
 value: models.ToolChoiceEnum = /* values here */
+```
+
+### `models.ToolChoice`
+
+```python
+value: models.ToolChoice = /* values here */
 ```
 

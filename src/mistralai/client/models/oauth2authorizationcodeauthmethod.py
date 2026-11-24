@@ -28,6 +28,12 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
+TokenEndpointAuthMethod = Literal[
+    "client_secret_post",
+    "client_secret_basic",
+]
+
+
 class OAuth2AuthorizationCodeAuthMethodTypedDict(TypedDict):
     auth_data: AuthDataTypedDict
     method_type: Literal["oauth2"]
@@ -36,6 +42,8 @@ class OAuth2AuthorizationCodeAuthMethodTypedDict(TypedDict):
     grant_type: Literal["authorization_code"]
     oauth2_server_metadata: NotRequired[Nullable[ExtendedOAuthServerMetadataTypedDict]]
     r"""OAuth2 authorization server metadata (endpoints, scopes_supported, ...)."""
+    token_endpoint_auth_method: NotRequired[Nullable[TokenEndpointAuthMethod]]
+    r"""How the client secret is sent to the token endpoint: in the request body (client_secret_post) or in an HTTP Basic header (client_secret_basic). Defaults to client_secret_post."""
 
 
 class OAuth2AuthorizationCodeAuthMethod(BaseModel):
@@ -62,13 +70,25 @@ class OAuth2AuthorizationCodeAuthMethod(BaseModel):
     oauth2_server_metadata: OptionalNullable[ExtendedOAuthServerMetadata] = UNSET
     r"""OAuth2 authorization server metadata (endpoints, scopes_supported, ...)."""
 
+    token_endpoint_auth_method: OptionalNullable[TokenEndpointAuthMethod] = UNSET
+    r"""How the client secret is sent to the token endpoint: in the request body (client_secret_post) or in an HTTP Basic header (client_secret_basic). Defaults to client_secret_post."""
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["method_type", "headers", "oauth2_server_metadata"])
-        nullable_fields = set(["headers", "oauth2_server_metadata"])
+        optional_fields = set(
+            [
+                "method_type",
+                "headers",
+                "oauth2_server_metadata",
+                "token_endpoint_auth_method",
+            ]
+        )
+        nullable_fields = set(
+            ["headers", "oauth2_server_metadata", "token_endpoint_auth_method"]
+        )
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

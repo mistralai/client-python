@@ -177,6 +177,7 @@ class Webhooks(BaseSDK):
         provider: models.WebhookProvider,
         name: str,
         owner_type: Optional[models.TriggersOwnerType] = None,
+        description: OptionalNullable[str] = UNSET,
         secret: OptionalNullable[str] = UNSET,
         encryption_key: OptionalNullable[str] = UNSET,
         url_verification_token: OptionalNullable[str] = UNSET,
@@ -188,6 +189,7 @@ class Webhooks(BaseSDK):
         validity_period_second: OptionalNullable[int] = UNSET,
         signature_extractor_regex: OptionalNullable[str] = UNSET,
         timestamp_extractor_regex: OptionalNullable[str] = UNSET,
+        timestamp_pattern: OptionalNullable[str] = UNSET,
         signature_payload_pattern: OptionalNullable[str] = UNSET,
         signature_encoding: OptionalNullable[models.WebhookSignatureEncoding] = UNSET,
         success_status_code: OptionalNullable[int] = UNSET,
@@ -203,6 +205,7 @@ class Webhooks(BaseSDK):
         :param provider:
         :param name: Human-readable name for this webhook
         :param owner_type:
+        :param description: What this webhook is used for
         :param secret: Signing secret provided by the third-party provider
         :param encryption_key: Encryption key used to decrypt webhook payloads
         :param url_verification_token: Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers
@@ -211,10 +214,11 @@ class Webhooks(BaseSDK):
         :param signature_header_name:
         :param validity_period_second: Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300
         :param signature_extractor_regex: Regex to extract signature, eg sha256=(.*)
-        :param timestamp_extractor_regex: Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)
+        :param timestamp_extractor_regex: Regex to extract the timestamp from the rendered timestamp_pattern (the signature header by default), used as {timestamp}, eg t=([^,]+). Defaults to the whole value when timestamp_pattern is set
+        :param timestamp_pattern: Pattern for the timestamp used as {timestamp}, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {headers.X-Slack-Request-Timestamp} or {body.webhookTimestamp}. Defaults to the signature header when timestamp_extractor_regex is set
         :param signature_payload_pattern: Pattern for signature payload, eg {body} or {timestamp}.{body}
         :param signature_encoding:
-        :param success_status_code:
+        :param success_status_code: HTTP status code returned for accepted deliveries, eg 200
         :param event_type_pattern: Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}
         :param event_id_pattern: Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body
         :param retries: Override the default retry configuration for this method
@@ -239,6 +243,7 @@ class Webhooks(BaseSDK):
             provider=provider,
             owner_type=owner_type,
             name=name,
+            description=description,
             secret=secret,
             encryption_key=encryption_key,
             url_verification_token=url_verification_token,
@@ -248,6 +253,7 @@ class Webhooks(BaseSDK):
             validity_period_second=validity_period_second,
             signature_extractor_regex=signature_extractor_regex,
             timestamp_extractor_regex=timestamp_extractor_regex,
+            timestamp_pattern=timestamp_pattern,
             signature_payload_pattern=signature_payload_pattern,
             signature_encoding=signature_encoding,
             success_status_code=success_status_code,
@@ -323,6 +329,7 @@ class Webhooks(BaseSDK):
         provider: models.WebhookProvider,
         name: str,
         owner_type: Optional[models.TriggersOwnerType] = None,
+        description: OptionalNullable[str] = UNSET,
         secret: OptionalNullable[str] = UNSET,
         encryption_key: OptionalNullable[str] = UNSET,
         url_verification_token: OptionalNullable[str] = UNSET,
@@ -334,6 +341,7 @@ class Webhooks(BaseSDK):
         validity_period_second: OptionalNullable[int] = UNSET,
         signature_extractor_regex: OptionalNullable[str] = UNSET,
         timestamp_extractor_regex: OptionalNullable[str] = UNSET,
+        timestamp_pattern: OptionalNullable[str] = UNSET,
         signature_payload_pattern: OptionalNullable[str] = UNSET,
         signature_encoding: OptionalNullable[models.WebhookSignatureEncoding] = UNSET,
         success_status_code: OptionalNullable[int] = UNSET,
@@ -349,6 +357,7 @@ class Webhooks(BaseSDK):
         :param provider:
         :param name: Human-readable name for this webhook
         :param owner_type:
+        :param description: What this webhook is used for
         :param secret: Signing secret provided by the third-party provider
         :param encryption_key: Encryption key used to decrypt webhook payloads
         :param url_verification_token: Token the provider echoes back when verifying the URL. Required for WhatsApp (paste the same value in the Verify token field of the Meta App Dashboard), forbidden for other providers
@@ -357,10 +366,11 @@ class Webhooks(BaseSDK):
         :param signature_header_name:
         :param validity_period_second: Maximum allowed drift in seconds between the signed timestamp and reception time, eg 300
         :param signature_extractor_regex: Regex to extract signature, eg sha256=(.*)
-        :param timestamp_extractor_regex: Regex to extract the timestamp from the signature header, used as {timestamp}, eg t=([^,]+)
+        :param timestamp_extractor_regex: Regex to extract the timestamp from the rendered timestamp_pattern (the signature header by default), used as {timestamp}, eg t=([^,]+). Defaults to the whole value when timestamp_pattern is set
+        :param timestamp_pattern: Pattern for the timestamp used as {timestamp}, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {headers.X-Slack-Request-Timestamp} or {body.webhookTimestamp}. Defaults to the signature header when timestamp_extractor_regex is set
         :param signature_payload_pattern: Pattern for signature payload, eg {body} or {timestamp}.{body}
         :param signature_encoding:
-        :param success_status_code:
+        :param success_status_code: HTTP status code returned for accepted deliveries, eg 200
         :param event_type_pattern: Pattern for the event type, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.type} or {headers.X-GitHub-Event}
         :param event_id_pattern: Pattern for a unique event identifier used to deduplicate deliveries, with {body.<path>} and {headers.<Header-Name>} placeholders, eg {body.id} or {body.event_id}.{headers.X-Delivery-Id}. Defaults to a hash of the request body
         :param retries: Override the default retry configuration for this method
@@ -385,6 +395,7 @@ class Webhooks(BaseSDK):
             provider=provider,
             owner_type=owner_type,
             name=name,
+            description=description,
             secret=secret,
             encryption_key=encryption_key,
             url_verification_token=url_verification_token,
@@ -394,6 +405,7 @@ class Webhooks(BaseSDK):
             validity_period_second=validity_period_second,
             signature_extractor_regex=signature_extractor_regex,
             timestamp_extractor_regex=timestamp_extractor_regex,
+            timestamp_pattern=timestamp_pattern,
             signature_payload_pattern=signature_payload_pattern,
             signature_encoding=signature_encoding,
             success_status_code=success_status_code,

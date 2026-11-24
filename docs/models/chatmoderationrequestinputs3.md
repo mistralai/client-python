@@ -1,6 +1,6 @@
 # ChatModerationRequestInputs3
 
-Chat to classify
+Chat to classify.
 
 
 ## Supported Types

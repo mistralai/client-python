@@ -28,9 +28,6 @@ dev = [
 [tool.uv]
 exclude-newer = "2 days"
 
-[tool.setuptools.package-data]
-"*" = ["py.typed", "src/mistralai/gcp/client/py.typed"]
-
 [tool.hatch.build.targets.sdist]
 include = ["src/mistralai"]
 

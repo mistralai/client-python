@@ -38,14 +38,16 @@ async def main():
     # anywhere. To run the same input again later, upload it and keep the file id:
     #     payload = BatchInput.from_payload({...})
     #     f = await batch.upload(payload)      # f.file_id -- stash and reuse
-    #     result = await batch.run(f)
+    #     result = await batch.run(f, model="mistral-embed")
     result = await batch.run(
         BatchInput.from_payload(
             {
                 custom_id: EmbeddingRequest(model="mistral-embed", inputs=text)
                 for custom_id, text in texts.items()
             }
-        )
+        ),
+        # The Batch API requires the job's model, even when each body names it.
+        model="mistral-embed",
     )
     print(
         f"Job {result.job.id}: {result.status} "
@@ -68,7 +70,7 @@ async def main():
     # time (constant memory). It binds to a job you already own -- create it (or
     # rehydrate one from a prior process via batch.get(job_id)) and pass the handle;
     # it reads only, so cleaning up the job and its files stays yours:
-    #     handle = await batch.create(BatchInput.from_payload({...}))
+    #     handle = await batch.create(BatchInput.from_payload({...}), model="mistral-embed")
     #     async for custom_id, item in batch.stream_results(handle):
     #         ...  # item is a typed EmbeddingResponse or a BatchRequestError
 

@@ -32,6 +32,7 @@ class ScalarStatisticValueTypedDict(TypedDict):
     id: str
     type: Literal["scalar"]
     value: NotRequired[Nullable[float]]
+    sample_count: NotRequired[Nullable[int]]
 
 
 class ScalarStatisticValue(BaseModel):
@@ -55,13 +56,15 @@ class ScalarStatisticValue(BaseModel):
 
     value: OptionalNullable[float] = UNSET
 
+    sample_count: OptionalNullable[int] = UNSET
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["type", "value"])
-        nullable_fields = set(["value"])
+        optional_fields = set(["type", "value", "sample_count"])
+        nullable_fields = set(["value", "sample_count"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

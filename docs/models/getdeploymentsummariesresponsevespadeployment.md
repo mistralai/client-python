@@ -1,9 +1,0 @@
-# GetDeploymentSummariesResponseVespaDeployment
-
-
-## Fields
-
-| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `type`                                                                                                         | *Literal["vespa"]*                                                                                             | :heavy_check_mark:                                                                                             | N/A                                                                                                            |
-| `indexes`                                                                                                      | List[[models.GetDeploymentSummariesResponseVespaIndex](../models/getdeploymentsummariesresponsevespaindex.md)] | :heavy_check_mark:                                                                                             | N/A                                                                                                            |

@@ -17,8 +17,8 @@ from typing_extensions import Annotated, TypeAliasType
 OAuth2AuthMethodTypedDict = TypeAliasType(
     "OAuth2AuthMethodTypedDict",
     Union[
-        OAuth2AuthorizationCodeAuthMethodTypedDict,
         OAuth2ClientCredentialsAuthMethodTypedDict,
+        OAuth2AuthorizationCodeAuthMethodTypedDict,
     ],
 )
 

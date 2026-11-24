@@ -168,6 +168,28 @@ class TestConnection(unittest.IsolatedAsyncioTestCase):
             ],
         )
 
+    async def test_update_session_sends_phoneme_hints(self) -> None:
+        ws = FakeWebSocket()
+        await _connection(ws).update_session(phoneme_hints={"Dab": ["d", "a", "b"]})
+        self.assertEqual(
+            ws.sent,
+            [
+                {
+                    "type": "session.update",
+                    "session": {"phoneme_hints": {"Dab": ["d", "a", "b"]}},
+                }
+            ],
+        )
+
+    async def test_update_session_clears_phoneme_hints_with_empty_mapping(
+        self,
+    ) -> None:
+        ws = FakeWebSocket()
+        await _connection(ws).update_session(phoneme_hints={})
+        self.assertEqual(
+            ws.sent, [{"type": "session.update", "session": {"phoneme_hints": {}}}]
+        )
+
     async def test_rejects_empty_update(self) -> None:
         ws = FakeWebSocket()
         with self.assertRaisesRegex(ValueError, "At least one session field"):
@@ -220,6 +242,20 @@ class TestRealtimeSpeech(unittest.IsolatedAsyncioTestCase):
             ],
         )
         self.assertEqual(connection.request_id, "ws-123")
+
+    async def test_connect_sends_phoneme_hints(self) -> None:
+        ws = FakeWebSocket([SESSION_CREATED])
+        with self._patch(ws):
+            await self._client().connect(MODEL, phoneme_hints={"Dab": ["d", "a", "b"]})
+        self.assertEqual(
+            ws.sent,
+            [
+                {
+                    "type": "session.update",
+                    "session": {"phoneme_hints": {"Dab": ["d", "a", "b"]}},
+                }
+            ],
+        )
 
     async def test_connect_sends_nothing_without_session_fields(self) -> None:
         ws = FakeWebSocket([SESSION_CREATED])

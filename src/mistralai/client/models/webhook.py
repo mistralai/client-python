@@ -43,11 +43,13 @@ class WebhookTypedDict(TypedDict):
     expires_at: Nullable[datetime]
     created_at: datetime
     updated_at: datetime
+    description: NotRequired[Nullable[str]]
     url_verification_token: NotRequired[Nullable[str]]
     r"""Token the provider echoes back when verifying the URL (WhatsApp: the Verify token)"""
     event_type_path: NotRequired[Nullable[str]]
     event_type_pattern: NotRequired[Nullable[str]]
     event_id_pattern: NotRequired[Nullable[str]]
+    timestamp_pattern: NotRequired[Nullable[str]]
 
 
 class Webhook(BaseModel):
@@ -93,6 +95,8 @@ class Webhook(BaseModel):
 
     updated_at: datetime
 
+    description: OptionalNullable[str] = UNSET
+
     url_verification_token: OptionalNullable[str] = UNSET
     r"""Token the provider echoes back when verifying the URL (WhatsApp: the Verify token)"""
 
@@ -107,6 +111,8 @@ class Webhook(BaseModel):
 
     event_id_pattern: OptionalNullable[str] = UNSET
 
+    timestamp_pattern: OptionalNullable[str] = UNSET
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
@@ -114,14 +120,17 @@ class Webhook(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "description",
                 "url_verification_token",
                 "event_type_path",
                 "event_type_pattern",
                 "event_id_pattern",
+                "timestamp_pattern",
             ]
         )
         nullable_fields = set(
             [
+                "description",
                 "url_verified",
                 "url_verification_token",
                 "signature_hash_algorithm",
@@ -135,6 +144,7 @@ class Webhook(BaseModel):
                 "event_type_path",
                 "event_type_pattern",
                 "event_id_pattern",
+                "timestamp_pattern",
                 "expires_at",
             ]
         )

@@ -29,8 +29,29 @@ There are also package-specific ownership files:
 
 If a file is not listed in the relevant `.genignore` and it has the generated header, assume it should not be edited directly.
 
+Custom SDK hooks are hand-written too, though the root `.genignore` does not list them: in `src/mistralai/client/_hooks/`
+(and `packages/*/src/mistralai/*/client/_hooks/`), every file without the generated header, such as `registration.py`
+and `custom_user_agent.py`. Speakeasy writes `registration.py` once and never overwrites it (the package `.genignore`
+files also list it); `sdkhooks.py`, `types.py` and `__init__.py` carry the header and are regenerated.
+
 ## PR Review Rule Of Thumb
 
 - Prefer PRs that change hand-owned files listed in `.genignore`.
 - Be skeptical of direct edits to generated SDK files under `src/`, `docs/`, or `packages/*/src/`.
 - If a generated file changed, look for the corresponding source/config change that explains the regeneration.
+
+## How a Change Reaches PyPI
+
+This directory is the source of truth; the public `mistralai/client-python` repository is a copy of it. Releasing
+runs in the Buildkite pipeline `eng-sdk-codegen` in the dashboard monorepo, not in GitHub Actions:
+
+1. Regenerate: a cron every Friday at 06:17 UTC, or a manual build with `Action = regenerate`, runs Speakeasy on
+   `openapi/specs/v2/` and opens the rolling dashboard pull request from `sdk/regen-client-python`. Review and merge it.
+2. Publish: a person starts a build with `Action = publish`, from the Buildkite UI or through the Buildkite API or
+   MCP with `action=publish`, `dry_run=false`, `clients=python` as build meta-data. It copies this directory into a
+   pull request on the `sdk-sync` branch of `mistralai/client-python`. Publishing never regenerates, so merge step 1
+   first.
+3. Merging that public pull request is the release: it publishes to PyPI.
+
+The full procedure, its options and its safety checks are in the dashboard skill
+`openapi/.agents/skills/deploy-public-sdk/SKILL.md`.

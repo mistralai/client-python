@@ -13,7 +13,7 @@ from mistralai.client.models import (
     ThinkChunk,
     TextChunk,
 )
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 
 class Explanation(BaseModel):
@@ -164,6 +164,31 @@ class TestConvertToParsedChatCompletionResponse(unittest.TestCase):
         assert output.choices is not None
         assert output.choices[0].message is not None
         self.assertIsNone(output.choices[0].message.parsed)
+
+    def test_convert_to_parsed_chat_completion_response_with_non_object_json(self):
+        for content, json_type in [
+            ("[1, 2, 3]", "array"),
+            ("42", "number"),
+            ('"x = -4"', "string"),
+            ("true", "boolean"),
+            ("null", "null"),
+        ]:
+            with self.subTest(content=content):
+                response = mock_cc_response.model_copy(deep=True)
+                assert response.choices is not None
+                assert response.choices[0].message is not None
+                response.choices[0].message.content = content
+                with self.assertRaises(ValidationError) as ctx:
+                    convert_to_parsed_chat_completion_response(
+                        response, MathDemonstration
+                    )
+                errors = ctx.exception.errors()
+                self.assertEqual(len(errors), 1)
+                self.assertEqual(errors[0]["type"], "json_not_object")
+                self.assertEqual(
+                    errors[0]["msg"],
+                    f"Expected a JSON object to parse into MathDemonstration, got a JSON {json_type}",
+                )
 
 
 if __name__ == "__main__":

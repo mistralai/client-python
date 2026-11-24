@@ -91,11 +91,25 @@ SignalInvocationBodyInput = TypeAliasType(
 r"""Input data for the signal, matching its schema"""
 
 
+SignalInvocationBodyCallContextTypedDict = TypeAliasType(
+    "SignalInvocationBodyCallContextTypedDict", Union[bool, int, str]
+)
+
+
+SignalInvocationBodyCallContext = TypeAliasType(
+    "SignalInvocationBodyCallContext", Union[bool, int, str]
+)
+
+
 class SignalInvocationBodyTypedDict(TypedDict):
     name: str
     r"""The name of the signal to send"""
     input: NotRequired[Nullable[SignalInvocationBodyInputTypedDict]]
     r"""Input data for the signal, matching its schema"""
+    call_context: NotRequired[
+        Nullable[Dict[str, SignalInvocationBodyCallContextTypedDict]]
+    ]
+    r"""Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here."""
 
 
 class SignalInvocationBody(BaseModel):
@@ -105,13 +119,16 @@ class SignalInvocationBody(BaseModel):
     input: OptionalNullable[SignalInvocationBodyInput] = UNSET
     r"""Input data for the signal, matching its schema"""
 
+    call_context: OptionalNullable[Dict[str, SignalInvocationBodyCallContext]] = UNSET
+    r"""Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here."""
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["input"])
-        nullable_fields = set(["input"])
+        optional_fields = set(["input", "call_context"])
+        nullable_fields = set(["input", "call_context"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

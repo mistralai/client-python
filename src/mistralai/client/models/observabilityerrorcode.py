@@ -32,6 +32,7 @@ ObservabilityErrorCode = Union[
         "DATASET_NOT_FOUND",
         "DATASET_TASK_NOT_FOUND",
         "DATASET_RECORD_NOT_FOUND",
+        "DATASET_RECORD_ID_CONFLICT",
         "DATASET_RECORD_FORMAT_ERROR",
         "AGENT_NOT_FOUND",
         "AGENT_MISTRAL_API_ERROR",
@@ -62,6 +63,7 @@ ObservabilityErrorCode = Union[
         "TRACES_FILTER_QUERY_PARSE_ERROR",
         "TRACE_NOT_FOUND",
         "SPAN_NOT_FOUND",
+        "OCSF_NOT_ENABLED",
     ],
     UnrecognizedStr,
 ]

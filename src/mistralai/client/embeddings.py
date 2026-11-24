@@ -59,10 +59,10 @@ class Embeddings(BaseSDK):
         request = models.EmbeddingRequest(
             model=model,
             metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
-            inputs=utils.unmarshal(inputs, models.EmbeddingRequestInputs),
             output_dimension=output_dimension,
             output_dtype=output_dtype,
             encoding_format=encoding_format,
+            inputs=utils.get_pydantic_model(inputs, models.EmbeddingRequestInputs),
         )
 
         req = self._build_request(
@@ -174,10 +174,10 @@ class Embeddings(BaseSDK):
         request = models.EmbeddingRequest(
             model=model,
             metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
-            inputs=utils.unmarshal(inputs, models.EmbeddingRequestInputs),
             output_dimension=output_dimension,
             output_dtype=output_dtype,
             encoding_format=encoding_format,
+            inputs=utils.get_pydantic_model(inputs, models.EmbeddingRequestInputs),
         )
 
         req = self._build_request_async(

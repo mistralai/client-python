@@ -64,25 +64,25 @@ ChatModerationRequestInputs3TypedDict = TypeAliasType(
         List[List[ChatModerationRequestInputs2TypedDict]],
     ],
 )
-r"""Chat to classify"""
+r"""Chat to classify."""
 
 
 ChatModerationRequestInputs3 = TypeAliasType(
     "ChatModerationRequestInputs3",
     Union[List[ChatModerationRequestInputs1], List[List[ChatModerationRequestInputs2]]],
 )
-r"""Chat to classify"""
+r"""Chat to classify."""
 
 
 class ChatModerationRequestTypedDict(TypedDict):
     inputs: ChatModerationRequestInputs3TypedDict
-    r"""Chat to classify"""
+    r"""Chat to classify."""
     model: str
 
 
 class ChatModerationRequest(BaseModel):
     inputs: Annotated[ChatModerationRequestInputs3, pydantic.Field(alias="input")]
-    r"""Chat to classify"""
+    r"""Chat to classify."""
 
     model: str
 

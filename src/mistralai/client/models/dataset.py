@@ -12,7 +12,7 @@ from mistralai.client.types import (
 )
 from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
-from typing import Optional
+from typing import Any, Dict, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -27,6 +27,7 @@ class DatasetTypedDict(TypedDict):
     owner_id: str
     workspace_id: str
     owner_type: NotRequired[PrincipalType]
+    metadata: NotRequired[Dict[str, Any]]
 
 
 class Dataset(BaseModel):
@@ -50,12 +51,14 @@ class Dataset(BaseModel):
 
     owner_type: Optional[PrincipalType] = None
 
+    metadata: Optional[Dict[str, Any]] = None
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["owner_type"])
+        optional_fields = set(["owner_type", "metadata"])
         nullable_fields = set(["deleted_at"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()

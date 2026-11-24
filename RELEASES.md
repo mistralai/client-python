@@ -1987,3 +1987,99 @@ Based on:
 - [python v3.8.0] .
 ### Releases
 - [PyPI v3.8.0] https://pypi.org/project/mistralai/3.8.0 - .
+
+## 2026-11-24 14:42:03
+### Generated SDK baseline differences
+The published SDK or generator baseline differs from the baseline used by the OpenAPI changelog.
+
+<details>
+<summary>Generated surface details</summary>
+
+#### Beta surface changes
+Removed from the beta surface (122):
+- `ContextSearchIndexes`
+- `GetDeploymentSummariesResponse`
+- `GetDeploymentSummariesResponseDeployment`
+- `GetDeploymentSummariesResponseVespaDeployment`
+- `GetDeploymentSummariesResponseVespaIndex`
+- `ImportDatasetFromPlaygroundRequest`
+- `IngestionPipelineTargetIndexRef`
+- `PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest`
+- `RagSearchIndexes`
+- `RegisterDeploymentRequestDeployment`
+- `RegisterDeploymentRequestVespaDeployment`
+- `RegisterDeploymentRequestVespaField`
+- `RegisterDeploymentRequestVespaIndex`
+- `RegisterSearchIndexResponseIndex`
+- `UnknownGetDeploymentSummariesResponseDeploymentDeployment`
+- `UnregisterDeploymentV1RagDeploymentsDeploymentIDDeleteRequest`
+- `UpdateIndexMetricsV1RagDeploymentsDeploymentIDMetricsPutRequest`
+- `UpdateMetricsRequestDeploymentMetricsOffline`
+- `UpdateMetricsRequestDeploymentMetricsOnline`
+- `UpdateMetricsRequestIndexMetrics`
+- `CreateIngestionPipelineConfigurationRequest.target_indexes`
+- `GetDeploymentSummariesResponse.deployments`
+- `GetDeploymentSummariesResponseDeployment.created_at`
+- `GetDeploymentSummariesResponseDeployment.creator_id`
+- `GetDeploymentSummariesResponseDeployment.deployment`
+- ...and 97 more
+
+Changed types or signatures in beta (10):
+- `AudioChunk.type: Annotated[Annotated[Literal['input_audio'], AfterValidator(validate_const('input_audio'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Optional[Literal['input_audio']], AfterValidator(validate_const('input_audio'))], pydantic.Field(alias='type')]`
+- `BetaContext.search_indexes: ContextSearchIndexes -> SearchIndexes`
+- `EvaluationRunV2Response.run_scores: Optional[Dict[str, EvaluationRunScoreV2]] -> Optional[Dict[str, EvaluationRunRunScoreV2]]`
+- `EvaluationRunV2ResponseTypedDict.run_scores: NotRequired[Dict[str, EvaluationRunScoreV2TypedDict]] -> NotRequired[Dict[str, EvaluationRunRunScoreV2TypedDict]]`
+- `EvaluationRunV2WithRefsResponse.run_scores: Optional[Dict[str, EvaluationRunScoreV2]] -> Optional[Dict[str, EvaluationRunRunScoreV2]]`
+- `EvaluationRunV2WithRefsResponseTypedDict.run_scores: NotRequired[Dict[str, EvaluationRunScoreV2TypedDict]] -> NotRequired[Dict[str, EvaluationRunRunScoreV2TypedDict]]`
+- `TurnDetectionEagerEndEvent.type: Annotated[Annotated[Optional[Literal['turn.eager_end']], AfterValidator(validate_const('turn.eager_end'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Literal['turn.eager_end'], AfterValidator(validate_const('turn.eager_end'))], pydantic.Field(alias='type')]`
+- `TurnDetectionEndEvent.type: Annotated[Annotated[Optional[Literal['turn.end']], AfterValidator(validate_const('turn.end'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Literal['turn.end'], AfterValidator(validate_const('turn.end'))], pydantic.Field(alias='type')]`
+- `TurnDetectionResumeEvent.type: Annotated[Annotated[Optional[Literal['turn.resume']], AfterValidator(validate_const('turn.resume'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Literal['turn.resume'], AfterValidator(validate_const('turn.resume'))], pydantic.Field(alias='type')]`
+- `TurnDetectionStartEvent.type: Annotated[Annotated[Optional[Literal['turn.start']], AfterValidator(validate_const('turn.start'))], pydantic.Field(alias='type')] -> Annotated[Annotated[Literal['turn.start'], AfterValidator(validate_const('turn.start'))], pydantic.Field(alias='type')]`
+</details>
+
+### API changes
+#### Beta API changes
+
+- `sdk.beta.observability.datasets`: removed `import_from_playground()`; added `create_records()`.
+- Removed beta operations: `sdk.beta.rag.search_indexes.get_deployment_summaries()`, `sdk.beta.rag.search_indexes.register_deployment()`, `sdk.beta.rag.search_indexes.unregister_deployment()`, and `sdk.beta.rag.search_indexes.update_index_metrics()`.
+- Removed field `target_indexes` from request in `sdk.beta.rag.ingestion_pipeline_configurations.register()`.
+
+#### Added operations
+
+Stable:
+
+- `sdk.workflows.deployments.create_deployment_archive()`
+
+
+#### Schema changes
+
+- Added response field `metadata` in `sdk.beta.observability.datasets.list()`, `sdk.beta.observability.datasets.create()`, `sdk.beta.observability.datasets.fetch()`, and `sdk.beta.observability.datasets.update()`.
+- Added enum values `dataset_record_id_conflict` and `ocsf_not_enabled` across beta observability datasets, beta observability datasets records, beta observability evaluations, beta observability evaluations projects, beta observability evaluations runs, beta observability evaluations records, beta observability evaluations optimizations, beta observability evaluations scorers, beta observability logs, beta observability traces, beta observability spans (62 operations).
+- Added request field `metadata` in `sdk.beta.observability.datasets.create()` and `sdk.beta.observability.datasets.update()`.
+- Added response fields `display`, `goals`, `metric_directions`, `weight_key`, and `metrics` in `sdk.beta.observability.evaluations.runs.search()`, `sdk.beta.observability.evaluations.runs.search_all()`, `sdk.beta.observability.evaluations.runs.get()`, and `sdk.beta.observability.evaluations.optimizations.list_trials()`.
+- Added response fields `missing` and `sample_count` across beta observability evaluations runs, beta observability evaluations records, beta observability evaluations optimizations (8 operations).
+- Added request field `token_endpoint_auth_method` in `sdk.beta.connectors.create()` and `sdk.beta.connectors.update()`.
+- Added enum value `custom_connectors_disabled` in `sdk.beta.connectors.create()`, `sdk.beta.connectors.create_credentials()`, `sdk.beta.connectors.update_credentials()`, and `sdk.beta.connectors.update()`.
+- Added field `status[403]` across beta context search indexes (10 operations).
+- Added field `status[503]` across beta context search indexes (15 operations).
+- Added field `status[402]` in `sdk.beta.context.search_indexes.search()`.
+- Added response fields `description` and `timestamp_pattern` across beta triggers, beta webhooks (6 operations).
+- Added request fields `description` and `timestamp_pattern` in `sdk.beta.webhooks.create()`.
+- Added response field `prompt_tokens_details` across audio speech, audio transcriptions, chat, FIM, agents, embeddings (10 operations).
+- Added response variants `turn.eager_end`, `turn.end`, `turn.resume`, and `turn.start` in `sdk.audio.transcriptions.stream()`.
+- Added response enum values `turn.eager_end`, `turn.end`, `turn.resume`, and `turn.start` in `sdk.audio.transcriptions.stream()`.
+- Changed request fields `id` and `type` across chat, agents, classifiers (6 operations).
+- Changed response fields `type` and `id` across chat, FIM, agents (6 operations).
+- Added request variants `Array<EmbeddingInput>`, `AudioChunk`, and `ImageURLChunk` in `sdk.embeddings.create()`.
+- Added request field `queries` in `sdk.classifiers.moderate()`.
+- Changed request field `union(Array<>)[]` in `sdk.classifiers.moderate_chat()`.
+- Added request field `call_context` in `sdk.workflows.execute_workflow()`, `sdk.workflows.execute_workflow_registration()`, `sdk.workflows.executions.signal_workflow_execution()`, and `sdk.workflows.executions.update_workflow_execution()`.
+
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.807.0 (2.956.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v3.9.0] .
+### Releases
+- [PyPI v3.9.0] https://pypi.org/project/mistralai/3.9.0 - .

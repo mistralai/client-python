@@ -264,7 +264,7 @@ async def _decode_schedule_inputs(
             schedule_def["input"] = decoded_input
 
 
-def _decrypt_sse_line(line: bytes, payload_encoder: PayloadEncoder) -> bytes:
+async def _decrypt_sse_line(line: bytes, payload_encoder: PayloadEncoder) -> bytes:
     """Decrypt event payloads in an SSE data line."""
     if not line.startswith(b"data:"):
         return line
@@ -283,8 +283,10 @@ def _decrypt_sse_line(line: bytes, payload_encoder: PayloadEncoder) -> bytes:
         if not isinstance(attributes, dict):
             return line
 
-        # Decrypt in place - _decrypt_event_attributes modifies attributes dict
-        _run_async(_decrypt_event_attributes(attributes, payload_encoder))
+        # Decrypt in place - _decrypt_event_attributes modifies attributes dict.
+        # Awaited on the caller's loop: _run_async would block it with a new
+        # thread and event loop for every line.
+        await _decrypt_event_attributes(attributes, payload_encoder)
 
         return b"data: " + json.dumps(event_wrapper).encode("utf-8")
     except (json.JSONDecodeError, Exception) as e:
@@ -302,19 +304,19 @@ class _DecryptingAsyncByteStream(AsyncByteStream):
 
     async def __aiter__(self) -> AsyncIterator[bytes]:
         async for chunk in self._original:
-            for processed in self._process_chunk(chunk):
+            async for processed in self._process_chunk(chunk):
                 yield processed
         # Flush remaining buffer
         if self._buffer:
-            yield _decrypt_sse_line(self._buffer, self._payload_encoder)
+            yield await _decrypt_sse_line(self._buffer, self._payload_encoder)
 
-    def _process_chunk(self, chunk: bytes):
+    async def _process_chunk(self, chunk: bytes) -> AsyncIterator[bytes]:
         self._buffer += chunk
         lines = self._buffer.split(b"\n")
         # Keep last incomplete line in buffer
         self._buffer = lines[-1]
         for line in lines[:-1]:
-            yield _decrypt_sse_line(line, self._payload_encoder) + b"\n"
+            yield await _decrypt_sse_line(line, self._payload_encoder) + b"\n"
 
     async def aclose(self) -> None:
         if hasattr(self._original, "aclose"):

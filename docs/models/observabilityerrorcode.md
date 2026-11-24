@@ -39,6 +39,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"DATASET_NOT_FOUND"`
 - `"DATASET_TASK_NOT_FOUND"`
 - `"DATASET_RECORD_NOT_FOUND"`
+- `"DATASET_RECORD_ID_CONFLICT"`
 - `"DATASET_RECORD_FORMAT_ERROR"`
 - `"AGENT_NOT_FOUND"`
 - `"AGENT_MISTRAL_API_ERROR"`
@@ -69,3 +70,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"TRACES_FILTER_QUERY_PARSE_ERROR"`
 - `"TRACE_NOT_FOUND"`
 - `"SPAN_NOT_FOUND"`
+- `"OCSF_NOT_ENABLED"`
