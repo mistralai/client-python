@@ -2,18 +2,11 @@
 
 from __future__ import annotations
 from .turndetectionendreason import TurnDetectionEndReason
-from mistralai.client.types import (
-    BaseModel,
-    UNSET_SENTINEL,
-    current_exclude_none,
-    serialize_with_info,
-)
-from mistralai.client.types.basemodel import current_filtered_dump
+from mistralai.client.types import BaseModel
 from mistralai.client.utils import validate_const
 import pydantic
-from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal, Optional
+from typing import Literal
 from typing_extensions import Annotated, TypedDict
 
 
@@ -29,34 +22,9 @@ class TurnDetectionEndEvent(BaseModel):
     end_reason: TurnDetectionEndReason
 
     type: Annotated[
-        Annotated[
-            Optional[Literal["turn.end"]], AfterValidator(validate_const("turn.end"))
-        ],
+        Annotated[Literal["turn.end"], AfterValidator(validate_const("turn.end"))],
         pydantic.Field(alias="type"),
     ] = "turn.end"
-
-    @model_serializer(mode="wrap")
-    def _serialize_model_with_info(self, handler, info):
-        return serialize_with_info(self.serialize_model, handler, info)
-
-    def serialize_model(self, handler):
-        optional_fields = set(["type"])
-        exclude_none = current_exclude_none()
-        skip_filtered = exclude_none is False or current_filtered_dump()
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias if f.alias is not None else n
-            if k not in serialized and n not in serialized and skip_filtered:
-                continue
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
 
 
 try:

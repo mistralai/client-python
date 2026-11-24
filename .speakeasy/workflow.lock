@@ -16,8 +16,8 @@ sources:
             - 1.0.0
     mistral-openapi:
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:6441873fab21311e396b17c3470a67ba76f56913be59c79268c323a00bb4eea4
-        sourceBlobDigest: sha256:b411ae12070945d5822bc3e421566c8ffd00e28a234e3948b5ff41c1026836bd
+        sourceRevisionDigest: sha256:063546f721a2fa07d26e90fddc31f4317e9e337979736b3f218bd288ef275494
+        sourceBlobDigest: sha256:299c23ba84cfb85774160e24158cc6de3ac1f34e974ec7d01ada86e9d3d540fa
         tags:
             - latest
             - 1.0.0
@@ -39,10 +39,10 @@ targets:
     mistralai-sdk:
         source: mistral-openapi
         sourceNamespace: mistral-openapi
-        sourceRevisionDigest: sha256:6441873fab21311e396b17c3470a67ba76f56913be59c79268c323a00bb4eea4
-        sourceBlobDigest: sha256:b411ae12070945d5822bc3e421566c8ffd00e28a234e3948b5ff41c1026836bd
+        sourceRevisionDigest: sha256:063546f721a2fa07d26e90fddc31f4317e9e337979736b3f218bd288ef275494
+        sourceBlobDigest: sha256:299c23ba84cfb85774160e24158cc6de3ac1f34e974ec7d01ada86e9d3d540fa
         codeSamplesNamespace: mistral-openapi-python-code-samples
-        codeSamplesRevisionDigest: sha256:650e5e46f796ed806de0a697d0b8c705375ab2395cb22103d8ca67e30bff556f
+        codeSamplesRevisionDigest: sha256:d7e11d407412b2b3956e55036ba28180d7bdba0b1b8954238742b344546294da
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.807.0

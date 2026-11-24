@@ -1,10 +1,13 @@
 import asyncio
 import json
+import time
 from typing import Any, Optional, Sequence, cast
 from uuid import UUID
 
+import httpx2 as httpx
 import pytest
 
+from mistralai.client import Mistral, errors
 from mistralai.client.models import (
     BatchJob,
     BatchJobStatus,
@@ -12,6 +15,9 @@ from mistralai.client.models import (
     EmbeddingRequest,
     EmbeddingResponse,
 )
+from mistralai.client.types import UNSET
+from mistralai.client.utils import BackoffStrategy, RetryConfig
+from mistralai.extra.batch import client as batch_client_module
 from mistralai.extra.batch import (
     RUNNING_STATUSES,
     BatchClient,
@@ -151,6 +157,7 @@ class _FakeClient:
     def __init__(self, files, jobs):
         self.files = files
         self.batch = type("Batch", (), {"jobs": jobs})()
+        self.sdk_configuration = type("Config", (), {"retry_config": UNSET})()
 
 
 def _embed_client(files, jobs):
@@ -584,6 +591,117 @@ async def test_wait_raises_timeout():
         await client.wait(handle, poll_interval_seconds=0, timeout_hours=0)
 
 
+def _job_json(status: BatchJobStatus) -> dict[str, Any]:
+    return _make_job(status=status).model_dump(mode="json", by_alias=True)
+
+
+def _http_batch_client(
+    answers: list[Any], seen: list[str], **mistral_kwargs: Any
+) -> BatchClient:
+    """A BatchClient over a real ``Mistral`` whose transport plays ``answers`` in
+    order: an int is a bare error status, a ``(status, headers)`` tuple an error
+    with headers, an exception is raised as a transport
+    failure, a status string is a 200 with that job state."""
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request.url.path)
+        answer = answers.pop(0)
+        if isinstance(answer, Exception):
+            raise answer
+        if isinstance(answer, int):
+            return httpx.Response(answer, json={"detail": "boom"})
+        if isinstance(answer, tuple):
+            code, headers = answer
+            return httpx.Response(code, headers=headers, json={"detail": "boom"})
+        return httpx.Response(200, json=_job_json(answer))
+
+    mistral = Mistral(
+        api_key="test",
+        async_client=httpx.AsyncClient(transport=httpx.MockTransport(handler)),
+        **mistral_kwargs,
+    )
+    return BatchClient(
+        mistral, endpoint="/v1/embeddings", response_body_type=EmbeddingResponse
+    )
+
+
+@pytest.fixture
+def fast_poll_retries(monkeypatch):
+    monkeypatch.setattr(batch_client_module, "_POLL_RETRY_INITIAL_INTERVAL_MS", 1)
+    monkeypatch.setattr(batch_client_module, "_POLL_RETRY_MAX_INTERVAL_MS", 1)
+    monkeypatch.setattr(batch_client_module, "_POLL_RETRY_JITTER_MS", 0)
+
+
+@pytest.mark.asyncio
+async def test_wait_survives_transient_poll_failures(fast_poll_retries):
+    # One 5xx or dropped connection among thousands of polls must not end a
+    # multi-hour wait (mistralai/client-python#625).
+    seen: list[str] = []
+    client = _http_batch_client(
+        [503, httpx.ConnectError("reset"), "RUNNING", 502, 504, 429, "SUCCESS"], seen
+    )
+    terminal = await client.wait(str(JOB_ID), poll_interval_seconds=0)
+    assert terminal.status == "SUCCESS"
+    assert len(seen) == 7
+
+
+@pytest.mark.asyncio
+async def test_wait_raises_client_errors_at_once(fast_poll_retries):
+    seen: list[str] = []
+    client = _http_batch_client([404, "SUCCESS"], seen)
+    with pytest.raises(errors.SDKError):
+        await client.wait(str(JOB_ID), poll_interval_seconds=0)
+    assert len(seen) == 1
+
+
+@pytest.mark.asyncio
+async def test_wait_gives_up_when_a_poll_keeps_failing(monkeypatch, fast_poll_retries):
+    monkeypatch.setattr(batch_client_module, "_POLL_RETRY_MAX_ELAPSED_MS", 50)
+    seen: list[str] = []
+    client = _http_batch_client([503] * 1000, seen)
+    with pytest.raises(errors.SDKError):
+        await client.wait(str(JOB_ID), poll_interval_seconds=0)
+    assert 1 < len(seen) < 1000
+
+
+@pytest.mark.asyncio
+async def test_wait_retry_after_cannot_outlast_the_deadline(fast_poll_retries):
+    # The backoff sleeps a Retry-After as given: an hour-long one must not hold
+    # the wait an hour past its deadline.
+    seen: list[str] = []
+    client = _http_batch_client([(503, {"Retry-After": "3600"}), "SUCCESS"], seen)
+    started = time.monotonic()
+    with pytest.raises(TimeoutError):
+        await client.wait(
+            str(JOB_ID), poll_interval_seconds=0, deadline=time.monotonic() + 0.2
+        )
+    assert time.monotonic() - started < 5
+    assert len(seen) == 1
+
+
+@pytest.mark.asyncio
+async def test_wait_keeps_the_callers_retry_config(fast_poll_retries):
+    seen: list[str] = []
+    client = _http_batch_client(
+        [503, "SUCCESS"],
+        seen,
+        retry_config=RetryConfig("none", BackoffStrategy(1, 1, 1, 1), False),
+    )
+    with pytest.raises(errors.SDKError):
+        await client.wait(str(JOB_ID), poll_interval_seconds=0)
+    assert len(seen) == 1
+
+
+@pytest.mark.asyncio
+async def test_get_does_not_retry_on_its_own(fast_poll_retries):
+    # get() stays single-shot, for drivers (Temporal, cron) that own the cadence.
+    seen: list[str] = []
+    client = _http_batch_client([503, "SUCCESS"], seen)
+    with pytest.raises(errors.SDKError):
+        await client.get(str(JOB_ID))
+    assert len(seen) == 1
+
+
 # ---------------------------------------------------------------------------
 # stream_results() — one-pass, line by line
 # ---------------------------------------------------------------------------
@@ -920,7 +1038,7 @@ async def test_run_download_uses_http_headers():
 
 
 @pytest.mark.asyncio
-async def test_run_deletes_input_it_uploaded_and_result_files():
+async def test_run_deletes_input_it_uploaded_but_keeps_result_files():
     files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
@@ -930,12 +1048,29 @@ async def test_run_deletes_input_it_uploaded_and_result_files():
         poll_interval_seconds=0,
     )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    # the input file run() uploaded + the job's output file are all cleaned up
-    assert deleted == {str(FILE_UPLOADED_ID), str(FILE_OUT_ID)}
+    assert deleted == {str(FILE_UPLOADED_ID)}
 
 
 @pytest.mark.asyncio
-async def test_run_deletes_output_and_error_files():
+async def test_run_keeps_result_files_by_default():
+    files = _FakeFiles(
+        downloads={
+            str(FILE_OUT_ID): [b""],
+            str(FILE_ERROR_ID): [_err_line("b").encode()],
+        }
+    )
+    jobs = _FakeJobs([_make_job(failed=1, succeeded=0)], poll_statuses=["SUCCESS"])
+    client = _embed_client(files, jobs)
+    result = await client.run(
+        BatchInput.from_payload({"a": _embed_req()}), poll_interval_seconds=0
+    )
+    assert not any(c[0] == "delete" for c in files.calls)
+    assert result.job.output_file == str(FILE_OUT_ID)
+    assert result.job.error_file == str(FILE_ERROR_ID)
+
+
+@pytest.mark.asyncio
+async def test_run_deletes_result_files_when_asked():
     files = _FakeFiles(
         downloads={
             str(FILE_OUT_ID): [b""],
@@ -945,10 +1080,11 @@ async def test_run_deletes_output_and_error_files():
     jobs = _FakeJobs([_make_job(failed=1, succeeded=0)], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     await client.run(
-        BatchInput.from_payload({"a": _embed_req()}), poll_interval_seconds=0
+        BatchInput.from_payload({"a": _embed_req()}),
+        poll_interval_seconds=0,
+        cleanup_result_files=True,
     )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
-    # inline input (nothing uploaded); both result files cleaned up
     assert deleted == {str(FILE_OUT_ID), str(FILE_ERROR_ID)}
 
 
@@ -957,7 +1093,11 @@ async def test_run_does_not_delete_caller_supplied_input_file():
     files = _FakeFiles(downloads={str(FILE_OUT_ID): [_ok_line("a").encode()]})
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
-    await client.run(BatchInputFile(FILE_PREEXISTING_ID), poll_interval_seconds=0)
+    await client.run(
+        BatchInputFile(FILE_PREEXISTING_ID),
+        poll_interval_seconds=0,
+        cleanup_result_files=True,
+    )
     deleted = {c[1]["file_id"] for c in files.calls if c[0] == "delete"}
     assert str(FILE_PREEXISTING_ID) not in deleted  # the caller owns their input file
     assert str(FILE_OUT_ID) in deleted
@@ -969,7 +1109,8 @@ async def test_run_delete_uses_http_headers():
     jobs = _FakeJobs([_make_job()], poll_statuses=["SUCCESS"])
     client = _embed_client(files, jobs)
     await client.run(
-        BatchInput.from_payload({"a": _embed_req()}),
+        BatchInput.from_payload({"a": _embed_req(), "b": _embed_req()}),
+        inline_threshold=1,
         poll_interval_seconds=0,
         http_headers={"x": "y"},
     )

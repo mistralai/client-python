@@ -11,8 +11,8 @@
 * [update](#update) - Patch dataset
 * [list_records](#list_records) - List existing records in the dataset
 * [create_record](#create_record) - Add a record to the dataset
+* [create_records](#create_records) - Add several records to the dataset
 * [import_from_file](#import_from_file) - Populate the dataset with records from an uploaded file
-* [import_from_playground](#import_from_playground) - Populate the dataset with records from playground conversations
 * [import_from_spans](#import_from_spans) - Populate the dataset with records mapped from telemetry spans
 * [import_from_dataset_records](#import_from_dataset_records) - Populate the dataset with records from another dataset
 * [export_to_jsonl](#export_to_jsonl) - Export to the Files API and retrieve presigned URL to download the resulting JSONL file
@@ -48,6 +48,7 @@ with Mistral(
 | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
 | `description`                                                       | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `metadata`                                                          | Dict[str, *Any*]                                                    | :heavy_minus_sign:                                                  | N/A                                                                 |
 | `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
 
 ### Response
@@ -211,6 +212,7 @@ with Mistral(
 | `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
 | `name`                                                                                           | *OptionalNullable[str]*                                                                          | :heavy_minus_sign:                                                                               | N/A                                                                                              |
 | `description`                                                                                    | *OptionalNullable[str]*                                                                          | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `metadata`                                                                                       | Dict[str, *Any*]                                                                                 | :heavy_minus_sign:                                                                               | N/A                                                                                              |
 | `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
 
 ### Response
@@ -321,6 +323,48 @@ with Mistral(
 | errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
 | errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
 
+## create_records
+
+Creates 1 to 100 records in one transaction: if one record is invalid, none is created. Records are returned in the request order.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="create_dataset_records_v1_observability_datasets__dataset_id__records_bulk_post" method="post" path="/v1/observability/datasets/{dataset_id}/records/bulk" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY"),
+) as mistral:
+
+    res = mistral.beta.observability.datasets.create_records(dataset_id="<id>", records=[])
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
+| `records`                                                                                        | List[[models.CreateDatasetRecordsItem](../../models/createdatasetrecordsitem.md)]                | :heavy_check_mark:                                                                               | Records to add. They are created together: if one is invalid, none is created.                   |
+| `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
+
+### Response
+
+**[models.CreateDatasetRecordsResponse](../../models/createdatasetrecordsresponse.md)**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
+| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
+
 ## import_from_file
 
 Populate the dataset with records from an uploaded file
@@ -350,48 +394,6 @@ with Mistral(
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
 | `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
 | `file_id`                                                                                        | *str*                                                                                            | :heavy_check_mark:                                                                               | N/A                                                                                              |
-| `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
-
-### Response
-
-**[models.DatasetImportTask](../../models/datasetimporttask.md)**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.ObservabilityError | 400, 404, 408, 409, 422   | application/json          |
-| errors.SDKError           | 4XX, 5XX                  | \*/\*                     |
-
-## import_from_playground
-
-Populate the dataset with records from playground conversations
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="post_dataset_records_from_playground_v1_observability_datasets__dataset_id__imports_from_playground_post" method="post" path="/v1/observability/datasets/{dataset_id}/imports/from-playground" -->
-```python
-from mistralai.client import Mistral
-import os
-
-
-with Mistral(
-    api_key=os.getenv("MISTRAL_API_KEY"),
-) as mistral:
-
-    res = mistral.beta.observability.datasets.import_from_playground(dataset_id="5cb42584-5fcf-4837-997a-6a67c5e6900d", conversation_ids=[])
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
-| `conversation_ids`                                                                               | List[*str*]                                                                                      | :heavy_check_mark:                                                                               | N/A                                                                                              |
 | `retries`                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                 | :heavy_minus_sign:                                                                               | Configuration to override the default retry behavior of the client.                              |
 
 ### Response

@@ -17,3 +17,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"connectors_count_limit_reached"`
 - `"credentials_rejected"`
 - `"server_unreachable"`
+- `"custom_connectors_disabled"`

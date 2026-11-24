@@ -115,7 +115,7 @@ class ChatCompletionRequestTypedDict(TypedDict):
     r"""The seed to use for random sampling. If set, different calls will generate deterministic results."""
     metadata: NotRequired[Nullable[Dict[str, Any]]]
     response_format: NotRequired[ResponseFormatTypedDict]
-    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide. Note: on third-party models (for example GLM), the schema is still enforced, but field descriptions may not influence the output; put field-level requirements in the prompt."""
     tools: NotRequired[Nullable[List[ChatCompletionRequestToolTypedDict]]]
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""
     tool_choice: NotRequired[ChatCompletionRequestToolChoiceTypedDict]
@@ -176,7 +176,7 @@ class ChatCompletionRequest(BaseModel):
     metadata: OptionalNullable[Dict[str, Any]] = UNSET
 
     response_format: Optional[ResponseFormat] = None
-    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide."""
+    r"""Specify the format that the model must output. By default it will use `{ \"type\": \"text\" }`. Setting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is in JSON. When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message. Setting to `{ \"type\": \"json_schema\" }` enables JSON schema mode, which guarantees the message the model generates is in JSON and follows the schema you provide. Note: on third-party models (for example GLM), the schema is still enforced, but field descriptions may not influence the output; put field-level requirements in the prompt."""
 
     tools: OptionalNullable[List[ChatCompletionRequestTool]] = UNSET
     r"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for."""

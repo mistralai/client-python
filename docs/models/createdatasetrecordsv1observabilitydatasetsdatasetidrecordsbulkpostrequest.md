@@ -1,0 +1,9 @@
+# CreateDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsBulkPostRequest
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
+| `create_dataset_records_request`                                                                 | [models.CreateDatasetRecordsRequest](../models/createdatasetrecordsrequest.md)                   | :heavy_check_mark:                                                                               | N/A                                                                                              |

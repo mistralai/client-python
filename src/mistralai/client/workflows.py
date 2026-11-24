@@ -922,6 +922,12 @@ class Workflows(BaseSDK):
         force_new_trace: Optional[bool] = False,
         traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.WorkflowExecutionRequestCallContext],
+                Mapping[str, models.WorkflowExecutionRequestCallContextTypedDict],
+            ]
+        ] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -940,6 +946,7 @@ class Workflows(BaseSDK):
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
         :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -974,6 +981,12 @@ class Workflows(BaseSDK):
                 traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[
+                        Dict[str, models.WorkflowExecutionRequestCallContext]
+                    ],
                 ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
@@ -1061,6 +1074,12 @@ class Workflows(BaseSDK):
         force_new_trace: Optional[bool] = False,
         traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.WorkflowExecutionRequestCallContext],
+                Mapping[str, models.WorkflowExecutionRequestCallContextTypedDict],
+            ]
+        ] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1079,6 +1098,7 @@ class Workflows(BaseSDK):
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
         :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1113,6 +1133,12 @@ class Workflows(BaseSDK):
                 traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[
+                        Dict[str, models.WorkflowExecutionRequestCallContext]
+                    ],
                 ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
@@ -1203,6 +1229,12 @@ class Workflows(BaseSDK):
         force_new_trace: Optional[bool] = False,
         traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.WorkflowExecutionRequestCallContext],
+                Mapping[str, models.WorkflowExecutionRequestCallContextTypedDict],
+            ]
+        ] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1221,6 +1253,7 @@ class Workflows(BaseSDK):
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
         :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1255,6 +1288,12 @@ class Workflows(BaseSDK):
                 traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[
+                        Dict[str, models.WorkflowExecutionRequestCallContext]
+                    ],
                 ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,
@@ -1345,6 +1384,12 @@ class Workflows(BaseSDK):
         force_new_trace: Optional[bool] = False,
         traceparent: OptionalNullable[str] = UNSET,
         extensions: OptionalNullable[Mapping[str, Any]] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.WorkflowExecutionRequestCallContext],
+                Mapping[str, models.WorkflowExecutionRequestCallContextTypedDict],
+            ]
+        ] = UNSET,
         task_queue: OptionalNullable[str] = UNSET,
         deployment_name: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1363,6 +1408,7 @@ class Workflows(BaseSDK):
         :param force_new_trace: If true, ignore the caller's trace context and start a new, independent trace for this execution instead of joining the caller's trace.
         :param traceparent: W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set.
         :param extensions: Plugin-specific data to propagate into WorkflowContext.extensions at execution time.
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param task_queue: Deprecated. Use deployment_name instead.
         :param deployment_name: Name of the deployment to route this execution to
         :param retries: Override the default retry configuration for this method
@@ -1397,6 +1443,12 @@ class Workflows(BaseSDK):
                 traceparent=traceparent,
                 extensions=utils.unmarshal(
                     extensions, OptionalNullable[Dict[str, Any]]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[
+                        Dict[str, models.WorkflowExecutionRequestCallContext]
+                    ],
                 ),
                 task_queue=task_queue,
                 deployment_name=deployment_name,

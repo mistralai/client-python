@@ -12,12 +12,14 @@ from mistralai.client.types import (
 )
 from mistralai.client.types.basemodel import current_filtered_dump
 from pydantic import model_serializer
+from typing import Any, Dict
 from typing_extensions import NotRequired, TypedDict
 
 
 class UpdateDatasetRequestTypedDict(TypedDict):
     name: NotRequired[Nullable[str]]
     description: NotRequired[Nullable[str]]
+    metadata: NotRequired[Nullable[Dict[str, Any]]]
 
 
 class UpdateDatasetRequest(BaseModel):
@@ -25,13 +27,15 @@ class UpdateDatasetRequest(BaseModel):
 
     description: OptionalNullable[str] = UNSET
 
+    metadata: OptionalNullable[Dict[str, Any]] = UNSET
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["name", "description"])
-        nullable_fields = set(["name", "description"])
+        optional_fields = set(["name", "description", "metadata"])
+        nullable_fields = set(["name", "description", "metadata"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

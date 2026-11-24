@@ -1,3 +1,7 @@
+import asyncio
+import base64
+import json
+
 import httpx2 as httpx
 import pytest
 from httpx2._types import AsyncByteStream, SyncByteStream
@@ -15,6 +19,8 @@ from mistralai.extra.workflows import (
     PayloadEncryptionMode,
     WorkflowEncodingConfig,
 )
+from mistralai.extra.workflows.encoding.models import EncodedPayloadOptions
+from mistralai.extra.workflows.encoding.payload_encoder import PayloadEncoder
 from mistralai.client._hooks.stream_error_hook import (
     STREAM_OPERATIONS_WITH_ERROR_EVENT,
     WorkflowStreamErrorHook,
@@ -259,3 +265,75 @@ def test_hook_ignores_non_stream_operations():
     # Response is returned untouched: same object, original stream not wrapped.
     assert result is response
     assert response.stream is source
+
+
+@pytest.mark.asyncio
+async def test_encoding_hook_decrypts_stream_on_the_callers_event_loop(monkeypatch):
+    # PRIM-2306: each SSE line used to be decrypted on a new thread with a new
+    # event loop while the caller's loop stayed blocked.
+    encryption_config = WorkflowEncodingConfig(
+        payload_encryption=PayloadEncryptionConfig(
+            mode=PayloadEncryptionMode.FULL, main_key=SecretStr("0" * 64)
+        )
+    )
+    client = Mistral(api_key="test-key")
+    configure_workflow_encoding(
+        encryption_config, namespace="demo", sdk_config=client.sdk_configuration
+    )
+    encoder = PayloadEncoder(encoding_config=encryption_config)
+    frames = []
+    for n in range(3):
+        encoded, options = await encoder.encode_event_payload_content(
+            json.dumps({"n": n}).encode()
+        )
+        assert EncodedPayloadOptions.ENCRYPTED in options
+        event = {
+            "data": {
+                "attributes": {
+                    "output": {
+                        "type": "json",
+                        "value": base64.b64encode(encoded).decode(),
+                        "encoding_options": [option.value for option in options],
+                    }
+                }
+            }
+        }
+        frames.append(f"event: workflow.event\ndata: {json.dumps(event)}\n\n".encode())
+
+    decoding_loops = []
+    decode_event_payload = PayloadEncoder.decode_event_payload
+
+    async def recording_decode_event_payload(self, payload_data):
+        decoding_loops.append(asyncio.get_running_loop())
+        return await decode_event_payload(self, payload_data)
+
+    monkeypatch.setattr(
+        PayloadEncoder, "decode_event_payload", recording_decode_event_payload
+    )
+
+    ctx = AfterSuccessContext(
+        HookContext(
+            config=client.sdk_configuration,
+            base_url="https://api.example.com",
+            operation_id=STREAM_OPERATION_ID,
+            oauth2_scopes=[],
+            security_source=None,
+            tags=None,
+            extensions=None,
+        )
+    )
+    response = WorkflowEncodingHook().after_success(
+        ctx, _sse_response(_AsyncSource(frames))
+    )
+    assert isinstance(response, httpx.Response)
+    body = b"".join([chunk async for chunk in response.aiter_bytes()])
+
+    outputs = [
+        json.loads(line[len(b"data:") :])["data"]["attributes"]["output"]
+        for line in body.split(b"\n")
+        if line.startswith(b"data:")
+    ]
+    assert outputs == [
+        {"type": "json", "value": {"n": n}, "encoding_options": []} for n in range(3)
+    ]
+    assert decoding_loops == [asyncio.get_running_loop()] * 3

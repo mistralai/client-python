@@ -26,7 +26,7 @@ class RealtimeTranscriptionSessionUpdatePayloadTypedDict(TypedDict):
     diarize: NotRequired[Nullable[bool]]
     r"""Inline speaker tagging. Set before audio starts."""
     context_bias: NotRequired[Nullable[List[str]]]
-    r"""Anticipated phrases or terms to bias transcription towards. Set before audio starts."""
+    r"""Anticipated phrases or terms to bias transcription towards. Replaces the current list. Can be updated after audio starts: takes effect after the next input_audio.flush, or from the next utterance if no audio was sent since the last flush."""
     language: NotRequired[Nullable[str]]
     r"""ISO-639-1 code of the input audio language. Set before audio starts."""
     speaker_references: NotRequired[Nullable[Dict[str, str]]]
@@ -46,7 +46,7 @@ class RealtimeTranscriptionSessionUpdatePayload(BaseModel):
     r"""Inline speaker tagging. Set before audio starts."""
 
     context_bias: OptionalNullable[List[str]] = UNSET
-    r"""Anticipated phrases or terms to bias transcription towards. Set before audio starts."""
+    r"""Anticipated phrases or terms to bias transcription towards. Replaces the current list. Can be updated after audio starts: takes effect after the next input_audio.flush, or from the next utterance if no audio was sent since the last flush."""
 
     language: OptionalNullable[str] = UNSET
     r"""ISO-639-1 code of the input audio language. Set before audio starts."""

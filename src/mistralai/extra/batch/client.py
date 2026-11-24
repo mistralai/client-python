@@ -70,8 +70,12 @@ from mistralai.client.models import (
     BatchRequest,
     File,
 )
-from mistralai.client.types import BaseModel, OptionalNullable
-from mistralai.client.utils import stream_to_bytes_async
+from mistralai.client.types import UNSET, BaseModel, OptionalNullable
+from mistralai.client.utils import (
+    BackoffStrategy,
+    RetryConfig,
+    stream_to_bytes_async,
+)
 
 if TYPE_CHECKING:
     from mistralai.client.sdk import Mistral
@@ -502,6 +506,16 @@ class BatchResult(Generic[RespBodyT]):
         return _ordered(self.by_id(), errors_by_id, custom_ids)
 
 
+# How ``wait`` retries one failed status poll when the client sets no retry_config:
+# the SDK's own backoff (429/5xx and connection errors), 1 s doubling to 1 min, and
+# for at most 15 min (never past the wait's deadline) before the error is raised.
+_POLL_RETRY_INITIAL_INTERVAL_MS = 1_000
+_POLL_RETRY_MAX_INTERVAL_MS = 60_000
+_POLL_RETRY_EXPONENT = 2.0
+_POLL_RETRY_MAX_ELAPSED_MS = 15 * 60_000
+_POLL_RETRY_JITTER_MS = 1_000
+
+
 # ---------------------------------------------------------------------------
 # Client: lifecycle primitives + run() convenience
 # ---------------------------------------------------------------------------
@@ -661,12 +675,18 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
     ) -> "BatchJobHandle[RespBodyT]":
         """Poll until the job reaches a terminal state, returning the terminal handle.
         Pass ``deadline`` (a ``time.monotonic()`` value) to enforce a wall-clock cap
-        shared across several calls; otherwise it is derived from ``timeout_hours``."""
+        shared across several calls; otherwise it is derived from ``timeout_hours``.
+
+        A poll that meets a transient failure (429, 5xx, connection error or
+        timeout) is retried with backoff for up to 15 minutes, within the deadline
+        (``TimeoutError`` once the deadline passes mid-retry),
+        unless the ``Mistral`` client has its own ``retry_config``, which then
+        applies instead. Other errors (e.g. 404) are raised at once."""
         job_id = self._job_id(handle)
         if deadline is None:
             deadline = time.monotonic() + timeout_hours * 3600
         while True:
-            current = await self.get(job_id, http_headers=http_headers)
+            current = await self._poll(job_id, deadline, http_headers)
             if is_terminal(current.status):
                 return current
             remaining = deadline - time.monotonic()
@@ -773,6 +793,7 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         poll_interval_seconds: float = 30.0,
         max_failed_job_retries: int = 0,
         inline_threshold: int = 1000,
+        cleanup_result_files: bool = False,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> BatchResult[RespBodyT]:
         """Run a batch end to end, blocking until the job reaches a terminal state,
@@ -797,10 +818,16 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
         transactional (wait for the whole thing, retry the whole thing), which cannot
         be expressed once results have been streamed out incrementally.
 
-        Cleans up the server-side files it creates: the input file it uploaded (a
-        caller-supplied ``BatchInputFile`` is left alone) and every attempt's
-        output/error files, whose bytes are already materialized into the result. If
-        the job is still running when ``run`` aborts (timeout, or the coroutine is
+        Deletes the input file it uploaded, since that one is its own temporary
+        artifact (a caller-supplied ``BatchInputFile`` is left alone). The job's
+        output/error files are KEPT: their bytes are materialized into the result, but
+        ``result.job.output_file`` still names them, the console still lists them, and
+        a caller that crashes before persisting the result would otherwise lose the
+        only copy of output it has already paid for. Pass
+        ``cleanup_result_files=True`` to delete them as well, accepting that the file
+        ids on the returned job then refer to files that no longer exist.
+
+        If the job is still running when ``run`` aborts (timeout, or the coroutine is
         cancelled), it best-effort ``cancel``s it so it doesn't keep billing.
 
         For a decomposed lifecycle (Temporal activity polled by a retry policy, or
@@ -863,13 +890,52 @@ class BatchClient(Generic[ReqBodyT, RespBodyT]):
             if created_input is not None:
                 await self._delete_quietly(created_input, http_headers)
             raise
-        # Success: the result files are materialized into ``result`` (superseded
-        # attempts' files are discarded orphans), so the server copies -- and the input
-        # file run() uploaded -- are now safe to delete.
-        await self._delete_files_quietly([*result_files, created_input], http_headers)
+        to_delete: list[Optional[ResourceID]] = [created_input]
+        if cleanup_result_files:
+            to_delete += result_files
+        await self._delete_files_quietly(to_delete, http_headers)
         return result
 
     # -- internals ----------------------------------------------------------
+
+    async def _poll(
+        self,
+        job_id: str,
+        deadline: float,
+        http_headers: Optional[Mapping[str, str]],
+    ) -> "BatchJobHandle[RespBodyT]":
+        """One status poll for ``wait``. A long wait makes thousands of them, so a
+        transient failure is retried rather than ending the wait; a retry config
+        set on the client wins."""
+        kwargs = self._headers_kwarg(http_headers)
+        remaining_ms = int((deadline - time.monotonic()) * 1000)
+        budget_ms = min(_POLL_RETRY_MAX_ELAPSED_MS, remaining_ms)
+        if self._client.sdk_configuration.retry_config is not UNSET or budget_ms <= 0:
+            job = await self._client.batch.jobs.get_async(
+                job_id=cast(Any, job_id), **kwargs
+            )
+            return BatchJobHandle(job)
+        kwargs["retries"] = RetryConfig(
+            "backoff",
+            BackoffStrategy(
+                initial_interval=_POLL_RETRY_INITIAL_INTERVAL_MS,
+                max_interval=_POLL_RETRY_MAX_INTERVAL_MS,
+                exponent=_POLL_RETRY_EXPONENT,
+                max_elapsed_time=budget_ms,
+                jitter_ms=_POLL_RETRY_JITTER_MS,
+            ),
+            retry_connection_errors=True,
+        )
+        try:
+            # The backoff sleeps a server's Retry-After as given, which could
+            # carry the poll past the wait's deadline: hold it to the deadline.
+            job = await asyncio.wait_for(
+                self._client.batch.jobs.get_async(job_id=cast(Any, job_id), **kwargs),
+                timeout=remaining_ms / 1000,
+            )
+        except asyncio.TimeoutError as exc:
+            raise TimeoutError(f"Batch job {job_id} timed out while polling") from exc
+        return BatchJobHandle(job)
 
     @staticmethod
     def _headers_kwarg(

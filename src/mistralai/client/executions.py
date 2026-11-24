@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import eventstreaming, get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Iterable, List, Mapping, Optional, Union
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
 
 
 class Executions(BaseSDK):
@@ -406,6 +406,12 @@ class Executions(BaseSDK):
                 models.SignalInvocationBodyInputTypedDict,
             ]
         ] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.SignalInvocationBodyCallContext],
+                Mapping[str, models.SignalInvocationBodyCallContextTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -416,6 +422,7 @@ class Executions(BaseSDK):
         :param execution_id:
         :param name: The name of the signal to send
         :param input: Input data for the signal, matching its schema
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -440,6 +447,10 @@ class Executions(BaseSDK):
                 name=name,
                 input=utils.get_pydantic_model(
                     input, OptionalNullable[models.SignalInvocationBodyInput]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[Dict[str, models.SignalInvocationBodyCallContext]],
                 ),
             ),
         )
@@ -521,6 +532,12 @@ class Executions(BaseSDK):
                 models.SignalInvocationBodyInputTypedDict,
             ]
         ] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.SignalInvocationBodyCallContext],
+                Mapping[str, models.SignalInvocationBodyCallContextTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -531,6 +548,7 @@ class Executions(BaseSDK):
         :param execution_id:
         :param name: The name of the signal to send
         :param input: Input data for the signal, matching its schema
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -555,6 +573,10 @@ class Executions(BaseSDK):
                 name=name,
                 input=utils.get_pydantic_model(
                     input, OptionalNullable[models.SignalInvocationBodyInput]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[Dict[str, models.SignalInvocationBodyCallContext]],
                 ),
             ),
         )
@@ -1850,6 +1872,12 @@ class Executions(BaseSDK):
                 models.UpdateInvocationBodyInputTypedDict,
             ]
         ] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.UpdateInvocationBodyCallContext],
+                Mapping[str, models.UpdateInvocationBodyCallContextTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1860,6 +1888,7 @@ class Executions(BaseSDK):
         :param execution_id:
         :param name: The name of the update to request
         :param input: Input data for the update, matching its schema
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1884,6 +1913,10 @@ class Executions(BaseSDK):
                 name=name,
                 input=utils.get_pydantic_model(
                     input, OptionalNullable[models.UpdateInvocationBodyInput]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[Dict[str, models.UpdateInvocationBodyCallContext]],
                 ),
             ),
         )
@@ -1965,6 +1998,12 @@ class Executions(BaseSDK):
                 models.UpdateInvocationBodyInputTypedDict,
             ]
         ] = UNSET,
+        call_context: OptionalNullable[
+            Union[
+                Mapping[str, models.UpdateInvocationBodyCallContext],
+                Mapping[str, models.UpdateInvocationBodyCallContextTypedDict],
+            ]
+        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1975,6 +2014,7 @@ class Executions(BaseSDK):
         :param execution_id:
         :param name: The name of the update to request
         :param input: Input data for the update, matching its schema
+        :param call_context: Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1999,6 +2039,10 @@ class Executions(BaseSDK):
                 name=name,
                 input=utils.get_pydantic_model(
                     input, OptionalNullable[models.UpdateInvocationBodyInput]
+                ),
+                call_context=utils.unmarshal(
+                    call_context,
+                    OptionalNullable[Dict[str, models.UpdateInvocationBodyCallContext]],
                 ),
             ),
         )

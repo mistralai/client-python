@@ -5,7 +5,9 @@ from .classificationstatisticspec import (
     ClassificationStatisticSpec,
     ClassificationStatisticSpecTypedDict,
 )
+from .displayspec import DisplaySpec, DisplaySpecTypedDict
 from .goalspec import GoalSpec, GoalSpecTypedDict
+from .metricdirectionspec import MetricDirectionSpec, MetricDirectionSpecTypedDict
 from .percentilestatisticspec import (
     PercentileStatisticSpec,
     PercentileStatisticSpecTypedDict,
@@ -119,6 +121,9 @@ class EvaluatorV2TypedDict(TypedDict):
     direction: NotRequired[Nullable[EvaluatorV2Direction]]
     min_value: NotRequired[Nullable[float]]
     max_value: NotRequired[Nullable[float]]
+    display: NotRequired[Nullable[List[DisplaySpecTypedDict]]]
+    goals: NotRequired[Nullable[List[GoalSpecTypedDict]]]
+    metric_directions: NotRequired[Nullable[List[MetricDirectionSpecTypedDict]]]
 
 
 class EvaluatorV2(BaseModel):
@@ -152,6 +157,12 @@ class EvaluatorV2(BaseModel):
 
     max_value: OptionalNullable[float] = UNSET
 
+    display: OptionalNullable[List[DisplaySpec]] = UNSET
+
+    goals: OptionalNullable[List[GoalSpec]] = UNSET
+
+    metric_directions: OptionalNullable[List[MetricDirectionSpec]] = UNSET
+
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
@@ -166,6 +177,9 @@ class EvaluatorV2(BaseModel):
                 "direction",
                 "min_value",
                 "max_value",
+                "display",
+                "goals",
+                "metric_directions",
             ]
         )
         nullable_fields = set(
@@ -178,6 +192,9 @@ class EvaluatorV2(BaseModel):
                 "direction",
                 "min_value",
                 "max_value",
+                "display",
+                "goals",
+                "metric_directions",
             ]
         )
         exclude_none = current_exclude_none()

@@ -6,7 +6,7 @@ from mistralai.client import Mistral
 from mistralai.extra.run.context import RunContext
 from mistralai.client.types import BaseModel
 
-MODEL = "mistral-medium-2505"
+MODEL = "mistral-medium-latest"
 
 
 async def main():

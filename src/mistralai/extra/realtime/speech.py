@@ -6,7 +6,7 @@ import json
 import time
 from asyncio import CancelledError
 from collections import deque
-from typing import Any, AsyncIterator, Deque, Mapping, Optional, Union
+from typing import Any, AsyncIterator, Deque, Dict, List, Mapping, Optional, Union
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 try:
@@ -29,6 +29,7 @@ from mistralai.client._hooks.service_account_auth import (
     read_service_account_token,
 )
 from mistralai.client.models import (
+    IPAPhoneme,
     RealtimeSpeechError,
     RealtimeSpeechInputTextAppend,
     RealtimeSpeechInputTextEnd,
@@ -160,6 +161,7 @@ class RealtimeSpeechConnection:
         response_format: Optional[SpeechOutputFormat] = None,
         streaming_mode: Optional[RealtimeSpeechStreamingMode] = None,
         expressiveness: Optional[float] = None,
+        phoneme_hints: Optional[Dict[str, List[IPAPhoneme]]] = None,
     ) -> None:
         if self._closed:
             raise RuntimeError("Connection is closed")
@@ -170,6 +172,7 @@ class RealtimeSpeechConnection:
             "response_format": response_format,
             "streaming_mode": streaming_mode,
             "expressiveness": expressiveness,
+            "phoneme_hints": phoneme_hints,
         }
         fields = {name: value for name, value in fields.items() if value is not None}
         if not fields:
@@ -256,6 +259,7 @@ class RealtimeSpeech:
         response_format: Optional[SpeechOutputFormat] = None,
         streaming_mode: Optional[RealtimeSpeechStreamingMode] = None,
         expressiveness: Optional[float] = None,
+        phoneme_hints: Optional[Dict[str, List[IPAPhoneme]]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -325,6 +329,7 @@ class RealtimeSpeech:
                 response_format,
                 streaming_mode,
                 expressiveness,
+                phoneme_hints,
             )
             if any(value is not None for value in session_fields):
                 await connection.update_session(
@@ -333,6 +338,7 @@ class RealtimeSpeech:
                     response_format=response_format,
                     streaming_mode=streaming_mode,
                     expressiveness=expressiveness,
+                    phoneme_hints=phoneme_hints,
                 )
 
             return connection
@@ -356,6 +362,7 @@ class RealtimeSpeech:
         response_format: Optional[SpeechOutputFormat] = None,
         streaming_mode: Optional[RealtimeSpeechStreamingMode] = None,
         expressiveness: Optional[float] = None,
+        phoneme_hints: Optional[Dict[str, List[IPAPhoneme]]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -367,6 +374,7 @@ class RealtimeSpeech:
             response_format=response_format,
             streaming_mode=streaming_mode,
             expressiveness=expressiveness,
+            phoneme_hints=phoneme_hints,
             server_url=server_url,
             timeout_ms=timeout_ms,
             http_headers=http_headers,

@@ -2,12 +2,12 @@
 
 from .basesdk import BaseSDK
 from .sdkconfiguration import SDKConfiguration
-from mistralai.client.context_search_indexes import ContextSearchIndexes
+from mistralai.client.search_indexes import SearchIndexes
 from typing import Optional
 
 
 class BetaContext(BaseSDK):
-    search_indexes: ContextSearchIndexes
+    search_indexes: SearchIndexes
 
     def __init__(
         self, sdk_config: SDKConfiguration, parent_ref: Optional[object] = None
@@ -17,6 +17,6 @@ class BetaContext(BaseSDK):
         self._init_sdks()
 
     def _init_sdks(self):
-        self.search_indexes = ContextSearchIndexes(
+        self.search_indexes = SearchIndexes(
             self.sdk_configuration, parent_ref=self.parent_ref
         )

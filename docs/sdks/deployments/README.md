@@ -15,6 +15,7 @@
 * [restart_deployment](#restart_deployment) - Restart Deployment
 * [list_deployment_workers](#list_deployment_workers) - List Deployment Workers
 * [get_deployment_archive](#get_deployment_archive) - Get Deployment Archive
+* [create_deployment_archive](#create_deployment_archive) - Create Deployment Archive
 * [get_deployment_logs](#get_deployment_logs) - Get Deployment Logs
 * [stream_deployment_logs](#stream_deployment_logs) - Stream Deployment Logs
 
@@ -481,6 +482,49 @@ with Mistral(
 ### Response
 
 **[models.DeploymentArchiveResponse](../../models/deploymentarchiveresponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| errors.HTTPValidationError | 422                        | application/json           |
+| errors.SDKError            | 4XX, 5XX                   | \*/\*                      |
+
+## create_deployment_archive
+
+Create an empty archive, with a signed URL to upload the tarball a managed deployment builds from.
+
+PUT the gzipped tar to `upload_url` with `upload_headers`, then pass `archive_id` in the spec on create or update.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="create_deployment_archive_v1_workflows_deployments_archives_post" method="post" path="/v1/workflows/deployments/archives" -->
+```python
+from mistralai.client import Mistral
+import os
+
+
+with Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY"),
+) as mistral:
+
+    res = mistral.workflows.deployments.create_deployment_archive(size=911758)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `size`                                                                                       | *int*                                                                                        | :heavy_check_mark:                                                                           | Size of the gzipped tar in bytes, at most 256 MiB. The upload URL accepts exactly this size. |
+| `retries`                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                             | :heavy_minus_sign:                                                                           | Configuration to override the default retry behavior of the client.                          |
+
+### Response
+
+**[models.DeploymentArchiveUploadResponse](../../models/deploymentarchiveuploadresponse.md)**
 
 ### Errors
 

@@ -16,3 +16,4 @@ The ``type`` discriminator lets future result shapes (e.g. a categorical ``categ
 | `type`                        | *Optional[Literal["scalar"]]* | :heavy_minus_sign:            | N/A                           |
 | `id`                          | *str*                         | :heavy_check_mark:            | N/A                           |
 | `value`                       | *OptionalNullable[float]*     | :heavy_minus_sign:            | N/A                           |
+| `sample_count`                | *OptionalNullable[int]*       | :heavy_minus_sign:            | N/A                           |

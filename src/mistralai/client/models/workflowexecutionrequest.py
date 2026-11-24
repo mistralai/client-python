@@ -13,8 +13,18 @@ from mistralai.client.types import (
 from mistralai.client.types.basemodel import current_filtered_dump
 import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
+
+
+WorkflowExecutionRequestCallContextTypedDict = TypeAliasType(
+    "WorkflowExecutionRequestCallContextTypedDict", Union[bool, int, str]
+)
+
+
+WorkflowExecutionRequestCallContext = TypeAliasType(
+    "WorkflowExecutionRequestCallContext", Union[bool, int, str]
+)
 
 
 class WorkflowExecutionRequestTypedDict(TypedDict):
@@ -33,6 +43,10 @@ class WorkflowExecutionRequestTypedDict(TypedDict):
     r"""W3C trace context to join this execution to the caller's trace. Ignored when force_new_trace is set."""
     extensions: NotRequired[Nullable[Dict[str, Any]]]
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
+    call_context: NotRequired[
+        Nullable[Dict[str, WorkflowExecutionRequestCallContextTypedDict]]
+    ]
+    r"""Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here."""
     task_queue: NotRequired[Nullable[str]]
     r"""Deprecated. Use deployment_name instead."""
     deployment_name: NotRequired[Nullable[str]]
@@ -63,6 +77,11 @@ class WorkflowExecutionRequest(BaseModel):
     extensions: OptionalNullable[Dict[str, Any]] = UNSET
     r"""Plugin-specific data to propagate into WorkflowContext.extensions at execution time."""
 
+    call_context: OptionalNullable[Dict[str, WorkflowExecutionRequestCallContext]] = (
+        UNSET
+    )
+    r"""Cleartext technical values (ids, flags) for the code this call runs, read with `get_call_context()`. Not covered by payload encryption: never put customer content here."""
+
     task_queue: Annotated[
         OptionalNullable[str],
         pydantic.Field(
@@ -89,6 +108,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "force_new_trace",
                 "traceparent",
                 "extensions",
+                "call_context",
                 "task_queue",
                 "deployment_name",
             ]
@@ -101,6 +121,7 @@ class WorkflowExecutionRequest(BaseModel):
                 "custom_tracing_attributes",
                 "traceparent",
                 "extensions",
+                "call_context",
                 "task_queue",
                 "deployment_name",
             ]

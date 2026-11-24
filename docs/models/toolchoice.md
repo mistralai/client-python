@@ -1,7 +1,5 @@
 # ToolChoice
 
-ToolChoice is either a ToolChoiceEnum or a ToolChoice
-
 
 ## Fields
 

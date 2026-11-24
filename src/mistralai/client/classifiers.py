@@ -17,10 +17,10 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models.ModerationRequestInputs, models.ModerationRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        queries: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -29,8 +29,9 @@ class Classifiers(BaseSDK):
         r"""Moderations
 
         :param model: ID of the model to use.
-        :param inputs: Text to classify.
+        :param inputs: Text to moderate.
         :param metadata:
+        :param queries: Named moderation queries to evaluate.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -49,10 +50,11 @@ class Classifiers(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ClassificationRequest(
+        request = models.ModerationRequest(
             model=model,
             metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
-            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
+            queries=utils.unmarshal(queries, OptionalNullable[Dict[str, str]]),
+            inputs=utils.unmarshal(inputs, models.ModerationRequestInputs),
         )
 
         req = self._build_request(
@@ -69,7 +71,7 @@ class Classifiers(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ClassificationRequest
+                request, False, False, "json", models.ModerationRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -122,10 +124,10 @@ class Classifiers(BaseSDK):
         *,
         model: str,
         inputs: Union[
-            models.ClassificationRequestInputs,
-            models.ClassificationRequestInputsTypedDict,
+            models.ModerationRequestInputs, models.ModerationRequestInputsTypedDict
         ],
         metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
+        queries: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -134,8 +136,9 @@ class Classifiers(BaseSDK):
         r"""Moderations
 
         :param model: ID of the model to use.
-        :param inputs: Text to classify.
+        :param inputs: Text to moderate.
         :param metadata:
+        :param queries: Named moderation queries to evaluate.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -154,10 +157,11 @@ class Classifiers(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ClassificationRequest(
+        request = models.ModerationRequest(
             model=model,
             metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
-            inputs=utils.unmarshal(inputs, models.ClassificationRequestInputs),
+            queries=utils.unmarshal(queries, OptionalNullable[Dict[str, str]]),
+            inputs=utils.unmarshal(inputs, models.ModerationRequestInputs),
         )
 
         req = self._build_request_async(
@@ -174,7 +178,7 @@ class Classifiers(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.ClassificationRequest
+                request, False, False, "json", models.ModerationRequest
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -237,7 +241,7 @@ class Classifiers(BaseSDK):
     ) -> models.ModerationResponse:
         r"""Chat Moderations
 
-        :param inputs: Chat to classify
+        :param inputs: Chat to classify.
         :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -341,7 +345,7 @@ class Classifiers(BaseSDK):
     ) -> models.ModerationResponse:
         r"""Chat Moderations
 
-        :param inputs: Chat to classify
+        :param inputs: Chat to classify.
         :param model:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

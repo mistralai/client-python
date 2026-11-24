@@ -27,3 +27,27 @@ value: models.TranscriptionStreamSegmentDelta = /* values here */
 value: models.TranscriptionStreamTextDelta = /* values here */
 ```
 
+### `models.TurnDetectionEagerEndEvent`
+
+```python
+value: models.TurnDetectionEagerEndEvent = /* values here */
+```
+
+### `models.TurnDetectionEndEvent`
+
+```python
+value: models.TurnDetectionEndEvent = /* values here */
+```
+
+### `models.TurnDetectionResumeEvent`
+
+```python
+value: models.TurnDetectionResumeEvent = /* values here */
+```
+
+### `models.TurnDetectionStartEvent`
+
+```python
+value: models.TurnDetectionStartEvent = /* values here */
+```
+

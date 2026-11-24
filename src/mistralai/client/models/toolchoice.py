@@ -15,16 +15,12 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ToolChoiceTypedDict(TypedDict):
-    r"""ToolChoice is either a ToolChoiceEnum or a ToolChoice"""
-
     function: FunctionNameTypedDict
     r"""this restriction of `Function` is used to select a specific function to call"""
     type: NotRequired[str]
 
 
 class ToolChoice(BaseModel):
-    r"""ToolChoice is either a ToolChoiceEnum or a ToolChoice"""
-
     function: FunctionName
     r"""this restriction of `Function` is used to select a specific function to call"""
 

@@ -11,6 +11,10 @@ TranscriptionStreamEventTypes = Union[
         "transcription.segment",
         "transcription.text.delta",
         "transcription.done",
+        "turn.start",
+        "turn.eager_end",
+        "turn.resume",
+        "turn.end",
     ],
     UnrecognizedStr,
 ]

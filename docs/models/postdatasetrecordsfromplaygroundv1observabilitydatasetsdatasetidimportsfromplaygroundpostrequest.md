@@ -1,9 +1,0 @@
-# PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest
-
-
-## Fields
-
-| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `dataset_id`                                                                                     | *str*                                                                                            | :heavy_check_mark:                                                                               | Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs. |
-| `import_dataset_from_playground_request`                                                         | [models.ImportDatasetFromPlaygroundRequest](../models/importdatasetfromplaygroundrequest.md)     | :heavy_check_mark:                                                                               | N/A                                                                                              |

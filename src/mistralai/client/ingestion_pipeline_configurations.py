@@ -7,7 +7,7 @@ from mistralai.client._hooks import HookContext
 from mistralai.client.types import OptionalNullable, UNSET
 from mistralai.client.utils import get_security_from_env
 from mistralai.client.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional
 
 
 class IngestionPipelineConfigurations(BaseSDK):
@@ -184,12 +184,6 @@ class IngestionPipelineConfigurations(BaseSDK):
         *,
         name: str,
         pipeline_composition: OptionalNullable[Mapping[str, str]] = UNSET,
-        target_indexes: OptionalNullable[
-            Union[
-                Iterable[models.IngestionPipelineTargetIndexRef],
-                Iterable[models.IngestionPipelineTargetIndexRefTypedDict],
-            ]
-        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -201,7 +195,6 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         :param name:
         :param pipeline_composition:
-        :param target_indexes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -224,10 +217,6 @@ class IngestionPipelineConfigurations(BaseSDK):
             name=name,
             pipeline_composition=utils.unmarshal(
                 pipeline_composition, OptionalNullable[Dict[str, str]]
-            ),
-            target_indexes=utils.get_pydantic_model(
-                target_indexes,
-                OptionalNullable[List[models.IngestionPipelineTargetIndexRef]],
             ),
         )
 
@@ -304,12 +293,6 @@ class IngestionPipelineConfigurations(BaseSDK):
         *,
         name: str,
         pipeline_composition: OptionalNullable[Mapping[str, str]] = UNSET,
-        target_indexes: OptionalNullable[
-            Union[
-                Iterable[models.IngestionPipelineTargetIndexRef],
-                Iterable[models.IngestionPipelineTargetIndexRefTypedDict],
-            ]
-        ] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -321,7 +304,6 @@ class IngestionPipelineConfigurations(BaseSDK):
 
         :param name:
         :param pipeline_composition:
-        :param target_indexes:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -344,10 +326,6 @@ class IngestionPipelineConfigurations(BaseSDK):
             name=name,
             pipeline_composition=utils.unmarshal(
                 pipeline_composition, OptionalNullable[Dict[str, str]]
-            ),
-            target_indexes=utils.get_pydantic_model(
-                target_indexes,
-                OptionalNullable[List[models.IngestionPipelineTargetIndexRef]],
             ),
         )
 

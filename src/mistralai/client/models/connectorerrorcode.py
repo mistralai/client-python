@@ -10,6 +10,7 @@ ConnectorErrorCode = Union[
         "connectors_count_limit_reached",
         "credentials_rejected",
         "server_unreachable",
+        "custom_connectors_disabled",
     ],
     UnrecognizedStr,
 ]

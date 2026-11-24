@@ -1,0 +1,11 @@
+# ModerationRequest
+
+
+## Fields
+
+| Field                                                                  | Type                                                                   | Required                                                               | Description                                                            | Example                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `model`                                                                | *str*                                                                  | :heavy_check_mark:                                                     | ID of the model to use.                                                | mistral-moderation-latest                                              |
+| `metadata`                                                             | Dict[str, *Any*]                                                       | :heavy_minus_sign:                                                     | N/A                                                                    |                                                                        |
+| `queries`                                                              | Dict[str, *str*]                                                       | :heavy_minus_sign:                                                     | Named moderation queries to evaluate.                                  |                                                                        |
+| `inputs`                                                               | [models.ModerationRequestInputs](../models/moderationrequestinputs.md) | :heavy_check_mark:                                                     | Text to moderate.                                                      |                                                                        |

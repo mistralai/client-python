@@ -16,26 +16,26 @@ from typing_extensions import NotRequired, TypedDict
 
 class ToolCallTypedDict(TypedDict):
     function: FunctionCallTypedDict
-    id: NotRequired[str]
     type: NotRequired[str]
     index: NotRequired[int]
+    id: NotRequired[str]
 
 
 class ToolCall(BaseModel):
     function: FunctionCall
 
-    id: Optional[str] = "null"
-
     type: Optional[str] = "function"
 
     index: Optional[int] = 0
+
+    id: Optional[str] = None
 
     @model_serializer(mode="wrap")
     def _serialize_model_with_info(self, handler, info):
         return serialize_with_info(self.serialize_model, handler, info)
 
     def serialize_model(self, handler):
-        optional_fields = set(["id", "type", "index"])
+        optional_fields = set(["type", "index", "id"])
         exclude_none = current_exclude_none()
         skip_filtered = exclude_none is False or current_filtered_dump()
         serialized = handler(self)

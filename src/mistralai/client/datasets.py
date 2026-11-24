@@ -31,6 +31,7 @@ class Datasets(BaseSDK):
         *,
         name: str,
         description: str,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -40,6 +41,7 @@ class Datasets(BaseSDK):
 
         :param name:
         :param description:
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -61,6 +63,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRequest(
             name=name,
             description=description,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request(
@@ -132,6 +135,7 @@ class Datasets(BaseSDK):
         *,
         name: str,
         description: str,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -141,6 +145,7 @@ class Datasets(BaseSDK):
 
         :param name:
         :param description:
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -162,6 +167,7 @@ class Datasets(BaseSDK):
         request = models.CreateDatasetRequest(
             name=name,
             description=description,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request_async(
@@ -816,6 +822,7 @@ class Datasets(BaseSDK):
         dataset_id: str,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -826,6 +833,7 @@ class Datasets(BaseSDK):
         :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param name:
         :param description:
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -849,6 +857,7 @@ class Datasets(BaseSDK):
             update_dataset_request=models.UpdateDatasetRequest(
                 name=name,
                 description=description,
+                metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             ),
         )
 
@@ -926,6 +935,7 @@ class Datasets(BaseSDK):
         dataset_id: str,
         name: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
+        metadata: OptionalNullable[Mapping[str, Any]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -936,6 +946,7 @@ class Datasets(BaseSDK):
         :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
         :param name:
         :param description:
+        :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -959,6 +970,7 @@ class Datasets(BaseSDK):
             update_dataset_request=models.UpdateDatasetRequest(
                 name=name,
                 description=description,
+                metadata=utils.unmarshal(metadata, OptionalNullable[Dict[str, Any]]),
             ),
         )
 
@@ -1462,6 +1474,238 @@ class Datasets(BaseSDK):
 
         raise errors.SDKError("Unexpected response received", http_res)
 
+    def create_records(
+        self,
+        *,
+        dataset_id: str,
+        records: Union[
+            Iterable[models.CreateDatasetRecordsItem],
+            Iterable[models.CreateDatasetRecordsItemTypedDict],
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CreateDatasetRecordsResponse:
+        r"""Add several records to the dataset
+
+        Creates 1 to 100 records in one transaction: if one record is invalid, none is created. Records are returned in the request order.
+
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
+        :param records: Records to add. They are created together: if one is invalid, none is created.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.CreateDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsBulkPostRequest(
+            dataset_id=dataset_id,
+            create_dataset_records_request=models.CreateDatasetRecordsRequest(
+                records=utils.get_pydantic_model(
+                    records, List[models.CreateDatasetRecordsItem]
+                ),
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v1/observability/datasets/{dataset_id}/records/bulk",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.create_dataset_records_request,
+                False,
+                False,
+                "json",
+                models.CreateDatasetRecordsRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="create_dataset_records_v1_observability_datasets__dataset_id__records_bulk_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "201", "application/json"):
+            return unmarshal_json_response(
+                models.CreateDatasetRecordsResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "404", "408", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(
+                errors.ObservabilityErrorData, http_res
+            )
+            raise errors.ObservabilityError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
+    async def create_records_async(
+        self,
+        *,
+        dataset_id: str,
+        records: Union[
+            Iterable[models.CreateDatasetRecordsItem],
+            Iterable[models.CreateDatasetRecordsItemTypedDict],
+        ],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.CreateDatasetRecordsResponse:
+        r"""Add several records to the dataset
+
+        Creates 1 to 100 records in one transaction: if one record is invalid, none is created. Records are returned in the request order.
+
+        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
+        :param records: Records to add. They are created together: if one is invalid, none is created.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if timeout_ms is None:
+            timeout_ms = 300000
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.CreateDatasetRecordsV1ObservabilityDatasetsDatasetIDRecordsBulkPostRequest(
+            dataset_id=dataset_id,
+            create_dataset_records_request=models.CreateDatasetRecordsRequest(
+                records=utils.get_pydantic_model(
+                    records, List[models.CreateDatasetRecordsItem]
+                ),
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/observability/datasets/{dataset_id}/records/bulk",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.create_dataset_records_request,
+                False,
+                False,
+                "json",
+                models.CreateDatasetRecordsRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="create_dataset_records_v1_observability_datasets__dataset_id__records_bulk_post",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+                tags=["beta.observability.datasets"],
+                extensions=None,
+            ),
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "201", "application/json"):
+            return unmarshal_json_response(
+                models.CreateDatasetRecordsResponse, http_res
+            )
+        if utils.match_response(
+            http_res, ["400", "404", "408", "409", "422"], "application/json"
+        ):
+            response_data = unmarshal_json_response(
+                errors.ObservabilityErrorData, http_res
+            )
+            raise errors.ObservabilityError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.SDKError("API error occurred", http_res, http_res_text)
+
+        raise errors.SDKError("Unexpected response received", http_res)
+
     def import_from_file(
         self,
         *,
@@ -1645,220 +1889,6 @@ class Datasets(BaseSDK):
                 config=self.sdk_configuration,
                 base_url=base_url or "",
                 operation_id="post_dataset_records_from_file_v1_observability_datasets__dataset_id__imports_from_file_post",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-                tags=["beta.observability.datasets"],
-                extensions=None,
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "202", "application/json"):
-            return unmarshal_json_response(models.DatasetImportTask, http_res)
-        if utils.match_response(
-            http_res, ["400", "404", "408", "409", "422"], "application/json"
-        ):
-            response_data = unmarshal_json_response(
-                errors.ObservabilityErrorData, http_res
-            )
-            raise errors.ObservabilityError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = await utils.stream_to_text_async(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    def import_from_playground(
-        self,
-        *,
-        dataset_id: str,
-        conversation_ids: Iterable[str],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DatasetImportTask:
-        r"""Populate the dataset with records from playground conversations
-
-        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
-        :param conversation_ids:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
-            dataset_id=dataset_id,
-            import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
-                conversation_ids=utils.unmarshal(conversation_ids, List[str]),
-            ),
-        )
-
-        req = self._build_request(
-            method="POST",
-            path="/v1/observability/datasets/{dataset_id}/imports/from-playground",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_playground_request,
-                False,
-                False,
-                "json",
-                models.ImportDatasetFromPlaygroundRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = self.do_request(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="post_dataset_records_from_playground_v1_observability_datasets__dataset_id__imports_from_playground_post",
-                oauth2_scopes=None,
-                security_source=get_security_from_env(
-                    self.sdk_configuration.security, models.Security
-                ),
-                tags=["beta.observability.datasets"],
-                extensions=None,
-            ),
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            retry_config=retry_config,
-        )
-
-        response_data: Any = None
-        if utils.match_response(http_res, "202", "application/json"):
-            return unmarshal_json_response(models.DatasetImportTask, http_res)
-        if utils.match_response(
-            http_res, ["400", "404", "408", "409", "422"], "application/json"
-        ):
-            response_data = unmarshal_json_response(
-                errors.ObservabilityErrorData, http_res
-            )
-            raise errors.ObservabilityError(response_data, http_res)
-        if utils.match_response(http_res, "4XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-        if utils.match_response(http_res, "5XX", "*"):
-            http_res_text = utils.stream_to_text(http_res)
-            raise errors.SDKError("API error occurred", http_res, http_res_text)
-
-        raise errors.SDKError("Unexpected response received", http_res)
-
-    async def import_from_playground_async(
-        self,
-        *,
-        dataset_id: str,
-        conversation_ids: Iterable[str],
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.DatasetImportTask:
-        r"""Populate the dataset with records from playground conversations
-
-        :param dataset_id: Dataset UUID or workspace-scoped slug. UUID-shaped values are always interpreted as dataset IDs.
-        :param conversation_ids:
-        :param retries: Override the default retry configuration for this method
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if timeout_ms is None:
-            timeout_ms = 300000
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.PostDatasetRecordsFromPlaygroundV1ObservabilityDatasetsDatasetIDImportsFromPlaygroundPostRequest(
-            dataset_id=dataset_id,
-            import_dataset_from_playground_request=models.ImportDatasetFromPlaygroundRequest(
-                conversation_ids=utils.unmarshal(conversation_ids, List[str]),
-            ),
-        )
-
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/observability/datasets/{dataset_id}/imports/from-playground",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.import_dataset_from_playground_request,
-                False,
-                False,
-                "json",
-                models.ImportDatasetFromPlaygroundRequest,
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["429", "500", "502", "503", "504"])
-
-        http_res = await self.do_request_async(
-            hook_ctx=HookContext(
-                config=self.sdk_configuration,
-                base_url=base_url or "",
-                operation_id="post_dataset_records_from_playground_v1_observability_datasets__dataset_id__imports_from_playground_post",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security

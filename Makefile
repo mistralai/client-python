@@ -7,15 +7,15 @@ help:
 	@echo "  make update-speakeasy-version VERSION=x.y.z   Update Speakeasy CLI version"
 	@echo "  make check-config                             Check gen.yaml against recommended defaults"
 	@echo ""
-	@echo "Note: Production SDK generation is done via GitHub Actions:"
-	@echo "  .github/workflows/sdk_generation_mistralai_sdk.yaml"
+	@echo "Note: Production SDK generation and release run in the Buildkite pipeline eng-sdk-codegen"
+	@echo "  (dashboard monorepo); see openapi/.agents/skills/deploy-public-sdk/SKILL.md"
 
 # Generate all SDKs (main, Azure, GCP)
 generate:
 	speakeasy run -t all
 
 # Test SDK generation locally.
-# For production, use GitHub Actions: .github/workflows/sdk_generation_mistralai_sdk.yaml
+# For production, use the Buildkite pipeline eng-sdk-codegen (see the help target).
 # This uses the Speakeasy CLI version defined in .speakeasy/workflow.yaml
 test-generate:
 	speakeasy run --skip-versioning
